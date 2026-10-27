@@ -1,0 +1,9 @@
+dist/
+.astro/
+node_modules/
+.agents/
+.claude/
+docs/
+pnpm-lock.yaml
+skills-lock.json
+src/design-system/*.generated.*

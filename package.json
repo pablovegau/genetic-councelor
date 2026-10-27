@@ -4,18 +4,41 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "tokens": "tz build",
-    "dev": "tz build && astro dev",
-    "build": "tz build && astro build",
+    "tokens": "tz build && node scripts/build-style-props.mjs",
+    "dev": "pnpm tokens && astro dev",
+    "build": "pnpm tokens && pnpm typecheck && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "typecheck": "astro check",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
   },
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
-    "astro": "^7.4.2"
+    "@astrojs/react": "^7.1.1",
+    "astro": "^7.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@eslint/js": "^10.0.1",
     "@terrazzo/cli": "^2.10.0",
-    "@terrazzo/plugin-css": "^2.10.0"
+    "@terrazzo/plugin-css": "^2.10.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^10.13.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.1"
   }
 }

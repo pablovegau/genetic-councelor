@@ -2,7 +2,13 @@ import { defineConfig } from "@terrazzo/cli";
 import css from "@terrazzo/plugin-css";
 
 // Solo los roles que cambian con el esquema se repiten en oscuro.
-const schemeTokens = ["color.bg.*", "color.text.*", "color.border.*", "color.action.*", "color.focus.*"];
+const schemeTokens = [
+  "color.bg.*",
+  "color.text.*",
+  "color.border.*",
+  "color.action.*",
+  "color.focus.*",
+];
 
 export default defineConfig({
   tokens: ["./src/design-system/tokens/tokens.resolver.json"],
