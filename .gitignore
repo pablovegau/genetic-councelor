@@ -1,0 +1,6 @@
+# Originales de las fotos (JPEG de 3-5 MB, Adobe RGB): solo en local. Las versiones web viven en docs/design/assets/web/
+docs/design/assets/*.jpg
+.DS_Store
+node_modules/
+dist/
+.astro/
