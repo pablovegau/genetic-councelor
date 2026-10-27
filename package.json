@@ -6,10 +6,10 @@
   "scripts": {
     "tokens": "tz build && node scripts/build-style-props.ts",
     "dev": "pnpm tokens && astro dev",
-    "build": "pnpm tokens && pnpm typecheck && astro build",
+    "build": "pnpm typecheck && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "astro check",
+    "typecheck": "pnpm tokens && astro check",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
