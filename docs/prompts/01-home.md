@@ -7,7 +7,7 @@ Todo lo marcado **PENDIENTE** no está decidido: el agente debe señalarlo, no r
 ```text
 Vamos a montar la home de la web de Sara Torres-Esquius, asesora genética. Es una persona real y una web de salud, así que usa solo los datos de este mensaje, de docs/design/brief.md y de CONTEXT.md: no inventes titulaciones, cifras, reseñas, precios ni promesas. Lo que falte, márcalo como pendiente.
 
-Lee antes docs/design/brief.md y CONTEXT.md. Si usas la skill landing-page-design: aplica la parte A (intake, estructura, conversión, SEO). De la parte B solo lo que no contradiga el brief; en concreto, "Torres-Esquius" lleva guion y se queda así, y el tono es sereno, sin revelados con mucho movimiento. Ante cualquier choque, manda el brief.
+Lee antes docs/design/brief.md y CONTEXT.md. Reglas de conversión que aplican: una oferta, una audiencia, una acción principal; sin CTAs que compitan sobre el pliegue; beneficio antes que característica; concreto, no vago; las objeciones son una sección, no una nota al pie; la prueba va junto a lo que respalda; se construye sección a sección. "Torres-Esquius" lleva guion y se queda así. Ante cualquier choque con estas reglas, manda el brief.
 
 Intake:
 - Acción principal: reservar una primera visita por videollamada. Herramienta de reserva: PENDIENTE (enlace).

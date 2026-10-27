@@ -23,14 +23,22 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Imagen para redes de 1200×630, favicon y manifest, `h1` único por página, 404 con `noindex`, enlace "saltar al contenido".
 - [ ] Datos estructurados en un solo grafo: `Person` (con ORCID en `sameAs`) y servicio profesional. Verificar antes si el `FAQPage` aporta algo: Google restringe esos resultados en salud.
 - [ ] Fuentes servidas desde el propio dominio con la API de fuentes de Astro (cuando se elija tipografía).
-- [ ] Instalar la skill [`landing-page-design`](https://github.com/elayadesign/ai-design-skills) a nivel de proyecto.
-  - Leer antes su `SKILL.md` (es lo que el agente va a obedecer) y fijar un commit concreto del repo, no `main`.
-  - Usar la **parte A** (intake, estructura, reglas de conversión, build por secciones, SEO). La **parte B** (sistema visual) solo donde no contradiga el brief: prohíbe guiones en el texto (rompe "Torres-Esquius"), limita a una tipografía sin cursivas y manda revelados con mucho movimiento.
-  - Si choca con el brief, **manda el brief**: decirlo en el prompt de arranque (ver `docs/prompts/01-home.md`).
-- [ ] Elegir hosting (el vídeo usa Cloudflare) y dominio.
+- [x] Skill [`landing-page-design`](https://github.com/elayadesign/ai-design-skills): leída y **no instalada** (decisión, versión `ded7efc9d5`). Las reglas de conversión de su parte A ya van dentro de `docs/prompts/01-home.md`. Motivos: su parte B choca con el brief, y sus reglas de "contenido realista" y de "asumir y seguir" chocan con no inventar nada en una web de salud.
+- [x] Hosting: Vercel (https://genetic-councelor.vercel.app/).
+- [ ] Elegir dominio.
+
+## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
+- [x] Tokens primitivos y semánticos en DTCG 2025.10 con Terrazzo; tema `default` con esquemas claro y oscuro (`data-scheme`). Valores neutros de placeholder.
+- [ ] Sustituir los placeholders por los valores reales cuando haya dirección visual (colores, tipografía, radios).
+- [ ] Primitivos de UI: Box, Flex, Grid, Text, Icon. Decidir el mecanismo de estilos (recomendado: CSS Modules + custom properties, props mapeados por atributo) y el catálogo (recomendado: página interna en Astro).
+- [ ] Button = Flex + Icon + Text; luego componentes mayores. Los tokens de componente se crean con cada componente.
+- [ ] Tipografía semántica junto al componente Text. Verificar antes la forma del tipo `typography` de DTCG (no la pude leer entera).
+- [ ] Interruptor de esquema: `data-scheme` + `localStorage` + script en el `<head>` para evitar el parpadeo, cuando exista el componente.
+- [ ] Fotos de Sara con fondo blanco de plató en modo oscuro: decidir marco/tarjeta, recorte o zona clara.
+- [ ] Menú móvil del repo antiguo como componente: conservar la X, la tarjeta lateral y el botón de reservar abajo; corregir panel con scroll en pantallas bajas, `inert` cuando está cerrado, `prefers-reduced-motion`, breakpoint más alto y selector ES/CA/EN.
 
 ## Diseño
-- [ ] Dirección visual: comparar 2 o 3 prototipos reales (`/prototype`) antes de elegir. Diseñar primero a ancho de móvil.
+- [ ] Dirección visual: comparar 2 o 3 prototipos reales (`/prototype`) antes de elegir. Cada prototipo es una variante de valores de los tokens, no un diseño aparte. Diseñar primero a ancho de móvil.
 - [ ] Esqueleto previsible: hero con reserva, situaciones, primera visita en pasos, precios, Sara, FAQ.
 - [ ] Árbol genealógico como elemento visual: aspecto de dibujo a mano, generado por ordenador.
 
@@ -55,6 +63,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 ## Calidad
 - [ ] SEO: una página por situación, títulos por intención de búsqueda, "test genético" y "consejo genético" explicados en el cuerpo y las FAQ.
 - [ ] Accesibilidad y rendimiento en móvil.
+- [ ] Cada elemento interactivo con sus estados (hover, activo, foco visible, error), sin enlaces muertos, 404 propia, texto alternativo en las imágenes con significado y HTML semántico.
 - [ ] Revisión antes de dar algo por hecho: `pnpm build` sin errores, consola limpia, viewport de 390×844, `prefers-reduced-motion`, y probar con un navegador de pruebas, no con el Chrome de Pablo.
 
 ## Pendiente de negocio
