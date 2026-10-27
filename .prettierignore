@@ -7,3 +7,7 @@ docs/
 pnpm-lock.yaml
 skills-lock.json
 src/design-system/*.generated.*
+coverage/
+playwright-report/
+test-results/
+.vitest/

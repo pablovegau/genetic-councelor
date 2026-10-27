@@ -11,3 +11,8 @@ src/design-system/style-props.generated.css
 src/design-system/style-props.generated.ts
 coverage/
 .vitest/
+playwright-report/
+test-results/
+blob-report/
+e2e/**/*-darwin.png
+.pnpm-store/

@@ -32,7 +32,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] 2. React (hecho): `@astrojs/react`, `react`, `react-dom`. Portar Box, Flex, Grid, Text e Icon a TSX. El generador exporta las escalas como `as const` (sin `as never`). El catálogo sigue siendo una página Astro.
 - [x] 3. Unitarios con Vitest 5 (hecho; seams S1 tokens, S2 CSS generado, S3 generador, S4 helpers y contrato): tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
 - [x] 4. Componentes con Vitest en modo navegador (hecho para Box, Flex, Grid, Text e Icon) (`@vitest/browser-playwright`) y Testing Library.
-- [ ] 5. Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
+- [ ] 5. (en la PR `feat/playwright-ci`; se marca al fusionarla) Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
 - [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
 
 ## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
