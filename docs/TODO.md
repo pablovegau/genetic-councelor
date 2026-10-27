@@ -8,7 +8,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] Usar **Astro** (rápido, SEO y poco JavaScript). Ver `docs/adr/0001-astro-con-rutas-por-idioma.md`.
 - [x] Preparar **i18n**: español por defecto, catalán e inglés (`/ca`, `/en`). Esqueleto con selector de idioma y portada mínima por idioma.
 - [ ] Añadir `hreflang` y `canonical` en el `<head>` cuando tengamos dominio (`site` en `astro.config.mjs`).
-- [ ] Opcional: validación de tipos con `@astrojs/check` y `typescript`.
+- [ ] Validación de tipos con `@astrojs/check` y `typescript@6` (el build falla si hay errores). Ver el plan técnico.
 - [ ] Añadir a `CLAUDE.md` cómo arrancar el servidor: `astro dev --background`, y `astro dev stop`, `status` y `logs`.
 
 ## Vercel
@@ -27,10 +27,21 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] Hosting: Vercel (https://genetic-councelor.vercel.app/).
 - [ ] Elegir dominio.
 
+## Plan técnico (ADR 0004 y 0005), por orden
+- [x] 1. Herramientas (hecho; el hook de pre-commit ejecuta lint-staged y typecheck, y se le añadirá `test` con el paso 3): TypeScript 6 estricto con `astro check` en el build, ESLint 10 (typescript-eslint, jsx-a11y, eslint-plugin-astro) y Prettier con `prettier-plugin-astro`. Scripts `check`, `lint` y `format`. Hook de pre-commit con la skill `setup-pre-commit` (Husky y lint-staged).
+- [x] 2. React (hecho): `@astrojs/react`, `react`, `react-dom`. Portar Box, Flex, Grid, Text e Icon a TSX. El generador exporta las escalas como `as const` (sin `as never`). El catálogo sigue siendo una página Astro.
+- [ ] 3. Unitarios con Vitest 5: tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
+- [ ] 4. Componentes con Vitest en modo navegador (`@vitest/browser-playwright`) y Testing Library.
+- [ ] 5. Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
+- [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
+
 ## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
 - [x] Tokens primitivos y semánticos en DTCG 2025.10 con Terrazzo; tema `default` con esquemas claro y oscuro (`data-scheme`). Valores neutros de placeholder.
 - [ ] Sustituir los placeholders por los valores reales cuando haya dirección visual (colores, tipografía, radios).
-- [ ] Primitivos de UI: Box, Flex, Grid, Text, Icon. Decidir el mecanismo de estilos (recomendado: CSS Modules + custom properties, props mapeados por atributo) y el catálogo (recomendado: página interna en Astro).
+- [x] Primitivos de UI: Box, Flex, Grid, Text, Icon, con style props generados desde los tokens y catálogo interno en `/design-system/` (ver `docs/adr/0003-primitivos-y-style-props.md`).
+- [ ] Decidir al lanzar si el catálogo se excluye del build de producción (hoy es público con `noindex`).
+- [ ] Props que faltan según se necesiten: márgenes, props responsivos, sombras.
+- [ ] Set de iconos definitivo (hoy 4 trazos placeholder) y favicon.
 - [ ] Button = Flex + Icon + Text; luego componentes mayores. Los tokens de componente se crean con cada componente.
 - [ ] Tipografía semántica junto al componente Text. Verificar antes la forma del tipo `typography` de DTCG (no la pude leer entera).
 - [ ] Interruptor de esquema: `data-scheme` + `localStorage` + script en el `<head>` para evitar el parpadeo, cuando exista el componente.
