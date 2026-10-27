@@ -1,0 +1,19 @@
+@layer base, components, props;
+
+@layer components {
+  .text {
+    margin: 0;
+  }
+
+  .text[data-align="start"] {
+    text-align: start;
+  }
+
+  .text[data-align="center"] {
+    text-align: center;
+  }
+
+  .text[data-align="end"] {
+    text-align: end;
+  }
+}

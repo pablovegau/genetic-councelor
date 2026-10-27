@@ -1,0 +1,8 @@
+@layer base, components, props;
+
+@layer components {
+  .icon {
+    display: inline-block;
+    flex-shrink: 0;
+  }
+}

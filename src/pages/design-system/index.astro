@@ -1,0 +1,354 @@
+---
+import { Box, Flex, Grid, Icon, Text } from "../../design-system/primitives";
+import { iconNames } from "../../design-system/primitives/Icon/icons";
+import {
+  colorRoles,
+  fontSizes,
+  fontWeights,
+  lineHeights,
+  neutralSteps,
+  radiusSteps,
+  spaceSteps,
+} from "../../design-system/style-props.generated";
+import Base from "../../layouts/Base.astro";
+
+const words = [
+  "uno",
+  "dos",
+  "tres",
+  "cuatro",
+  "cinco",
+  "seis",
+  "siete",
+  "ocho",
+  "nueve",
+  "diez",
+  "once",
+  "doce",
+];
+const cells = [1, 2, 3, 4, 5, 6];
+---
+
+<Base title="Design system" noindex languageNav={false}>
+  <Flex as="header" direction="column" gap="3" p="6" border="default">
+    <Text as="h1" size="8" weight="bold" leading="tight">
+      Design system
+    </Text>
+    <Text color="muted">
+      Catálogo interno. Tokens DTCG 2025.10, tema <code>default</code>, esquemas
+      claro y oscuro. Los valores actuales son placeholders neutros.
+    </Text>
+    <Flex gap="2" wrap align="center">
+      <Text as="span" size="2" color="muted">
+        Esquema:
+      </Text>
+      <button type="button" data-set-scheme="system">
+        Sistema
+      </button>
+      <button type="button" data-set-scheme="light">
+        Claro
+      </button>
+      <button type="button" data-set-scheme="dark">
+        Oscuro
+      </button>
+    </Flex>
+  </Flex>
+
+  <Flex direction="column" gap="10" p="6">
+    <Flex
+      as="section"
+      direction="column"
+      gap="4"
+      aria-labelledby="tokens-color"
+    >
+      <Text as="h2" id="tokens-color" size="6" weight="semibold">
+        Tokens · color
+      </Text>
+      <Text size="2" color="muted">
+        Primitivos: escala neutral.
+      </Text>
+      <Grid minColumn="24" gap="3">
+        {neutralSteps.map((step) => (
+          <Flex direction="column" gap="1">
+            <Box
+              radius="control"
+              border="default"
+              style={{
+                backgroundColor: `var(--color-neutral-${step})`,
+                blockSize: "var(--space-10)",
+              }}
+            />
+            <Text as="span" size="1" color="muted">
+              neutral.{step}
+            </Text>
+          </Flex>
+        ))}
+      </Grid>
+      <Text size="2" color="muted">
+        Semánticos: cambian con el esquema.
+      </Text>
+      <Grid minColumn="24" gap="3">
+        {colorRoles.map((role) => (
+          <Flex direction="column" gap="1">
+            <Box
+              radius="control"
+              border="strong"
+              style={{
+                backgroundColor: `var(--color-${role})`,
+                blockSize: "var(--space-10)",
+              }}
+            />
+            <Text as="span" size="1" color="muted">
+              color.{role.replace("-", ".")}
+            </Text>
+          </Flex>
+        ))}
+      </Grid>
+    </Flex>
+
+    <Flex
+      as="section"
+      direction="column"
+      gap="3"
+      aria-labelledby="tokens-space"
+    >
+      <Text as="h2" id="tokens-space" size="6" weight="semibold">
+        Tokens · espaciado
+      </Text>
+      {spaceSteps.map((step) => (
+        <Flex gap="3" align="center">
+          <Text
+            as="span"
+            size="1"
+            color="muted"
+            style={{ inlineSize: "var(--space-10)" }}
+          >
+            {step}
+          </Text>
+          <Box
+            bg="subtle"
+            border="default"
+            style={{
+              inlineSize: `var(--space-${step})`,
+              blockSize: "var(--space-3)",
+            }}
+          />
+        </Flex>
+      ))}
+    </Flex>
+
+    <Flex
+      as="section"
+      direction="column"
+      gap="3"
+      aria-labelledby="tokens-radius"
+    >
+      <Text as="h2" id="tokens-radius" size="6" weight="semibold">
+        Tokens · radios
+      </Text>
+      <Flex gap="4" wrap>
+        {radiusSteps.map((step) => (
+          <Flex direction="column" gap="1" align="center">
+            <Box
+              bg="subtle"
+              border="strong"
+              style={{
+                borderRadius: `var(--radius-${step})`,
+                inlineSize: "var(--space-16)",
+                blockSize: "var(--space-16)",
+              }}
+            />
+            <Text as="span" size="1" color="muted">
+              radius.{step}
+            </Text>
+          </Flex>
+        ))}
+      </Flex>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="3" aria-labelledby="tokens-type">
+      <Text as="h2" id="tokens-type" size="6" weight="semibold">
+        Tokens · tipografía
+      </Text>
+      {fontSizes.map((step) => (
+        <Text size={step}>size.{step} · Asesoramiento genético</Text>
+      ))}
+      <Flex gap="4" wrap>
+        {fontWeights.map((step) => (
+          <Text weight={step}>{step}</Text>
+        ))}
+      </Flex>
+      <Grid columns={2} gap="4">
+        {lineHeights.map((step) => (
+          <Box p="3" border="default" radius="control">
+            <Text size="2" color="muted">
+              leading.{step}
+            </Text>
+            <Text leading={step}>
+              Un estudio genético no es una sentencia: ayuda a conocer un riesgo
+              y a decidir con calma qué hacer con esa información.
+            </Text>
+          </Box>
+        ))}
+      </Grid>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="4" aria-labelledby="prim-box">
+      <Text as="h2" id="prim-box" size="6" weight="semibold">
+        Primitivo · Box
+      </Text>
+      <Text size="2" color="muted">
+        Props: <code>as</code>, <code>p px py pt pr pb pl</code>,{" "}
+        <code>bg</code>,<code>border</code>, <code>radius</code>.
+      </Text>
+      <Flex gap="4" wrap>
+        <Box p="4" bg="surface" border="default" radius="surface">
+          <Text as="span">p=4 · surface · radius surface</Text>
+        </Box>
+        <Box px="6" py="2" bg="subtle" border="strong" radius="control">
+          <Text as="span">px=6 py=2</Text>
+        </Box>
+        <Box as="aside" pl="8" pt="1" border="default">
+          <Text as="span">as="aside" pl=8 pt=1</Text>
+        </Box>
+      </Flex>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="4" aria-labelledby="prim-flex">
+      <Text as="h2" id="prim-flex" size="6" weight="semibold">
+        Primitivo · Flex
+      </Text>
+      <Text size="2" color="muted">
+        Un Flex es un Box con{" "}
+        <code>direction align justify wrap inline gap gapX gapY</code>.
+      </Text>
+      <Flex
+        gap="2"
+        justify="between"
+        align="center"
+        p="3"
+        bg="subtle"
+        radius="control"
+      >
+        <Text as="span">justify=between</Text>
+        <Text as="span">align=center</Text>
+        <Text as="span">gap=2</Text>
+      </Flex>
+      <Flex direction="column" gap="1" p="3" bg="subtle" radius="control">
+        <Text as="span">direction=column</Text>
+        <Text as="span">gap=1</Text>
+      </Flex>
+      <Flex gap="2" wrap p="3" bg="subtle" radius="control">
+        {words.map((word) => (
+          <Box px="3" py="1" bg="surface" border="default" radius="control">
+            <Text as="span" size="2">
+              {word}
+            </Text>
+          </Box>
+        ))}
+      </Flex>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="4" aria-labelledby="prim-grid">
+      <Text as="h2" id="prim-grid" size="6" weight="semibold">
+        Primitivo · Grid
+      </Text>
+      <Text size="2" color="muted">
+        Un Grid es un Box con <code>columns</code> (1 a 6, o 12),
+        <code>minColumn</code> (responsivo), <code>align</code> y{" "}
+        <code>gap</code>.
+      </Text>
+      <Grid columns={3} gap="3">
+        {cells.map((n) => (
+          <Box p="3" bg="subtle" radius="control">
+            <Text as="span">columns=3 · celda {n}</Text>
+          </Box>
+        ))}
+      </Grid>
+      <Grid minColumn="24" gap="3">
+        {cells.map((n) => (
+          <Box p="3" bg="subtle" radius="control">
+            <Text as="span">minColumn=24 · celda {n}</Text>
+          </Box>
+        ))}
+      </Grid>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="4" aria-labelledby="prim-text">
+      <Text as="h2" id="prim-text" size="6" weight="semibold">
+        Primitivo · Text
+      </Text>
+      <Text size="2" color="muted">
+        Props: <code>as</code>, <code>size</code>, <code>weight</code>,
+        <code>color</code>, <code>leading</code>, <code>align</code>. Las
+        variantes semánticas llegarán con la dirección visual.
+      </Text>
+      <Text size="5" weight="semibold">
+        default · semibold · size 5
+      </Text>
+      <Text color="muted">color=muted</Text>
+      <Box
+        p="3"
+        radius="control"
+        style={{ backgroundColor: "var(--color-action-bg)" }}
+      >
+        <Text color="inverse" as="span">
+          color=inverse sobre action.bg
+        </Text>
+      </Box>
+      <Text align="center" border="default" p="3">
+        align=center
+      </Text>
+    </Flex>
+
+    <Flex as="section" direction="column" gap="4" aria-labelledby="prim-icon">
+      <Text as="h2" id="prim-icon" size="6" weight="semibold">
+        Primitivo · Icon
+      </Text>
+      <Text size="2" color="muted">
+        Decorativo por defecto (<code>aria-hidden</code>); informativo si lleva
+        <code>label</code>. Hereda <code>currentColor</code>. Set de iconos:
+        placeholder.
+      </Text>
+      <Flex gap="6" wrap align="end">
+        {iconNames.map((name) => (
+          <Flex direction="column" gap="1" align="center">
+            <Icon name={name} iconSize="8" />
+            <Text as="span" size="1" color="muted">
+              {name}
+            </Text>
+          </Flex>
+        ))}
+      </Flex>
+      <Flex gap="4" align="center">
+        <Icon name="check" iconSize="4" />
+        <Icon name="check" iconSize="6" color="muted" />
+        <Icon name="close" iconSize="8" label="Cerrar" />
+      </Flex>
+      <Flex
+        gap="2"
+        align="center"
+        p="3"
+        border="default"
+        radius="control"
+        inline
+      >
+        <Text as="span">Composición</Text>
+        <Icon name="arrow-right" iconSize="4" />
+      </Flex>
+    </Flex>
+  </Flex>
+
+  <script>
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-set-scheme]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const scheme = button.dataset.setScheme;
+          if (scheme === "system")
+            delete document.documentElement.dataset.scheme;
+          else document.documentElement.dataset.scheme = scheme;
+        });
+      });
+  </script>
+</Base>

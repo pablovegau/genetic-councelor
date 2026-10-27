@@ -7,3 +7,5 @@ dist/
 
 # Generado por Terrazzo desde src/design-system/tokens (pnpm tokens)
 src/design-system/tokens.generated.css
+src/design-system/style-props.generated.css
+src/design-system/style-props.generated.ts

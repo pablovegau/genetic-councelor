@@ -1,0 +1,8 @@
+@layer base, components, props;
+
+@layer components {
+  .box {
+    box-sizing: border-box;
+    min-inline-size: 0;
+  }
+}

@@ -1,17 +1,21 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import "../design-system/tokens.generated.css";
+import "../design-system/style-props.generated.css";
 import "../design-system/base.css";
 
 interface Props {
   title: string;
+  /** Páginas internas que nunca se indexan, ni siquiera al publicar. */
+  noindex?: boolean;
+  languageNav?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, noindex = false, languageNav = true } = Astro.props;
 const locale = Astro.currentLocale ?? "es";
 // Hasta publicar con el dominio definitivo la web no se indexa.
 // Al publicar: PUBLIC_ALLOW_INDEXING=true en las variables de entorno de Vercel.
-const indexable = import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
+const indexable = !noindex && import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
 const locales = [
   { code: "es", label: "Español" },
   { code: "ca", label: "Català" },
@@ -24,13 +28,16 @@ const locales = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content={indexable ? "index, follow" : "noindex, nofollow"} />
+    <meta
+      name="robots"
+      content={indexable ? "index, follow" : "noindex, nofollow"}
+    />
     <title>{title}</title>
   </head>
   <body>
-    <nav aria-label="Language">
-      {
-        locales.map(({ code, label }) => (
+    {languageNav && (
+      <nav aria-label="Language">
+        {locales.map(({ code, label }) => (
           <a
             href={getRelativeLocaleUrl(code)}
             lang={code}
@@ -39,9 +46,9 @@ const locales = [
           >
             {label}
           </a>
-        ))
-      }
-    </nav>
+        ))}
+      </nav>
+    )}
     <main>
       <slot />
     </main>
