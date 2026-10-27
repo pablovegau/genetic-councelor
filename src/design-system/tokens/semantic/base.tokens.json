@@ -1,0 +1,18 @@
+{
+  "$description": "Tokens semánticos que no cambian con el tema. Solo alias de primitivos, nunca valores sueltos.",
+  "radius": {
+    "$type": "dimension",
+    "control": { "$value": "{radius.2}" },
+    "surface": { "$value": "{radius.3}" }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "interaction": { "$value": "{duration.fast}" }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "default": { "$value": "{easing.standard}" }
+    }
+  }
+}

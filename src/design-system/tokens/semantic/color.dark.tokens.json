@@ -1,0 +1,27 @@
+{
+  "$description": "Roles de color, tema default, esquema oscuro. Misma forma que color.light.tokens.json: solo cambian los alias.",
+  "color": {
+    "$type": "color",
+    "bg": {
+      "page": { "$value": "{color.neutral.950}" },
+      "surface": { "$value": "{color.neutral.900}" },
+      "subtle": { "$value": "{color.neutral.800}" }
+    },
+    "text": {
+      "default": { "$value": "{color.neutral.50}" },
+      "muted": { "$value": "{color.neutral.400}" },
+      "inverse": { "$value": "{color.neutral.900}" }
+    },
+    "border": {
+      "default": { "$value": "{color.neutral.800}" },
+      "strong": { "$value": "{color.neutral.600}" }
+    },
+    "action": {
+      "bg": { "$value": "{color.neutral.50}" },
+      "fg": { "$value": "{color.neutral.900}" }
+    },
+    "focus": {
+      "ring": { "$value": "{color.neutral.50}" }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$description": "Roles de color, tema default, esquema claro. PLACEHOLDER: todo neutro hasta que haya dirección visual.",
+  "color": {
+    "$type": "color",
+    "bg": {
+      "page": { "$value": "{color.neutral.50}" },
+      "surface": { "$value": "{color.white}" },
+      "subtle": { "$value": "{color.neutral.100}" }
+    },
+    "text": {
+      "default": { "$value": "{color.neutral.900}" },
+      "muted": { "$value": "{color.neutral.600}" },
+      "inverse": { "$value": "{color.neutral.50}" }
+    },
+    "border": {
+      "default": { "$value": "{color.neutral.200}" },
+      "strong": { "$value": "{color.neutral.400}" }
+    },
+    "action": {
+      "bg": { "$value": "{color.neutral.900}" },
+      "fg": { "$value": "{color.neutral.50}" }
+    },
+    "focus": {
+      "ring": { "$value": "{color.neutral.900}" }
+    }
+  }
+}

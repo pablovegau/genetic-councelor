@@ -1,0 +1,33 @@
+{
+  "name": "Sara Torres-Esquius · tema default",
+  "version": "2025.10",
+  "description": "Tema default con esquemas claro y oscuro. Los primitivos y lo semántico común van en conjuntos; el esquema es un modificador que solo cambia los roles de color.",
+  "sets": {
+    "primitive": {
+      "sources": [
+        { "$ref": "primitive/color.tokens.json" },
+        { "$ref": "primitive/space.tokens.json" },
+        { "$ref": "primitive/shape.tokens.json" },
+        { "$ref": "primitive/font.tokens.json" },
+        { "$ref": "primitive/motion.tokens.json" }
+      ]
+    },
+    "semantic-base": {
+      "sources": [{ "$ref": "semantic/base.tokens.json" }]
+    }
+  },
+  "modifiers": {
+    "scheme": {
+      "contexts": {
+        "light": [{ "$ref": "semantic/color.light.tokens.json" }],
+        "dark": [{ "$ref": "semantic/color.dark.tokens.json" }]
+      },
+      "default": "light"
+    }
+  },
+  "resolutionOrder": [
+    { "$ref": "#/sets/primitive" },
+    { "$ref": "#/sets/semantic-base" },
+    { "$ref": "#/modifiers/scheme" }
+  ]
+}

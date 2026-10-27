@@ -1,0 +1,13 @@
+{
+  "$description": "Duraciones y curvas de movimiento.",
+  "duration": {
+    "$type": "duration",
+    "fast": { "$value": { "value": 150, "unit": "ms" } },
+    "normal": { "$value": { "value": 250, "unit": "ms" } },
+    "slow": { "$value": { "value": 400, "unit": "ms" } }
+  },
+  "easing": {
+    "$type": "cubicBezier",
+    "standard": { "$value": [0.2, 0, 0, 1] }
+  }
+}

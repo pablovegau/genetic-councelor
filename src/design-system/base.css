@@ -1,0 +1,15 @@
+/* Base global mínima. Solo consume tokens semánticos; sin valores sueltos. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg-page);
+  color: var(--color-text-default);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-3);
+  line-height: var(--font-line-height-normal);
+}
