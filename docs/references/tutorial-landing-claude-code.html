@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía: landing con Claude Code</title>
+<style>
+  :root {
+    --bg: #fafaf8; --fg: #1d1d1b; --muted: #66665f; --line: #deded8; --card: #ffffff;
+    --adopt: #1f6b43; --adopt-bg: #e3f2ea;
+    --adapt: #8a5a00; --adapt-bg: #fbefd2;
+    --skip: #9b2c2c; --skip-bg: #f9e1e1;
+    --done: #3a4a8c; --done-bg: #e4e8f7;
+    --link: #1a4fa0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151514; --fg: #ecece8; --muted: #a2a29a; --line: #34342f; --card: #1e1e1c;
+      --adopt: #7fd1a1; --adopt-bg: #1c3326;
+      --adapt: #e8c06a; --adapt-bg: #392d12;
+      --skip: #f09a9a; --skip-bg: #3b1d1d;
+      --done: #9fb0f0; --done-bg: #1f2540;
+      --link: #8db4f5;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 52rem; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  h1 { font-size: 1.8rem; line-height: 1.2; margin: 0 0 .4rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  h3 { font-size: 1.05rem; margin: 0 0 .25rem; }
+  p, li { max-width: 68ch; }
+  a { color: var(--link); }
+  .meta { color: var(--muted); font-size: .9rem; margin: 0 0 1.5rem; }
+  .verdict { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--adapt); border-radius: 8px; padding: 1rem 1.25rem; }
+  .verdict p { margin: .4rem 0; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 0 0 .9rem; }
+  .step header { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: baseline; }
+  .step header label { display: flex; gap: .6rem; align-items: baseline; cursor: pointer; flex: 1 1 18rem; }
+  .step input[type=checkbox] { width: 1.1rem; height: 1.1rem; flex: none; transform: translateY(.2rem); }
+  .step input:checked + h3 { text-decoration: line-through; color: var(--muted); }
+  .ts { font-variant-numeric: tabular-nums; font-size: .85rem; white-space: nowrap; }
+  .tag { font-size: .75rem; font-weight: 600; letter-spacing: .02em; padding: .1rem .55rem; border-radius: 99px; white-space: nowrap; }
+  .adopt { color: var(--adopt); background: var(--adopt-bg); }
+  .adapt { color: var(--adapt); background: var(--adapt-bg); }
+  .skip  { color: var(--skip);  background: var(--skip-bg); }
+  .done  { color: var(--done);  background: var(--done-bg); }
+  .cols { display: grid; gap: .75rem 1.5rem; grid-template-columns: 1fr; margin-top: .5rem; }
+  @media (min-width: 40rem) { .cols { grid-template-columns: 1fr 1fr; } }
+  .cols h4 { margin: 0 0 .15rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .cols p { margin: 0; font-size: .95rem; }
+  ul.check { list-style: none; padding: 0; }
+  ul.check li { margin: .4rem 0; }
+  ul.check label { display: flex; gap: .6rem; cursor: pointer; }
+  code { font-size: .9em; background: var(--line); padding: .05rem .3rem; border-radius: 4px; }
+  .note { color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Guía: landing con Claude Code</h1>
+<p class="meta">
+  Basada en el vídeo <a href="https://www.youtube.com/watch?v=A4QYEDQCnaQ">«Crea una Landing ESPECTACULAR con Claude Code»</a> (25:38).
+  Elaborada a partir de la <strong>transcripción automática</strong> (subtítulos generados), no viendo las imágenes:
+  los nombres propios están mal transcritos y todo lo visual queda por verificar al ver el vídeo.
+  Marca los pasos según vayas avanzando; el estado se guarda en este navegador.
+</p>
+
+<h2 style="border-top:0;padding-top:0;margin-top:1.5rem">¿Tiene sentido seguirlo?</h2>
+<div class="verdict">
+  <p><strong>Solo en parte.</strong> Aprovechamos el método y el stack; descartamos el efecto estrella del vídeo.</p>
+  <p><strong>Sí:</strong> Astro (rápido, bueno para SEO y para tres idiomas), el orden de trabajo (activos → skills → un prompt largo de dirección de arte → iterar por partes), optimizar imágenes a WebP, pedir el coste antes de generar nada y probar en pequeño antes de escalar.</p>
+  <p><strong>No:</strong> el fondo de vídeo generado con IA que avanza con el scroll. Choca con nuestro brief: la web debe ser previsible y serena, y ser accesible desde el móvil y por SEO. El propio autor admite que en móvil <em>«el vídeo no está preparado»</em> (24:08). Además, la IA <em>«se inventa»</em> partes de las fotos (17:43 y 18:49: un agujero en la pared, un pasillo): aceptable en un restaurante que el autor apenas recuerda, no con las fotos reales de una profesional sanitaria, donde la autenticidad es parte de la confianza.</p>
+  <p><strong>Contexto que conviene tener presente:</strong> el vídeo está patrocinado por la plataforma de generación (lo dice a 02:20, y los créditos los puso ella). Sus costes en el vídeo son de un plan «ultra» regalado; el autor estima entre 10 y 60 $ por proyecto.</p>
+  <p class="note">Aun así merece verlo entero: es una referencia útil de cómo se ve un flujo de trabajo con Claude Code de principio a fin.</p>
+</div>
+
+<h2>Pasos del vídeo y qué hacemos con cada uno</h2>
+<p class="note">Etiquetas: <span class="tag adopt">Adoptar</span> <span class="tag adapt">Adaptar</span> <span class="tag skip">Descartar</span> <span class="tag done">Ya hecho</span></p>
+
+<section id="steps"></section>
+
+<h2>Para comparar al ver el vídeo</h2>
+<p>Cosas que la transcripción no deja ver o que no pude verificar. Márcalas según las resuelvas.</p>
+<ul class="check" id="verify"></ul>
+
+<h2>Prompts del autor</h2>
+<p>Dice (23:44) que deja un archivo con todos los prompts y el código abierto en su GitHub, enlazados en la descripción del vídeo. Cuando tengas el enlace, anótalo aquí y lo comparo con nuestro brief:</p>
+<p class="note">Enlace al repositorio: <em>pendiente</em></p>
+
+</main>
+
+<script>
+const VIDEO = "https://www.youtube.com/watch?v=A4QYEDQCnaQ&t=";
+const steps = [
+  { id: "s1", t: 102, ts: "01:42", tag: ["adopt","Adoptar"], title: "Crear el proyecto con Astro",
+    v: "Proyecto Astro porque da buen rendimiento; la IA programa lo básico y el esfuerzo va a los recursos (imágenes, vídeo).",
+    s: "Astro encaja: sitio de contenido, SEO crítico, tres idiomas (ES/CA/EN) y poco JavaScript. Decisión a registrar como ADR cuando la tomemos." },
+  { id: "s2", t: 130, ts: "02:10", tag: ["skip","Descartar"], title: "Plataforma de generación de vídeo + MCP en Claude Code",
+    v: "Plataforma patrocinada con más de 30 modelos y un MCP que se conecta a Claude Code (02:56 a 04:00).",
+    s: "No necesitamos generar vídeo. Cuenta de pago, coste y datos de terceros sin beneficio para una web sanitaria." },
+  { id: "s3", t: 254, ts: "04:14", tag: ["done","Ya hecho"], title: "Fotos en el proyecto y optimizar a WebP",
+    v: "Carpeta <code>public/fotos</code> y prompt «optimiza a .webp»; casi sin diferencia visual (04:39 a 05:18).",
+    s: "Hecho: 20 fotos de Sara convertidas, 65 MB → 2,1 MB, convertidas de Adobe RGB a sRGB. Están en <code>docs/design/assets/web/</code>." },
+  { id: "s4", t: 321, ts: "05:21", tag: ["adapt","Adaptar"], title: "Skill de diseño de landing (estrategia, estructura, copy, SEO)",
+    v: "Skill de código abierto de otra persona con reglas de estrategia, estructura, copywriting, SEO y tipografías; instalada por URL a nivel de proyecto (06:02 a 06:35).",
+    s: "Revisar antes de instalar: las skills corren con permisos del agente, y su estética es la de otro proyecto. Si sirve, usar solo la parte de estrategia y SEO, no sus tipografías." },
+  { id: "s5", t: 401, ts: "06:41", tag: ["skip","Descartar"], title: "Skill «scroll world» vía /plugin marketplace",
+    v: "Plugin que anima un vídeo de fondo según el scroll.",
+    s: "Es el efecto que descartamos. Si más adelante queremos un movimiento sutil, se hace sin esta dependencia." },
+  { id: "s6", t: 431, ts: "07:11", tag: ["adopt","Adoptar"], title: "Pedir el coste antes de generar",
+    v: "«Dime costes y opciones. No lo hagas, solo dame información» (07:11 a 08:40): evita sorpresas de gasto.",
+    s: "Buen hábito general: pedir plan y coste antes de ejecutar cualquier cosa de pago o difícil de revertir." },
+  { id: "s7", t: 540, ts: "09:00", tag: ["adapt","Adaptar"], title: "Trabajar en piezas pequeñas, no en una sola",
+    v: "Un clip corto por cada par de fotos consecutivas, en lugar de un vídeo largo: si falla uno, repites solo ese.",
+    s: "El principio vale para la web: construir y validar sección por sección (home, una situación, la primera visita) en vez de todo a la vez." },
+  { id: "s8", t: 824, ts: "13:44", tag: ["adopt","Adoptar"], title: "Probar en pequeño y comparar opciones",
+    v: "Genera una sola transición con tres modelos para compararlos antes de elegir (13:44 a 15:30).",
+    s: "Equivale a nuestro paso de dirección visual: comparar 2 o 3 prototipos reales (<code>/prototype</code>) antes de comprometer una." },
+  { id: "s9", t: 983, ts: "16:23", tag: ["adopt","Adoptar"], title: "Un prompt largo con todo el contexto y restricciones",
+    v: "Keyframes, ajustes comunes, prompt por clip y <em>prompts negativos</em> para evitar fallos conocidos (16:23 a 17:08).",
+    s: "Es justo el papel de nuestro brief: contexto + qué evitar (alarmista, vendedora, fría, doble hélice, stock). Lo escribimos antes, y mejor." },
+  { id: "s10", t: 1036, ts: "17:16", tag: ["skip","Descartar"], title: "Ampliar fotos con IA y reintentos automáticos",
+    v: "La IA completa partes que no se ven para llegar a 16:9 y reintenta los clips fallidos (17:16 a 19:30).",
+    s: "No alterar las fotos de Sara con IA. Para formatos distintos, usar las versiones horizontal y vertical que ya existen (<code>-v</code>)." },
+  { id: "s11", t: 1207, ts: "20:07", tag: ["adapt","Adaptar"], title: "Medir coste y peso al final",
+    v: "137 créditos usados; los vídeos de 2K pesan unos 12 MB; los pasa a MP4/WebM sin audio (20:07 a 21:20).",
+    s: "Aplicar a nuestras páginas: peso total y tiempo de carga como criterio de aceptación en móvil, no solo diseño." },
+  { id: "s12", t: 1288, ts: "21:28", tag: ["adopt","Adoptar"], title: "Prompt de dirección de arte para montar la web",
+    v: "Un prompt muy largo: dirección de arte, reserva de mesa y su URL, platos destacados, datos, logo, legales y uso de los vídeos.",
+    s: "Nuestro equivalente es una spec: del brief a <code>/to-spec</code> y <code>/to-tickets</code> en <code>.scratch/</code>, con reserva, precios, textos legales y SEO." },
+  { id: "s13", t: 1318, ts: "21:58", tag: ["adapt","Adaptar"], title: "Revisar el resultado, también en móvil",
+    v: "Prueba en escritorio y en móvil (22:00 y 24:00); admite que en móvil lo importante queda en el centro y haría vídeos específicos.",
+    s: "Nuestro público llega sobre todo desde el móvil: revisar siempre primero a ancho de móvil." },
+  { id: "s14", t: 1413, ts: "23:33", tag: ["adopt","Adoptar"], title: "Código abierto, archivo de prompts y despliegue en Cloudflare",
+    v: "Repo público con el código y un archivo con todos los prompts; despliega en Cloudflare para ver peso y rendimiento (23:33 a 24:00).",
+    s: "Guardar nuestros prompts y decisiones en el repo (ya lo hacemos con brief y <code>CONTEXT.md</code>). Hosting: decisión pendiente." }
+];
+const verify = [
+  "Nombres exactos de las skills y sus URLs (la transcripción los deforma: «Aya», «scroll word», «Arcoushi»).",
+  "Si el autor usa i18n de Astro o solo una página en un idioma.",
+  "Cómo está hecho el scroll: ¿secuencia de imágenes en canvas o &lt;video&gt;? (11:47 a 11:55 recomienda canvas).",
+  "Qué dice la descripción: enlace al repo, archivo de prompts y enlace del patrocinio.",
+  "Qué tal se ve y pesa en móvil (24:00): peso real y fluidez.",
+  "Qué tipografías y estructura propone la skill de landing, para ver si alguna parte sirve a nuestro brief.",
+  "Si hay algo del flujo de Claude Code (sesión, skills por proyecto, subagentes) que no estemos usando."
+];
+const store = {
+  get(k) { try { return localStorage.getItem(k) === "1"; } catch { return false; } },
+  set(k, v) { try { localStorage.setItem(k, v ? "1" : "0"); } catch {} }
+};
+const el = (h) => { const t = document.createElement("template"); t.innerHTML = h.trim(); return t.content.firstChild; };
+const root = document.getElementById("steps");
+steps.forEach((s) => {
+  const node = el(`
+    <article class="step">
+      <header>
+        <label><input type="checkbox" id="${s.id}" ${store.get(s.id) ? "checked" : ""}><h3>${s.title}</h3></label>
+        <a class="ts" href="${VIDEO}${s.t}s" target="_blank" rel="noopener">▶ ${s.ts}</a>
+        <span class="tag ${s.tag[0]}">${s.tag[1]}</span>
+      </header>
+      <div class="cols">
+        <div><h4>En el vídeo</h4><p>${s.v}</p></div>
+        <div><h4>En nuestro proyecto</h4><p>${s.s}</p></div>
+      </div>
+    </article>`);
+  node.querySelector("input").addEventListener("change", (e) => store.set(s.id, e.target.checked));
+  root.appendChild(node);
+});
+const list = document.getElementById("verify");
+verify.forEach((text, i) => {
+  const id = "v" + i;
+  const li = el(`<li><label><input type="checkbox" id="${id}" ${store.get(id) ? "checked" : ""}><span>${text}</span></label></li>`);
+  li.querySelector("input").addEventListener("change", (e) => store.set(id, e.target.checked));
+  list.appendChild(li);
+});
+</script>
+</body>
+</html>
