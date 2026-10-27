@@ -15,3 +15,4 @@ playwright-report/
 test-results/
 blob-report/
 e2e/**/*-darwin.png
+.pnpm-store/

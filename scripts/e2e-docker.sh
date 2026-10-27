@@ -13,6 +13,6 @@ IMAGE="mcr.microsoft.com/playwright:v1.64.1-noble"
 docker run --rm --init --ipc=host --platform linux/amd64 \
   -v "$PWD":/work -w /work \
   -v /work/node_modules \
-  -v pnpm-store:/root/.local/share/pnpm \
+  -v pnpm-store:/pnpm-store -e npm_config_store_dir=/pnpm-store \
   "$IMAGE" \
   sh -c 'corepack enable && pnpm install --frozen-lockfile && pnpm test:e2e "$@"' sh "$@"

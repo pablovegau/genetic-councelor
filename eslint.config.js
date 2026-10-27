@@ -13,6 +13,7 @@ export default defineConfig([
     "playwright-report/",
     "test-results/",
     ".vitest/",
+    ".pnpm-store/",
     ".astro/",
     ".agents/",
     ".claude/",
