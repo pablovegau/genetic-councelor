@@ -14,7 +14,7 @@
     },
     "border": {
       "default": { "$value": "{color.neutral.200}" },
-      "strong": { "$value": "{color.neutral.400}" }
+      "strong": { "$value": "{color.neutral.500}" }
     },
     "action": {
       "bg": { "$value": "{color.neutral.900}" },
