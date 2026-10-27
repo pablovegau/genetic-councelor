@@ -9,3 +9,5 @@ dist/
 src/design-system/tokens.generated.css
 src/design-system/style-props.generated.css
 src/design-system/style-props.generated.ts
+coverage/
+.vitest/
