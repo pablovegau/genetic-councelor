@@ -7,6 +7,9 @@ interface Props {
 
 const { title } = Astro.props;
 const locale = Astro.currentLocale ?? "es";
+// Hasta publicar con el dominio definitivo la web no se indexa.
+// Al publicar: PUBLIC_ALLOW_INDEXING=true en las variables de entorno de Vercel.
+const indexable = import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
 const locales = [
   { code: "es", label: "Español" },
   { code: "ca", label: "Català" },
@@ -19,6 +22,7 @@ const locales = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content={indexable ? "index, follow" : "noindex, nofollow"} />
     <title>{title}</title>
   </head>
   <body>
