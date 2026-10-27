@@ -40,7 +40,7 @@ export interface TextStyleProps {
   leading?: LineHeight;
 }
 
-const styleKeys = new Set([
+export const styleKeys = new Set([
   "p",
   "px",
   "py",
