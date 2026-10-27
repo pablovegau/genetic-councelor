@@ -30,8 +30,8 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 ## Plan técnico (ADR 0004 y 0005), por orden
 - [x] 1. Herramientas (hecho; el hook de pre-commit ejecuta lint-staged y typecheck, y se le añadirá `test` con el paso 3): TypeScript 6 estricto con `astro check` en el build, ESLint 10 (typescript-eslint, jsx-a11y, eslint-plugin-astro) y Prettier con `prettier-plugin-astro`. Scripts `check`, `lint` y `format`. Hook de pre-commit con la skill `setup-pre-commit` (Husky y lint-staged).
 - [x] 2. React (hecho): `@astrojs/react`, `react`, `react-dom`. Portar Box, Flex, Grid, Text e Icon a TSX. El generador exporta las escalas como `as const` (sin `as never`). El catálogo sigue siendo una página Astro.
-- [ ] 3. Unitarios con Vitest 5: tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
-- [ ] 4. Componentes con Vitest en modo navegador (`@vitest/browser-playwright`) y Testing Library.
+- [x] 3. Unitarios con Vitest 5 (hecho; seams S1 tokens, S2 CSS generado, S3 generador, S4 helpers y contrato): tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
+- [x] 4. Componentes con Vitest en modo navegador (hecho para Box, Flex, Grid, Text e Icon) (`@vitest/browser-playwright`) y Testing Library.
 - [ ] 5. Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
 - [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
 

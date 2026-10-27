@@ -22,3 +22,7 @@ Cobertura: umbral solo sobre la lógica; los componentes de presentación se pro
 
 - Hace falta un workflow de GitHub Actions (lint, tipos, unitarios, componentes, build, a11y y VRT) y las bases de VRT viven en el repositorio.
 - Vitest 5 y Playwright se instalan como dependencias de desarrollo; los navegadores de Playwright, en CI.
+- En una máquina nueva hay que ejecutar una vez `pnpm exec playwright install chromium`: los tests de componentes usan un Chromium real.
+- `pnpm test` genera antes los tokens (los tests leen el CSS generado). `pnpm coverage` añade el umbral del 90 % sobre la lógica.
+- Las expectativas de los tests de componentes se obtienen preguntando al navegador por el valor de la variable de cada token, no con literales: sobreviven a cambiar los valores de los tokens con la dirección visual (comprobado cambiando espaciado, tamaño, interlineado, radio y color).
+- Los tests se verifican con mutaciones deliberadas del código y de los tokens: cada rotura hace saltar el test que corresponde.
