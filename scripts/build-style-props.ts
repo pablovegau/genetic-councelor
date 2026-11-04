@@ -13,6 +13,7 @@ const sources: TokenSources = {
   colorPrimitive: read("tokens/primitive/color.tokens.json"),
   colorLight: read("tokens/semantic/color.light.tokens.json"),
   base: read("tokens/semantic/base.tokens.json"),
+  typography: read("tokens/semantic/typography.tokens.json"),
 };
 
 const { css, ts } = buildStyleProps(sources);

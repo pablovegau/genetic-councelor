@@ -79,7 +79,8 @@ export const catalogGroups: CatalogGroup[] = [
       {
         slug: "text",
         label: "Text",
-        description: "Texto con tamaño, peso, color e interlineado.",
+        description:
+          "Texto con estilos semánticos (variant), tamaño, peso, color e interlineado.",
       },
       {
         slug: "icon",

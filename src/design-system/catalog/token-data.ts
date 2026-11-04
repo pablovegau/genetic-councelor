@@ -31,8 +31,10 @@ export function typographySpec(style: string) {
       primitiveLookup
     );
   const size = resolved("font-size") as { value: number };
+  const compact = resolved("font-size-compact") as { value: number };
   return {
     px: size.value * 16,
+    compactPx: compact.value * 16,
     weight: resolved("font-weight"),
     lineHeight: resolved("line-height"),
     tracking: resolved("letter-spacing"),

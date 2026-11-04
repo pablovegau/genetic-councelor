@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { page } from "vitest/browser";
+import { textVariants } from "../../style-props.generated";
 import { computed } from "../../testing/computed";
 import { Text } from "./Text";
 
@@ -89,6 +91,130 @@ describe("Text", () => {
     expect(screen.getByRole("link", { name: "ir" })).toHaveAttribute(
       "href",
       "/contacto"
+    );
+  });
+});
+
+describe("Text · variant", () => {
+  const desktop = () => page.viewport(1024, 800);
+  const compact = () => page.viewport(390, 800);
+  const headingLevels = ["1", "2", "3", "4", "5"] as const;
+
+  it.each(headingLevels)(
+    "heading-%s se renderiza como un encabezado de su nivel por defecto",
+    (level) => {
+      render(<Text variant={`heading-${level}`}>título</Text>);
+      expect(
+        screen.getByRole("heading", { level: Number(level) })
+      ).toBeTruthy();
+    }
+  );
+
+  it.each(["text-lg", "text", "text-sm", "caption"] as const)(
+    "%s se renderiza como un párrafo por defecto",
+    (variant) => {
+      render(
+        <Text variant={variant} data-testid="text">
+          texto
+        </Text>
+      );
+      expect(screen.getByTestId("text").tagName).toBe("P");
+    }
+  );
+
+  it("as manda sobre la etiqueta por defecto de la variante", () => {
+    render(
+      <Text variant="heading-2" as="h3">
+        título
+      </Text>
+    );
+    expect(screen.getByRole("heading", { level: 3 })).toBeTruthy();
+    expect(screen.queryByRole("heading", { level: 2 })).toBeNull();
+  });
+
+  it.each(textVariants)(
+    "%s aplica en escritorio los valores de sus tokens",
+    async (variant) => {
+      await desktop();
+      render(<Text variant={variant} data-testid="text" />);
+      const token = (property: string) =>
+        `var(--typography-${variant}-${property})`;
+      const context = { "font-size": token("font-size") };
+      expect(styleOf().fontFamily).toBe(
+        computed("font-family", token("font-family"))
+      );
+      expect(styleOf().fontSize).toBe(
+        computed("font-size", token("font-size"))
+      );
+      expect(styleOf().fontWeight).toBe(
+        computed("font-weight", token("font-weight"))
+      );
+      expect(styleOf().lineHeight).toBe(
+        computed("line-height", token("line-height"), context)
+      );
+      expect(styleOf().letterSpacing).toBe(
+        computed(
+          "letter-spacing",
+          `calc(${token("letter-spacing")} * 1em)`,
+          context
+        )
+      );
+    }
+  );
+
+  it("las variantes se distinguen entre sí (el test no es vacío)", async () => {
+    await desktop();
+    render(
+      <>
+        <Text variant="heading-1" data-testid="a" />
+        <Text variant="caption" data-testid="b" />
+      </>
+    );
+    expect(getComputedStyle(screen.getByTestId("a")).fontSize).not.toBe(
+      getComputedStyle(screen.getByTestId("b")).fontSize
+    );
+  });
+
+  it("en pantallas pequeñas un titular usa su tamaño compacto", async () => {
+    await compact();
+    render(<Text variant="heading-1" data-testid="text" />);
+    const small = computed(
+      "font-size",
+      "var(--typography-heading-1-font-size-compact)"
+    );
+    expect(small).not.toBe(
+      computed("font-size", "var(--typography-heading-1-font-size)")
+    );
+    expect(styleOf().fontSize).toBe(small);
+  });
+
+  it("en pantallas pequeñas el texto conserva su tamaño", async () => {
+    await compact();
+    render(<Text variant="text" data-testid="text" />);
+    expect(styleOf().fontSize).toBe(
+      computed("font-size", "var(--typography-text-font-size)")
+    );
+  });
+
+  it.each([
+    ["escritorio", desktop],
+    ["pantalla pequeña", compact],
+  ])("size sobrescribe la variante en %s", async (_name, setViewport) => {
+    await setViewport();
+    render(<Text variant="heading-1" size="3" data-testid="text" />);
+    expect(styleOf().fontSize).toBe(
+      computed("font-size", "var(--font-size-3)")
+    );
+  });
+
+  it("weight sobrescribe el peso de la variante", async () => {
+    await desktop();
+    render(<Text variant="heading-1" weight="regular" data-testid="text" />);
+    expect(styleOf().fontWeight).toBe(
+      computed("font-weight", "var(--font-weight-regular)")
+    );
+    expect(styleOf().fontWeight).not.toBe(
+      computed("font-weight", "var(--typography-heading-1-font-weight)")
     );
   });
 });

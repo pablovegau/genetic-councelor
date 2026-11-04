@@ -338,7 +338,7 @@ describe("escalas tipográficas", () => {
     return (token?.value as { value: number }).value;
   };
 
-  it.each(styles)("el estilo %s define sus cinco propiedades", (style) => {
+  it.each(styles)("el estilo %s define sus seis propiedades", (style) => {
     const properties = [...tokens.keys()]
       .filter((path) => path.startsWith(`typography.${style}.`))
       .map((path) => path.split(".")[2])
@@ -346,10 +346,30 @@ describe("escalas tipográficas", () => {
     expect(properties).toEqual([
       "font-family",
       "font-size",
+      "font-size-compact",
       "font-weight",
       "letter-spacing",
       "line-height",
     ]);
+  });
+
+  const compactOf = (style: string) => {
+    const token = tokens.get(`typography.${style}.font-size-compact`);
+    return (token?.value as { value: number }).value;
+  };
+
+  it.each(styles)(
+    "el tamaño compacto de %s nunca es mayor que el de escritorio",
+    (style) => {
+      expect(compactOf(style)).toBeLessThanOrEqual(sizeOf(style));
+    }
+  );
+
+  it("los titulares se reducen en pantallas pequeñas y el texto no", () => {
+    for (const style of styles.slice(0, 5))
+      expect(compactOf(style)).toBeLessThan(sizeOf(style));
+    for (const style of styles.slice(5))
+      expect(compactOf(style)).toBe(sizeOf(style));
   });
 
   it("los titulares bajan de tamaño de heading-1 a heading-5", () => {

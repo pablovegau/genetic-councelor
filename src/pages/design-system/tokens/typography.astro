@@ -36,7 +36,11 @@ const inline = (style: string, weight?: string) =>
 
 const summary = (style: string) => {
   const spec = typographySpec(style);
-  return `${spec.px}px · peso ${String(spec.weight)} · interlineado ${String(spec.lineHeight)} · tracking ${String(spec.tracking)}`;
+  const size =
+    spec.compactPx === spec.px
+      ? `${spec.px}px`
+      : `${spec.px}px (móvil ${spec.compactPx}px)`;
+  return `${size} · peso ${String(spec.weight)} · interlineado ${String(spec.lineHeight)} · tracking ${String(spec.tracking)}`;
 };
 
 const primitives = [

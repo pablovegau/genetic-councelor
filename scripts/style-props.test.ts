@@ -28,6 +28,7 @@ const sources: TokenSources = {
     },
   },
   base: { radius: { $type: "dimension", control: token } },
+  typography: { typography: { "heading-1": token, text: token } },
 };
 
 const { css, ts } = buildStyleProps(sources);
@@ -84,14 +85,48 @@ describe("reglas CSS de los style props", () => {
     expect(css).toContain(`${selector} { ${declaration}; }`);
   });
 
-  it("genera exactamente 34 reglas para estos tokens", () => {
-    expect(css.match(/\[data-/g)).toHaveLength(34);
+  it("genera exactamente 40 reglas para estos tokens", () => {
+    expect(css.match(/\[data-/g)).toHaveLength(40);
+  });
+
+  it("variant aplica los cinco valores del estilo de texto, con el tracking como múltiplo de em", () => {
+    expect(css).toContain(
+      '[data-variant="heading-1"] { font-family: var(--typography-heading-1-font-family); font-size: var(--typography-heading-1-font-size); font-weight: var(--typography-heading-1-font-weight); line-height: var(--typography-heading-1-line-height); letter-spacing: calc(var(--typography-heading-1-letter-spacing) * 1em); }'
+    );
+    expect(css).toContain('[data-variant="text"] {');
+  });
+
+  it("variant va antes que size, weight y leading para que estos la sobrescriban", () => {
+    const variant = css.indexOf('[data-variant="text"] {');
+    expect(variant).toBeGreaterThan(-1);
+    for (const later of [
+      '[data-size="1"]',
+      '[data-weight="bold"]',
+      '[data-leading="tight"]',
+    ])
+      expect(variant).toBeLessThan(css.indexOf(later));
+  });
+
+  it("en pantallas pequeñas cada variante usa su tamaño compacto, salvo que lleve size", () => {
+    const media = css.slice(css.indexOf("@media (max-width: 47.99rem)"));
+    expect(media).toContain(
+      '[data-variant="heading-1"]:not([data-size]) { font-size: var(--typography-heading-1-font-size-compact); }'
+    );
+    expect(media).toContain(
+      '[data-variant="text"]:not([data-size]) { font-size: var(--typography-text-font-size-compact); }'
+    );
+  });
+
+  it("el bloque de pantallas pequeñas está dentro de la capa props", () => {
+    expect(css.indexOf("@layer props {")).toBeLessThan(
+      css.indexOf("@media (max-width: 47.99rem)")
+    );
   });
 
   it("declara el orden de capas y mete todas las reglas en la capa props", () => {
     expect(css).toContain("@layer base, components, props;");
     const afterLayer = css.slice(css.indexOf("@layer props {"));
-    expect(afterLayer.match(/\[data-/g)).toHaveLength(34);
+    expect(afterLayer.match(/\[data-/g)).toHaveLength(40);
     expect(css.slice(0, css.indexOf("@layer props {"))).not.toContain("[data-");
   });
 
@@ -115,6 +150,7 @@ describe("tipos y listas generados", () => {
     'export const fontSizes = ["1"] as const;',
     'export const fontWeights = ["regular","bold"] as const;',
     'export const lineHeights = ["tight"] as const;',
+    'export const textVariants = ["heading-1","text"] as const;',
     'export const neutralSteps = ["50","100"] as const;',
     'export const radiusSteps = ["0","full"] as const;',
   ])("exporta la lista %s", (line) => {
@@ -132,6 +168,9 @@ describe("tipos y listas generados", () => {
     expect(ts).toContain("export type BgRole = (typeof bgRoles)[number];");
     expect(ts).toContain(
       "export type LineHeight = (typeof lineHeights)[number];"
+    );
+    expect(ts).toContain(
+      "export type Variant = (typeof textVariants)[number];"
     );
   });
 });

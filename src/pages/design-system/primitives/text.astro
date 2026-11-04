@@ -1,30 +1,399 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import { Box, Flex, Text } from "../../../design-system/primitives";
+import CopyButton from "../../../design-system/catalog/CopyButton.astro";
+import { TextPlayground } from "../../../design-system/catalog/TextPlayground";
+import { typographySpec } from "../../../design-system/catalog/token-data";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
+import { Text } from "../../../design-system/primitives";
+import {
+  fontSizes,
+  fontWeights,
+  lineHeights,
+  textColors,
+  textVariants,
+} from "../../../design-system/style-props.generated";
+
+const quote = (values: readonly string[]) =>
+  values.map((value) => `"${value}"`).join(" | ");
+
+const props = [
+  {
+    name: "variant",
+    type: quote(textVariants),
+    default: "—",
+    description:
+      "Estilo de texto semántico: familia, tamaño, peso, interlineado y tracking de una vez. Los titulares se reducen por debajo de 48 rem.",
+  },
+  {
+    name: "as",
+    type: "ElementType",
+    default: "h1 a h5 según la variante; p en el resto",
+    description:
+      "Etiqueta HTML. El aspecto y el nivel del encabezado son independientes: usa as para respetar la jerarquía del documento.",
+  },
+  {
+    name: "size",
+    type: quote(fontSizes),
+    default: "—",
+    description: "Paso de la escala de tamaños. Sobrescribe el de la variante.",
+  },
+  {
+    name: "weight",
+    type: quote(fontWeights),
+    default: "—",
+    description: "Peso de la fuente. Sobrescribe el de la variante.",
+  },
+  {
+    name: "color",
+    type: quote(textColors),
+    default: "—",
+    description: "Rol de color de texto.",
+  },
+  {
+    name: "leading",
+    type: quote(lineHeights),
+    default: "—",
+    description: "Interlineado. Sobrescribe el de la variante.",
+  },
+  {
+    name: "align",
+    type: '"start" | "center" | "end"',
+    default: "—",
+    description: "Alineación del texto.",
+  },
+];
+
+const examples = [
+  {
+    title: "Un titular de página",
+    code: jsxSnippet(
+      "Text",
+      { variant: "heading-1" },
+      "Dibujamos tu árbol familiar"
+    ),
+    sample: { variant: "heading-1", as: "p" },
+    text: "Dibujamos tu árbol familiar",
+  },
+  {
+    title: "Aspecto de un nivel con la etiqueta de otro",
+    code: jsxSnippet(
+      "Text",
+      { variant: "heading-3", as: "h2" },
+      "Así es la primera visita"
+    ),
+    sample: { variant: "heading-3", as: "p" },
+    text: "Así es la primera visita",
+  },
+  {
+    title: "Texto de apoyo",
+    code: jsxSnippet(
+      "Text",
+      { variant: "text-sm", color: "muted" },
+      "Todo lo que nos cuentes es confidencial."
+    ),
+    sample: { variant: "text-sm", color: "muted" },
+    text: "Todo lo que nos cuentes es confidencial.",
+  },
+] as const;
+
+const tagOf = (variant: string) =>
+  /^heading-([1-5])$/.exec(variant)?.[1] ? `h${variant.slice(-1)}` : "p";
+const summary = (variant: string) => {
+  const spec = typographySpec(variant);
+  return spec.compactPx === spec.px
+    ? `${spec.px}px`
+    : `${spec.px}px · móvil ${spec.compactPx}px`;
+};
 ---
 
 <CatalogLayout group="primitives" item="text">
-  <Flex direction="column" gap="6">
-    <Text size="2" color="muted">
-      Props: <code>as</code>, <code>size</code>, <code>weight</code>,
-      <code>color</code>, <code>leading</code>, <code>align</code>. Las
-      variantes semánticas llegarán con la dirección visual.
-    </Text>
-    <Text size="5" weight="semibold">
-      default · semibold · size 5
-    </Text>
-    <Text color="muted">color=muted</Text>
-    <Box
-      p="3"
-      radius="control"
-      style={{ backgroundColor: "var(--color-action-bg)" }}
-    >
-      <Text color="inverse" as="span">
-        color=inverse sobre action.bg
-      </Text>
-    </Box>
-    <Text align="center" border="default" p="3">
-      align=center
-    </Text>
-  </Flex>
+  <div class="page">
+    <section class="block" aria-labelledby="usage">
+      <div class="heading">
+        <h2 id="usage">Uso</h2>
+        <p>
+          Todo el texto de la web pasa por <code>Text</code>. Una variante
+          aplica un estilo completo; las props sueltas lo ajustan.
+        </p>
+      </div>
+      <div class="code">
+        <code>
+          import {"{"} Text {"}"} from "design-system/primitives";
+        </code>
+        <CopyButton
+          value={'import { Text } from "design-system/primitives";'}
+          label="Copiar la importación"
+        />
+      </div>
+      <div class="examples">
+        {examples.map((example) => (
+          <div class="example">
+            <h3>{example.title}</h3>
+            <div class="stage">
+              <Text {...example.sample}>{example.text}</Text>
+            </div>
+            <div class="code">
+              <code>{example.code}</code>
+              <CopyButton value={example.code} label="Copiar el ejemplo" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="props">
+      <div class="heading">
+        <h2 id="props">Props</h2>
+        <p>
+          Además de estas, acepta los style props de Box (espaciado, fondo,
+          borde y radio) y cualquier atributo del elemento elegido con
+          <code>as</code>.
+        </p>
+      </div>
+      {/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex -- región con scroll horizontal: debe poder enfocarse con el teclado (axe: scrollable-region-focusable) */}
+      <div
+        class="table-wrap"
+        tabindex="0"
+        role="region"
+        aria-label="Tabla de props de Text"
+      >
+        {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Prop</th>
+              <th scope="col">Valores</th>
+              <th scope="col">Por defecto</th>
+              <th scope="col">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {props.map((prop) => (
+              <tr>
+                <th scope="row">
+                  <code>{prop.name}</code>
+                </th>
+                <td>
+                  <code class="type">{prop.type}</code>
+                </td>
+                <td>{prop.default}</td>
+                <td>{prop.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="variants">
+      <div class="heading">
+        <h2 id="variants">Variantes</h2>
+        <p>
+          Cada variante con su etiqueta por defecto y su tamaño de escritorio.
+          Redimensiona la ventana para ver cómo se reducen los titulares.
+        </p>
+      </div>
+      <div class="variants">
+        {textVariants.map((variant) => (
+          <div class="variant">
+            <div class="meta">
+              <code>{variant}</code>
+              <span>
+                &lt;{tagOf(variant)}&gt; · {summary(variant)}
+              </span>
+            </div>
+            <Text variant={variant} as="p">
+              {variant.startsWith("heading")
+                ? "Asesoramiento genético"
+                : "Un estudio genético no es una sentencia: ayuda a conocer un riesgo y a decidir con calma."}
+            </Text>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="playground">
+      <div class="heading">
+        <h2 id="playground">Probador</h2>
+        <p>Elige props y copia el código resultante.</p>
+      </div>
+      <TextPlayground client:load />
+    </section>
+
+    <section class="block" aria-labelledby="a11y">
+      <div class="heading">
+        <h2 id="a11y">Accesibilidad</h2>
+      </div>
+      <ul class="notes">
+        <li>
+          El aspecto y el nivel son independientes: elige la variante por cómo
+          debe verse y <code>as</code> por el lugar que ocupa en el documento.
+          Cada página debe tener un único <code>h1</code>.
+        </li>
+        <li>
+          Los pares de color de texto sobre cada fondo cumplen WCAG AA (texto
+          por defecto, además, AAA); lo comprueban los tests de tokens.
+        </li>
+        <li>
+          Los tamaños usan <code>rem</code>, así que respetan el tamaño de
+          fuente que el usuario haya elegido en su navegador.
+        </li>
+      </ul>
+    </section>
+  </div>
 </CatalogLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .block,
+  .heading,
+  .example {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .heading {
+    gap: var(--space-1);
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .heading p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .stage {
+    padding: var(--space-6);
+    overflow: hidden;
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .code {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-surface);
+  }
+
+  .code code {
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+    font-size: var(--font-size-2);
+  }
+
+  .table-wrap:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: var(--border-width-2);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+  }
+
+  table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-2);
+    text-align: start;
+  }
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  thead th {
+    background-color: var(--color-bg-subtle);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .type {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-1);
+    overflow-wrap: anywhere;
+  }
+
+  .variants {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .variant {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block-end: var(--space-6);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .meta code {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .notes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+    padding-inline-start: var(--space-5);
+    font-size: var(--font-size-3);
+    line-height: var(--font-line-height-relaxed);
+  }
+
+  p code,
+  li code {
+    font-size: var(--font-size-2);
+  }
+</style>
