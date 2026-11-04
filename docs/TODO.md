@@ -8,13 +8,13 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] Usar **Astro** (rápido, SEO y poco JavaScript). Ver `docs/adr/0001-astro-con-rutas-por-idioma.md`.
 - [x] Preparar **i18n**: español por defecto, catalán e inglés (`/ca`, `/en`). Esqueleto con selector de idioma y portada mínima por idioma.
 - [ ] Añadir `hreflang` y `canonical` en el `<head>` cuando tengamos dominio (`site` en `astro.config.mjs`).
-- [ ] Validación de tipos con `@astrojs/check` y `typescript@6` (el build falla si hay errores). Ver el plan técnico.
+- [x] Validación de tipos con `@astrojs/check` y `typescript@6` (el build falla si hay errores). Ver el plan técnico.
 - [ ] Añadir a `CLAUDE.md` cómo arrancar el servidor: `astro dev --background`, y `astro dev stop`, `status` y `logs`.
 
 ## Vercel
-- [ ] Conectar el repo; una web estática de Astro no necesita adaptador.
-- [ ] `site` con la URL de Vercel mientras no haya dominio (canonical y sitemap salen de ahí).
-- [ ] `noindex` mientras la web sea un esqueleto, para que Google no indexe la página en construcción. Quitarlo al publicar.
+- [x] Conectar el repo; una web estática de Astro no necesita adaptador.
+- [x] `site` con la URL de Vercel mientras no haya dominio (canonical y sitemap salen de ahí).
+- [x] `noindex` mientras la web sea un esqueleto, para que Google no indexe la página en construcción. Quitarlo al publicar.
 - [ ] Caché de `/_astro/` en `vercel.json` si hace falta (el `_headers` del repo de referencia es de Cloudflare).
 
 ## SEO (patrón del repo de referencia)
@@ -32,8 +32,11 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] 2. React (hecho): `@astrojs/react`, `react`, `react-dom`. Portar Box, Flex, Grid, Text e Icon a TSX. El generador exporta las escalas como `as const` (sin `as never`). El catálogo sigue siendo una página Astro.
 - [x] 3. Unitarios con Vitest 5 (hecho; seams S1 tokens, S2 CSS generado, S3 generador, S4 helpers y contrato): tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
 - [x] 4. Componentes con Vitest en modo navegador (hecho para Box, Flex, Grid, Text e Icon) (`@vitest/browser-playwright`) y Testing Library.
-- [ ] 5. (en la PR `feat/playwright-ci`; se marca al fusionarla) Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
+- [x] 5. (hecho, PR #1) Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
 - [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
+- [x] `main` protegida: la comprobación `verify` es obligatoria, también para administradores, y se entra por PR. Para saltarla en una emergencia, desactivarlo en Settings → Branches.
+- [x] `update-vrt.yml` validado de extremo a extremo y la versión de Playwright vigilada por un test (`scripts/playwright-version.test.ts`).
+- [ ] Pruebas que dependen de funcionalidad futura: el menú con teclado (cuando exista), `hreflang` y `canonical` (cuando haya dominio) y la paridad de claves de i18n (cuando haya diccionarios).
 
 ## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
 - [x] Tokens primitivos y semánticos en DTCG 2025.10 con Terrazzo; tema `default` con esquemas claro y oscuro (`data-scheme`). Valores neutros de placeholder.
