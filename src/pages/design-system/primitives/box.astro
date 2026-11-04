@@ -1,0 +1,24 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Text } from "../../../design-system/primitives";
+---
+
+<CatalogLayout group="primitives" item="box">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Props: <code>as</code>, <code>p px py pt pr pb pl</code>, <code>bg</code>,
+      <code>border</code>, <code>radius</code>.
+    </Text>
+    <Flex gap="4" wrap>
+      <Box p="4" bg="surface" border="default" radius="surface">
+        <Text as="span">p=4 · surface · radius surface</Text>
+      </Box>
+      <Box px="6" py="2" bg="subtle" border="strong" radius="control">
+        <Text as="span">px=6 py=2</Text>
+      </Box>
+      <Box as="aside" pl="8" pt="1" border="default">
+        <Text as="span">as="aside" pl=8 pt=1</Text>
+      </Box>
+    </Flex>
+  </Flex>
+</CatalogLayout>

@@ -1,0 +1,34 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Flex, Icon, Text } from "../../../design-system/primitives";
+import { iconNames } from "../../../design-system/primitives/Icon/icons";
+---
+
+<CatalogLayout group="primitives" item="icon">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Decorativo por defecto (<code>aria-hidden</code>); informativo si lleva
+      <code>label</code>. Hereda <code>currentColor</code>. Set de iconos:
+      placeholder.
+    </Text>
+    <Flex gap="6" wrap align="end">
+      {iconNames.map((name) => (
+        <Flex direction="column" gap="1" align="center">
+          <Icon name={name} iconSize="8" />
+          <Text as="span" size="1" color="muted">
+            {name}
+          </Text>
+        </Flex>
+      ))}
+    </Flex>
+    <Flex gap="4" align="center">
+      <Icon name="check" iconSize="4" />
+      <Icon name="check" iconSize="6" color="muted" />
+      <Icon name="close" iconSize="8" label="Cerrar" />
+    </Flex>
+    <Flex gap="2" align="center" p="3" border="default" radius="control" inline>
+      <Text as="span">Composición</Text>
+      <Icon name="arrow-right" iconSize="4" />
+    </Flex>
+  </Flex>
+</CatalogLayout>

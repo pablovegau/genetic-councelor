@@ -1,0 +1,53 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Grid, Text } from "../../../design-system/primitives";
+import {
+  colorRoles,
+  neutralSteps,
+} from "../../../design-system/style-props.generated";
+---
+
+<CatalogLayout group="tokens" item="color">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Primitivos: escala neutral.
+    </Text>
+    <Grid minColumn="24" gap="3">
+      {neutralSteps.map((step) => (
+        <Flex direction="column" gap="1">
+          <Box
+            radius="control"
+            border="default"
+            style={{
+              backgroundColor: `var(--color-neutral-${step})`,
+              blockSize: "var(--space-10)",
+            }}
+          />
+          <Text as="span" size="1" color="muted">
+            neutral.{step}
+          </Text>
+        </Flex>
+      ))}
+    </Grid>
+    <Text size="2" color="muted">
+      Semánticos: cambian con el esquema.
+    </Text>
+    <Grid minColumn="24" gap="3">
+      {colorRoles.map((role) => (
+        <Flex direction="column" gap="1">
+          <Box
+            radius="control"
+            border="strong"
+            style={{
+              backgroundColor: `var(--color-${role})`,
+              blockSize: "var(--space-10)",
+            }}
+          />
+          <Text as="span" size="1" color="muted">
+            color.{role.replace("-", ".")}
+          </Text>
+        </Flex>
+      ))}
+    </Grid>
+  </Flex>
+</CatalogLayout>

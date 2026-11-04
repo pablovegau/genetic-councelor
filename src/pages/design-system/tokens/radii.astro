@@ -1,0 +1,28 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Text } from "../../../design-system/primitives";
+import { radiusSteps } from "../../../design-system/style-props.generated";
+---
+
+<CatalogLayout group="tokens" item="radii">
+  <Flex direction="column" gap="6">
+    <Flex gap="4" wrap>
+      {radiusSteps.map((step) => (
+        <Flex direction="column" gap="1" align="center">
+          <Box
+            bg="subtle"
+            border="strong"
+            style={{
+              borderRadius: `var(--radius-${step})`,
+              inlineSize: "var(--space-16)",
+              blockSize: "var(--space-16)",
+            }}
+          />
+          <Text as="span" size="1" color="muted">
+            radius.{step}
+          </Text>
+        </Flex>
+      ))}
+    </Flex>
+  </Flex>
+</CatalogLayout>

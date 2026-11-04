@@ -1,0 +1,30 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Text } from "../../../design-system/primitives";
+import { spaceSteps } from "../../../design-system/style-props.generated";
+---
+
+<CatalogLayout group="tokens" item="space">
+  <Flex direction="column" gap="6">
+    {spaceSteps.map((step) => (
+      <Flex gap="3" align="center">
+        <Text
+          as="span"
+          size="1"
+          color="muted"
+          style={{ inlineSize: "var(--space-10)" }}
+        >
+          {step}
+        </Text>
+        <Box
+          bg="subtle"
+          border="default"
+          style={{
+            inlineSize: `var(--space-${step})`,
+            blockSize: "var(--space-3)",
+          }}
+        />
+      </Flex>
+    ))}
+  </Flex>
+</CatalogLayout>

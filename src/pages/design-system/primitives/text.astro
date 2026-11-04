@@ -1,0 +1,30 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Text } from "../../../design-system/primitives";
+---
+
+<CatalogLayout group="primitives" item="text">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Props: <code>as</code>, <code>size</code>, <code>weight</code>,
+      <code>color</code>, <code>leading</code>, <code>align</code>. Las
+      variantes semánticas llegarán con la dirección visual.
+    </Text>
+    <Text size="5" weight="semibold">
+      default · semibold · size 5
+    </Text>
+    <Text color="muted">color=muted</Text>
+    <Box
+      p="3"
+      radius="control"
+      style={{ backgroundColor: "var(--color-action-bg)" }}
+    >
+      <Text color="inverse" as="span">
+        color=inverse sobre action.bg
+      </Text>
+    </Box>
+    <Text align="center" border="default" p="3">
+      align=center
+    </Text>
+  </Flex>
+</CatalogLayout>

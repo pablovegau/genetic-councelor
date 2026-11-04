@@ -1,0 +1,35 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Grid, Text } from "../../../design-system/primitives";
+import {
+  fontSizes,
+  fontWeights,
+  lineHeights,
+} from "../../../design-system/style-props.generated";
+---
+
+<CatalogLayout group="tokens" item="typography">
+  <Flex direction="column" gap="6">
+    {fontSizes.map((step) => (
+      <Text size={step}>size.{step} · Asesoramiento genético</Text>
+    ))}
+    <Flex gap="4" wrap>
+      {fontWeights.map((step) => (
+        <Text weight={step}>{step}</Text>
+      ))}
+    </Flex>
+    <Grid columns={2} gap="4">
+      {lineHeights.map((step) => (
+        <Box p="3" border="default" radius="control">
+          <Text size="2" color="muted">
+            leading.{step}
+          </Text>
+          <Text leading={step}>
+            Un estudio genético no es una sentencia: ayuda a conocer un riesgo y
+            a decidir con calma qué hacer con esa información.
+          </Text>
+        </Box>
+      ))}
+    </Grid>
+  </Flex>
+</CatalogLayout>

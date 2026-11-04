@@ -1,15 +1,37 @@
 ---
-import { catalogGroups } from "./sections";
+import { catalogGroups, catalogHref } from "./sections";
+
+interface Props {
+  currentPath: string;
+}
+
+const normalize = (path: string) => path.replace(/\/+$/, "");
+const current = normalize(Astro.props.currentPath);
+const isCurrent = (href: string) => normalize(href) === current;
 ---
 
 <nav class="catalog-nav" aria-label="Catálogo del design system">
+  <a
+    class="overview"
+    href="/design-system/"
+    aria-current={isCurrent("/design-system/") ? "page" : undefined}
+  >
+    Overview
+  </a>
   {catalogGroups.map((group) => (
     <details open>
       <summary>{group.label}</summary>
       <ul>
         {group.items.map((item) => (
           <li>
-            <a href={`#${item.id}`}>{item.label}</a>
+            <a
+              href={catalogHref(group, item)}
+              aria-current={
+                isCurrent(catalogHref(group, item)) ? "page" : undefined
+              }
+            >
+              {item.label}
+            </a>
           </li>
         ))}
         {group.pending?.map((label) => (
@@ -21,6 +43,18 @@ import { catalogGroups } from "./sections";
       </ul>
     </details>
   ))}
+  <div class="scheme" role="group" aria-label="Esquema de color">
+    <span>Esquema</span>
+    <button type="button" data-set-scheme="system">
+      Sistema
+    </button>
+    <button type="button" data-set-scheme="light">
+      Claro
+    </button>
+    <button type="button" data-set-scheme="dark">
+      Oscuro
+    </button>
+  </div>
 </nav>
 
 <style>
@@ -96,6 +130,11 @@ import { catalogGroups } from "./sections";
     text-decoration: none;
   }
 
+  .overview {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-default);
+  }
+
   a:hover {
     background-color: var(--color-bg-subtle);
     color: var(--color-text-default);
@@ -115,6 +154,22 @@ import { catalogGroups } from "./sections";
     font-size: var(--font-size-1);
   }
 
+  .scheme {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-block-start: var(--space-4);
+    padding: var(--space-3);
+    border-block-start: var(--border-width-1) solid var(--color-border-default);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-1);
+  }
+
+  .scheme span {
+    inline-size: 100%;
+  }
+
   summary:focus-visible,
   a:focus-visible {
     outline: var(--border-width-2) solid var(--color-focus-ring);
@@ -125,7 +180,7 @@ import { catalogGroups } from "./sections";
     .catalog-nav {
       position: sticky;
       inset-block-start: 0;
-      max-block-size: 100dvh;
+      block-size: 100dvh;
       overflow-y: auto;
       border-bottom: 0;
       border-inline-end: var(--border-width-1) solid var(--color-border-default);
@@ -135,38 +190,11 @@ import { catalogGroups } from "./sections";
 </style>
 
 <script>
-  // En pantallas estrechas los grupos empiezan cerrados para que el menú no ocupe la página.
+  // En pantallas estrechas solo queda abierto el grupo de la página actual, para que el menú no
+  // ocupe la pantalla.
   if (window.matchMedia("(max-width: 47.99rem)").matches) {
-    document
-      .querySelectorAll(".catalog-nav details")
-      .forEach((group) => group.removeAttribute("open"));
+    document.querySelectorAll(".catalog-nav details").forEach((group) => {
+      if (!group.querySelector("[aria-current]")) group.removeAttribute("open");
+    });
   }
-
-  // Marca en el menú la sección que se está viendo.
-  const links = [
-    ...document.querySelectorAll<HTMLAnchorElement>(".catalog-nav a"),
-  ];
-  const byId = new Map(links.map((link) => [link.hash.slice(1), link]));
-
-  const setCurrent = (id: string) => {
-    links.forEach((link) => link.removeAttribute("aria-current"));
-    byId.get(id)?.setAttribute("aria-current", "location");
-  };
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        const id = entry.target.getAttribute("aria-labelledby");
-        if (entry.isIntersecting && id) setCurrent(id);
-      }
-    },
-    { rootMargin: "-20% 0px -70% 0px" }
-  );
-
-  byId.forEach((_link, id) => {
-    const section = document.getElementById(id)?.closest("section");
-    if (section) observer.observe(section);
-  });
-
-  setCurrent(location.hash.slice(1) || [...byId.keys()][0] || "");
 </script>

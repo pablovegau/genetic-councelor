@@ -1,0 +1,52 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Text } from "../../../design-system/primitives";
+const words = [
+  "uno",
+  "dos",
+  "tres",
+  "cuatro",
+  "cinco",
+  "seis",
+  "siete",
+  "ocho",
+  "nueve",
+  "diez",
+  "once",
+  "doce",
+];
+---
+
+<CatalogLayout group="primitives" item="flex">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Un Flex es un Box con{" "}
+      <code>direction align justify wrap inline gap gapX gapY</code>.
+    </Text>
+    <Flex
+      gap="2"
+      justify="between"
+      align="center"
+      p="3"
+      bg="subtle"
+      radius="control"
+    >
+      <Text as="span">justify=between</Text>
+      <Text as="span">align=center</Text>
+      <Text as="span">gap=2</Text>
+    </Flex>
+    <Flex direction="column" gap="1" p="3" bg="subtle" radius="control">
+      <Text as="span">direction=column</Text>
+      <Text as="span">gap=1</Text>
+    </Flex>
+    <Flex gap="2" wrap p="3" bg="subtle" radius="control">
+      {words.map((word) => (
+        <Box px="3" py="1" bg="surface" border="default" radius="control">
+          <Text as="span" size="2">
+            {word}
+          </Text>
+        </Box>
+      ))}
+    </Flex>
+  </Flex>
+</CatalogLayout>

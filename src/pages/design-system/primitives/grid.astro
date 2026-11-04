@@ -1,0 +1,29 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import { Box, Flex, Grid, Text } from "../../../design-system/primitives";
+const cells = [1, 2, 3, 4, 5, 6];
+---
+
+<CatalogLayout group="primitives" item="grid">
+  <Flex direction="column" gap="6">
+    <Text size="2" color="muted">
+      Un Grid es un Box con <code>columns</code> (1 a 6, o 12),
+      <code>minColumn</code> (responsivo), <code>align</code> y <code>gap</code>
+      .
+    </Text>
+    <Grid columns={3} gap="3">
+      {cells.map((n) => (
+        <Box p="3" bg="subtle" radius="control">
+          <Text as="span">columns=3 · celda {n}</Text>
+        </Box>
+      ))}
+    </Grid>
+    <Grid minColumn="24" gap="3">
+      {cells.map((n) => (
+        <Box p="3" bg="subtle" radius="control">
+          <Text as="span">minColumn=24 · celda {n}</Text>
+        </Box>
+      ))}
+    </Grid>
+  </Flex>
+</CatalogLayout>
