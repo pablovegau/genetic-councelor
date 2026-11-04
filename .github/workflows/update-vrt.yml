@@ -1,11 +1,13 @@
 name: Update VRT baselines
 
 # Regenera las capturas de regresión visual en la imagen de Playwright y las sube a la rama.
-# Ejecutar a mano (Actions → Update VRT baselines) cuando un cambio visual sea intencionado.
+# Ejecutar a mano (Actions → Update VRT baselines) cuando un cambio visual sea intencionado,
+# sobre la rama de la PR: `main` está protegida y no admite pushes directos.
 on: workflow_dispatch
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   update:
@@ -24,6 +26,7 @@ jobs:
       - run: pnpm build
       - run: pnpm exec playwright test vrt --update-snapshots
       - name: Commit the new baselines
+        id: commit
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
@@ -31,7 +34,21 @@ jobs:
           git add e2e
           if git diff --cached --quiet; then
             echo "Sin cambios en las capturas."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git commit -m "Update VRT baselines"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+      # Los commits hechos con el GITHUB_TOKEN no lanzan workflows. Se lanza la CI a mano sobre
+      # la rama para que la PR tenga su comprobación `verify` sobre el commit nuevo.
+      - name: Run CI on the new commit
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/dispatches" \
+            -d "{\"ref\":\"$GITHUB_REF_NAME\"}"
