@@ -1,6 +1,6 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import TokenCard from "../../../design-system/catalog/TokenCard.astro";
 import {
   primitiveLookup,
   space,
@@ -15,24 +15,27 @@ const tokens = flattenTokens(space);
 ---
 
 <CatalogLayout group="tokens" item="space">
-  <div class="list">
+  <div class="grid">
     {tokens.map(({ path, value }) => (
-      <TokenRow token={path} details={describeValue(value, primitiveLookup)}>
+      <TokenCard token={path} details={describeValue(value, primitiveLookup)}>
         <div
           class="bar"
           style={`inline-size: var(${tokenVariable(path)})`}
           aria-hidden="true"
         />
-      </TokenRow>
+      </TokenCard>
     ))}
   </div>
 </CatalogLayout>
 
 <style>
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--card-min, 13rem), 1fr)
+    );
   }
 
   .bar {

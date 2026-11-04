@@ -1,6 +1,6 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import TokenCard from "../../../design-system/catalog/TokenCard.astro";
 import {
   motion,
   primitiveLookup,
@@ -58,9 +58,9 @@ const rows = [
           <h2 id={`motion-${index}`}>{row.title}</h2>
           {row.note && <p>{row.note}</p>}
         </div>
-        <div class="list">
+        <div class="grid" style="--card-min: 16rem">
           {row.items.map(({ token, duration, easing }) => (
-            <TokenRow
+            <TokenCard
               token={token.path}
               details={describeValue(token.value, primitiveLookup)}
             >
@@ -75,7 +75,7 @@ const rows = [
                   <div class="dot" />
                 </div>
               </div>
-            </TokenRow>
+            </TokenCard>
           ))}
         </div>
       </section>
@@ -130,10 +130,13 @@ const rows = [
     font-size: var(--font-size-2);
   }
 
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--card-min, 13rem), 1fr)
+    );
   }
 
   .demo {

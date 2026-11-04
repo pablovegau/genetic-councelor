@@ -1,6 +1,6 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import TokenCard from "../../../design-system/catalog/TokenCard.astro";
 import {
   font,
   primitiveLookup,
@@ -17,14 +17,22 @@ const paragraph =
 const sections = [
   {
     id: "family",
+    min: "16rem",
     title: "Familia",
     prefix: "font.family.",
     note: "Placeholder: pila del sistema hasta servir Funnel desde el propio dominio.",
   },
-  { id: "size", title: "Tamaño", prefix: "font.size.", note: "" },
-  { id: "weight", title: "Peso", prefix: "font.weight.", note: "" },
+  { id: "size", min: "9rem", title: "Tamaño", prefix: "font.size.", note: "" },
+  {
+    id: "weight",
+    min: "12rem",
+    title: "Peso",
+    prefix: "font.weight.",
+    note: "",
+  },
   {
     id: "leading",
+    min: "22rem",
     title: "Interlineado",
     prefix: "font.line-height.",
     note: "",
@@ -40,9 +48,9 @@ const sections = [
           <h2 id={`type-${section.id}`}>{section.title}</h2>
           {section.note && <p>{section.note}</p>}
         </div>
-        <div class="list">
+        <div class="grid" style={`--card-min: ${section.min}`}>
           {tokensOf(font, section.prefix).map(({ path, value }) => (
-            <TokenRow
+            <TokenCard
               token={path}
               details={describeValue(value, primitiveLookup)}
             >
@@ -52,13 +60,13 @@ const sections = [
                 </span>
               )}
               {section.id === "size" && (
-                <span style={`font-size: var(${tokenVariable(path)})`}>
-                  {sample}
-                </span>
+                <span style={`font-size: var(${tokenVariable(path)})`}>Aa</span>
               )}
               {section.id === "weight" && (
-                <span style={`font-weight: var(${tokenVariable(path)})`}>
-                  {sample}
+                <span
+                  style={`font-weight: var(${tokenVariable(path)}); font-size: var(--font-size-8)`}
+                >
+                  Aa
                 </span>
               )}
               {section.id === "leading" && (
@@ -69,7 +77,7 @@ const sections = [
                   {paragraph}
                 </span>
               )}
-            </TokenRow>
+            </TokenCard>
           ))}
         </div>
       </section>
@@ -110,10 +118,13 @@ const sections = [
     font-size: var(--font-size-2);
   }
 
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--card-min, 13rem), 1fr)
+    );
   }
 
   .paragraph {

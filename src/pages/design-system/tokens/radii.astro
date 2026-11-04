@@ -1,6 +1,6 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import TokenCard from "../../../design-system/catalog/TokenCard.astro";
 import {
   primitiveLookup,
   semantic,
@@ -20,9 +20,9 @@ const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
   <div class="page">
     <section class="block" aria-labelledby="radius-primitives">
       <h2 id="radius-primitives">Primitivos</h2>
-      <div class="list">
+      <div class="grid">
         {primitives.map(({ path, value }) => (
-          <TokenRow
+          <TokenCard
             token={path}
             details={describeValue(value, primitiveLookup)}
           >
@@ -31,7 +31,7 @@ const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
               style={`border-radius: var(${tokenVariable(path)})`}
               aria-hidden="true"
             />
-          </TokenRow>
+          </TokenCard>
         ))}
       </div>
     </section>
@@ -39,9 +39,9 @@ const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
     <section class="block" aria-labelledby="radius-semantic">
       <h2 id="radius-semantic">Semánticos</h2>
       <p>Los componentes usan estos alias, no los primitivos.</p>
-      <div class="list">
+      <div class="grid">
         {aliases.map(({ path, value }) => (
-          <TokenRow
+          <TokenCard
             token={path}
             details={describeValue(value, primitiveLookup)}
           >
@@ -50,7 +50,7 @@ const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
               style={`border-radius: var(${tokenVariable(path)})`}
               aria-hidden="true"
             />
-          </TokenRow>
+          </TokenCard>
         ))}
       </div>
     </section>
@@ -85,10 +85,13 @@ const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
     font-size: var(--font-size-2);
   }
 
-  .list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+  .grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--card-min, 13rem), 1fr)
+    );
   }
 
   .box {
