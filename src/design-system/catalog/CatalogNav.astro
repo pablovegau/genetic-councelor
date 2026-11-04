@@ -1,0 +1,172 @@
+---
+import { catalogGroups } from "./sections";
+---
+
+<nav class="catalog-nav" aria-label="Catálogo del design system">
+  {catalogGroups.map((group) => (
+    <details open>
+      <summary>{group.label}</summary>
+      <ul>
+        {group.items.map((item) => (
+          <li>
+            <a href={`#${item.id}`}>{item.label}</a>
+          </li>
+        ))}
+        {group.pending?.map((label) => (
+          <li class="pending">
+            <span>{label}</span>
+            <small>pendiente</small>
+          </li>
+        ))}
+      </ul>
+    </details>
+  ))}
+</nav>
+
+<style>
+  .catalog-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    border-bottom: var(--border-width-1) solid var(--color-border-default);
+    font-size: var(--font-size-2);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-control);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: "";
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    border-inline-end: var(--border-width-2) solid currentColor;
+    border-block-end: var(--border-width-2) solid currentColor;
+    transform: rotate(-45deg);
+  }
+
+  details[open] > summary::after {
+    transform: rotate(45deg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    summary::after {
+      transition: transform var(--motion-duration-interaction)
+        var(--motion-easing-default);
+    }
+  }
+
+  summary:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    margin: 0;
+    padding: var(--space-1) 0 var(--space-2) var(--space-3);
+    list-style: none;
+  }
+
+  a,
+  .pending {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-control);
+  }
+
+  a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  a:hover {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-text-default);
+  }
+
+  a[aria-current] {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .pending {
+    color: var(--color-text-muted);
+  }
+
+  small {
+    font-size: var(--font-size-1);
+  }
+
+  summary:focus-visible,
+  a:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: calc(var(--border-width-2) * -1);
+  }
+
+  @media (min-width: 48rem) {
+    .catalog-nav {
+      position: sticky;
+      inset-block-start: 0;
+      max-block-size: 100dvh;
+      overflow-y: auto;
+      border-bottom: 0;
+      border-inline-end: var(--border-width-1) solid var(--color-border-default);
+      padding-block: var(--space-6);
+    }
+  }
+</style>
+
+<script>
+  // En pantallas estrechas los grupos empiezan cerrados para que el menú no ocupe la página.
+  if (window.matchMedia("(max-width: 47.99rem)").matches) {
+    document
+      .querySelectorAll(".catalog-nav details")
+      .forEach((group) => group.removeAttribute("open"));
+  }
+
+  // Marca en el menú la sección que se está viendo.
+  const links = [
+    ...document.querySelectorAll<HTMLAnchorElement>(".catalog-nav a"),
+  ];
+  const byId = new Map(links.map((link) => [link.hash.slice(1), link]));
+
+  const setCurrent = (id: string) => {
+    links.forEach((link) => link.removeAttribute("aria-current"));
+    byId.get(id)?.setAttribute("aria-current", "location");
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        const id = entry.target.getAttribute("aria-labelledby");
+        if (entry.isIntersecting && id) setCurrent(id);
+      }
+    },
+    { rootMargin: "-20% 0px -70% 0px" }
+  );
+
+  byId.forEach((_link, id) => {
+    const section = document.getElementById(id)?.closest("section");
+    if (section) observer.observe(section);
+  });
+
+  setCurrent(location.hash.slice(1) || [...byId.keys()][0] || "");
+</script>
