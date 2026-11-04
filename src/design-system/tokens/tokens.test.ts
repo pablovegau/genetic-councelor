@@ -300,6 +300,84 @@ describe("rampas de color primitivas", () => {
   });
 });
 
+describe("escalas tipográficas", () => {
+  const tokens = loadScheme("light");
+  const numbers = (prefix: string) =>
+    [...tokens.values()]
+      .filter((token) => token.path.startsWith(prefix))
+      .map((token) => {
+        const value = token.value as { value?: number } | number;
+        return {
+          key: token.path.slice(prefix.length),
+          value: typeof value === "number" ? value : (value.value ?? NaN),
+        };
+      });
+
+  it("los tamaños de fuente crecen con cada paso", () => {
+    const sizes = numbers("font.size.")
+      .sort((first, second) => Number(first.key) - Number(second.key))
+      .map(({ value }) => value);
+    sizes.slice(1).forEach((value, index) => {
+      expect(value).toBeGreaterThan(sizes[index]!);
+    });
+  });
+
+  const styles = [
+    "heading-1",
+    "heading-2",
+    "heading-3",
+    "heading-4",
+    "heading-5",
+    "text-lg",
+    "text",
+    "text-sm",
+    "caption",
+  ];
+  const sizeOf = (style: string) => {
+    const token = tokens.get(`typography.${style}.font-size`);
+    return (token?.value as { value: number }).value;
+  };
+
+  it.each(styles)("el estilo %s define sus cinco propiedades", (style) => {
+    const properties = [...tokens.keys()]
+      .filter((path) => path.startsWith(`typography.${style}.`))
+      .map((path) => path.split(".")[2])
+      .sort();
+    expect(properties).toEqual([
+      "font-family",
+      "font-size",
+      "font-weight",
+      "letter-spacing",
+      "line-height",
+    ]);
+  });
+
+  it("los titulares bajan de tamaño de heading-1 a heading-5", () => {
+    const sizes = styles.slice(0, 5).map(sizeOf);
+    sizes.slice(1).forEach((size, index) => {
+      expect(size).toBeLessThan(sizes[index]!);
+    });
+  });
+
+  it("los estilos de texto bajan de tamaño de text-lg a caption", () => {
+    const sizes = styles.slice(5).map(sizeOf);
+    sizes.slice(1).forEach((size, index) => {
+      expect(size).toBeLessThan(sizes[index]!);
+    });
+  });
+
+  it("los titulares usan la familia display y el texto la familia sans", () => {
+    const familyOf = (style: string) =>
+      tokens.get(`typography.${style}.font-family`)?.chain.at(-1);
+    expect(new Set(styles.slice(0, 5).map(familyOf))).toEqual(
+      new Set(["font.family.display"])
+    );
+    expect(new Set(styles.slice(5).map(familyOf))).toEqual(
+      new Set(["font.family.sans"])
+    );
+  });
+});
+
 // Política de contraste del proyecto (WCAG 2.x): ver ADR 0005.
 //  - texto: 4,5:1 (AA); el texto principal, 7:1 (AAA)
 //  - componentes de interfaz (borde fuerte, foco): 3:1 (1.4.11); el borde decorativo está exento

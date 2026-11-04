@@ -41,13 +41,13 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 ## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
 - [x] Tokens primitivos y semánticos en DTCG 2025.10 con Terrazzo; tema `default` con esquemas claro y oscuro (`data-scheme`). Valores neutros de placeholder.
 - [x] Colores reales: rampas `neutral`, `violet`, `orange` y `red` en oklch y roles `action`, `accent`, `danger`, `tint` y `focus` (ver `docs/design/direccion-visual.md`). Pendiente de revisar con Sara.
-- [ ] Tipografía real (Funnel Display y Funnel Sans, servidas desde el propio dominio con la API de fuentes de Astro) y radios definitivos.
+- [x] Tipografía real: Funnel Display y Funnel Sans servidas desde el propio dominio y estilos de texto semánticos como tokens. Pendiente: comprobar la cobertura del catalán con texto real y definir los radios definitivos.
 - [x] Primitivos de UI: Box, Flex, Grid, Text, Icon, con style props generados desde los tokens y catálogo interno en `/design-system/` (ver `docs/adr/0003-primitivos-y-style-props.md`).
 - [ ] Decidir al lanzar si el catálogo se excluye del build de producción (hoy es público con `noindex`).
 - [ ] Props que faltan según se necesiten: márgenes, props responsivos, sombras.
 - [ ] Set de iconos definitivo (hoy 4 trazos placeholder) y favicon.
 - [ ] Button = Flex + Icon + Text; luego componentes mayores. Los tokens de componente se crean con cada componente.
-- [ ] Tipografía semántica junto al componente Text. Verificar antes la forma del tipo `typography` de DTCG (no la pude leer entera).
+- [x] Tipografía semántica como tokens (cinco alias por estilo, sin el tipo compuesto `typography`). Falta el componente de texto que los use, con la reducción de los titulares en móvil.
 - [ ] Interruptor de esquema: `data-scheme` + `localStorage` + script en el `<head>` para evitar el parpadeo, cuando exista el componente.
 - [ ] Fotos de Sara con fondo blanco de plató en modo oscuro: decidir marco/tarjeta, recorte o zona clara.
 - [ ] Menú móvil del repo antiguo como componente: conservar la X, la tarjeta lateral y el botón de reservar abajo; corregir panel con scroll en pantallas bajas, `inert` cuando está cerrado, `prefers-reduced-motion`, breakpoint más alto y selector ES/CA/EN.

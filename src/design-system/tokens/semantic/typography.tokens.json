@@ -1,0 +1,203 @@
+{
+  "$description": "Estilos de texto semánticos, uno por grupo, con cinco propiedades cada uno. Solo alias de primitivos. Los tamaños son de escritorio; la reducción en pantallas pequeñas se define con el componente de texto.",
+  "typography": {
+    "heading-1": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.display}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.11}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.none}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.tighter}"
+      }
+    },
+    "heading-2": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.display}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.9}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.display}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.tight}"
+      }
+    },
+    "heading-3": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.display}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.7}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.tight}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.snug}"
+      }
+    },
+    "heading-4": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.display}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.6}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.tight}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.snug}"
+      }
+    },
+    "heading-5": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.display}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.5}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.snug}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.snug}"
+      }
+    },
+    "text-lg": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.4}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.relaxed}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.normal}"
+      }
+    },
+    "text": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.3}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.normal}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.normal}"
+      }
+    },
+    "text-sm": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.2}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.normal}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.normal}"
+      }
+    },
+    "caption": {
+      "font-family": {
+        "$type": "fontFamily",
+        "$value": "{font.family.sans}"
+      },
+      "font-size": {
+        "$type": "dimension",
+        "$value": "{font.size.1}"
+      },
+      "font-weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": "{font.line-height.normal}"
+      },
+      "letter-spacing": {
+        "$type": "number",
+        "$value": "{font.tracking.normal}"
+      }
+    }
+  }
+}

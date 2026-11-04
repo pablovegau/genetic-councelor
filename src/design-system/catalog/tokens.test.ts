@@ -9,6 +9,8 @@ import {
   resolveValue,
   tokenReference,
   tokenVariable,
+  typographyDeclarations,
+  typographyStyles,
 } from "./tokens";
 
 describe("nombre y referencia de un token", () => {
@@ -181,5 +183,29 @@ describe("detalle de un token", () => {
 
   it("un alias roto muestra solo el destino", () => {
     expect(describeValue("{radius.9}", lookup)).toEqual(["→ radius.9"]);
+  });
+});
+
+describe("estilos de texto semánticos", () => {
+  it("lista cada estilo una sola vez y en orden, ignorando otros tokens", () => {
+    const tokens = [
+      { path: "color.bg.page", value: "x" },
+      { path: "typography.heading-1.font-size", value: "x" },
+      { path: "typography.heading-1.font-weight", value: "x" },
+      { path: "typography.text.font-size", value: "x" },
+    ];
+    expect(typographyStyles(tokens)).toEqual(["heading-1", "text"]);
+  });
+
+  it("el CSS del estilo usa las cinco variables del estilo", () => {
+    expect(typographyDeclarations("heading-2")).toBe(
+      [
+        "font-family: var(--typography-heading-2-font-family);",
+        "font-size: var(--typography-heading-2-font-size);",
+        "font-weight: var(--typography-heading-2-font-weight);",
+        "line-height: var(--typography-heading-2-line-height);",
+        "letter-spacing: calc(var(--typography-heading-2-letter-spacing) * 1em);",
+      ].join("\n")
+    );
   });
 });

@@ -80,3 +80,34 @@ export function describeValue(
   if (pixels) lines.push(pixels);
   return lines;
 }
+
+/** Propiedades de cada estilo de texto semántico (`typography.heading-1.font-size`…). */
+export const typographyProperties = [
+  "font-family",
+  "font-size",
+  "font-weight",
+  "line-height",
+  "letter-spacing",
+] as const;
+
+/** Nombres de los estilos de texto, en el orden en que aparecen en los tokens. */
+export const typographyStyles = (tokens: FlatToken[]) => [
+  ...new Set(
+    tokens
+      .filter(({ path }) => path.startsWith("typography."))
+      .map(({ path }) => path.split(".")[1] ?? "")
+  ),
+];
+
+/** El CSS de un estilo de texto, listo para pegar. El tracking es un múltiplo de em. */
+export function typographyDeclarations(style: string) {
+  const reference = (property: string) =>
+    tokenReference(`typography.${style}.${property}`);
+  return typographyProperties
+    .map((property) =>
+      property === "letter-spacing"
+        ? `letter-spacing: calc(${reference(property)} * 1em);`
+        : `${property}: ${reference(property)};`
+    )
+    .join("\n");
+}

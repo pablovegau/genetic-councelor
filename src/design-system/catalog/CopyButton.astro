@@ -2,16 +2,18 @@
 interface Props {
   /** Lo que se copia al portapapeles. */
   value: string;
+  /** Texto accesible; por defecto «Copiar» y el valor. */
+  label?: string;
 }
 
-const { value } = Astro.props;
+const { value, label } = Astro.props;
 ---
 
 <button
   type="button"
   class="copy"
   data-copy={value}
-  aria-label={`Copiar ${value}`}
+  aria-label={label ?? `Copiar ${value}`}
 >
   Copiar
 </button>

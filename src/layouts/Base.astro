@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import "../design-system/tokens.generated.css";
 import "../design-system/style-props.generated.css";
@@ -33,6 +34,8 @@ const locales = [
       content={indexable ? "index, follow" : "noindex, nofollow"}
     />
     <title>{title}</title>
+    <Font cssVariable="--font-funnel-display" preload={[{ subset: "latin" }]} />
+    <Font cssVariable="--font-funnel-sans" preload={[{ subset: "latin" }]} />
   </head>
   <body>
     {languageNav && (
@@ -54,3 +57,13 @@ const locales = [
     </main>
   </body>
 </html>
+
+<style is:global>
+  /* Astro registra cada fuente con un nombre único (p. ej. «Funnel Display-b0a0…») y lo expone en
+     --font-funnel-*. Este puente conecta esas variables con los tokens de familia, que de otro modo
+     apuntarían a un nombre que el navegador no conoce. Sin capa, para ganar a tokens.generated.css. */
+  :root {
+    --font-family-display: var(--font-funnel-display);
+    --font-family-sans: var(--font-funnel-sans);
+  }
+</style>

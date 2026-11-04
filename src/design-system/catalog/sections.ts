@@ -45,7 +45,7 @@ export const catalogGroups: CatalogGroup[] = [
       {
         slug: "typography",
         label: "Typography",
-        description: "Familia, tamaños, pesos e interlineados.",
+        description: "Estilos de texto semánticos y la escala tipográfica.",
       },
       {
         slug: "motion",
