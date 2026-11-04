@@ -1,28 +1,100 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import { Box, Flex, Text } from "../../../design-system/primitives";
-import { radiusSteps } from "../../../design-system/style-props.generated";
+import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import {
+  primitiveLookup,
+  semantic,
+  shape,
+  tokensOf,
+} from "../../../design-system/catalog/token-data";
+import {
+  describeValue,
+  tokenVariable,
+} from "../../../design-system/catalog/tokens";
+
+const primitives = tokensOf(shape, "radius.");
+const aliases = semantic.filter(({ path }) => path.startsWith("radius."));
 ---
 
 <CatalogLayout group="tokens" item="radii">
-  <Flex direction="column" gap="6">
-    <Flex gap="4" wrap>
-      {radiusSteps.map((step) => (
-        <Flex direction="column" gap="1" align="center">
-          <Box
-            bg="subtle"
-            border="strong"
-            style={{
-              borderRadius: `var(--radius-${step})`,
-              inlineSize: "var(--space-16)",
-              blockSize: "var(--space-16)",
-            }}
-          />
-          <Text as="span" size="1" color="muted">
-            radius.{step}
-          </Text>
-        </Flex>
-      ))}
-    </Flex>
-  </Flex>
+  <div class="page">
+    <section class="block" aria-labelledby="radius-primitives">
+      <h2 id="radius-primitives">Primitivos</h2>
+      <div class="list">
+        {primitives.map(({ path, value }) => (
+          <TokenRow
+            token={path}
+            details={describeValue(value, primitiveLookup)}
+          >
+            <div
+              class="box"
+              style={`border-radius: var(${tokenVariable(path)})`}
+              aria-hidden="true"
+            />
+          </TokenRow>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="radius-semantic">
+      <h2 id="radius-semantic">Semánticos</h2>
+      <p>Los componentes usan estos alias, no los primitivos.</p>
+      <div class="list">
+        {aliases.map(({ path, value }) => (
+          <TokenRow
+            token={path}
+            details={describeValue(value, primitiveLookup)}
+          >
+            <div
+              class="box"
+              style={`border-radius: var(${tokenVariable(path)})`}
+              aria-hidden="true"
+            />
+          </TokenRow>
+        ))}
+      </div>
+    </section>
+  </div>
 </CatalogLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .box {
+    inline-size: var(--space-16);
+    block-size: var(--space-16);
+    border: var(--border-width-2) solid var(--color-border-strong);
+    background-color: var(--color-bg-subtle);
+  }
+</style>

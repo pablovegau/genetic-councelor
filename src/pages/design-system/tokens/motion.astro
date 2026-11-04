@@ -1,0 +1,187 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import {
+  motion,
+  primitiveLookup,
+  semantic,
+  tokensOf,
+} from "../../../design-system/catalog/token-data";
+import {
+  describeValue,
+  tokenVariable,
+} from "../../../design-system/catalog/tokens";
+
+const durations = tokensOf(motion, "duration.");
+const easings = tokensOf(motion, "easing.");
+const aliases = semantic.filter(({ path }) => path.startsWith("motion."));
+// Cada demostración combina una duración con una curva; las curvas se prueban con la duración normal.
+const demo = (duration: string, easing: string) => ({ duration, easing });
+const rows = [
+  {
+    title: "Duraciones",
+    note: "",
+    items: durations.map((token) => ({
+      token,
+      ...demo(token.path, "easing.standard"),
+    })),
+  },
+  {
+    title: "Curvas",
+    note: "Se prueban con la duración normal.",
+    items: easings.map((token) => ({
+      token,
+      ...demo("duration.normal", token.path),
+    })),
+  },
+  {
+    title: "Semánticos",
+    note: "Los componentes usan estos alias.",
+    items: aliases.map((token) => ({
+      token,
+      ...demo(
+        token.path.includes("duration")
+          ? token.path
+          : "motion.duration.interaction",
+        token.path.includes("easing") ? token.path : "motion.easing.default"
+      ),
+    })),
+  },
+];
+---
+
+<CatalogLayout group="tokens" item="motion">
+  <div class="page">
+    {rows.map((row, index) => (
+      <section class="block" aria-labelledby={`motion-${index}`}>
+        <div class="heading">
+          <h2 id={`motion-${index}`}>{row.title}</h2>
+          {row.note && <p>{row.note}</p>}
+        </div>
+        <div class="list">
+          {row.items.map(({ token, duration, easing }) => (
+            <TokenRow
+              token={token.path}
+              details={describeValue(token.value, primitiveLookup)}
+            >
+              <div
+                class="demo"
+                style={`--demo-duration: var(${tokenVariable(duration)}); --demo-easing: var(${tokenVariable(easing)})`}
+              >
+                <button type="button" data-demo>
+                  Probar
+                </button>
+                <div class="track" aria-hidden="true">
+                  <div class="dot" />
+                </div>
+              </div>
+            </TokenRow>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <script>
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-demo]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const demo = button.closest<HTMLElement>(".demo");
+          if (!demo) return;
+          if (demo.hasAttribute("data-moved"))
+            demo.removeAttribute("data-moved");
+          else demo.setAttribute("data-moved", "");
+        });
+      });
+  </script>
+</CatalogLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .block,
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .heading {
+    gap: var(--space-1);
+  }
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .heading p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .demo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    inline-size: 100%;
+  }
+
+  .demo button {
+    flex: none;
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-width-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-default);
+    font: inherit;
+    font-size: var(--font-size-2);
+    cursor: pointer;
+  }
+
+  .demo button:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: var(--border-width-2);
+  }
+
+  .track {
+    flex: 1;
+    min-inline-size: var(--space-16);
+    padding: var(--space-1);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-full);
+  }
+
+  .dot {
+    inline-size: var(--space-3);
+    block-size: var(--space-3);
+    border-radius: var(--radius-full);
+    background-color: var(--color-action-bg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dot {
+      transition: transform var(--demo-duration) var(--demo-easing);
+    }
+
+    .demo[data-moved] .dot {
+      transform: translateX(calc(var(--space-16) + var(--space-8)));
+    }
+  }
+</style>

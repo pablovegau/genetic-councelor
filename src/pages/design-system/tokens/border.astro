@@ -1,0 +1,42 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import TokenRow from "../../../design-system/catalog/TokenRow.astro";
+import {
+  primitiveLookup,
+  shape,
+  tokensOf,
+} from "../../../design-system/catalog/token-data";
+import {
+  describeValue,
+  tokenVariable,
+} from "../../../design-system/catalog/tokens";
+
+const widths = tokensOf(shape, "border.width.");
+---
+
+<CatalogLayout group="tokens" item="border">
+  <div class="list">
+    {widths.map(({ path, value }) => (
+      <TokenRow token={path} details={describeValue(value, primitiveLookup)}>
+        <div
+          class="line"
+          style={`border-block-start-width: var(${tokenVariable(path)})`}
+          aria-hidden="true"
+        />
+      </TokenRow>
+    ))}
+  </div>
+</CatalogLayout>
+
+<style>
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .line {
+    inline-size: 100%;
+    border-block-start: var(--border-width-1) solid var(--color-text-default);
+  }
+</style>

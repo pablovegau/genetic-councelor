@@ -1,35 +1,122 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import { Box, Flex, Grid, Text } from "../../../design-system/primitives";
+import TokenRow from "../../../design-system/catalog/TokenRow.astro";
 import {
-  fontSizes,
-  fontWeights,
-  lineHeights,
-} from "../../../design-system/style-props.generated";
+  font,
+  primitiveLookup,
+  tokensOf,
+} from "../../../design-system/catalog/token-data";
+import {
+  describeValue,
+  tokenVariable,
+} from "../../../design-system/catalog/tokens";
+
+const sample = "Asesoramiento genético";
+const paragraph =
+  "Un estudio genético no es una sentencia: ayuda a conocer un riesgo y a decidir con calma qué hacer con esa información.";
+const sections = [
+  {
+    id: "family",
+    title: "Familia",
+    prefix: "font.family.",
+    note: "Placeholder: pila del sistema hasta servir Funnel desde el propio dominio.",
+  },
+  { id: "size", title: "Tamaño", prefix: "font.size.", note: "" },
+  { id: "weight", title: "Peso", prefix: "font.weight.", note: "" },
+  {
+    id: "leading",
+    title: "Interlineado",
+    prefix: "font.line-height.",
+    note: "",
+  },
+];
 ---
 
 <CatalogLayout group="tokens" item="typography">
-  <Flex direction="column" gap="6">
-    {fontSizes.map((step) => (
-      <Text size={step}>size.{step} · Asesoramiento genético</Text>
+  <div class="page">
+    {sections.map((section) => (
+      <section class="block" aria-labelledby={`type-${section.id}`}>
+        <div class="heading">
+          <h2 id={`type-${section.id}`}>{section.title}</h2>
+          {section.note && <p>{section.note}</p>}
+        </div>
+        <div class="list">
+          {tokensOf(font, section.prefix).map(({ path, value }) => (
+            <TokenRow
+              token={path}
+              details={describeValue(value, primitiveLookup)}
+            >
+              {section.id === "family" && (
+                <span style={`font-family: var(${tokenVariable(path)})`}>
+                  {sample}
+                </span>
+              )}
+              {section.id === "size" && (
+                <span style={`font-size: var(${tokenVariable(path)})`}>
+                  {sample}
+                </span>
+              )}
+              {section.id === "weight" && (
+                <span style={`font-weight: var(${tokenVariable(path)})`}>
+                  {sample}
+                </span>
+              )}
+              {section.id === "leading" && (
+                <span
+                  class="paragraph"
+                  style={`line-height: var(${tokenVariable(path)})`}
+                >
+                  {paragraph}
+                </span>
+              )}
+            </TokenRow>
+          ))}
+        </div>
+      </section>
     ))}
-    <Flex gap="4" wrap>
-      {fontWeights.map((step) => (
-        <Text weight={step}>{step}</Text>
-      ))}
-    </Flex>
-    <Grid columns={2} gap="4">
-      {lineHeights.map((step) => (
-        <Box p="3" border="default" radius="control">
-          <Text size="2" color="muted">
-            leading.{step}
-          </Text>
-          <Text leading={step}>
-            Un estudio genético no es una sentencia: ayuda a conocer un riesgo y
-            a decidir con calma qué hacer con esa información.
-          </Text>
-        </Box>
-      ))}
-    </Grid>
-  </Flex>
+  </div>
 </CatalogLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+  }
+
+  .block,
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .heading {
+    gap: var(--space-1);
+  }
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .heading p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .paragraph {
+    font-size: var(--font-size-3);
+  }
+</style>

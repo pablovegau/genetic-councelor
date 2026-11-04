@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   aliasTarget,
+  describeValue,
   flattenTokens,
   formatOklch,
+  formatTokenValue,
+  pixelEquivalent,
+  resolveValue,
   tokenReference,
   tokenVariable,
 } from "./tokens";
@@ -65,5 +69,117 @@ describe("aplanar un árbol de tokens", () => {
     expect(flattenTokens({ color: { white: { $value: value } } })).toEqual([
       { path: "color.white", value },
     ]);
+  });
+});
+
+describe("valor de un token para mostrar", () => {
+  it("una dimensión se escribe con su unidad", () => {
+    expect(formatTokenValue({ value: 0.5, unit: "rem" })).toBe("0.5rem");
+  });
+
+  it("una duración se escribe con su unidad", () => {
+    expect(formatTokenValue({ value: 150, unit: "ms" })).toBe("150ms");
+  });
+
+  it("una curva de easing se escribe como cubic-bezier", () => {
+    expect(formatTokenValue([0.2, 0, 0, 1])).toBe("cubic-bezier(0.2, 0, 0, 1)");
+  });
+
+  it("una familia tipográfica lista sus fuentes separadas por comas", () => {
+    expect(formatTokenValue(["system-ui", "sans-serif"])).toBe(
+      "system-ui, sans-serif"
+    );
+  });
+
+  it("un número se escribe tal cual", () => {
+    expect(formatTokenValue(1.5)).toBe("1.5");
+  });
+
+  it("un alias se muestra con una flecha a su destino", () => {
+    expect(formatTokenValue("{radius.2}")).toBe("→ radius.2");
+  });
+});
+
+describe("equivalente en píxeles", () => {
+  it("convierte rem a píxeles con 1 rem igual a 16 px", () => {
+    expect(pixelEquivalent({ value: 0.5, unit: "rem" })).toBe("8px");
+  });
+
+  it("no añade nada a un valor que ya está en píxeles", () => {
+    expect(pixelEquivalent({ value: 2, unit: "px" })).toBeUndefined();
+  });
+
+  it("no añade nada a un valor que no es una dimensión", () => {
+    expect(pixelEquivalent(1.5)).toBeUndefined();
+  });
+});
+
+describe("resolver alias", () => {
+  const lookup = new Map<string, unknown>([
+    ["radius.2", { value: 0.5, unit: "rem" }],
+    ["radius.control", "{radius.2}"],
+  ]);
+
+  it("devuelve un valor que no es un alias sin tocarlo", () => {
+    expect(resolveValue(1.5, lookup)).toBe(1.5);
+  });
+
+  it("sigue un alias hasta su valor", () => {
+    expect(resolveValue("{radius.2}", lookup)).toEqual({
+      value: 0.5,
+      unit: "rem",
+    });
+  });
+
+  it("sigue una cadena de alias", () => {
+    expect(resolveValue("{radius.control}", lookup)).toEqual({
+      value: 0.5,
+      unit: "rem",
+    });
+  });
+
+  it("devuelve undefined si el destino no existe", () => {
+    expect(resolveValue("{radius.9}", lookup)).toBeUndefined();
+  });
+
+  it("no se queda en bucle ante un ciclo de alias", () => {
+    const cycle = new Map<string, unknown>([
+      ["a", "{b}"],
+      ["b", "{a}"],
+    ]);
+    expect(resolveValue("{a}", cycle)).toBe("{a}");
+  });
+});
+
+describe("detalle de un token", () => {
+  const lookup = new Map<string, unknown>([
+    ["radius.2", { value: 0.5, unit: "rem" }],
+    ["duration.fast", { value: 150, unit: "ms" }],
+  ]);
+
+  it("una dimensión en rem muestra su valor y los píxeles", () => {
+    expect(describeValue({ value: 0.5, unit: "rem" }, lookup)).toEqual([
+      "0.5rem",
+      "8px",
+    ]);
+  });
+
+  it("un alias muestra a qué apunta, su valor final y los píxeles", () => {
+    expect(describeValue("{radius.2}", lookup)).toEqual([
+      "→ radius.2",
+      "= 0.5rem",
+      "8px",
+    ]);
+  });
+
+  it("un alias a una duración no añade píxeles", () => {
+    expect(describeValue("{duration.fast}", lookup)).toEqual([
+      "→ duration.fast",
+      "= 150ms",
+    ]);
+  });
+
+  it("un alias roto muestra solo el destino", () => {
+    expect(describeValue("{radius.9}", lookup)).toEqual(["→ radius.9"]);
   });
 });

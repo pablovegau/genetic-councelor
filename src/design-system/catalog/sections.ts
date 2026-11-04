@@ -35,12 +35,23 @@ export const catalogGroups: CatalogGroup[] = [
       {
         slug: "radii",
         label: "Radii",
-        description: "Escala de radios de esquina.",
+        description: "Escala de radios de esquina y sus alias semánticos.",
+      },
+      {
+        slug: "border",
+        label: "Border",
+        description: "Anchos de borde.",
       },
       {
         slug: "typography",
         label: "Typography",
-        description: "Tamaños, pesos e interlineados.",
+        description: "Familia, tamaños, pesos e interlineados.",
+      },
+      {
+        slug: "motion",
+        label: "Motion",
+        description:
+          "Duraciones y curvas de movimiento, con sus alias semánticos.",
       },
     ],
   },

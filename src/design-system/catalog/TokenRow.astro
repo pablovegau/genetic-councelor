@@ -1,0 +1,84 @@
+---
+import CopyButton from "./CopyButton.astro";
+import { tokenReference, tokenVariable } from "./tokens";
+
+interface Props {
+  /** Ruta completa del token, por ejemplo `space.4`. */
+  token: string;
+  /** Líneas de detalle bajo el nombre (valor, alias, equivalente en píxeles…). */
+  details?: string[];
+}
+
+const { token, details = [] } = Astro.props;
+---
+
+<div class="row">
+  <div class="preview">
+    <slot />
+  </div>
+  <div class="info">
+    <code class="name">{token}</code>
+    <code class="variable">{tokenVariable(token)}</code>
+    {details.map((line) => (
+      <span class="detail">{line}</span>
+    ))}
+  </div>
+  <CopyButton value={tokenReference(token)} />
+</div>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-surface);
+  }
+
+  .preview {
+    display: flex;
+    align-items: center;
+    min-inline-size: 0;
+    overflow: hidden;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-inline-size: 0;
+  }
+
+  code {
+    overflow-wrap: anywhere;
+  }
+
+  .name {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .variable,
+  .detail {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-1);
+  }
+
+  .detail {
+    font-family: inherit;
+  }
+
+  .row :global(.copy) {
+    justify-self: start;
+  }
+
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: minmax(8rem, 1fr) minmax(0, 1fr) auto;
+      gap: var(--space-6);
+    }
+  }
+</style>
