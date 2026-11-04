@@ -164,6 +164,7 @@ const rows = [
   }
 
   .track {
+    container-type: inline-size;
     flex: 1;
     min-inline-size: var(--space-16);
     padding: var(--space-1);
@@ -184,7 +185,7 @@ const rows = [
     }
 
     .demo[data-moved] .dot {
-      transform: translateX(calc(var(--space-16) + var(--space-8)));
+      transform: translateX(calc(100cqw - var(--space-3)));
     }
   }
 </style>
