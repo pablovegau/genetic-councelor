@@ -25,7 +25,7 @@ export const catalogGroups: CatalogGroup[] = [
         slug: "color",
         label: "Color",
         description:
-          "Escala neutral primitiva y roles semánticos que cambian con el esquema.",
+          "Rampas primitivas (neutral, violet, orange, red) y roles semánticos que cambian con el esquema.",
       },
       {
         slug: "space",

@@ -3,25 +3,80 @@
   "color": {
     "$type": "color",
     "bg": {
-      "page": { "$value": "{color.neutral.950}" },
-      "surface": { "$value": "{color.neutral.900}" },
-      "subtle": { "$value": "{color.neutral.800}" }
+      "page": {
+        "$value": "{color.neutral.950}"
+      },
+      "surface": {
+        "$value": "{color.neutral.900}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.800}"
+      }
     },
     "text": {
-      "default": { "$value": "{color.neutral.50}" },
-      "muted": { "$value": "{color.neutral.400}" },
-      "inverse": { "$value": "{color.neutral.900}" }
+      "default": {
+        "$value": "{color.neutral.50}"
+      },
+      "muted": {
+        "$value": "{color.neutral.400}"
+      },
+      "inverse": {
+        "$value": "{color.neutral.900}"
+      }
     },
     "border": {
-      "default": { "$value": "{color.neutral.800}" },
-      "strong": { "$value": "{color.neutral.500}" }
+      "default": {
+        "$value": "{color.neutral.800}"
+      },
+      "strong": {
+        "$value": "{color.neutral.500}"
+      }
     },
     "action": {
-      "bg": { "$value": "{color.neutral.50}" },
-      "fg": { "$value": "{color.neutral.900}" }
+      "bg": {
+        "$value": "{color.violet.400}"
+      },
+      "fg": {
+        "$value": "{color.neutral.950}"
+      },
+      "bg-hover": {
+        "$value": "{color.violet.300}"
+      },
+      "bg-active": {
+        "$value": "{color.violet.200}"
+      }
+    },
+    "accent": {
+      "bg": {
+        "$value": "{color.orange.400}"
+      },
+      "fg": {
+        "$value": "{color.neutral.950}"
+      }
+    },
+    "danger": {
+      "bg": {
+        "$value": "{color.red.400}"
+      },
+      "fg": {
+        "$value": "{color.neutral.950}"
+      }
+    },
+    "tint": {
+      "violet": {
+        "$value": "{color.violet.950}"
+      },
+      "orange": {
+        "$value": "{color.orange.950}"
+      },
+      "red": {
+        "$value": "{color.red.950}"
+      }
     },
     "focus": {
-      "ring": { "$value": "{color.neutral.50}" }
+      "ring": {
+        "$value": "{color.violet.400}"
+      }
     }
   }
 }

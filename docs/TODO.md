@@ -33,14 +33,15 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] 3. Unitarios con Vitest 5 (hecho; seams S1 tokens, S2 CSS generado, S3 generador, S4 helpers y contrato): tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
 - [x] 4. Componentes con Vitest en modo navegador (hecho para Box, Flex, Grid, Text e Icon) (`@vitest/browser-playwright`) y Testing Library.
 - [x] 5. (hecho, PR #1) Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
-- [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
+- [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Va después de los tokens, con la cabecera. Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
 - [x] `main` protegida: la comprobación `verify` es obligatoria, también para administradores, y se entra por PR. Para saltarla en una emergencia, desactivarlo en Settings → Branches.
 - [x] `update-vrt.yml` validado de extremo a extremo y la versión de Playwright vigilada por un test (`scripts/playwright-version.test.ts`).
 - [ ] Pruebas que dependen de funcionalidad futura: el menú con teclado (cuando exista), `hreflang` y `canonical` (cuando haya dominio) y la paridad de claves de i18n (cuando haya diccionarios).
 
 ## Design system (ver `docs/adr/0002-tokens-dtcg-con-terrazzo.md`)
 - [x] Tokens primitivos y semánticos en DTCG 2025.10 con Terrazzo; tema `default` con esquemas claro y oscuro (`data-scheme`). Valores neutros de placeholder.
-- [ ] Sustituir los placeholders por los valores reales cuando haya dirección visual (colores, tipografía, radios).
+- [x] Colores reales: rampas `neutral`, `violet`, `orange` y `red` en oklch y roles `action`, `accent`, `danger`, `tint` y `focus` (ver `docs/design/direccion-visual.md`). Pendiente de revisar con Sara.
+- [ ] Tipografía real (Funnel Display y Funnel Sans, servidas desde el propio dominio con la API de fuentes de Astro) y radios definitivos.
 - [x] Primitivos de UI: Box, Flex, Grid, Text, Icon, con style props generados desde los tokens y catálogo interno en `/design-system/` (ver `docs/adr/0003-primitivos-y-style-props.md`).
 - [ ] Decidir al lanzar si el catálogo se excluye del build de producción (hoy es público con `noindex`).
 - [ ] Props que faltan según se necesiten: márgenes, props responsivos, sombras.
@@ -52,7 +53,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Menú móvil del repo antiguo como componente: conservar la X, la tarjeta lateral y el botón de reservar abajo; corregir panel con scroll en pantallas bajas, `inert` cuando está cerrado, `prefers-reduced-motion`, breakpoint más alto y selector ES/CA/EN.
 
 ## Diseño
-- [ ] Dirección visual: comparar 2 o 3 prototipos reales (`/prototype`) antes de elegir. Cada prototipo es una variante de valores de los tokens, no un diseño aparte. Diseñar primero a ancho de móvil.
+- [x] Dirección visual elegida tras varias rondas de prototipos (ver `docs/design/direccion-visual.md`). Falta la revisión con Sara.
 - [ ] Esqueleto previsible: hero con reserva, situaciones, primera visita en pasos, precios, Sara, FAQ.
 - [ ] Árbol genealógico como elemento visual: aspecto de dibujo a mano, generado por ordenador.
 

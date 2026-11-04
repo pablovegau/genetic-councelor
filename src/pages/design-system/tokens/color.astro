@@ -5,49 +5,90 @@ import {
   colorRoles,
   neutralSteps,
 } from "../../../design-system/style-props.generated";
+
+// Las rampas comparten pasos (lo comprueban los tests de tokens), así que neutralSteps vale para todas.
+const ramps = ["neutral", "violet", "orange", "red"];
+
+// «action-bg-hover» → grupo «action», nombre «bg-hover».
+const groups = colorRoles.reduce<Record<string, string[]>>((found, role) => {
+  const [group = "", ...name] = role.split("-");
+  (found[group] ??= []).push(name.join("-"));
+  return found;
+}, {});
 ---
 
 <CatalogLayout group="tokens" item="color">
-  <Flex direction="column" gap="6">
-    <Text size="2" color="muted">
-      Primitivos: escala neutral.
-    </Text>
-    <Grid minColumn="24" gap="3">
-      {neutralSteps.map((step) => (
-        <Flex direction="column" gap="1">
-          <Box
-            radius="control"
-            border="default"
-            style={{
-              backgroundColor: `var(--color-neutral-${step})`,
-              blockSize: "var(--space-10)",
-            }}
-          />
-          <Text as="span" size="1" color="muted">
-            neutral.{step}
+  <Flex direction="column" gap="10">
+    <Flex as="section" direction="column" gap="5" aria-labelledby="ramps">
+      <Flex direction="column" gap="1">
+        <Text as="h2" id="ramps" size="6" weight="semibold">
+          Rampas
+        </Text>
+        <Text size="2" color="muted">
+          Primitivos en oklch, de 50 (más claro) a 950 (más oscuro). Sin
+          significado: los roles los usan por su nombre.
+        </Text>
+      </Flex>
+      {ramps.map((ramp) => (
+        <Flex direction="column" gap="2">
+          <Text as="h3" size="3" weight="semibold">
+            {ramp}
           </Text>
+          <Grid minColumn="24" gap="3">
+            {neutralSteps.map((step) => (
+              <Flex direction="column" gap="1">
+                <Box
+                  radius="control"
+                  border="default"
+                  style={{
+                    backgroundColor: `var(--color-${ramp}-${step})`,
+                    blockSize: "var(--space-12)",
+                  }}
+                />
+                <Text as="span" size="1" color="muted">
+                  {step}
+                </Text>
+              </Flex>
+            ))}
+          </Grid>
         </Flex>
       ))}
-    </Grid>
-    <Text size="2" color="muted">
-      Semánticos: cambian con el esquema.
-    </Text>
-    <Grid minColumn="24" gap="3">
-      {colorRoles.map((role) => (
-        <Flex direction="column" gap="1">
-          <Box
-            radius="control"
-            border="strong"
-            style={{
-              backgroundColor: `var(--color-${role})`,
-              blockSize: "var(--space-10)",
-            }}
-          />
-          <Text as="span" size="1" color="muted">
-            color.{role.replace("-", ".")}
+    </Flex>
+
+    <Flex as="section" direction="column" gap="5" aria-labelledby="roles">
+      <Flex direction="column" gap="1">
+        <Text as="h2" id="roles" size="6" weight="semibold">
+          Roles semánticos
+        </Text>
+        <Text size="2" color="muted">
+          Cambian con el esquema: usa el interruptor del menú para verlos en
+          claro y en oscuro.
+        </Text>
+      </Flex>
+      {Object.entries(groups).map(([group, names]) => (
+        <Flex direction="column" gap="2">
+          <Text as="h3" size="3" weight="semibold">
+            {group}
           </Text>
+          <Grid minColumn="24" gap="3">
+            {names.map((name) => (
+              <Flex direction="column" gap="1">
+                <Box
+                  radius="control"
+                  border="strong"
+                  style={{
+                    backgroundColor: `var(--color-${group}-${name})`,
+                    blockSize: "var(--space-12)",
+                  }}
+                />
+                <Text as="span" size="1" color="muted">
+                  {name}
+                </Text>
+              </Flex>
+            ))}
+          </Grid>
         </Flex>
       ))}
-    </Grid>
+    </Flex>
   </Flex>
 </CatalogLayout>
