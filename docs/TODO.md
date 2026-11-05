@@ -54,7 +54,8 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 
 ## Diseño
 - [x] Dirección visual elegida tras varias rondas de prototipos (ver `docs/design/direccion-visual.md`). Falta la revisión con Sara.
-- [ ] Esqueleto previsible: hero con reserva, situaciones, primera visita en pasos, precios, Sara, FAQ.
+- [x] Home real a partir de la maqueta, en es/ca/en (`src/components/Home.astro`, textos en `src/i18n/`). Los textos de ca y en son traducciones del español, pendientes de revisar. Los estilos están en `src/styles/site.css` y falta migrarlos a componentes del DS; los enlaces de reserva, legal y redes apuntan a anclas hasta tener herramienta de reserva y textos.
+- [ ] Esqueleto previsible, lo que falta: precios, FAQ y una puerta por cada situación.
 - [ ] Árbol genealógico como elemento visual: aspecto de dibujo a mano, generado por ordenador.
 
 ## Contenido

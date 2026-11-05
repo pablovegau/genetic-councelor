@@ -1,0 +1,61 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getCopy } from "../i18n";
+
+const locale = Astro.currentLocale ?? "es";
+const { site, footer } = getCopy(locale);
+const home = getRelativeLocaleUrl(locale);
+---
+
+<footer class="sec s-pie" id="contacto">
+  <div class="sec-in foot">
+    <div class="foot-grid">
+      <div>
+        <strong class="brand">{site.brand}</strong>
+        <p>{footer.tagline}</p>
+      </div>
+      <div>
+        <h2>{footer.pages}</h2>
+        <ul>
+          <li>
+            <a href={home}>{footer.home}</a>
+          </li>
+          <li>
+            <a href="#sobre-mi">{site.nav.about}</a>
+          </li>
+          <li>
+            <a href="#cita">{site.book}</a>
+          </li>
+          <li>
+            <a href="#contacto">{site.nav.contact}</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2>{footer.legal}</h2>
+        <ul>
+          {footer.legalLinks.map((label) => (
+            <li>
+              <a href="#contacto">{label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>{footer.contact}</h2>
+        <ul>
+          <li class="pending-line">{footer.email}</li>
+          <li>
+            <a href="#contacto">LinkedIn</a>
+          </li>
+          <li>
+            <a href="#contacto">Instagram</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>{footer.copyright}</span>
+    </div>
+  </div>
+</footer>

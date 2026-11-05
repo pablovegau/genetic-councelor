@@ -1,0 +1,133 @@
+---
+import avatar from "../assets/mg-3149.webp";
+import portrait from "../assets/mg-3199.webp";
+import { getCopy } from "../i18n";
+import FamilyTree from "./FamilyTree.astro";
+
+const copy = getCopy(Astro.currentLocale);
+const { site, hero, situations, process, about, closing } = copy;
+
+const fills = ["f1", "f2", "f3", "f1"];
+// Un trazo por paso de la primera visita (el segundo, con el color de la franja).
+const stepIcons = [
+  '<rect x="5" y="3.5" width="14" height="17.5" rx="2" /><path d="M9 3.5h6V6H9z" /><path class="acc" d="M8.5 11.5h7M8.5 15h4.5" />',
+  '<path d="M3.5 6.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5l-3.5 3v-3h-.5a2 2 0 0 1-2-2z" /><path class="acc" d="M19.5 9.5h.5a1.5 1.5 0 0 1 1.5 1.5v5a1.5 1.5 0 0 1-1.5 1.5H20v2.5l-3-2.5h-3.5" />',
+  '<circle cx="10.5" cy="10.5" r="6.5" /><path d="M20.5 20.5l-5.4-5.4" /><path class="acc" d="M7.5 10.5l2.2 2.2 3.8-4.4" />',
+  '<rect x="3.5" y="5" width="17" height="15.5" rx="2.2" /><path d="M8 3v4M16 3v4M3.5 10h17" /><path class="acc" d="M8.8 15.2l2.4 2.4 4.2-4.6" />',
+];
+---
+
+<div id="inicio">
+  <section class="sec s-hero">
+    <div class="sec-in hero">
+      <div class="hero-copy">
+        <h1>{hero.title}</h1>
+        <p>{hero.text}</p>
+        <div class="hero-actions">
+          <a class="cta" href="#cita">
+            {site.book}
+          </a>
+          <div class="byline">
+            <span class="avatar">
+              <img
+                src={avatar.src}
+                alt=""
+                width={avatar.width}
+                height={avatar.height}
+              />
+            </span>
+            <span>
+              <strong>{site.brand}</strong>
+              <small>{hero.role}</small>
+            </span>
+          </div>
+        </div>
+        <small>{hero.confidential}</small>
+      </div>
+      <FamilyTree />
+    </div>
+  </section>
+
+  <section class="sec s-sobre" id="sobre-mi">
+    <div class="sec-in about">
+      <div class="about-img">
+        <img
+          src={portrait.src}
+          alt={about.imageAlt}
+          width={portrait.width}
+          height={portrait.height}
+          loading="lazy"
+        />
+      </div>
+      <div class="about-copy">
+        <h2>{site.brand}</h2>
+        {about.text.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+        <a class="link" href="#sobre-mi">
+          {about.link}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec s-situaciones">
+    <div class="sec-in stack">
+      <h2>{situations.title}</h2>
+      <p class="lead">{situations.lead}</p>
+      <ul class="list">
+        {situations.items.map(({ title, text }, i) => (
+          <li>
+            <svg viewBox="0 0 20 20" aria-hidden="true" stroke-width="2">
+              {i % 2 === 0 ? (
+                <circle cx="10" cy="10" r="7" class={fills[i]} />
+              ) : (
+                <rect x="3" y="3" width="14" height="14" class={fills[i]} />
+              )}
+            </svg>
+            <div>
+              <a href="#cita">{title}</a>
+              <p>{text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec s-proceso" id="primera-visita">
+    <div class="sec-in stack">
+      <h2>{process.title}</h2>
+      <p class="lead">{process.lead}</p>
+      <ol class="process">
+        {process.steps.map(({ when, title, text, key, value }, i) => (
+          <li>
+            <span class="num">{i + 1}</span>
+            <span class="step-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" set:html={stepIcons[i]} />
+            </span>
+            <small>{when}</small>
+            <h3>{title}</h3>
+            <p>{text}</p>
+            <dl>
+              <dt>{key}</dt>
+              <dd>{value}</dd>
+            </dl>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec s-cierre" id="cita">
+    <div class="sec-in cierre">
+      <div class="cierre-copy">
+        <h2>{closing.title}</h2>
+        <p class="lead">{closing.lead}</p>
+      </div>
+      <a class="cta" href="#cita">
+        {site.book}
+      </a>
+    </div>
+  </section>
+</div>

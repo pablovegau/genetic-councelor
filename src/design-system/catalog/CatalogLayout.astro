@@ -23,11 +23,7 @@ const description =
   "Catálogo interno. Tokens DTCG 2025.10, tema default, esquemas claro y oscuro. Los valores actuales son placeholders neutros.";
 ---
 
-<Base
-  title={item ? `${item.label} · Design system` : "Design system"}
-  noindex
-  languageNav={false}
->
+<Base title={item ? `${item.label} · Design system` : "Design system"} noindex>
   <div class="catalog">
     <CatalogNav currentPath={Astro.url.pathname} />
     <div class="catalog-main">
