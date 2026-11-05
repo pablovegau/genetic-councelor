@@ -33,7 +33,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] 3. Unitarios con Vitest 5 (hecho; seams S1 tokens, S2 CSS generado, S3 generador, S4 helpers y contrato): tokens (alias, paridad claro/oscuro, contraste WCAG), generador y helpers.
 - [x] 4. Componentes con Vitest en modo navegador (hecho para Box, Flex, Grid, Text e Icon) (`@vitest/browser-playwright`) y Testing Library.
 - [x] 5. (hecho, PR #1) Playwright: axe y VRT del catálogo, ejecutados en CI Linux con script Docker local. Workflow de GitHub Actions.
-- [ ] 6. Base UI (`@base-ui/react`) cuando haga falta el primer widget (menú, diálogo). Va después de los tokens, con la cabecera. Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
+- [ ] 6. Base UI (`@base-ui/react`): instalado con Button. Falta usarlo en el primer widget compuesto (menú, diálogo), con la cabecera. Recordar `isolation: isolate` en la raíz y `body { position: relative }` para Safari de iOS 26.
 - [x] `main` protegida: la comprobación `verify` es obligatoria, también para administradores, y se entra por PR. Para saltarla en una emergencia, desactivarlo en Settings → Branches.
 - [x] `update-vrt.yml` validado de extremo a extremo y la versión de Playwright vigilada por un test (`scripts/playwright-version.test.ts`).
 - [ ] Pruebas que dependen de funcionalidad futura: el menú con teclado (cuando exista), `hreflang` y `canonical` (cuando haya dominio) y la paridad de claves de i18n (cuando haya diccionarios).
@@ -46,7 +46,8 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Decidir al lanzar si el catálogo se excluye del build de producción (hoy es público con `noindex`).
 - [ ] Props que faltan según se necesiten: márgenes, props responsivos, sombras.
 - [ ] Set de iconos definitivo (hoy 4 trazos placeholder) y favicon.
-- [ ] Button = Flex + Icon + Text; luego componentes mayores. Los tokens de componente se crean con cada componente.
+- [x] Button (`src/design-system/components/Button`, Base UI para el botón y `<a>` con `href`): solo primario, tamaños md y sm, hover de solo color (sin subir ni sombra, decisión de Pablo). Tokens de componente en `tokens/component/button.tokens.json`. Pendiente más adelante: icono, variantes y trabajar mejor el hover/active.
+- [ ] Componentes mayores. Los tokens de componente se crean con cada componente.
 - [x] Tipografía semántica como tokens (cinco alias por estilo, sin el tipo compuesto `typography`). Falta el componente de texto que los use, con la reducción de los titulares en móvil.
 - [ ] Interruptor de esquema: `data-scheme` + `localStorage` + script en el `<head>` para evitar el parpadeo, cuando exista el componente.
 - [ ] Fotos de Sara con fondo blanco de plató en modo oscuro: decidir marco/tarjeta, recorte o zona clara.

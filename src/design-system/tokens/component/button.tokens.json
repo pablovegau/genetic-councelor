@@ -1,0 +1,28 @@
+{
+  "$description": "Tokens del componente Button. Solo alias de los semánticos: el esquema claro u oscuro llega por ellos.",
+  "button": {
+    "bg": {
+      "$type": "color",
+      "default": { "$value": "{color.action.bg}" },
+      "hover": { "$value": "{color.action.bg-hover}" },
+      "active": { "$value": "{color.action.bg-active}" }
+    },
+    "fg": { "$type": "color", "$value": "{color.action.fg}" },
+    "radius": { "$type": "dimension", "$value": "{radius.full}" },
+    "padding-x": {
+      "$type": "dimension",
+      "md": { "$value": "{space.6}" },
+      "sm": { "$value": "{space.4}" }
+    },
+    "padding-y": {
+      "$type": "dimension",
+      "md": { "$value": "{space.4}" },
+      "sm": { "$value": "{space.2}" }
+    },
+    "font-size": {
+      "$type": "dimension",
+      "md": { "$value": "{font.size.3}" },
+      "sm": { "$value": "{font.size.2}" }
+    }
+  }
+}

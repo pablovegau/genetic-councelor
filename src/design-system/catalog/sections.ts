@@ -93,8 +93,14 @@ export const catalogGroups: CatalogGroup[] = [
     slug: "components",
     label: "Components",
     description: "Piezas compuestas con su propio comportamiento.",
-    items: [],
-    pending: ["Button"],
+    items: [
+      {
+        slug: "button",
+        label: "Button",
+        description:
+          "Botón de acción en violeta; con href es un enlace con el mismo aspecto.",
+      },
+    ],
   },
 ];
 

@@ -24,3 +24,13 @@ El catálogo es una página interna de Astro (`/design-system/`), siempre con `n
 ## Estilos de texto (variant)
 
 `Text` acepta `variant`, un estilo semántico (`heading-1` a `heading-5`, `text-lg`, `text`, `text-sm`, `caption`) cuya lista sale de los tokens `typography.*` y se regenera con `pnpm tokens`. La variante va antes que `size`, `weight` y `leading` en la capa `props`, así que las props sueltas la sobrescriben. Por debajo de 48 rem los estilos usan su `font-size-compact` (los titulares se reducen, el texto no), salvo que el elemento lleve `size`. Un titular se renderiza como `h1` a `h5` según su variante y el resto como `p`; `as` manda siempre, porque el aspecto y el nivel del encabezado son independientes.
+
+## JavaScript mínimo: islas solo con comportamiento
+
+Los componentes del design system están en React, pero la web es estática. Astro solo envía JavaScript de React cuando el componente lleva una directiva `client:*`; sin ella es una plantilla que se convierte en HTML durante el build.
+
+- **Sin `client:*` por defecto.** Contenido, enlaces y botones que navegan (Button con `href`) van siempre como HTML estático. La home no debe contener ninguna isla.
+- **Isla solo con comportamiento real** (menú con diálogo, acordeón, formularios, probadores del catálogo), y con la directiva más tardía posible: `client:idle` o `client:visible` antes que `client:load`.
+- **Un único componente.** No se duplican los componentes en `.astro`: un Button dentro de una isla ya hidratada no añade coste, y mantener dos versiones las haría divergir.
+- **Un `<button>` con `onClick` suelto** en una página de Astro exigiría hidratarlo: se evita; si la acción puede ser un enlace o un formulario nativo, se usa eso.
+- Lo vigila un test de humo (`e2e/smoke.spec.ts`): ninguna de las tres home contiene `astro-island`.

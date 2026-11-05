@@ -1,0 +1,202 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import CopyButton from "../../../design-system/catalog/CopyButton.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
+import { Button } from "../../../design-system/components";
+import { Flex, Text } from "../../../design-system/primitives";
+
+const rows: PropRow[] = [
+  {
+    name: "size",
+    type: '"md" | "sm"',
+    default: '"md"',
+    description: "Tamaño: relleno y tamaño de letra.",
+  },
+  {
+    name: "href",
+    type: "string",
+    default: "—",
+    description:
+      "Si se indica, se renderiza un enlace (a) con el mismo aspecto. Una acción que navega debe ser un enlace.",
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    default: "false",
+    description:
+      "Solo en el botón. Gestionado por Base UI: no responde al ratón ni al teclado.",
+  },
+  {
+    name: "onClick",
+    type: "(event) => void",
+    default: "—",
+    description: "Solo en el botón. Cualquier otro atributo de button o de a.",
+  },
+];
+
+const tokens = [
+  ["--button-bg-default", "Fondo en reposo (color.action.bg)"],
+  ["--button-bg-hover", "Fondo al pasar el ratón (color.action.bg-hover)"],
+  ["--button-bg-active", "Fondo al pulsar (color.action.bg-active)"],
+  ["--button-fg", "Color del texto (color.action.fg)"],
+  ["--button-radius", "Radio de esquina (radius.full)"],
+  ["--button-padding-x-md", "Relleno horizontal md (space.6)"],
+  ["--button-padding-y-md", "Relleno vertical md (space.4)"],
+  ["--button-padding-x-sm", "Relleno horizontal sm (space.4)"],
+  ["--button-padding-y-sm", "Relleno vertical sm (space.2)"],
+  ["--button-font-size-md", "Tamaño de letra md (font.size.3)"],
+  ["--button-font-size-sm", "Tamaño de letra sm (font.size.2)"],
+];
+---
+
+<CatalogLayout group="components" item="button">
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="La acción principal de una pantalla: reservar la primera visita. El cambio al pasar el ratón es solo de color."
+    >
+      <CodeLine
+        code={'import { Button } from "design-system/components";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        <Example
+          title="Una acción que navega"
+          code={jsxSnippet("Button", { href: "#cita" }, "Reservar cita")}
+        >
+          <Button href="#cita">Reservar cita</Button>
+        </Example>
+        <Example
+          title="Una acción de la propia página"
+          code={jsxSnippet("Button", { onClick: "{…}" }, "Enviar")}
+        >
+          <Button>Enviar</Button>
+        </Example>
+        <Example
+          title="Tamaño pequeño"
+          code={jsxSnippet(
+            "Button",
+            { size: "sm", href: "#cita" },
+            "Reservar cita"
+          )}
+        >
+          <Button size="sm" href="#cita">
+            Reservar cita
+          </Button>
+        </Example>
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="states"
+      title="Estados"
+      description="Reposo, deshabilitado y los dos tamaños. Pasa el ratón, pulsa o usa el teclado sobre los botones para ver el resto."
+    >
+      <Flex gap="4" wrap align="center">
+        <Button>Reposo</Button>
+        <Button disabled>Deshabilitado</Button>
+        <Button size="sm">Pequeño</Button>
+        <Button size="sm" disabled>
+          Pequeño deshabilitado
+        </Button>
+      </Flex>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Es un button (con Base UI) o, con href, un a. Acepta además los atributos del elemento."
+    >
+      <PropsTable component="Button" rows={rows} />
+    </DocSection>
+
+    <DocSection
+      id="tokens"
+      title="Tokens"
+      description="Tokens de componente: son alias de los semánticos, así que el esquema oscuro llega solo."
+    >
+      <ul class="tokens">
+        {tokens.map(([name, description]) => (
+          <li>
+            <code>{name}</code>
+            <Text as="span" size="2" color="muted">
+              {description}
+            </Text>
+            <CopyButton value={`var(${name})`} label={`Copiar var(${name})`} />
+          </li>
+        ))}
+      </ul>
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Button" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          Usa <code>href</code> cuando la acción lleva a otra página o a otra
+          parte de esta, y el botón cuando hace algo en la misma página.
+        </li>
+        <li>
+          El texto del botón dice qué ocurre («Reservar cita»), nunca «Pulsa
+          aquí».
+        </li>
+        <li>
+          El foco con teclado se ve con un anillo del color de foco. Los estados
+          del color cumplen WCAG AA; lo comprueban los tests de tokens.
+        </li>
+        <li>
+          Deshabilitado, el botón sale del orden de tabulación. Si hace falta
+          explicar por qué, hazlo en el texto de alrededor.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
+</CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .tokens {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tokens li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-control);
+  }
+
+  .tokens code {
+    font-size: var(--font-size-2);
+  }
+
+  .tokens li :global(button) {
+    margin-inline-start: auto;
+  }
+</style>

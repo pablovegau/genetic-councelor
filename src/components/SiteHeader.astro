@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { Button } from "../design-system/components";
 import { getCopy, locales } from "../i18n";
 
 const locale = Astro.currentLocale ?? "es";
@@ -34,9 +35,9 @@ const nav = [
       ))}
     </div>
     <div class="top-actions">
-      <a class="cta cta-sm" href="#cita">
+      <Button className="cta cta-sm" size="sm" href="#cita">
         {site.book}
-      </a>
+      </Button>
       <button
         class="icon-btn scheme-btn"
         type="button"
@@ -78,9 +79,9 @@ const nav = [
       {nav.map(({ label, href }) => (
         <a href={href}>{label}</a>
       ))}
-      <a class="cta" href="#cita">
+      <Button className="cta" href="#cita">
         {site.book}
-      </a>
+      </Button>
     </nav>
   </div>
 </header>

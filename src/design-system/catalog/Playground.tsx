@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import { Button } from "../components";
 import { Box, Flex, Grid, Icon, Text } from "../primitives";
 import { iconNames } from "../primitives/Icon/icons";
 import {
@@ -146,6 +147,23 @@ const configs = {
       </Grid>
     ),
   },
+  Button: {
+    controls: [
+      { name: "size", options: ["md", "sm"] },
+      { name: "disabled", options: boolean },
+    ],
+    kinds: { disabled: "boolean" },
+    initial: {},
+    children: "Reservar cita",
+    render: (values, content) => (
+      <Button
+        size={values.size as "md" | "sm" | undefined}
+        disabled={values.disabled === "true"}
+      >
+        {content}
+      </Button>
+    ),
+  },
   Icon: {
     controls: [
       { name: "name", options: iconNames },
@@ -189,7 +207,7 @@ export function Playground({ component }: { component: PlaygroundComponent }) {
             </select>
           </label>
         ))}
-        {component === "Text" && (
+        {(component === "Text" || component === "Button") && (
           <label className={styles.field}>
             <span>contenido</span>
             <input

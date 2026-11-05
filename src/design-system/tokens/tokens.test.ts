@@ -204,10 +204,15 @@ describe.each(schemes)("tokens del esquema %s", (scheme) => {
     ).toEqual([]);
   });
 
-  it("los tokens semánticos son solo alias, nunca valores sueltos", () => {
+  it("los tokens semánticos y de componente son solo alias, nunca valores sueltos", () => {
     expect(
       [...tokens.values()]
-        .filter((t) => t.file.startsWith("semantic/") && !t.alias)
+        .filter(
+          (t) =>
+            (t.file.startsWith("semantic/") ||
+              t.file.startsWith("component/")) &&
+            !t.alias
+        )
         .map((t) => t.path)
     ).toEqual([]);
   });

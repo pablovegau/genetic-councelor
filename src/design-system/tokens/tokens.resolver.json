@@ -31,6 +31,13 @@
           "$ref": "semantic/typography.tokens.json"
         }
       ]
+    },
+    "component": {
+      "sources": [
+        {
+          "$ref": "component/button.tokens.json"
+        }
+      ]
     }
   },
   "modifiers": {
@@ -56,6 +63,9 @@
     },
     {
       "$ref": "#/sets/semantic-base"
+    },
+    {
+      "$ref": "#/sets/component"
     },
     {
       "$ref": "#/modifiers/scheme"
