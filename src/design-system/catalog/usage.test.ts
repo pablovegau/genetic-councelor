@@ -21,4 +21,25 @@ describe("ejemplo de uso en JSX", () => {
       )
     ).toBe('<Text color="muted">Hola</Text>');
   });
+
+  it("sin contenido cierra la etiqueta sobre sí misma", () => {
+    expect(jsxSnippet("Icon", { name: "check" }, "")).toBe(
+      '<Icon name="check" />'
+    );
+  });
+
+  it("escribe los números como expresión y los booleanos como atributo suelto", () => {
+    expect(
+      jsxSnippet("Grid", { columns: "3", wrap: "true", gap: "4" }, "…", {
+        columns: "number",
+        wrap: "boolean",
+      })
+    ).toBe('<Grid columns={3} wrap gap="4">…</Grid>');
+  });
+
+  it("un booleano distinto de true no se escribe", () => {
+    expect(
+      jsxSnippet("Flex", { wrap: "false" }, "…", { wrap: "boolean" })
+    ).toBe("<Flex>…</Flex>");
+  });
 });

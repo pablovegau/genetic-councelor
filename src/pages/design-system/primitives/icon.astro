@@ -1,34 +1,154 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import { quote, type PropRow } from "../../../design-system/catalog/prop-docs";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
 import { Flex, Icon, Text } from "../../../design-system/primitives";
 import { iconNames } from "../../../design-system/primitives/Icon/icons";
+import {
+  spaceSteps,
+  textColors,
+} from "../../../design-system/style-props.generated";
+
+const rows: PropRow[] = [
+  {
+    name: "name",
+    type: quote(iconNames),
+    default: "—",
+    description: "Icono a dibujar. Obligatoria.",
+  },
+  {
+    name: "iconSize",
+    type: quote(spaceSteps),
+    default: '"5"',
+    description: "Lado del icono, como paso de la escala space.",
+  },
+  {
+    name: "color",
+    type: quote(textColors),
+    default: "currentColor",
+    description: "Rol de color de texto. Sin él hereda el color del texto.",
+  },
+  {
+    name: "label",
+    type: "string",
+    default: "—",
+    description:
+      "Si se indica, el icono es informativo (role img). Si no, es decorativo y se oculta a los lectores de pantalla.",
+  },
+];
 ---
 
 <CatalogLayout group="primitives" item="icon">
-  <Flex direction="column" gap="6">
-    <Text size="2" color="muted">
-      Decorativo por defecto (<code>aria-hidden</code>); informativo si lleva
-      <code>label</code>. Hereda <code>currentColor</code>. Set de iconos:
-      placeholder.
-    </Text>
-    <Flex gap="6" wrap align="end">
-      {iconNames.map((name) => (
-        <Flex direction="column" gap="1" align="center">
-          <Icon name={name} iconSize="8" />
-          <Text as="span" size="1" color="muted">
-            {name}
-          </Text>
-        </Flex>
-      ))}
-    </Flex>
-    <Flex gap="4" align="center">
-      <Icon name="check" iconSize="4" />
-      <Icon name="check" iconSize="6" color="muted" />
-      <Icon name="close" iconSize="8" label="Cerrar" />
-    </Flex>
-    <Flex gap="2" align="center" p="3" border="default" radius="control" inline>
-      <Text as="span">Composición</Text>
-      <Icon name="arrow-right" iconSize="4" />
-    </Flex>
-  </Flex>
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="Iconos de trazo que heredan el color del texto. El set es provisional hasta elegir el definitivo."
+    >
+      <CodeLine
+        code={'import { Icon } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        <Example
+          title="Decorativo junto a un texto"
+          code={jsxSnippet("Icon", { name: "arrow-right", iconSize: "4" }, "")}
+        >
+          <Flex gap="2" align="center" inline>
+            <Text as="span">Reservar cita</Text>
+            <Icon name="arrow-right" iconSize="4" />
+          </Flex>
+        </Example>
+        <Example
+          title="Informativo, con su etiqueta"
+          code={jsxSnippet(
+            "Icon",
+            { name: "close", iconSize: "8", label: "Cerrar" },
+            ""
+          )}
+        >
+          <Icon name="close" iconSize="8" label="Cerrar" />
+        </Example>
+        <Example
+          title="Tamaños y color"
+          code={jsxSnippet(
+            "Icon",
+            { name: "check", iconSize: "6", color: "muted" },
+            ""
+          )}
+        >
+          <Flex gap="4" align="center">
+            <Icon name="check" iconSize="4" />
+            <Icon name="check" iconSize="6" color="muted" />
+            <Icon name="check" iconSize="8" />
+          </Flex>
+        </Example>
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="gallery"
+      title="Iconos disponibles"
+      description="El nombre es el valor de la prop name."
+    >
+      <Flex gap="6" wrap align="end">
+        {iconNames.map((name) => (
+          <Flex direction="column" gap="1" align="center">
+            <Icon name={name} iconSize="8" />
+            <Text as="span" size="1" color="muted">
+              {name}
+            </Text>
+          </Flex>
+        ))}
+      </Flex>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Además de estas, acepta cualquier atributo de un svg."
+    >
+      <PropsTable component="Icon" rows={rows} />
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Icon" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          Un icono que acompaña a un texto es decorativo: déjalo sin
+          <code>label</code> y queda oculto a los lectores de pantalla.
+        </li>
+        <li>
+          Un icono que es lo único dentro de un botón o enlace necesita nombre:
+          ponlo en el botón (<code>aria-label</code>) o usa
+          <code>label</code> en el icono, pero no en los dos.
+        </li>
+        <li>
+          Los trazos usan <code>currentColor</code>, así que heredan el
+          contraste del texto que los rodea.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
 </CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+</style>

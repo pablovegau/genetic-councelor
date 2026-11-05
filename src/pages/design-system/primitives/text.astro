@@ -1,7 +1,13 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
-import CopyButton from "../../../design-system/catalog/CopyButton.astro";
-import { TextPlayground } from "../../../design-system/catalog/TextPlayground";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import { quote } from "../../../design-system/catalog/prop-docs";
 import { typographySpec } from "../../../design-system/catalog/token-data";
 import { jsxSnippet } from "../../../design-system/catalog/usage";
 import { Text } from "../../../design-system/primitives";
@@ -12,9 +18,6 @@ import {
   textColors,
   textVariants,
 } from "../../../design-system/style-props.generated";
-
-const quote = (values: readonly string[]) =>
-  values.map((value) => `"${value}"`).join(" | ");
 
 const props = [
   {
@@ -107,92 +110,38 @@ const summary = (variant: string) => {
 ---
 
 <CatalogLayout group="primitives" item="text">
-  <div class="page">
-    <section class="block" aria-labelledby="usage">
-      <div class="heading">
-        <h2 id="usage">Uso</h2>
-        <p>
-          Todo el texto de la web pasa por <code>Text</code>. Una variante
-          aplica un estilo completo; las props sueltas lo ajustan.
-        </p>
-      </div>
-      <div class="code">
-        <code>
-          import {"{"} Text {"}"} from "design-system/primitives";
-        </code>
-        <CopyButton
-          value={'import { Text } from "design-system/primitives";'}
-          label="Copiar la importación"
-        />
-      </div>
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="Todo el texto de la web pasa por Text. Una variante aplica un estilo completo; las props sueltas lo ajustan."
+    >
+      <CodeLine
+        code={'import { Text } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
       <div class="examples">
         {examples.map((example) => (
-          <div class="example">
-            <h3>{example.title}</h3>
-            <div class="stage">
-              <Text {...example.sample}>{example.text}</Text>
-            </div>
-            <div class="code">
-              <code>{example.code}</code>
-              <CopyButton value={example.code} label="Copiar el ejemplo" />
-            </div>
-          </div>
+          <Example title={example.title} code={example.code}>
+            <Text {...example.sample}>{example.text}</Text>
+          </Example>
         ))}
       </div>
-    </section>
+    </DocSection>
 
-    <section class="block" aria-labelledby="props">
-      <div class="heading">
-        <h2 id="props">Props</h2>
-        <p>
-          Además de estas, acepta los style props de Box (espaciado, fondo,
-          borde y radio) y cualquier atributo del elemento elegido con
-          <code>as</code>.
-        </p>
-      </div>
-      {/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex -- región con scroll horizontal: debe poder enfocarse con el teclado (axe: scrollable-region-focusable) */}
-      <div
-        class="table-wrap"
-        tabindex="0"
-        role="region"
-        aria-label="Tabla de props de Text"
-      >
-        {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">Prop</th>
-              <th scope="col">Valores</th>
-              <th scope="col">Por defecto</th>
-              <th scope="col">Descripción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.map((prop) => (
-              <tr>
-                <th scope="row">
-                  <code>{prop.name}</code>
-                </th>
-                <td>
-                  <code class="type">{prop.type}</code>
-                </td>
-                <td>{prop.default}</td>
-                <td>{prop.description}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <DocSection
+      id="props"
+      title="Props"
+      description="Además de estas, acepta los style props de Box (espaciado, fondo, borde y radio) y cualquier atributo del elemento elegido con as."
+    >
+      <PropsTable component="Text" rows={props} />
+    </DocSection>
 
-    <section class="block" aria-labelledby="variants">
-      <div class="heading">
-        <h2 id="variants">Variantes</h2>
-        <p>
-          Cada variante con su etiqueta por defecto y su tamaño de escritorio.
-          Redimensiona la ventana para ver cómo se reducen los titulares.
-        </p>
-      </div>
+    <DocSection
+      id="variants"
+      title="Variantes"
+      description="Cada variante con su etiqueta por defecto y su tamaño de escritorio. Redimensiona la ventana para ver cómo se reducen los titulares."
+    >
       <div class="variants">
         {textVariants.map((variant) => (
           <div class="variant">
@@ -210,21 +159,18 @@ const summary = (variant: string) => {
           </div>
         ))}
       </div>
-    </section>
+    </DocSection>
 
-    <section class="block" aria-labelledby="playground">
-      <div class="heading">
-        <h2 id="playground">Probador</h2>
-        <p>Elige props y copia el código resultante.</p>
-      </div>
-      <TextPlayground client:load />
-    </section>
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Text" client:load />
+    </DocSection>
 
-    <section class="block" aria-labelledby="a11y">
-      <div class="heading">
-        <h2 id="a11y">Accesibilidad</h2>
-      </div>
-      <ul class="notes">
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
         <li>
           El aspecto y el nivel son independientes: elige la variante por cómo
           debe verse y <code>as</code> por el lugar que ocupa en el documento.
@@ -238,121 +184,15 @@ const summary = (variant: string) => {
           Los tamaños usan <code>rem</code>, así que respetan el tamaño de
           fuente que el usuario haya elegido en su navegador.
         </li>
-      </ul>
-    </section>
-  </div>
+      </Notes>
+    </DocSection>
+  </DocPage>
 </CatalogLayout>
 
 <style>
-  .page {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-16);
-  }
-
-  .block,
-  .heading,
-  .example {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .heading {
-    gap: var(--space-1);
-  }
-
-  h2,
-  h3,
-  p {
-    margin: 0;
-  }
-
-  h2 {
-    font-size: var(--font-size-6);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  h3 {
-    font-size: var(--font-size-3);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .heading p {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-2);
-  }
-
   .examples {
     display: grid;
     gap: var(--space-8);
-  }
-
-  .stage {
-    padding: var(--space-6);
-    overflow: hidden;
-    border: var(--border-width-1) solid var(--color-border-default);
-    border-radius: var(--radius-surface);
-    background-color: var(--color-bg-subtle);
-  }
-
-  .code {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border: var(--border-width-1) solid var(--color-border-default);
-    border-radius: var(--radius-surface);
-    background-color: var(--color-bg-surface);
-  }
-
-  .code code {
-    min-inline-size: 0;
-    overflow-wrap: anywhere;
-    font-size: var(--font-size-2);
-  }
-
-  .table-wrap:focus-visible {
-    outline: var(--border-width-2) solid var(--color-focus-ring);
-    outline-offset: var(--border-width-2);
-  }
-
-  .table-wrap {
-    overflow-x: auto;
-    border: var(--border-width-1) solid var(--color-border-default);
-    border-radius: var(--radius-surface);
-  }
-
-  table {
-    inline-size: 100%;
-    border-collapse: collapse;
-    font-size: var(--font-size-2);
-    text-align: start;
-  }
-
-  th,
-  td {
-    padding: var(--space-3) var(--space-4);
-    border-block-end: var(--border-width-1) solid var(--color-border-default);
-    text-align: start;
-    vertical-align: top;
-  }
-
-  thead th {
-    background-color: var(--color-bg-subtle);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  tbody tr:last-child th,
-  tbody tr:last-child td {
-    border-block-end: 0;
-  }
-
-  .type {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-1);
-    overflow-wrap: anywhere;
   }
 
   .variants {
@@ -382,18 +222,7 @@ const summary = (variant: string) => {
     font-weight: var(--font-weight-semibold);
   }
 
-  .notes {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+  p {
     margin: 0;
-    padding-inline-start: var(--space-5);
-    font-size: var(--font-size-3);
-    line-height: var(--font-line-height-relaxed);
-  }
-
-  p code,
-  li code {
-    font-size: var(--font-size-2);
   }
 </style>

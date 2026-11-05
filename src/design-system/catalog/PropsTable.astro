@@ -1,0 +1,89 @@
+---
+import type { PropRow } from "./prop-docs";
+
+interface Props {
+  /** Nombre del componente, para el nombre accesible de la tabla. */
+  component: string;
+  rows: PropRow[];
+}
+
+const { component, rows } = Astro.props;
+---
+
+{/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex -- región con scroll horizontal: debe poder enfocarse con el teclado (axe: scrollable-region-focusable) */}
+<div
+  class="table-wrap"
+  tabindex="0"
+  role="region"
+  aria-label={`Tabla de props de ${component}`}
+>
+  {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Prop</th>
+        <th scope="col">Valores</th>
+        <th scope="col">Por defecto</th>
+        <th scope="col">Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <th scope="row">
+            <code>{row.name}</code>
+          </th>
+          <td>
+            <code class="type">{row.type}</code>
+          </td>
+          <td>{row.default}</td>
+          <td>{row.description}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrap {
+    overflow-x: auto;
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+  }
+
+  .table-wrap:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: var(--border-width-2);
+  }
+
+  table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-2);
+    text-align: start;
+  }
+
+  th,
+  td {
+    padding: var(--space-3) var(--space-4);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  thead th {
+    background-color: var(--color-bg-subtle);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-block-end: 0;
+  }
+
+  .type {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-1);
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,6 +1,55 @@
 ---
 import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import {
+  boxRows,
+  gapRows,
+  quote,
+  type PropRow,
+} from "../../../design-system/catalog/prop-docs";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
 import { Box, Flex, Text } from "../../../design-system/primitives";
+
+const rows: PropRow[] = [
+  {
+    name: "direction",
+    type: quote(["row", "column", "row-reverse", "column-reverse"]),
+    default: '"row"',
+    description: "Eje principal.",
+  },
+  {
+    name: "align",
+    type: quote(["start", "center", "end", "stretch", "baseline"]),
+    default: "—",
+    description: "Alineación en el eje cruzado.",
+  },
+  {
+    name: "justify",
+    type: quote(["start", "center", "end", "between", "around"]),
+    default: "—",
+    description: "Distribución en el eje principal.",
+  },
+  {
+    name: "wrap",
+    type: "boolean",
+    default: "false",
+    description: "Permite que los hijos pasen a otra línea.",
+  },
+  {
+    name: "inline",
+    type: "boolean",
+    default: "false",
+    description: "Usa display: inline-flex en lugar de flex.",
+  },
+  ...gapRows,
+];
+
 const words = [
   "uno",
   "dos",
@@ -18,35 +67,101 @@ const words = [
 ---
 
 <CatalogLayout group="primitives" item="flex">
-  <Flex direction="column" gap="6">
-    <Text size="2" color="muted">
-      Un Flex es un Box con{" "}
-      <code>direction align justify wrap inline gap gapX gapY</code>.
-    </Text>
-    <Flex
-      gap="2"
-      justify="between"
-      align="center"
-      p="3"
-      bg="subtle"
-      radius="control"
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="Un Box con flexbox y separación entre hijos. Para colocar elementos en una fila o una columna."
     >
-      <Text as="span">justify=between</Text>
-      <Text as="span">align=center</Text>
-      <Text as="span">gap=2</Text>
-    </Flex>
-    <Flex direction="column" gap="1" p="3" bg="subtle" radius="control">
-      <Text as="span">direction=column</Text>
-      <Text as="span">gap=1</Text>
-    </Flex>
-    <Flex gap="2" wrap p="3" bg="subtle" radius="control">
-      {words.map((word) => (
-        <Box px="3" py="1" bg="surface" border="default" radius="control">
-          <Text as="span" size="2">
-            {word}
-          </Text>
-        </Box>
-      ))}
-    </Flex>
-  </Flex>
+      <CodeLine
+        code={'import { Flex } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        <Example
+          title="Repartir y centrar en una fila"
+          code={jsxSnippet(
+            "Flex",
+            { gap: "2", justify: "between", align: "center" },
+            "…"
+          )}
+        >
+          <Flex
+            gap="2"
+            justify="between"
+            align="center"
+            p="3"
+            bg="surface"
+            radius="control"
+          >
+            <Text as="span">justify=between</Text>
+            <Text as="span">align=center</Text>
+            <Text as="span">gap=2</Text>
+          </Flex>
+        </Example>
+        <Example
+          title="Una columna"
+          code={jsxSnippet("Flex", { direction: "column", gap: "1" }, "…")}
+        >
+          <Flex direction="column" gap="1" p="3" bg="surface" radius="control">
+            <Text as="span">direction=column</Text>
+            <Text as="span">gap=1</Text>
+          </Flex>
+        </Example>
+        <Example
+          title="Pasar a otra línea"
+          code={jsxSnippet("Flex", { gap: "2", wrap: "true" }, "…", {
+            wrap: "boolean",
+          })}
+        >
+          <Flex gap="2" wrap>
+            {words.map((word) => (
+              <Box px="3" py="1" bg="surface" border="default" radius="control">
+                <Text as="span" size="2">
+                  {word}
+                </Text>
+              </Box>
+            ))}
+          </Flex>
+        </Example>
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Además de estas, acepta todos los style props de Box y cualquier atributo del elemento elegido con as."
+    >
+      <PropsTable component="Flex" rows={[...rows, ...boxRows]} />
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Flex" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          El orden visual y el del DOM deben coincidir: con
+          <code>row-reverse</code> o <code>column-reverse</code> el teclado y
+          los lectores de pantalla siguen el orden del código, no el que se ve.
+        </li>
+        <li>
+          Con <code>wrap</code> el contenido se recoloca al ampliar el texto o
+          reducir la ventana, en lugar de desbordarse.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
 </CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+</style>
