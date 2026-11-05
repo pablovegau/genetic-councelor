@@ -1,0 +1,48 @@
+---
+interface Props {
+  /** Lo que se copia al portapapeles. */
+  value: string;
+  /** Texto accesible; por defecto «Copiar» y el valor. */
+  label?: string;
+}
+
+const { value, label } = Astro.props;
+---
+
+<button
+  type="button"
+  class="copy"
+  data-copy={value}
+  aria-label={label ?? `Copiar ${value}`}
+>
+  Copiar
+</button>
+
+<style>
+  .copy {
+    flex: none;
+    padding: var(--space-1) var(--space-2);
+    border: var(--border-width-1) solid var(--color-border-strong);
+    border-radius: var(--radius-control);
+    background-color: var(--color-bg-surface);
+    color: var(--color-text-default);
+    font: inherit;
+    font-size: var(--font-size-1);
+    cursor: pointer;
+  }
+
+  .copy:hover {
+    background-color: var(--color-bg-subtle);
+  }
+
+  .copy:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: var(--border-width-2);
+  }
+
+  .copy[data-copied] {
+    background-color: var(--color-action-bg);
+    border-color: var(--color-action-bg);
+    color: var(--color-action-fg);
+  }
+</style>

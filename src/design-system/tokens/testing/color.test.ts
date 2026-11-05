@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   colorValueToSrgb,
   contrastRatio,
+  isInSrgbGamut,
   oklchToSrgb,
   type Rgb,
 } from "./color";
@@ -23,6 +24,20 @@ describe("conversión de oklch a sRGB", () => {
 
   it("el magenta del ejemplo de la especificación DTCG es magenta en sRGB", () => {
     close(oklchToSrgb(0.7016, 0.3225, 328.363), [1, 0, 1], 0.01);
+  });
+});
+
+describe("gamut sRGB", () => {
+  it("el rojo primario de sRGB está dentro del gamut", () => {
+    expect(isInSrgbGamut(0.628, 0.2577, 29.23)).toBe(true);
+  });
+
+  it("un gris está dentro del gamut", () => {
+    expect(isInSrgbGamut(0.5, 0, 0)).toBe(true);
+  });
+
+  it("una saturación imposible en sRGB queda fuera del gamut", () => {
+    expect(isInSrgbGamut(0.55, 0.4, 288)).toBe(false);
   });
 });
 

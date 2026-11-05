@@ -1,0 +1,273 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CopyButton from "../../../design-system/catalog/CopyButton.astro";
+import TokenCard from "../../../design-system/catalog/TokenCard.astro";
+import {
+  font,
+  primitiveLookup,
+  tokensOf,
+  typographySpec,
+  typographyTokens,
+} from "../../../design-system/catalog/token-data";
+import {
+  describeValue,
+  tokenVariable,
+  typographyDeclarations,
+  typographyStyles,
+  typographyProperties,
+} from "../../../design-system/catalog/tokens";
+
+const styles = typographyStyles(typographyTokens);
+const headings = styles.filter((style) => style.startsWith("heading-"));
+const texts = styles.filter((style) => !style.startsWith("heading-"));
+
+// Un estilo de texto aplicado con sus cinco variables; el peso se puede cambiar para compararlos.
+const inline = (style: string, weight?: string) =>
+  typographyProperties
+    .map((property) => {
+      const variable = tokenVariable(`typography.${style}.${property}`);
+      if (property === "font-weight" && weight)
+        return `font-weight: var(--font-weight-${weight})`;
+      return property === "letter-spacing"
+        ? `letter-spacing: calc(var(${variable}) * 1em)`
+        : `${property}: var(${variable})`;
+    })
+    .join("; ");
+
+const summary = (style: string) => {
+  const spec = typographySpec(style);
+  const size =
+    spec.compactPx === spec.px
+      ? `${spec.px}px`
+      : `${spec.px}px (móvil ${spec.compactPx}px)`;
+  return `${size} · peso ${String(spec.weight)} · interlineado ${String(spec.lineHeight)} · tracking ${String(spec.tracking)}`;
+};
+
+const primitives = [
+  { id: "family", title: "Familia", prefix: "font.family.", min: "16rem" },
+  { id: "size", title: "Tamaño", prefix: "font.size.", min: "9rem" },
+  { id: "weight", title: "Peso", prefix: "font.weight.", min: "12rem" },
+  {
+    id: "leading",
+    title: "Interlineado",
+    prefix: "font.line-height.",
+    min: "22rem",
+  },
+  { id: "tracking", title: "Tracking", prefix: "font.tracking.", min: "12rem" },
+];
+const paragraph =
+  "Un estudio genético no es una sentencia: ayuda a conocer un riesgo y a decidir con calma qué hacer con esa información.";
+---
+
+<CatalogLayout group="tokens" item="typography">
+  <div class="page">
+    <section class="block" aria-labelledby="headings">
+      <div class="heading">
+        <h2 id="headings">Titulares · Funnel Display</h2>
+        <p>
+          Tamaños de escritorio. La reducción en pantallas pequeñas se definirá
+          con el componente de texto.
+        </p>
+      </div>
+      <div class="specimens">
+        {headings.map((style) => (
+          <div class="specimen">
+            <div class="sample" style={inline(style)}>
+              {style === "heading-1"
+                ? "Árbol familiar"
+                : "Asesoramiento genético"}
+            </div>
+            <div class="meta">
+              <code>{style}</code>
+              <span>{summary(style)}</span>
+              <CopyButton
+                value={typographyDeclarations(style)}
+                label={`Copiar el CSS de ${style}`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="texts">
+      <div class="heading">
+        <h2 id="texts">Texto · Funnel Sans</h2>
+        <p>Cada estilo en peso regular y semibold.</p>
+      </div>
+      <div class="specimens">
+        {texts.map((style) => (
+          <div class="specimen">
+            <div class="columns">
+              <div class="sample" style={inline(style, "regular")}>
+                {paragraph}
+              </div>
+              <div class="sample" style={inline(style, "semibold")}>
+                {paragraph}
+              </div>
+            </div>
+            <div class="meta">
+              <code>{style}</code>
+              <span>{summary(style)}</span>
+              <CopyButton
+                value={typographyDeclarations(style)}
+                label={`Copiar el CSS de ${style}`}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="primitives">
+      <div class="heading">
+        <h2 id="primitives">Primitivos</h2>
+        <p>La escala de la que salen los estilos.</p>
+      </div>
+      {primitives.map((group) => (
+        <div class="group">
+          <h3>{group.title}</h3>
+          <div class="grid" style={`--card-min: ${group.min}`}>
+            {tokensOf(font, group.prefix).map(({ path, value }) => (
+              <TokenCard
+                token={path}
+                details={describeValue(value, primitiveLookup)}
+              >
+                {group.id === "family" && (
+                  <span style={`font-family: var(${tokenVariable(path)})`}>
+                    Asesoramiento genético
+                  </span>
+                )}
+                {group.id === "size" && (
+                  <span style={`font-size: var(${tokenVariable(path)})`}>
+                    Aa
+                  </span>
+                )}
+                {group.id === "weight" && (
+                  <span
+                    style={`font-weight: var(${tokenVariable(path)}); font-size: var(--font-size-8)`}
+                  >
+                    Aa
+                  </span>
+                )}
+                {group.id === "leading" && (
+                  <span
+                    class="paragraph"
+                    style={`line-height: var(${tokenVariable(path)})`}
+                  >
+                    {paragraph}
+                  </span>
+                )}
+                {group.id === "tracking" && (
+                  <span
+                    style={`font-size: var(--font-size-8); letter-spacing: calc(var(${tokenVariable(path)}) * 1em)`}
+                  >
+                    Genética
+                  </span>
+                )}
+              </TokenCard>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+</CatalogLayout>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .block,
+  .heading,
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .heading {
+    gap: var(--space-1);
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .heading p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .specimens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .specimen {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding-block-end: var(--space-6);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+  }
+
+  .columns {
+    display: grid;
+    gap: var(--space-4) var(--space-8);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sample {
+    overflow-wrap: anywhere;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .meta code {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--card-min, 13rem), 1fr)
+    );
+  }
+
+  .paragraph {
+    font-size: var(--font-size-3);
+  }
+
+  @media (min-width: 48rem) {
+    .columns {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

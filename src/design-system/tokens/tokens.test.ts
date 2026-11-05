@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   colorValueToSrgb,
   contrastRatio,
+  isInSrgbGamut,
   type ColorValue,
 } from "./testing/color";
 import {
@@ -263,10 +264,151 @@ describe("resolver del tema default", () => {
   });
 });
 
+describe("rampas de color primitivas", () => {
+  const ramps = ["neutral", "violet", "orange", "red"];
+  const tokens = loadScheme("light");
+  const rampTokens = (ramp: string) =>
+    [...tokens.values()]
+      .filter((token) => token.path.startsWith(`color.${ramp}.`))
+      .map((token) => ({
+        step: Number(token.path.split(".")[2]),
+        components: (token.value as ColorValue).components as number[],
+      }))
+      .sort((first, second) => first.step - second.step);
+
+  it.each(ramps)("la rampa %s existe y tiene pasos", (ramp) => {
+    expect(rampTokens(ramp).length).toBeGreaterThan(0);
+  });
+
+  it("todas las rampas tienen los mismos pasos", () => {
+    const stepsOf = (ramp: string) => rampTokens(ramp).map(({ step }) => step);
+    for (const ramp of ramps) expect(stepsOf(ramp)).toEqual(stepsOf("neutral"));
+  });
+
+  it.each(ramps)("en la rampa %s la luminosidad baja en cada paso", (ramp) => {
+    const lightness = rampTokens(ramp).map(({ components }) => components[0]!);
+    lightness.slice(1).forEach((value, index) => {
+      expect(value).toBeLessThan(lightness[index]!);
+    });
+  });
+
+  it.each(ramps)("todos los pasos de la rampa %s caben en sRGB", (ramp) => {
+    const outside = rampTokens(ramp)
+      .filter(({ components: [l, c, h] }) => !isInSrgbGamut(l!, c!, h!))
+      .map(({ step }) => step);
+    expect(outside).toEqual([]);
+  });
+});
+
+describe("escalas tipográficas", () => {
+  const tokens = loadScheme("light");
+  const numbers = (prefix: string) =>
+    [...tokens.values()]
+      .filter((token) => token.path.startsWith(prefix))
+      .map((token) => {
+        const value = token.value as { value?: number } | number;
+        return {
+          key: token.path.slice(prefix.length),
+          value: typeof value === "number" ? value : (value.value ?? NaN),
+        };
+      });
+
+  it("los tamaños de fuente crecen con cada paso", () => {
+    const sizes = numbers("font.size.")
+      .sort((first, second) => Number(first.key) - Number(second.key))
+      .map(({ value }) => value);
+    sizes.slice(1).forEach((value, index) => {
+      expect(value).toBeGreaterThan(sizes[index]!);
+    });
+  });
+
+  const styles = [
+    "heading-1",
+    "heading-2",
+    "heading-3",
+    "heading-4",
+    "heading-5",
+    "text-lg",
+    "text",
+    "text-sm",
+    "caption",
+  ];
+  const sizeOf = (style: string) => {
+    const token = tokens.get(`typography.${style}.font-size`);
+    return (token?.value as { value: number }).value;
+  };
+
+  it.each(styles)("el estilo %s define sus seis propiedades", (style) => {
+    const properties = [...tokens.keys()]
+      .filter((path) => path.startsWith(`typography.${style}.`))
+      .map((path) => path.split(".")[2])
+      .sort();
+    expect(properties).toEqual([
+      "font-family",
+      "font-size",
+      "font-size-compact",
+      "font-weight",
+      "letter-spacing",
+      "line-height",
+    ]);
+  });
+
+  const compactOf = (style: string) => {
+    const token = tokens.get(`typography.${style}.font-size-compact`);
+    return (token?.value as { value: number }).value;
+  };
+
+  it.each(styles)(
+    "el tamaño compacto de %s nunca es mayor que el de escritorio",
+    (style) => {
+      expect(compactOf(style)).toBeLessThanOrEqual(sizeOf(style));
+    }
+  );
+
+  it("los titulares se reducen en pantallas pequeñas y el texto no", () => {
+    for (const style of styles.slice(0, 5))
+      expect(compactOf(style)).toBeLessThan(sizeOf(style));
+    for (const style of styles.slice(5))
+      expect(compactOf(style)).toBe(sizeOf(style));
+  });
+
+  it("los titulares bajan de tamaño de heading-1 a heading-5", () => {
+    const sizes = styles.slice(0, 5).map(sizeOf);
+    sizes.slice(1).forEach((size, index) => {
+      expect(size).toBeLessThan(sizes[index]!);
+    });
+  });
+
+  it("los estilos de texto bajan de tamaño de text-lg a caption", () => {
+    const sizes = styles.slice(5).map(sizeOf);
+    sizes.slice(1).forEach((size, index) => {
+      expect(size).toBeLessThan(sizes[index]!);
+    });
+  });
+
+  it("los titulares usan la familia display y el texto la familia sans", () => {
+    const familyOf = (style: string) =>
+      tokens.get(`typography.${style}.font-family`)?.chain.at(-1);
+    expect(new Set(styles.slice(0, 5).map(familyOf))).toEqual(
+      new Set(["font.family.display"])
+    );
+    expect(new Set(styles.slice(5).map(familyOf))).toEqual(
+      new Set(["font.family.sans"])
+    );
+  });
+});
+
 // Política de contraste del proyecto (WCAG 2.x): ver ADR 0005.
 //  - texto: 4,5:1 (AA); el texto principal, 7:1 (AAA)
 //  - componentes de interfaz (borde fuerte, foco): 3:1 (1.4.11); el borde decorativo está exento
-const surfaces = ["bg.page", "bg.surface", "bg.subtle"];
+const surfaces = [
+  "bg.page",
+  "bg.surface",
+  "bg.subtle",
+  "tint.violet",
+  "tint.orange",
+  "tint.red",
+];
 const contrastPairs = [
   ...surfaces.flatMap((surface) => [
     { fg: "text.default", bg: surface, min: 7 },
@@ -274,8 +416,21 @@ const contrastPairs = [
     { fg: "border.strong", bg: surface, min: 3 },
     { fg: "focus.ring", bg: surface, min: 3 },
   ]),
+  // Texto sobre cada color de relleno (incluidos los estados del botón).
   { fg: "action.fg", bg: "action.bg", min: 4.5 },
+  { fg: "action.fg", bg: "action.bg-hover", min: 4.5 },
+  { fg: "action.fg", bg: "action.bg-active", min: 4.5 },
   { fg: "text.inverse", bg: "action.bg", min: 4.5 },
+  { fg: "accent.fg", bg: "accent.bg", min: 4.5 },
+  { fg: "danger.fg", bg: "danger.bg", min: 4.5 },
+  // Los rellenos de color frente a las superficies donde se colocan (componentes de interfaz).
+  ...["bg.page", "bg.surface"].flatMap((surface) =>
+    ["action.bg", "accent.bg", "danger.bg"].map((fill) => ({
+      fg: fill,
+      bg: surface,
+      min: 3,
+    }))
+  ),
 ];
 
 describe.each(schemes)("contraste WCAG en el esquema %s", (scheme) => {

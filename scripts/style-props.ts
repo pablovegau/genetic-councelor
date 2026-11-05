@@ -10,6 +10,7 @@ export interface TokenSources {
   colorPrimitive: Group;
   colorLight: Group;
   base: Group;
+  typography: Group;
 }
 
 const keys = (group: unknown) =>
@@ -31,7 +32,11 @@ const listNames: Record<string, string> = {
   FontSize: "fontSizes",
   FontWeight: "fontWeights",
   LineHeight: "lineHeights",
+  Variant: "textVariants",
 };
+
+// Por debajo de este ancho los estilos de texto usan su tamaño compacto.
+const compactBreakpoint = "47.99rem";
 
 export function buildStyleProps(sources: TokenSources) {
   const font = at(sources.font, "font");
@@ -46,6 +51,7 @@ export function buildStyleProps(sources: TokenSources) {
     FontSize: keys(font.size),
     FontWeight: keys(font.weight),
     LineHeight: keys(font["line-height"]),
+    Variant: keys(at(sources.typography, "typography")),
   };
   const space = scales.Space!;
 
@@ -77,6 +83,18 @@ export function buildStyleProps(sources: TokenSources) {
       (v) => `border: var(--border-width-1) solid var(--color-border-${v})`,
     ],
     radius: [scales.Radius!, (v) => `border-radius: var(--radius-${v})`],
+    // Antes que size, weight y leading: las props sueltas sobrescriben la variante.
+    variant: [
+      scales.Variant!,
+      (v) =>
+        [
+          `font-family: var(--typography-${v}-font-family)`,
+          `font-size: var(--typography-${v}-font-size)`,
+          `font-weight: var(--typography-${v}-font-weight)`,
+          `line-height: var(--typography-${v}-line-height)`,
+          `letter-spacing: calc(var(--typography-${v}-letter-spacing) * 1em)`,
+        ].join("; "),
+    ],
     size: [scales.FontSize!, (v) => `font-size: var(--font-size-${v})`],
     weight: [scales.FontWeight!, (v) => `font-weight: var(--font-weight-${v})`],
     leading: [
@@ -90,7 +108,12 @@ export function buildStyleProps(sources: TokenSources) {
       (value) => `  [data-${kebab(prop)}="${value}"] { ${declaration(value)}; }`
     )
   );
-  const css = `/* ${header} */\n@layer base, components, props;\n\n@layer props {\n${rules.join("\n")}\n}\n`;
+  // En pantallas pequeñas, cada variante usa su tamaño compacto salvo que el elemento lleve `size`.
+  const compact = scales.Variant!.map(
+    (v) =>
+      `    [data-variant="${v}"]:not([data-size]) { font-size: var(--typography-${v}-font-size-compact); }`
+  );
+  const css = `/* ${header} */\n@layer base, components, props;\n\n@layer props {\n${rules.join("\n")}\n  @media (max-width: ${compactBreakpoint}) {\n${compact.join("\n")}\n  }\n}\n`;
 
   // Cada escala se exporta como lista `as const` y como tipo unión derivado de ella,
   // de modo que el catálogo y los tests recorren los mismos valores que aceptan los props.

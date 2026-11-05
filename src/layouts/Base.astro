@@ -1,26 +1,21 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { Font } from "astro:assets";
 import "../design-system/tokens.generated.css";
 import "../design-system/style-props.generated.css";
 import "../design-system/base.css";
 
 interface Props {
   title: string;
+  description?: string;
   /** Páginas internas que nunca se indexan, ni siquiera al publicar. */
   noindex?: boolean;
-  languageNav?: boolean;
 }
 
-const { title, noindex = false, languageNav = true } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const locale = Astro.currentLocale ?? "es";
 // Hasta publicar con el dominio definitivo la web no se indexa.
 // Al publicar: PUBLIC_ALLOW_INDEXING=true en las variables de entorno de Vercel.
 const indexable = !noindex && import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
-const locales = [
-  { code: "es", label: "Español" },
-  { code: "ca", label: "Català" },
-  { code: "en", label: "English" },
-];
 ---
 
 <!doctype html>
@@ -33,24 +28,35 @@ const locales = [
       content={indexable ? "index, follow" : "noindex, nofollow"}
     />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <Font cssVariable="--font-funnel-display" preload={[{ subset: "latin" }]} />
+    <Font cssVariable="--font-funnel-sans" preload={[{ subset: "latin" }]} />
+    <script is:inline>
+      // Esquema elegido por la persona: se aplica antes del primer pintado para que no parpadee.
+      try {
+        const saved = localStorage.getItem("scheme");
+        if (saved === "light" || saved === "dark")
+          document.documentElement.dataset.scheme = saved;
+      } catch {
+        // Sin almacenamiento (modo privado, bloqueado): se sigue el esquema del sistema.
+      }
+    </script>
   </head>
-  <body>
-    {languageNav && (
-      <nav aria-label="Language">
-        {locales.map(({ code, label }) => (
-          <a
-            href={getRelativeLocaleUrl(code)}
-            lang={code}
-            hreflang={code}
-            aria-current={code === locale ? "true" : undefined}
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-    )}
+  <body class="site">
+    <slot name="header" />
     <main>
       <slot />
     </main>
+    <slot name="footer" />
   </body>
 </html>
+
+<style is:global>
+  /* Astro registra cada fuente con un nombre único (p. ej. «Funnel Display-b0a0…») y lo expone en
+     --font-funnel-*. Este puente conecta esas variables con los tokens de familia, que de otro modo
+     apuntarían a un nombre que el navegador no conoce. Sin capa, para ganar a tokens.generated.css. */
+  :root {
+    --font-family-display: var(--font-funnel-display);
+    --font-family-sans: var(--font-funnel-sans);
+  }
+</style>

@@ -12,8 +12,8 @@ const encodeSrgb = (linear: number) => {
 const decodeSrgb = (channel: number) =>
   channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
 
-/** oklch (L 0..1, C, H en grados) a sRGB (0..1), recortado al gamut sRGB. */
-export function oklchToSrgb(l: number, c: number, h: number): Rgb {
+/** oklch (L 0..1, C, H en grados) a sRGB lineal, sin recortar: puede salirse de 0..1. */
+function oklchToLinearSrgb(l: number, c: number, h: number): Rgb {
   const hue = (h * Math.PI) / 180;
   const a = c * Math.cos(hue);
   const b = c * Math.sin(hue);
@@ -21,16 +21,24 @@ export function oklchToSrgb(l: number, c: number, h: number): Rgb {
   const mCone = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3;
   const sCone = (l - 0.0894841775 * a - 1.291485548 * b) ** 3;
   return [
-    encodeSrgb(
-      4.0767416621 * lCone - 3.3077115913 * mCone + 0.2309699292 * sCone
-    ),
-    encodeSrgb(
-      -1.2684380046 * lCone + 2.6097574011 * mCone - 0.3413193965 * sCone
-    ),
-    encodeSrgb(
-      -0.0041960863 * lCone - 0.7034186147 * mCone + 1.707614701 * sCone
-    ),
+    4.0767416621 * lCone - 3.3077115913 * mCone + 0.2309699292 * sCone,
+    -1.2684380046 * lCone + 2.6097574011 * mCone - 0.3413193965 * sCone,
+    -0.0041960863 * lCone - 0.7034186147 * mCone + 1.707614701 * sCone,
   ];
+}
+
+/** oklch (L 0..1, C, H en grados) a sRGB (0..1), recortado al gamut sRGB. */
+export function oklchToSrgb(l: number, c: number, h: number): Rgb {
+  const [red, green, blue] = oklchToLinearSrgb(l, c, h);
+  return [encodeSrgb(red), encodeSrgb(green), encodeSrgb(blue)];
+}
+
+/** Indica si el color oklch se puede mostrar en sRGB sin recortarlo (con una pequeña tolerancia). */
+export function isInSrgbGamut(l: number, c: number, h: number) {
+  const tolerance = 0.0005;
+  return oklchToLinearSrgb(l, c, h).every(
+    (channel) => channel >= -tolerance && channel <= 1 + tolerance
+  );
 }
 
 export interface ColorValue {

@@ -7,6 +7,9 @@ const schemeTokens = [
   "color.text.*",
   "color.border.*",
   "color.action.*",
+  "color.accent.*",
+  "color.danger.*",
+  "color.tint.*",
   "color.focus.*",
 ];
 

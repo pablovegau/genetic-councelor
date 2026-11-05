@@ -1,0 +1,263 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CopyButton from "../../../design-system/catalog/CopyButton.astro";
+import TokenSwatch from "../../../design-system/catalog/TokenSwatch.astro";
+import {
+  aliasTarget,
+  flattenTokens,
+  formatOklch,
+  tokenReference,
+  tokenVariable,
+} from "../../../design-system/catalog/tokens";
+import dark from "../../../design-system/tokens/semantic/color.dark.tokens.json";
+import light from "../../../design-system/tokens/semantic/color.light.tokens.json";
+import primitive from "../../../design-system/tokens/primitive/color.tokens.json";
+
+const ramps = ["neutral", "violet", "orange", "red"] as const;
+
+// Paleta base: cada rampa con su función y los roles que más se usan.
+const basePalette = [
+  {
+    ramp: "neutral",
+    role: "Base",
+    use: "Fondos, texto y bordes.",
+    tokens: ["color.bg.page", "color.text.default"],
+  },
+  {
+    ramp: "violet",
+    role: "Acción",
+    use: "Botón principal, enlaces y foco.",
+    tokens: ["color.action.bg", "color.focus.ring"],
+  },
+  {
+    ramp: "orange",
+    role: "Acento",
+    use: "Apoyos y detalles cálidos.",
+    tokens: ["color.accent.bg"],
+  },
+  {
+    ramp: "red",
+    role: "Peligro",
+    use: "Errores y avisos, no decoración.",
+    tokens: ["color.danger.bg"],
+  },
+] as const;
+
+const steps = (ramp: (typeof ramps)[number]) =>
+  flattenTokens(primitive.color[ramp], ["color", ramp]).map(
+    ({ path, value }) => ({
+      path,
+      step: path.split(".").at(-1) ?? "",
+      oklch: formatOklch((value as { components: number[] }).components),
+    })
+  );
+
+const darkByPath = new Map(
+  flattenTokens(dark).map(({ path, value }) => [path, String(value)])
+);
+const roles = flattenTokens(light).map(({ path, value }) => ({
+  path,
+  group: path.split(".")[1] ?? "",
+  light: aliasTarget(String(value)),
+  dark: aliasTarget(darkByPath.get(path) ?? ""),
+}));
+const groups = [...new Set(roles.map(({ group }) => group))];
+---
+
+<CatalogLayout group="tokens" item="color">
+  <div class="stack">
+    <section class="block" aria-labelledby="base">
+      <div class="heading">
+        <h2 id="base">Paleta base</h2>
+        <p>
+          Cuatro rampas y su función. Los componentes usan los roles, no las
+          rampas.
+        </p>
+      </div>
+      <div class="cards">
+        {basePalette.map((entry) => (
+          <article class="card">
+            <div class="strip" aria-hidden="true">
+              {steps(entry.ramp).map(({ path }) => (
+                <span style={`background-color: var(${tokenVariable(path)})`} />
+              ))}
+            </div>
+            <div class="title">
+              <h3>{entry.ramp}</h3>
+              <span>{entry.role}</span>
+            </div>
+            <p>{entry.use}</p>
+            <ul>
+              {entry.tokens.map((token) => (
+                <li>
+                  <code>{token}</code>
+                  <CopyButton value={tokenReference(token)} />
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="ramps">
+      <div class="heading">
+        <h2 id="ramps">Rampas</h2>
+        <p>
+          Primitivos en oklch, de 50 (más claro) a 950 (más oscuro). Sin
+          significado: los roles los usan por su nombre.
+        </p>
+      </div>
+      {ramps.map((ramp) => (
+        <div class="group">
+          <h3>{ramp}</h3>
+          <div class="swatches">
+            {steps(ramp).map(({ path, oklch }) => (
+              <TokenSwatch token={path} details={[oklch]} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="block" aria-labelledby="roles">
+      <div class="heading">
+        <h2 id="roles">Roles semánticos</h2>
+        <p>
+          Cambian con el esquema: usa el interruptor del menú para verlos en
+          claro y en oscuro. Cada uno apunta a un paso de rampa.
+        </p>
+      </div>
+      {groups.map((group) => (
+        <div class="group">
+          <h3>{group}</h3>
+          <div class="swatches">
+            {roles
+              .filter((role) => role.group === group)
+              .map((role) => (
+                <TokenSwatch
+                  token={role.path}
+                  details={[
+                    `claro → ${role.light.replace("color.", "")}`,
+                    `oscuro → ${role.dark.replace("color.", "")}`,
+                  ]}
+                />
+              ))}
+          </div>
+        </div>
+      ))}
+    </section>
+  </div>
+</CatalogLayout>
+
+<style>
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .block,
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .group {
+    gap: var(--space-3);
+  }
+
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  h3 {
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .heading p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .swatches,
+  .cards {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  }
+
+  .cards {
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+  }
+
+  .strip {
+    display: flex;
+    block-size: var(--space-12);
+    overflow: hidden;
+    border-radius: var(--radius-control);
+  }
+
+  .strip span {
+    flex: 1;
+  }
+
+  .title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .title span,
+  .card p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .card ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  code {
+    overflow-wrap: anywhere;
+    font-size: var(--font-size-2);
+  }
+</style>

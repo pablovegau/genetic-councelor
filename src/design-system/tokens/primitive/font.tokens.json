@@ -1,10 +1,22 @@
 {
-  "$description": "Tipografía básica. PLACEHOLDER: pila del sistema hasta elegir tipografía.",
+  "$description": "Tipografía. Funnel Display (titulares) y Funnel Sans (texto), servidas desde el propio dominio con la API de fuentes de Astro; detrás, la pila del sistema. El tracking es un múltiplo de em (se aplica como calc(valor * 1em)).",
   "font": {
     "family": {
       "sans": {
         "$type": "fontFamily",
         "$value": [
+          "Funnel Sans",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif"
+        ]
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": [
+          "Funnel Display",
           "system-ui",
           "-apple-system",
           "Segoe UI",
@@ -15,29 +27,123 @@
     },
     "weight": {
       "$type": "fontWeight",
-      "regular": { "$value": 400 },
-      "medium": { "$value": 500 },
-      "semibold": { "$value": 600 },
-      "bold": { "$value": 700 }
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700
+      }
     },
     "size": {
       "$type": "dimension",
-      "1": { "$value": { "value": 0.75, "unit": "rem" } },
-      "2": { "$value": { "value": 0.875, "unit": "rem" } },
-      "3": { "$value": { "value": 1, "unit": "rem" } },
-      "4": { "$value": { "value": 1.125, "unit": "rem" } },
-      "5": { "$value": { "value": 1.25, "unit": "rem" } },
-      "6": { "$value": { "value": 1.5, "unit": "rem" } },
-      "7": { "$value": { "value": 1.875, "unit": "rem" } },
-      "8": { "$value": { "value": 2.25, "unit": "rem" } },
-      "9": { "$value": { "value": 3, "unit": "rem" } }
+      "1": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "2": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "3": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "4": {
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        }
+      },
+      "5": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      },
+      "6": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
+      "7": {
+        "$value": {
+          "value": 1.875,
+          "unit": "rem"
+        }
+      },
+      "8": {
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        }
+      },
+      "9": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        }
+      },
+      "10": {
+        "$value": {
+          "value": 3.75,
+          "unit": "rem"
+        }
+      },
+      "11": {
+        "$value": {
+          "value": 5,
+          "unit": "rem"
+        }
+      }
     },
     "line-height": {
       "$type": "number",
-      "tight": { "$value": 1.2 },
-      "snug": { "$value": 1.35 },
-      "normal": { "$value": 1.5 },
-      "relaxed": { "$value": 1.65 }
+      "none": {
+        "$value": 1
+      },
+      "display": {
+        "$value": 1.1
+      },
+      "tight": {
+        "$value": 1.2
+      },
+      "snug": {
+        "$value": 1.35
+      },
+      "normal": {
+        "$value": 1.5
+      },
+      "relaxed": {
+        "$value": 1.65
+      }
+    },
+    "tracking": {
+      "$type": "number",
+      "tighter": {
+        "$value": -0.04
+      },
+      "tight": {
+        "$value": -0.03
+      },
+      "snug": {
+        "$value": -0.02
+      },
+      "normal": {
+        "$value": 0
+      }
     }
   }
 }

@@ -7,6 +7,7 @@ import type {
   Radius,
   Space,
   TextColor,
+  Variant,
 } from "../style-props.generated";
 
 export interface BoxStyleProps {
@@ -34,6 +35,8 @@ export interface GridStyleProps {
 }
 
 export interface TextStyleProps {
+  /** Estilo de texto semántico: familia, tamaño, peso, interlineado y tracking de una vez. */
+  variant?: Variant;
   size?: FontSize;
   weight?: FontWeight;
   color?: TextColor;
@@ -55,6 +58,7 @@ export const styleKeys = new Set([
   "bg",
   "border",
   "radius",
+  "variant",
   "size",
   "weight",
   "color",

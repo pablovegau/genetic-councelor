@@ -5,29 +5,60 @@
   "sets": {
     "primitive": {
       "sources": [
-        { "$ref": "primitive/color.tokens.json" },
-        { "$ref": "primitive/space.tokens.json" },
-        { "$ref": "primitive/shape.tokens.json" },
-        { "$ref": "primitive/font.tokens.json" },
-        { "$ref": "primitive/motion.tokens.json" }
+        {
+          "$ref": "primitive/color.tokens.json"
+        },
+        {
+          "$ref": "primitive/space.tokens.json"
+        },
+        {
+          "$ref": "primitive/shape.tokens.json"
+        },
+        {
+          "$ref": "primitive/font.tokens.json"
+        },
+        {
+          "$ref": "primitive/motion.tokens.json"
+        }
       ]
     },
     "semantic-base": {
-      "sources": [{ "$ref": "semantic/base.tokens.json" }]
+      "sources": [
+        {
+          "$ref": "semantic/base.tokens.json"
+        },
+        {
+          "$ref": "semantic/typography.tokens.json"
+        }
+      ]
     }
   },
   "modifiers": {
     "scheme": {
       "contexts": {
-        "light": [{ "$ref": "semantic/color.light.tokens.json" }],
-        "dark": [{ "$ref": "semantic/color.dark.tokens.json" }]
+        "light": [
+          {
+            "$ref": "semantic/color.light.tokens.json"
+          }
+        ],
+        "dark": [
+          {
+            "$ref": "semantic/color.dark.tokens.json"
+          }
+        ]
       },
       "default": "light"
     }
   },
   "resolutionOrder": [
-    { "$ref": "#/sets/primitive" },
-    { "$ref": "#/sets/semantic-base" },
-    { "$ref": "#/modifiers/scheme" }
+    {
+      "$ref": "#/sets/primitive"
+    },
+    {
+      "$ref": "#/sets/semantic-base"
+    },
+    {
+      "$ref": "#/modifiers/scheme"
+    }
   ]
 }

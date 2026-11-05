@@ -1,0 +1,52 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  /** Texto breve bajo el título. */
+  description?: string;
+}
+
+const { id, title, description } = Astro.props;
+---
+
+<section class="block" aria-labelledby={id}>
+  <div class="heading">
+    <h2 id={id}>{title}</h2>
+    {description && <p>{description}</p>}
+  </div>
+  <slot />
+</section>
+
+<style>
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: var(--font-size-6);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  p {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  /* Las <code> del párrafo vienen del slot de la página, no de este componente. */
+  p :global(code) {
+    font-size: var(--font-size-2);
+  }
+</style>

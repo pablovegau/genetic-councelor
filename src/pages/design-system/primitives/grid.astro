@@ -1,0 +1,123 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import {
+  boxRows,
+  gapRows,
+  quote,
+  type PropRow,
+} from "../../../design-system/catalog/prop-docs";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
+import { Box, Grid, Text } from "../../../design-system/primitives";
+
+const rows: PropRow[] = [
+  {
+    name: "columns",
+    type: [1, 2, 3, 4, 5, 6, 12].join(" | "),
+    default: "—",
+    description: "Número de columnas iguales.",
+  },
+  {
+    name: "minColumn",
+    type: "paso de space",
+    default: "—",
+    description:
+      "Rejilla responsiva: tantas columnas como quepan con al menos este ancho.",
+  },
+  {
+    name: "align",
+    type: quote(["start", "center", "end", "stretch"]),
+    default: "—",
+    description: "Alineación de las celdas en el eje vertical.",
+  },
+  ...gapRows,
+];
+
+const cells = [1, 2, 3, 4, 5, 6];
+---
+
+<CatalogLayout group="primitives" item="grid">
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="Un Box con rejilla. Con columns el número es fijo; con minColumn se adapta al ancho disponible sin media queries."
+    >
+      <CodeLine
+        code={'import { Grid } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        <Example
+          title="Tres columnas fijas"
+          code={jsxSnippet("Grid", { columns: "3", gap: "3" }, "…", {
+            columns: "number",
+          })}
+        >
+          <Grid columns={3} gap="3">
+            {cells.map((n) => (
+              <Box p="3" bg="surface" radius="control">
+                <Text as="span">celda {n}</Text>
+              </Box>
+            ))}
+          </Grid>
+        </Example>
+        <Example
+          title="Se adapta al ancho"
+          code={jsxSnippet("Grid", { minColumn: "24", gap: "3" }, "…")}
+        >
+          <Grid minColumn="24" gap="3">
+            {cells.map((n) => (
+              <Box p="3" bg="surface" radius="control">
+                <Text as="span">celda {n}</Text>
+              </Box>
+            ))}
+          </Grid>
+        </Example>
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Además de estas, acepta todos los style props de Box y cualquier atributo del elemento elegido con as."
+    >
+      <PropsTable component="Grid" rows={[...rows, ...boxRows]} />
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Grid" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          Las celdas siguen el orden del DOM: lo que se ve primero es lo que el
+          teclado y los lectores de pantalla encuentran primero.
+        </li>
+        <li>
+          Prefiere <code>minColumn</code> a <code>columns</code> cuando el
+          contenido pueda ser largo: se reorganiza al ampliar el texto o en
+          pantallas estrechas.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
+</CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+</style>

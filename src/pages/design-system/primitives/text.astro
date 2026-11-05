@@ -1,0 +1,228 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import { quote } from "../../../design-system/catalog/prop-docs";
+import { typographySpec } from "../../../design-system/catalog/token-data";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
+import { Text } from "../../../design-system/primitives";
+import {
+  fontSizes,
+  fontWeights,
+  lineHeights,
+  textColors,
+  textVariants,
+} from "../../../design-system/style-props.generated";
+
+const props = [
+  {
+    name: "variant",
+    type: quote(textVariants),
+    default: "—",
+    description:
+      "Estilo de texto semántico: familia, tamaño, peso, interlineado y tracking de una vez. Los titulares se reducen por debajo de 48 rem.",
+  },
+  {
+    name: "as",
+    type: "ElementType",
+    default: "h1 a h5 según la variante; p en el resto",
+    description:
+      "Etiqueta HTML. El aspecto y el nivel del encabezado son independientes: usa as para respetar la jerarquía del documento.",
+  },
+  {
+    name: "size",
+    type: quote(fontSizes),
+    default: "—",
+    description: "Paso de la escala de tamaños. Sobrescribe el de la variante.",
+  },
+  {
+    name: "weight",
+    type: quote(fontWeights),
+    default: "—",
+    description: "Peso de la fuente. Sobrescribe el de la variante.",
+  },
+  {
+    name: "color",
+    type: quote(textColors),
+    default: "—",
+    description: "Rol de color de texto.",
+  },
+  {
+    name: "leading",
+    type: quote(lineHeights),
+    default: "—",
+    description: "Interlineado. Sobrescribe el de la variante.",
+  },
+  {
+    name: "align",
+    type: '"start" | "center" | "end"',
+    default: "—",
+    description: "Alineación del texto.",
+  },
+];
+
+const examples = [
+  {
+    title: "Un titular de página",
+    code: jsxSnippet(
+      "Text",
+      { variant: "heading-1" },
+      "Dibujamos tu árbol familiar"
+    ),
+    sample: { variant: "heading-1", as: "p" },
+    text: "Dibujamos tu árbol familiar",
+  },
+  {
+    title: "Aspecto de un nivel con la etiqueta de otro",
+    code: jsxSnippet(
+      "Text",
+      { variant: "heading-3", as: "h2" },
+      "Así es la primera visita"
+    ),
+    sample: { variant: "heading-3", as: "p" },
+    text: "Así es la primera visita",
+  },
+  {
+    title: "Texto de apoyo",
+    code: jsxSnippet(
+      "Text",
+      { variant: "text-sm", color: "muted" },
+      "Todo lo que nos cuentes es confidencial."
+    ),
+    sample: { variant: "text-sm", color: "muted" },
+    text: "Todo lo que nos cuentes es confidencial.",
+  },
+] as const;
+
+const tagOf = (variant: string) =>
+  /^heading-([1-5])$/.exec(variant)?.[1] ? `h${variant.slice(-1)}` : "p";
+const summary = (variant: string) => {
+  const spec = typographySpec(variant);
+  return spec.compactPx === spec.px
+    ? `${spec.px}px`
+    : `${spec.px}px · móvil ${spec.compactPx}px`;
+};
+---
+
+<CatalogLayout group="primitives" item="text">
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="Todo el texto de la web pasa por Text. Una variante aplica un estilo completo; las props sueltas lo ajustan."
+    >
+      <CodeLine
+        code={'import { Text } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        {examples.map((example) => (
+          <Example title={example.title} code={example.code}>
+            <Text {...example.sample}>{example.text}</Text>
+          </Example>
+        ))}
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Además de estas, acepta los style props de Box (espaciado, fondo, borde y radio) y cualquier atributo del elemento elegido con as."
+    >
+      <PropsTable component="Text" rows={props} />
+    </DocSection>
+
+    <DocSection
+      id="variants"
+      title="Variantes"
+      description="Cada variante con su etiqueta por defecto y su tamaño de escritorio. Redimensiona la ventana para ver cómo se reducen los titulares."
+    >
+      <div class="variants">
+        {textVariants.map((variant) => (
+          <div class="variant">
+            <div class="meta">
+              <code>{variant}</code>
+              <span>
+                &lt;{tagOf(variant)}&gt; · {summary(variant)}
+              </span>
+            </div>
+            <Text variant={variant} as="p">
+              {variant.startsWith("heading")
+                ? "Asesoramiento genético"
+                : "Un estudio genético no es una sentencia: ayuda a conocer un riesgo y a decidir con calma."}
+            </Text>
+          </div>
+        ))}
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Text" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          El aspecto y el nivel son independientes: elige la variante por cómo
+          debe verse y <code>as</code> por el lugar que ocupa en el documento.
+          Cada página debe tener un único <code>h1</code>.
+        </li>
+        <li>
+          Los pares de color de texto sobre cada fondo cumplen WCAG AA (texto
+          por defecto, además, AAA); lo comprueban los tests de tokens.
+        </li>
+        <li>
+          Los tamaños usan <code>rem</code>, así que respetan el tamaño de
+          fuente que el usuario haya elegido en su navegador.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
+</CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .variants {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .variant {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block-end: var(--space-6);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  .meta code {
+    color: var(--color-text-default);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  p {
+    margin: 0;
+  }
+</style>

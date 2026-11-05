@@ -1,7 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { catalogPages } from "../src/design-system/catalog/sections";
 
-const paths = ["/", "/ca/", "/en/", "/design-system/"];
+const paths = ["/", "/ca/", "/en/", ...catalogPages.map(({ path }) => path)];
 
 for (const path of paths) {
   test(`${path} no tiene violaciones de accesibilidad WCAG 2.2 AA`, async ({

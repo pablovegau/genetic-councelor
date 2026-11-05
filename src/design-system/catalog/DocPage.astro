@@ -1,0 +1,15 @@
+---
+// Ritmo vertical común de las páginas de componentes del catálogo.
+---
+
+<div class="page">
+  <slot />
+</div>
+
+<style>
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+</style>

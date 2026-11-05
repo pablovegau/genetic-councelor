@@ -11,6 +11,7 @@ export default defineConfig({
         "scripts/style-props.ts",
         "src/design-system/primitives/style-props.ts",
         "src/design-system/primitives/cx.ts",
+        "src/design-system/catalog/tokens.ts",
       ],
       thresholds: { statements: 90, branches: 90, functions: 90, lines: 90 },
     },

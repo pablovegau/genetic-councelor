@@ -1,27 +1,82 @@
 {
-  "$description": "Roles de color, tema default, esquema claro. PLACEHOLDER: todo neutro hasta que haya dirección visual.",
+  "$description": "Roles de color, tema default, esquema claro. action = violeta (bot\u00f3n, enlaces); accent = naranja (apoyos); danger = rojo (errores y avisos, no decoraci\u00f3n); tint = fondos de secci\u00f3n con un toque de cada color.",
   "color": {
     "$type": "color",
     "bg": {
-      "page": { "$value": "{color.neutral.50}" },
-      "surface": { "$value": "{color.white}" },
-      "subtle": { "$value": "{color.neutral.100}" }
+      "page": {
+        "$value": "{color.neutral.50}"
+      },
+      "surface": {
+        "$value": "{color.white}"
+      },
+      "subtle": {
+        "$value": "{color.neutral.100}"
+      }
     },
     "text": {
-      "default": { "$value": "{color.neutral.900}" },
-      "muted": { "$value": "{color.neutral.600}" },
-      "inverse": { "$value": "{color.neutral.50}" }
+      "default": {
+        "$value": "{color.neutral.900}"
+      },
+      "muted": {
+        "$value": "{color.neutral.600}"
+      },
+      "inverse": {
+        "$value": "{color.neutral.50}"
+      }
     },
     "border": {
-      "default": { "$value": "{color.neutral.200}" },
-      "strong": { "$value": "{color.neutral.500}" }
+      "default": {
+        "$value": "{color.neutral.200}"
+      },
+      "strong": {
+        "$value": "{color.neutral.500}"
+      }
     },
     "action": {
-      "bg": { "$value": "{color.neutral.900}" },
-      "fg": { "$value": "{color.neutral.50}" }
+      "bg": {
+        "$value": "{color.violet.600}"
+      },
+      "fg": {
+        "$value": "{color.white}"
+      },
+      "bg-hover": {
+        "$value": "{color.violet.700}"
+      },
+      "bg-active": {
+        "$value": "{color.violet.800}"
+      }
+    },
+    "accent": {
+      "bg": {
+        "$value": "{color.orange.600}"
+      },
+      "fg": {
+        "$value": "{color.white}"
+      }
+    },
+    "danger": {
+      "bg": {
+        "$value": "{color.red.600}"
+      },
+      "fg": {
+        "$value": "{color.white}"
+      }
+    },
+    "tint": {
+      "violet": {
+        "$value": "{color.violet.100}"
+      },
+      "orange": {
+        "$value": "{color.orange.100}"
+      },
+      "red": {
+        "$value": "{color.red.100}"
+      }
     },
     "focus": {
-      "ring": { "$value": "{color.neutral.900}" }
+      "ring": {
+        "$value": "{color.violet.600}"
+      }
     }
   }
 }

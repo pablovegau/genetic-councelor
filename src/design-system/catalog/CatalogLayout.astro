@@ -1,0 +1,140 @@
+---
+import Base from "../../layouts/Base.astro";
+import { Flex, Text } from "../primitives";
+import CatalogNav from "./CatalogNav.astro";
+import { catalogGroups } from "./sections";
+
+interface Props {
+  group?: string;
+  item?: string;
+}
+
+const { group: groupSlug, item: itemSlug } = Astro.props;
+const group = catalogGroups.find((candidate) => candidate.slug === groupSlug);
+const item = group?.items.find((candidate) => candidate.slug === itemSlug);
+
+if (groupSlug && itemSlug && !item) {
+  throw new Error(`La página ${groupSlug}/${itemSlug} no está en sections.ts`);
+}
+
+const title = item?.label ?? "Design system";
+const description =
+  item?.description ??
+  "Catálogo interno. Tokens DTCG 2025.10, tema default, esquemas claro y oscuro. Los valores actuales son placeholders neutros.";
+---
+
+<Base title={item ? `${item.label} · Design system` : "Design system"} noindex>
+  <div class="catalog">
+    <CatalogNav currentPath={Astro.url.pathname} />
+    <div class="catalog-main">
+      <Flex as="header" direction="column" gap="3" className="catalog-header">
+        {group && item && (
+          <Text size="2" color="muted">
+            {group.label} / {item.label}
+          </Text>
+        )}
+        <Text as="h1" size="8" weight="bold" leading="tight">
+          {title}
+        </Text>
+        <Text color="muted">{description}</Text>
+      </Flex>
+      <div class="catalog-content" data-catalog-content>
+        <slot />
+      </div>
+    </div>
+  </div>
+
+  <p class="status" role="status" aria-live="polite" data-status></p>
+
+  <script>
+    // Botones «Copiar»: copian el valor de data-copy y lo anuncian a los lectores de pantalla.
+    const status = document.querySelector<HTMLElement>("[data-status]");
+    document.addEventListener("click", async (event) => {
+      const target = event.target instanceof Element ? event.target : null;
+      const button = target?.closest<HTMLButtonElement>("[data-copy]");
+      if (!button) return;
+      const value = button.dataset.copy ?? "";
+      try {
+        await navigator.clipboard.writeText(value);
+        const label = button.textContent;
+        button.dataset.copied = "";
+        button.textContent = "Copiado";
+        if (status) status.textContent = `Copiado ${value}`;
+        setTimeout(() => {
+          delete button.dataset.copied;
+          button.textContent = label;
+        }, 1500);
+      } catch {
+        if (status) status.textContent = "No se pudo copiar";
+      }
+    });
+
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-set-scheme]")
+      .forEach((button) => {
+        button.addEventListener("click", () => {
+          const scheme = button.dataset.setScheme;
+          if (scheme === "system")
+            delete document.documentElement.dataset.scheme;
+          else document.documentElement.dataset.scheme = scheme;
+        });
+      });
+  </script>
+</Base>
+
+<style is:global>
+  /* Pila monoespaciada explícita: con la genérica «monospace» el navegador cambia de fuente tras el
+     primer pintado y el alto de la página varía, lo que rompe las capturas de regresión visual. */
+  .catalog code {
+    font-family:
+      ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas,
+      "Liberation Mono", "DejaVu Sans Mono", monospace;
+  }
+</style>
+
+<style>
+  .status {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .catalog {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .catalog-main {
+    min-inline-size: 0;
+    max-inline-size: 64rem;
+  }
+
+  .catalog-content {
+    padding: var(--space-6) var(--space-6) var(--space-24);
+  }
+
+  .catalog-main :global(.catalog-header) {
+    padding: var(--space-8) var(--space-6) var(--space-6);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+  }
+
+  @media (min-width: 48rem) {
+    .catalog {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .catalog-content {
+      padding-inline: var(--space-10);
+      padding-block-start: var(--space-10);
+    }
+
+    .catalog-main :global(.catalog-header) {
+      padding-inline: var(--space-10);
+      padding-block-start: var(--space-12);
+    }
+  }
+</style>

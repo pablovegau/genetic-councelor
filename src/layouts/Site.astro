@@ -1,0 +1,15 @@
+---
+import { getCopy } from "../i18n";
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import "../styles/site.css";
+import Base from "./Base.astro";
+
+const copy = getCopy(Astro.currentLocale);
+---
+
+<Base title={copy.meta.title} description={copy.meta.description}>
+  <SiteHeader slot="header" />
+  <slot />
+  <SiteFooter slot="footer" />
+</Base>

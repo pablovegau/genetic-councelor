@@ -1,0 +1,79 @@
+.playground {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.controls {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-1);
+}
+
+.field select,
+.field input {
+  padding: var(--space-2);
+  border: var(--border-width-1) solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-default);
+  font: inherit;
+  font-size: var(--font-size-2);
+}
+
+.field select:focus-visible,
+.field input:focus-visible,
+.copy:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--border-width-2);
+}
+
+.preview {
+  min-block-size: var(--space-24);
+  padding: var(--space-6);
+  overflow: hidden;
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-surface);
+  background-color: var(--color-bg-subtle);
+}
+
+.code {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-surface);
+  background-color: var(--color-bg-surface);
+}
+
+.code code {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--font-size-2);
+}
+
+.copy {
+  flex: none;
+  padding: var(--space-1) var(--space-2);
+  border: var(--border-width-1) solid var(--color-border-strong);
+  border-radius: var(--radius-control);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-default);
+  font: inherit;
+  font-size: var(--font-size-1);
+  cursor: pointer;
+}
+
+.copy:hover {
+  background-color: var(--color-bg-subtle);
+}

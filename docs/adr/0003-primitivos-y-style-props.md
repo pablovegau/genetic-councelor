@@ -20,3 +20,7 @@ El catálogo es una página interna de Astro (`/design-system/`), siempre con `n
 
 - Los ficheros `style-props.generated.*` no se versionan: hay que lanzar `pnpm tokens` en un clon nuevo. `pnpm dev` y `pnpm build` ya lo hacen.
 - La página de catálogo se publica en Vercel con `noindex`. Al lanzar hay que decidir si se excluye del build de producción o se protege.
+
+## Estilos de texto (variant)
+
+`Text` acepta `variant`, un estilo semántico (`heading-1` a `heading-5`, `text-lg`, `text`, `text-sm`, `caption`) cuya lista sale de los tokens `typography.*` y se regenera con `pnpm tokens`. La variante va antes que `size`, `weight` y `leading` en la capa `props`, así que las props sueltas la sobrescriben. Por debajo de 48 rem los estilos usan su `font-size-compact` (los titulares se reducen, el texto no), salvo que el elemento lleve `size`. Un titular se renderiza como `h1` a `h5` según su variante y el resto como `p`; `as` manda siempre, porque el aspecto y el nivel del encabezado son independientes.

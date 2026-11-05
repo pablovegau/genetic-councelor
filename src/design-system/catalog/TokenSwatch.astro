@@ -1,0 +1,78 @@
+---
+import CopyButton from "./CopyButton.astro";
+import { tokenReference, tokenVariable } from "./tokens";
+
+interface Props {
+  /** Ruta completa del token, por ejemplo `color.action.bg`. */
+  token: string;
+  /** Líneas de detalle bajo el nombre (valor, alias en cada esquema…). */
+  details?: string[];
+}
+
+const { token, details = [] } = Astro.props;
+---
+
+<div class="swatch">
+  <div
+    class="chip"
+    style={`background-color: var(${tokenVariable(token)})`}
+    aria-hidden="true"
+  ></div>
+  <div class="info">
+    <code class="name">{token}</code>
+    <code class="variable">{tokenVariable(token)}</code>
+    {details.map((line) => (
+      <span class="detail">{line}</span>
+    ))}
+  </div>
+  <CopyButton value={tokenReference(token)} />
+</div>
+
+<style>
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-surface);
+  }
+
+  .chip {
+    block-size: var(--space-12);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-control);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-inline-size: 0;
+    flex: 1;
+  }
+
+  code {
+    overflow-wrap: anywhere;
+  }
+
+  .name {
+    font-size: var(--font-size-2);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .variable,
+  .detail {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-1);
+  }
+
+  .detail {
+    font-family: inherit;
+  }
+
+  .swatch :global(.copy) {
+    align-self: flex-start;
+  }
+</style>

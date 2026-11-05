@@ -1,0 +1,125 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Example from "../../../design-system/catalog/Example.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import { Playground } from "../../../design-system/catalog/Playground";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import {
+  boxRows,
+  type PropRow,
+} from "../../../design-system/catalog/prop-docs";
+import { jsxSnippet } from "../../../design-system/catalog/usage";
+import { Box, Text } from "../../../design-system/primitives";
+
+const asRow: PropRow = {
+  name: "as",
+  type: "ElementType",
+  default: '"div"',
+  description:
+    "Etiqueta HTML del elemento. Úsala para dar significado: section, aside, article…",
+};
+
+const examples = [
+  {
+    title: "Una superficie con borde",
+    code: jsxSnippet(
+      "Box",
+      { p: "4", bg: "surface", border: "default", radius: "surface" },
+      "…"
+    ),
+    sample: { p: "4", bg: "surface", border: "default", radius: "surface" },
+    text: "p=4 · surface · radius surface",
+  },
+  {
+    title: "Relleno distinto en cada eje",
+    code: jsxSnippet(
+      "Box",
+      { px: "6", py: "2", bg: "subtle", border: "strong", radius: "control" },
+      "…"
+    ),
+    sample: {
+      px: "6",
+      py: "2",
+      bg: "subtle",
+      border: "strong",
+      radius: "control",
+    },
+    text: "px=6 py=2",
+  },
+  {
+    title: "Otra etiqueta con relleno parcial",
+    code: jsxSnippet(
+      "Box",
+      { as: "aside", pl: "8", pt: "1", border: "default" },
+      "…"
+    ),
+    sample: { as: "aside", pl: "8", pt: "1", border: "default" },
+    text: 'as="aside" pl=8 pt=1',
+  },
+] as const;
+---
+
+<CatalogLayout group="primitives" item="box">
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="La base de todo lo demás: un elemento sin estilo propio al que se le pone relleno, fondo, borde y radio con tokens. Flex, Grid y Text se construyen sobre él."
+    >
+      <CodeLine
+        code={'import { Box } from "design-system/primitives";'}
+        label="Copiar la importación"
+      />
+      <div class="examples">
+        {examples.map((example) => (
+          <Example title={example.title} code={example.code}>
+            <Box {...example.sample}>
+              <Text as="span">{example.text}</Text>
+            </Box>
+          </Example>
+        ))}
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Solo aceptan pasos de los tokens: no hay valores sueltos. Además, cualquier atributo del elemento elegido con as."
+    >
+      <PropsTable component="Box" rows={[asRow, ...boxRows]} />
+    </DocSection>
+
+    <DocSection
+      id="playground"
+      title="Probador"
+      description="Elige props y copia el código resultante."
+    >
+      <Playground component="Box" client:load />
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          Box no añade semántica: es un <code>div</code> hasta que le das otra
+          etiqueta con <code>as</code>. Elige <code>section</code>,
+          <code>aside</code> o <code>article</code> solo si ese contenido es
+          realmente una región.
+        </li>
+        <li>
+          Los fondos y bordes son roles semánticos, no colores: cambian solos en
+          el esquema oscuro y mantienen el contraste con el texto.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
+</CatalogLayout>
+
+<style>
+  .examples {
+    display: grid;
+    gap: var(--space-8);
+  }
+</style>
