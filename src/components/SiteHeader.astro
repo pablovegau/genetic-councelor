@@ -1,9 +1,15 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Button, MobileMenu } from "../design-system/components";
+import {
+  Button,
+  Container,
+  Link,
+  MobileMenu,
+  Wordmark,
+} from "../design-system/components";
+import SchemeToggle from "../design-system/components/SchemeToggle/SchemeToggle.astro";
 import { getCopy } from "../i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import SchemeToggle from "./SchemeToggle.astro";
 
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
@@ -14,25 +20,31 @@ const nav = [
 ];
 ---
 
-<header class="top">
-  <div class="sec-in top-in">
-    <a class="brand" href={home}>
-      {site.brand}
-    </a>
-    <nav class="nav-inline" aria-label={site.mainNav}>
-      {nav.map(({ label, href }) => (
-        <a href={href}>{label}</a>
-      ))}
-    </nav>
-    <div class="bar-langs">
-      <LanguageSwitcher />
-    </div>
-    <div class="top-actions">
-      <Button className="cta cta-sm" size="sm" href="#cita">
-        {site.book}
-      </Button>
-      <SchemeToggle toDark={site.toDark} toLight={site.toLight} />
-      <div class="menu-btn">
+<header>
+  <Container pad="bar">
+    <div class="bar">
+      <div class="brand">
+        <Wordmark fit href={home}>
+          {site.brand}
+        </Wordmark>
+      </div>
+      <nav class="nav" aria-label={site.mainNav}>
+        {nav.map(({ label, href }) => (
+          <Link variant="nav" href={href}>
+            {label}
+          </Link>
+        ))}
+      </nav>
+      <div class="langs">
+        <LanguageSwitcher />
+      </div>
+      <div class="actions">
+        <div class="book">
+          <Button size="sm" href="#cita">
+            {site.book}
+          </Button>
+        </div>
+        <SchemeToggle toDark={site.toDark} toLight={site.toLight} />
         <MobileMenu
           client:idle
           label={site.mainNav}
@@ -45,5 +57,54 @@ const nav = [
         </MobileMenu>
       </div>
     </div>
-  </div>
+  </Container>
 </header>
+
+<style>
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .brand {
+    margin-inline-end: auto;
+  }
+
+  .nav,
+  .langs,
+  .book {
+    display: none;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+  }
+
+  @media (min-width: 30rem) {
+    .bar {
+      gap: var(--space-4);
+    }
+
+    .actions {
+      gap: var(--space-1);
+    }
+  }
+
+  /* Escritorio: los enlaces, el idioma y el botón van en la barra; el menú lateral desaparece. */
+  @media (min-width: 48rem) {
+    .nav {
+      display: flex;
+      gap: var(--space-8);
+    }
+
+    .langs {
+      display: block;
+    }
+
+    .book {
+      display: inline-flex;
+    }
+  }
+</style>

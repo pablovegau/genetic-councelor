@@ -1,61 +1,41 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { Footer } from "../design-system/components";
 import { getCopy } from "../i18n";
 
 const locale = Astro.currentLocale ?? "es";
 const { site, footer } = getCopy(locale);
 const home = getRelativeLocaleUrl(locale);
+const columns = [
+  {
+    title: footer.pages,
+    links: [
+      { label: footer.home, href: home },
+      { label: site.nav.about, href: "#sobre-mi" },
+      { label: site.book, href: "#cita" },
+      { label: site.nav.contact, href: "#contacto" },
+    ],
+  },
+  {
+    title: footer.legal,
+    links: footer.legalLinks.map((label) => ({ label, href: "#contacto" })),
+  },
+  {
+    title: footer.contact,
+    links: [
+      // Sin enlace hasta que haya correo.
+      { label: footer.email },
+      { label: "LinkedIn", href: "#contacto" },
+      { label: "Instagram", href: "#contacto" },
+    ],
+  },
+];
 ---
 
-<footer class="sec s-pie" id="contacto">
-  <div class="sec-in foot">
-    <div class="foot-grid">
-      <div>
-        <strong class="brand">{site.brand}</strong>
-        <p>{footer.tagline}</p>
-      </div>
-      <div>
-        <h2>{footer.pages}</h2>
-        <ul>
-          <li>
-            <a href={home}>{footer.home}</a>
-          </li>
-          <li>
-            <a href="#sobre-mi">{site.nav.about}</a>
-          </li>
-          <li>
-            <a href="#cita">{site.book}</a>
-          </li>
-          <li>
-            <a href="#contacto">{site.nav.contact}</a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2>{footer.legal}</h2>
-        <ul>
-          {footer.legalLinks.map((label) => (
-            <li>
-              <a href="#contacto">{label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h2>{footer.contact}</h2>
-        <ul>
-          <li class="pending-line">{footer.email}</li>
-          <li>
-            <a href="#contacto">LinkedIn</a>
-          </li>
-          <li>
-            <a href="#contacto">Instagram</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot-base">
-      <span>{footer.copyright}</span>
-    </div>
-  </div>
-</footer>
+<Footer
+  id="contacto"
+  brand={site.brand}
+  tagline={footer.tagline}
+  columns={columns}
+  base={footer.copyright}
+/>

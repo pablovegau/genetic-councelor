@@ -1,0 +1,45 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import avatar from "../../../assets/mg-3149.webp";
+import { Byline } from "../../../design-system/components";
+
+const usage =
+  '<Byline avatar={avatar} name="Sara Torres-Esquius" description="Asesora genética en Barcelona" />';
+
+const rows: PropRow[] = [
+  {
+    name: "avatar",
+    type: "{ src: string; width: number; height: number }",
+    default: "—",
+    description:
+      "Foto de la persona. Es decorativa (alt vacío): el nombre va al lado.",
+  },
+  { name: "name", type: "string", default: "—", description: "Nombre." },
+  {
+    name: "description",
+    type: "string",
+    default: "—",
+    description: "Cargo o descripción breve.",
+  },
+];
+---
+
+<ComponentPage
+  item="byline"
+  intro={"La firma de la persona que atiende, junto al botón de reservar."}
+  importLine={'import { Byline } from "design-system/components";'}
+  usage={usage}
+  component="Byline"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "El recorte (zoom a la cara) está pensado para la foto actual de Sara; otra foto pedirá otro encuadre.",
+  ]}
+>
+  <Byline
+    avatar={avatar}
+    name="Sara Torres-Esquius"
+    description="Asesora genética en Barcelona"
+  />
+</ComponentPage>

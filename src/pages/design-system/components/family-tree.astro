@@ -1,0 +1,69 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import FamilyTree from "../../../design-system/components/FamilyTree/FamilyTree.astro";
+
+const usage =
+  '<FamilyTree ariaLabel="…" caption="…" symbols={{ man: { label, text }, … }} />';
+
+const rows: PropRow[] = [
+  {
+    name: "ariaLabel",
+    type: "string",
+    default: "—",
+    description: "Nombre accesible del dibujo.",
+  },
+  {
+    name: "caption",
+    type: "string",
+    default: "—",
+    description: "Frase bajo el dibujo cuando no hay ningún símbolo activo.",
+  },
+  {
+    name: "symbols",
+    type: 'Record<"man" | "woman" | "manAffected" | "womanAffected" | "carrier", { label; text }>',
+    default: "—",
+    description: "Nombre accesible y explicación de cada símbolo.",
+  },
+];
+---
+
+<ComponentPage
+  item="family-tree"
+  intro={
+    "La ilustración del hero. Es un componente Astro con un script mínimo (sin isla de React)."
+  }
+  importLine={
+    'import FamilyTree from "design-system/components/FamilyTree/FamilyTree.astro";'
+  }
+  usage={usage}
+  component="FamilyTree"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Cada símbolo se enfoca con el teclado, es un botón con nombre accesible y explica qué es bajo el dibujo.",
+    "Con <code>prefers-reduced-motion</code> no se anima el trazado.",
+    "Se mantiene como Astro (no React) para no hidratar una isla: el único JavaScript es un script de unas líneas.",
+  ]}
+>
+  <FamilyTree
+    ariaLabel="Árbol familiar de ejemplo"
+    caption="Toca un símbolo."
+    symbols={{
+      man: { label: "Hombre", text: "Un cuadrado es un hombre." },
+      woman: { label: "Mujer", text: "Un círculo es una mujer." },
+      manAffected: {
+        label: "Hombre afectado",
+        text: "Relleno: tiene la condición.",
+      },
+      womanAffected: {
+        label: "Mujer afectada",
+        text: "Relleno: tiene la condición.",
+      },
+      carrier: {
+        label: "Portadora",
+        text: "Un punto: porta la variante sin tener la condición.",
+      },
+    }}
+  />
+</ComponentPage>

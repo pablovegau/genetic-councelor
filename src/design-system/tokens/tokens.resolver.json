@@ -42,6 +42,12 @@
         },
         {
           "$ref": "component/mobile-menu.tokens.json"
+        },
+        {
+          "$ref": "component/section.tokens.json"
+        },
+        {
+          "$ref": "component/steps.tokens.json"
         }
       ]
     }

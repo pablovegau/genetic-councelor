@@ -1,0 +1,41 @@
+{
+  "$description": "Tokens de la sección: ritmo vertical, margen lateral y franja de color. Solo alias.",
+  "section": {
+    "pad-y": {
+      "$type": "dimension",
+      "$value": "{space.12}"
+    },
+    "pad-y-wide": {
+      "$type": "dimension",
+      "$value": "{space.20}"
+    },
+    "gutter": {
+      "$type": "dimension",
+      "$value": "{space.5}"
+    },
+    "gutter-wide": {
+      "$type": "dimension",
+      "$value": "{space.8}"
+    },
+    "start-pad-top": {
+      "$type": "dimension",
+      "$value": "{space.6}"
+    },
+    "start-pad-top-wide": {
+      "$type": "dimension",
+      "$value": "{space.8}"
+    },
+    "bar-pad-y": {
+      "$type": "dimension",
+      "$value": "{space.4}"
+    },
+    "end-pad-bottom": {
+      "$type": "dimension",
+      "$value": "{space.6}"
+    },
+    "band-size": {
+      "$type": "dimension",
+      "$value": "{space.2}"
+    }
+  }
+}

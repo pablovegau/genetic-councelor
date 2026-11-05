@@ -1,0 +1,21 @@
+@layer base, components, props;
+
+@layer components {
+  .portrait {
+    margin: 0;
+    overflow: hidden;
+    /* Blanco de plató de las fotos: pendiente decidir marco o recorte en modo oscuro. */
+    background: #f0f0f2;
+    border-radius: calc(var(--radius-4) * 1.75);
+  }
+
+  .portrait img {
+    display: block;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    block-size: auto;
+    max-block-size: 28rem;
+    object-fit: cover;
+    object-position: 50% 15%;
+  }
+}

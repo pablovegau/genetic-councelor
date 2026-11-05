@@ -1,0 +1,51 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import portrait from "../../../assets/mg-3199.webp";
+import { Portrait } from "../../../design-system/components";
+
+const usage =
+  '<Portrait src={portrait.src} width={portrait.width} height={portrait.height} alt="Sara Torres-Esquius" />';
+
+const rows: PropRow[] = [
+  {
+    name: "src / width / height",
+    type: "string / number / number",
+    default: "—",
+    description: "Imagen y sus dimensiones (evitan el salto de maquetación).",
+  },
+  {
+    name: "alt",
+    type: "string",
+    default: "—",
+    description: "Texto alternativo. Obligatorio: la foto es contenido.",
+  },
+  {
+    name: "loading",
+    type: '"lazy" | "eager"',
+    default: "—",
+    description: "Carga diferida si está bajo el primer pantallazo.",
+  },
+];
+---
+
+<ComponentPage
+  item="portrait"
+  intro={"La foto grande de la sección «Sobre mí»."}
+  importLine={'import { Portrait } from "design-system/components";'}
+  usage={usage}
+  component="Portrait"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Pendiente: las fotos tienen el blanco de plató; en modo oscuro hay que decidir marco, recorte o zona clara.",
+  ]}
+>
+  <Portrait
+    src={portrait.src}
+    width={portrait.width}
+    height={portrait.height}
+    alt="Sara Torres-Esquius sonriendo"
+    loading="lazy"
+  />
+</ComponentPage>

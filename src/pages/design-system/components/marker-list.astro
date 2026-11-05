@@ -1,0 +1,51 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { MarkerList } from "../../../design-system/components";
+
+const usage =
+  '<MarkerList items={[{ title: "…", text: "…", href: "#cita", marker: "circle", tone: "danger" }]} />';
+
+const rows: PropRow[] = [
+  {
+    name: "items",
+    type: '{ title; text; href; marker: "circle" | "square"; tone: "danger" | "accent" | "action" }[]',
+    default: "—",
+    description: "Entradas de la lista. El símbolo es decorativo.",
+  },
+];
+---
+
+<ComponentPage
+  item="marker-list"
+  intro={
+    "Las situaciones desde las que llegan las personas: cada una con el símbolo de un árbol genealógico."
+  }
+  importLine={'import { MarkerList } from "design-system/components";'}
+  usage={usage}
+  component="MarkerList"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Dos columnas desde 48 rem. Con <code>prefers-reduced-motion</code> el símbolo no crece al pasar el ratón.",
+  ]}
+>
+  <MarkerList
+    items={[
+      {
+        title: "Tengo antecedentes familiares",
+        text: "Cáncer, enfermedades del corazón u otras condiciones que se repiten en tu familia.",
+        href: "#demo",
+        marker: "circle",
+        tone: "danger",
+      },
+      {
+        title: "Quiero saber cuál es mi riesgo",
+        text: "Valoramos tus antecedentes para estimar tu riesgo con calma.",
+        href: "#demo",
+        marker: "square",
+        tone: "accent",
+      },
+    ]}
+  />
+</ComponentPage>

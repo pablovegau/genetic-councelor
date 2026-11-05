@@ -1,0 +1,39 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Wordmark } from "../../../design-system/components";
+
+const usage = '<Wordmark href="/">Sara Torres-Esquius</Wordmark>';
+
+const rows: PropRow[] = [
+  {
+    name: "as",
+    type: '"a" | "strong"',
+    default: '"a"',
+    description: "Enlace o texto.",
+  },
+  {
+    name: "fit",
+    type: "boolean",
+    default: "false",
+    description:
+      "En pantallas de menos de 30 rem baja el tamaño y no parte el nombre en dos líneas.",
+  },
+];
+---
+
+<ComponentPage
+  item="wordmark"
+  intro={
+    'El nombre de marca. Con as="a" es el enlace a la portada; con as="strong", un texto.'
+  }
+  importLine={'import { Wordmark } from "design-system/components";'}
+  usage={usage}
+  component="Wordmark"
+  rows={rows}
+  tokens={[]}
+  notes={[]}
+>
+  <Wordmark href="#demo">Sara Torres-Esquius</Wordmark>
+  <Wordmark as="strong">Sara Torres-Esquius</Wordmark>
+</ComponentPage>

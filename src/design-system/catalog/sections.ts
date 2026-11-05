@@ -106,6 +106,77 @@ export const catalogGroups: CatalogGroup[] = [
         description:
           "Menú de móvil: hamburguesa que pasa a X y panel lateral con cristal esmerilado.",
       },
+      {
+        slug: "section",
+        label: "Section",
+        description:
+          "Banda de página con fondo, franja de color y su contenido centrado (Container).",
+      },
+      {
+        slug: "link",
+        label: "Link",
+        description:
+          "Enlace de texto con cuatro variantes: énfasis, título, navegación y apagado.",
+      },
+      {
+        slug: "wordmark",
+        label: "Wordmark",
+        description:
+          "El nombre del sitio en la tipografía de titulares: enlace en la cabecera, texto en el pie.",
+      },
+      {
+        slug: "byline",
+        label: "Byline",
+        description:
+          "Firma: foto redonda recortada a la cara, con el nombre y el cargo.",
+      },
+      {
+        slug: "portrait",
+        label: "Portrait",
+        description:
+          "Foto en un marco de esquinas redondeadas, recortada a la persona.",
+      },
+      {
+        slug: "split",
+        label: "Split",
+        description:
+          "Dos bloques apilados en móvil y en dos columnas, centrados en vertical, desde 48 rem.",
+      },
+      {
+        slug: "marker-list",
+        label: "MarkerList",
+        description:
+          "Lista de entradas con un símbolo de color, un título que enlaza y una descripción.",
+      },
+      {
+        slug: "steps",
+        label: "Steps",
+        description:
+          "Pasos numerados unidos por una línea, como la línea de hermanos de un árbol genealógico.",
+      },
+      {
+        slug: "language-switch",
+        label: "LanguageSwitch",
+        description: "Enlaces ES / CA / EN con el idioma actual en negrita.",
+      },
+      {
+        slug: "footer",
+        label: "Footer",
+        description:
+          "Pie de página sobre fondo de tinta: marca, columnas de enlaces y línea final.",
+      },
+      {
+        slug: "family-tree",
+        label: "FamilyTree",
+        description:
+          "Árbol genealógico de ejemplo: se dibuja una vez y sus símbolos explican qué son.",
+      },
+      {
+        slug: "scheme-toggle",
+        label: "SchemeToggle",
+        description:
+          "Interruptor claro/oscuro con un icono que pasa de sol a luna.",
+      },
     ],
   },
 ];

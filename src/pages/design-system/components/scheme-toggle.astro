@@ -1,0 +1,45 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import SchemeToggle from "../../../design-system/components/SchemeToggle/SchemeToggle.astro";
+
+const usage =
+  '<SchemeToggle toDark="Cambiar a modo oscuro" toLight="Cambiar a modo claro" />';
+
+const rows: PropRow[] = [
+  {
+    name: "toDark",
+    type: "string",
+    default: "—",
+    description:
+      "Nombre accesible cuando el esquema actual es claro (lo que hará al pulsar).",
+  },
+  {
+    name: "toLight",
+    type: "string",
+    default: "—",
+    description: "Nombre accesible cuando el esquema actual es oscuro.",
+  },
+];
+---
+
+<ComponentPage
+  item="scheme-toggle"
+  intro={
+    "El botón de la cabecera que cambia el esquema de color. Lo recuerda la persona y no parpadea al cargar."
+  }
+  importLine={
+    'import SchemeToggle from "design-system/components/SchemeToggle/SchemeToggle.astro";'
+  }
+  usage={usage}
+  component="SchemeToggle"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Guarda la elección en <code>localStorage</code> y en <code>data-scheme</code>; un script en el <code>head</code> la aplica antes del primer pintado.",
+    "El cambio hace un fundido de 200 ms de toda la página (View Transition), salvo con movimiento reducido, sin soporte o con el menú móvil abierto.",
+    "El icono anima <code>r</code> y <code>cx</code> por CSS con unidad (<code>9px</code>): sin ella Safari y Firefox no forman la luna.",
+  ]}
+>
+  <SchemeToggle toDark="Cambiar a modo oscuro" toLight="Cambiar a modo claro" />
+</ComponentPage>

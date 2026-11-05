@@ -1,0 +1,71 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Section, Steps } from "../../../design-system/components";
+
+const usage =
+  '<Section tone="orange" band="accent">\n  <Steps items={steps} />\n</Section>';
+
+const rows: PropRow[] = [
+  {
+    name: "items",
+    type: "{ when; title; text; detailLabel; detail; icon: { paths: string[]; accent: string[] } }[]",
+    default: "—",
+    description:
+      "Un paso por entrada. El icono es un dibujo de 24×24: trazos normales y de acento.",
+  },
+];
+---
+
+<ComponentPage
+  item="steps"
+  intro={"Cómo es la primera visita, de principio a fin."}
+  importLine={'import { Steps } from "design-system/components";'}
+  usage={usage}
+  component="Steps"
+  rows={rows}
+  tokens={[
+    ["--steps-marker", "Diámetro del número (space.10)"],
+    ["--steps-icon", "Tamaño del icono (space.16)"],
+    ["--steps-gap", "Separación entre pasos en horizontal (space.6)"],
+    ["--steps-row-gap", "Separación entre pasos en vertical (space.8)"],
+  ]}
+  notes={[
+    "Es una lista ordenada; los iconos son decorativos.",
+    "Usa <code>--section-band</code> y <code>--section-bg</code> de la Section que lo contiene: ponlo siempre dentro de una.",
+    "Desde 48 rem los pasos cuelgan de una línea horizontal; las filas comparten altura (subgrid).",
+  ]}
+>
+  <Section tone="orange" band="accent">
+    <Steps
+      items={[
+        {
+          when: "Antes",
+          title: "Nos cuentas lo básico",
+          text: "Rellenas un breve cuestionario sobre tus antecedentes.",
+          detailLabel: "Qué necesitas",
+          detail: "Tus informes médicos",
+          icon: {
+            paths: [
+              "M7 3.5h10a2 2 0 0 1 2 2v13.5a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5.5a2 2 0 0 1 2-2z",
+            ],
+            accent: ["M8.5 11.5h7M8.5 15h4.5"],
+          },
+        },
+        {
+          when: "Durante",
+          title: "Conversamos",
+          text: "Dibujamos juntos tu árbol y repasamos qué enfermedades hay.",
+          detailLabel: "Duración",
+          detail: "Unos 60 minutos",
+          icon: {
+            paths: [
+              "M3.5 6.5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5l-3.5 3v-3h-.5a2 2 0 0 1-2-2z",
+            ],
+            accent: ["M19.5 9.5h.5a1.5 1.5 0 0 1 1.5 1.5v5"],
+          },
+        },
+      ]}
+    />
+  </Section>
+</ComponentPage>
