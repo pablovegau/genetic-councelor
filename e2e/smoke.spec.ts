@@ -87,3 +87,12 @@ test("el árbol explica cada símbolo al enfocarlo", async ({ page }) => {
     .focus();
   await expect(page.locator(".tree-caption")).toHaveText("Circle: a woman.");
 });
+
+for (const { path } of versions) {
+  test(`${path} no envía JavaScript de React: la home no tiene islas`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    await expect(page.locator("astro-island")).toHaveCount(0);
+  });
+}
