@@ -17,3 +17,24 @@ for (const { name, path } of catalogPages) {
     );
   });
 }
+
+// La home en cada idioma, entera. Antes de capturar se cargan las imágenes diferidas y las fuentes;
+// las animaciones (el árbol se dibuja al cargar) las lleva Playwright a su estado final.
+const homes = [
+  { name: "home-es", path: "/" },
+  { name: "home-ca", path: "/ca/" },
+  { name: "home-en", path: "/en/" },
+];
+
+for (const { name, path } of homes) {
+  test(`home: ${name}`, async ({ page }) => {
+    await page.goto(path);
+    await page.evaluate(async () => {
+      const images = [...document.images];
+      for (const image of images) image.loading = "eager";
+      await Promise.all(images.map((image) => image.decode()));
+      await document.fonts.ready;
+    });
+    await expect(page).toHaveScreenshot(`${name}.png`, { fullPage: true });
+  });
+}
