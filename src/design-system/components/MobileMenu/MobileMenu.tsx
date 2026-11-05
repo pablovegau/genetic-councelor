@@ -10,6 +10,8 @@ export interface MobileMenuProps {
   links: { label: string; href: string }[];
   /** Lo que va bajo los enlaces: selector de idioma, botón de reservar… */
   children?: ReactNode;
+  /** Dibujo decorativo de fondo (un SVG). Se atenúa y desenfoca; queda oculto a los lectores de pantalla. */
+  decoration?: ReactNode;
 }
 
 // Debe coincidir con el breakpoint de la media query del CSS (48rem, como el resto del sitio).
@@ -26,6 +28,7 @@ export function MobileMenu({
   closeLabel,
   links,
   children,
+  decoration,
 }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const firstLink = useRef<HTMLAnchorElement>(null);
@@ -59,6 +62,12 @@ export function MobileMenu({
           <Dialog.Title className={styles.title}>{label}</Dialog.Title>
           {/* Transparente y encima del botón de abrir, que es el que se ve hecho X. */}
           <Dialog.Close className={styles.close} aria-label={closeLabel} />
+          {decoration && (
+            // Capa propia, fuera del scroll: no suma altura al contenido ni intercepta clics.
+            <div className={styles.decoration} aria-hidden="true">
+              {decoration}
+            </div>
+          )}
           <div className={styles.scroll}>
             <nav aria-label={label} className={styles.nav}>
               <ul className={styles.list}>

@@ -17,6 +17,7 @@ const usage = `<MobileMenu
   closeLabel="Cerrar el menú"
   links={[{ label: "Sobre mí", href: "#sobre-mi" }]}
 >
+  <TreeBackdrop slot="decoration" />
   <Button href="#cita">Reservar cita</Button>
 </MobileMenu>`;
 
@@ -48,6 +49,13 @@ const rows: PropRow[] = [
       "Enlaces de navegación, en grande. El primero recibe el foco al abrir.",
   },
   {
+    name: "decoration",
+    type: "ReactNode (slot decoration)",
+    default: "—",
+    description:
+      'Dibujo de fondo, un SVG. Se atenúa, se desenfoca y queda oculto a los lectores de pantalla. En Astro: <TreeBackdrop slot="decoration" />.',
+  },
+  {
     name: "children",
     type: "ReactNode",
     default: "—",
@@ -66,6 +74,11 @@ const tokens = [
   ["--mobile-menu-inset-bottom", "Hueco inferior (space.3)"],
   ["--mobile-menu-padding", "Relleno interior (space.6)"],
   ["--mobile-menu-gap", "Separación entre bloques (space.2)"],
+  [
+    "--mobile-menu-decoration-opacity",
+    "Opacidad del dibujo de fondo (opacity.decor)",
+  ],
+  ["--mobile-menu-decoration-blur", "Desenfoque del dibujo de fondo (blur.xs)"],
   ["--mobile-menu-duration", "Duración de la entrada (duration.normal)"],
   ["--mobile-menu-easing", "Curva de la entrada (easing.standard)"],
 ];

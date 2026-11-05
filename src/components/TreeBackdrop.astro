@@ -1,0 +1,46 @@
+---
+// Árbol genealógico solo como dibujo de fondo (sin texto ni interacción): lo atenúa y desenfoca el
+// contenedor que lo recibe, p. ej. el menú móvil. Mismo trazado que FamilyTree.
+import {
+  carrierDotRadius,
+  circleRadius,
+  squareSize,
+  treeLines,
+  treeNodes,
+  treeViewBox,
+} from "./family-tree-geometry";
+---
+
+<svg
+  viewBox={treeViewBox}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {treeLines.map((d) => (
+    <path d={d} />
+  ))}
+  {treeNodes.map((node) => {
+    const fill = node.fill ?? "";
+    return node.shape === "square" ? (
+      <rect
+        class={fill}
+        x={node.x}
+        y={node.y}
+        width={squareSize}
+        height={squareSize}
+      />
+    ) : node.shape === "circle" ? (
+      <circle class={fill} cx={node.cx} cy={node.cy} r={circleRadius} />
+    ) : (
+      <g>
+        <circle class="s3" cx={node.cx} cy={node.cy} r={circleRadius} />
+        <circle class="f3" cx={node.cx} cy={node.cy} r={carrierDotRadius} />
+      </g>
+    );
+  })}
+</svg>

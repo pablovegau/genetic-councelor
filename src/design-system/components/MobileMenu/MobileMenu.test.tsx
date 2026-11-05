@@ -88,4 +88,37 @@ describe("MobileMenu", () => {
     const dialog = screen.getByRole("dialog");
     expect(dialog.contains(document.activeElement)).toBe(true);
   });
+
+  it("el adorno se pinta dentro del panel pero no se anuncia ni intercepta clics", async () => {
+    render(
+      <MobileMenu
+        label="Principal"
+        openLabel="Abrir el menú"
+        closeLabel="Cerrar el menú"
+        links={links}
+        decoration={
+          <svg data-testid="decoration" role="img" aria-label="Árbol" />
+        }
+      />
+    );
+    await userEvent.click(trigger());
+    await screen.findByRole("link", { name: "Sobre mí" });
+
+    const decoration = screen.getByTestId("decoration");
+    expect(screen.getByRole("dialog")).toContainElement(decoration);
+    // Oculto a lectores de pantalla aunque el contenido pasado tenga rol.
+    expect(screen.queryByRole("img", { name: "Árbol" })).toBeNull();
+    expect(
+      getComputedStyle(decoration.parentElement as HTMLElement).pointerEvents
+    ).toBe("none");
+  });
+
+  it("sin adorno no pinta la capa", async () => {
+    renderMenu();
+    await userEvent.click(trigger());
+    await screen.findByRole("link", { name: "Sobre mí" });
+    expect(
+      screen.getByRole("dialog").querySelector("[aria-hidden]")
+    ).toBeNull();
+  });
 });
