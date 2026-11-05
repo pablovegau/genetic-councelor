@@ -167,18 +167,14 @@ const stars = [
       calc(var(--dark) * (200ms + var(--i) * 60ms));
   }
 
-  /* Al pasar el ratón los rayos del sol laten un poco (la luna no se mueve). */
-  @media (prefers-reduced-motion: no-preference) {
-    .scheme-btn:hover .rays {
-      transform-origin: 12px 12px;
-      animation: pulse-rays 300ms ease-in-out infinite alternate;
-    }
+  /* Al pasar el ratón el icono cambia de color (sin movimiento, igual en sol y luna). */
+  .scheme-btn {
+    transition: color var(--motion-duration-interaction)
+      var(--motion-easing-default);
   }
 
-  @keyframes pulse-rays {
-    to {
-      transform: scale(0.95);
-    }
+  .scheme-btn:hover {
+    color: var(--color-action-bg);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -187,7 +183,8 @@ const stars = [
     .rim,
     .bite,
     .rays line,
-    .stars circle {
+    .stars circle,
+    .scheme-btn {
       transition: none;
     }
   }
