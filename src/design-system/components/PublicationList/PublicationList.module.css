@@ -1,0 +1,50 @@
+@layer base, components, props;
+
+@layer components {
+  .list {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .items {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry {
+    display: grid;
+    gap: var(--space-1);
+    padding-block-end: var(--space-5);
+    border-block-end: var(--border-width-1) solid var(--color-border-default);
+  }
+
+  .entry .title {
+    max-inline-size: 48rem;
+  }
+
+  .hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .more summary {
+    display: inline-block;
+    margin-block-end: var(--space-5);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    cursor: pointer;
+  }
+
+  .more summary:focus-visible {
+    outline: var(--border-width-2) solid currentcolor;
+    outline-offset: var(--border-width-2);
+  }
+}

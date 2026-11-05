@@ -58,7 +58,11 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 ## Diseño
 - [x] Dirección visual elegida tras varias rondas de prototipos (ver `docs/design/direccion-visual.md`). Falta la revisión con Sara.
 - [x] Home real a partir de la maqueta, en es/ca/en (`src/components/Home.astro`, textos en `src/i18n/`). Los textos de ca y en son traducciones del español, pendientes de revisar. Las piezas viven en el design system (`src/design-system/components/`) y `src/styles/site.css` solo guarda los ajustes globales; los enlaces de reserva, legal y redes apuntan a anclas hasta tener herramienta de reserva y textos.
-- [ ] Esqueleto previsible, lo que falta: precios, FAQ y una puerta por cada situación.
+- [x] Reserva (`/reservar/`, es/ca/en): precios a la vista, Cal.com bajo demanda y enlace directo, sin datos de salud. Ver `docs/adr/0006-reserva-con-calcom-y-publicaciones-desde-pubmed.md`.
+- [x] Sobre mí (`/sobre-mi/`): trayectoria, prensa y publicaciones de PubMed (JSON versionado + workflow semanal con PR).
+- [ ] Crear en Cal.com los eventos `primera-visita` y `seguimiento` (o cambiar los slugs en `src/config/booking.ts`) y decidir el cobro (Stripe desde Cal.com, al reservar o en la consulta).
+- [ ] Activar «Allow GitHub Actions to create and approve pull requests» para `update-publications.yml`; opcional `NCBI_EMAIL` y `NCBI_API_KEY`.
+- [ ] Esqueleto previsible, lo que falta: FAQ y una puerta por cada situación (hoy las situaciones de la home enlazan a la reserva).
 - [ ] Árbol genealógico como elemento visual: aspecto de dibujo a mano, generado por ordenador.
 
 ## Contenido

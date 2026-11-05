@@ -109,6 +109,65 @@ export const en: Copy = {
     title: "Start with your first visit.",
     lead: "Booking takes a few steps and you choose the day that suits you best. Everything you tell us is confidential.",
   },
+  booking: {
+    meta: {
+      title: "Book a visit · Sara Torres-Esquius",
+      description:
+        "Book your first genetic counselling visit by video call: prices up front and no health data needed to book.",
+    },
+    title: "Book your first visit",
+    lead: "Choose the day and time that suit you best. Visits are always by video call, so you can have them from home.",
+    visitsTitle: "Choose your visit",
+    first: {
+      name: "First visit",
+      note: "Deducted from the cost if you then have a genetic study.",
+      description:
+        "Together we draw your family tree, answer your questions and agree on a plan.",
+    },
+    followup: {
+      name: "Follow-up",
+      description:
+        "To pick the plan back up and answer any questions that come up after the first visit.",
+    },
+    choose: "See available times",
+    embedTitle: "Choose a day and time",
+    embedHint:
+      "Choose one of the visits above and the available times will appear here.",
+    fallback: "Can't see the calendar? Open it in a new page.",
+    privacy: "We don't ask for health data when you book.",
+    thirdParty:
+      "The calendar is provided by Cal.com and only loads when you choose a visit.",
+  },
+  aboutPage: {
+    meta: {
+      title: "About · Sara Torres-Esquius",
+      description:
+        "Career, press and scientific publications of Sara Torres-Esquius, genetic counsellor in Barcelona.",
+    },
+    lead: "Genetic counsellor in Barcelona. She supports adults and their families in understanding genetic risk and making decisions calmly.",
+    careerTitle: "Career",
+    career: [
+      "More than 10 years of experience in genetics.",
+      "Genetic counsellor at Hospital Vall d'Hebron since 2021.",
+      "Genetic counsellor at Clínica Corachan-IDOC since 2025.",
+      "Board member of SEAGen.",
+      "Associate lecturer at the UAB since 2025.",
+    ],
+    pressTitle: "Press and outreach",
+    press: [
+      "El País",
+      "La Vanguardia",
+      "RTVE",
+      "Onda Cero",
+      "Telemadrid",
+      "SEHH manual (2024)",
+    ],
+    publicationsTitle: "Publications",
+    publicationsLead: "Articles in scientific journals, taken from PubMed.",
+    total: "{count} publications on PubMed.",
+    more: "See the remaining {count}",
+    newTab: "opens in a new tab",
+  },
   footer: {
     tagline: "Genetic counselling for adults and their families, in Barcelona.",
     pages: "Pages",

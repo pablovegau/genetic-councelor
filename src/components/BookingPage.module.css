@@ -1,0 +1,29 @@
+.intro {
+  display: grid;
+  gap: var(--space-4);
+  max-inline-size: 40rem;
+}
+
+.title {
+  max-inline-size: 20ch;
+}
+
+.block {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.cards {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.stage {
+  min-block-size: var(--space-16);
+}
+
+@media (min-width: 48rem) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}

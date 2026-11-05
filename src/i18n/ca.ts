@@ -109,6 +109,65 @@ export const ca: Copy = {
     title: "Comença per la teva primera visita.",
     lead: "Reserves en pocs passos i tries el dia que et vagi millor. Tot el que ens expliquis és confidencial.",
   },
+  booking: {
+    meta: {
+      title: "Reservar cita · Sara Torres-Esquius",
+      description:
+        "Reserva la teva primera visita d'assessorament genètic per videotrucada: preus a la vista i sense dades de salut en reservar.",
+    },
+    title: "Reserva la teva primera visita",
+    lead: "Tria el dia i l'hora que et vagin millor. Les visites són sempre per videotrucada, així que les pots fer des de casa.",
+    visitsTitle: "Tria la teva visita",
+    first: {
+      name: "Primera visita",
+      note: "Descomptable si després et fas un estudi genètic.",
+      description:
+        "Dibuixem junts el teu arbre familiar, resolem els teus dubtes i acordem un pla.",
+    },
+    followup: {
+      name: "Seguiment",
+      description:
+        "Per reprendre el pla i resoldre els dubtes que sorgeixin després de la primera visita.",
+    },
+    choose: "Veure horaris",
+    embedTitle: "Tria dia i hora",
+    embedHint:
+      "Tria una de les visites de dalt i aquí veuràs els horaris disponibles.",
+    fallback: "No veus el calendari? Obre'l en una pàgina nova.",
+    privacy: "En reservar no et demanem dades de salut.",
+    thirdParty:
+      "El calendari l'ofereix Cal.com i només es carrega quan tries una visita.",
+  },
+  aboutPage: {
+    meta: {
+      title: "Sobre mi · Sara Torres-Esquius",
+      description:
+        "Trajectòria, premsa i publicacions científiques de Sara Torres-Esquius, assessora genètica a Barcelona.",
+    },
+    lead: "Assessora genètica a Barcelona. Acompanya persones adultes i les seves famílies a entendre el risc genètic i a prendre decisions amb calma.",
+    careerTitle: "Trajectòria",
+    career: [
+      "Més de 10 anys d'experiència en genètica.",
+      "Assessora genètica a l'Hospital Vall d'Hebron des del 2021.",
+      "Assessora genètica a la Clínica Corachan-IDOC des del 2025.",
+      "Vocal de la Junta Directiva de SEAGen.",
+      "Professora vinculada a la UAB des del 2025.",
+    ],
+    pressTitle: "Premsa i divulgació",
+    press: [
+      "El País",
+      "La Vanguardia",
+      "RTVE",
+      "Onda Cero",
+      "Telemadrid",
+      "Manual SEHH (2024)",
+    ],
+    publicationsTitle: "Publicacions",
+    publicationsLead: "Articles en revistes científiques, extrets de PubMed.",
+    total: "{count} publicacions a PubMed.",
+    more: "Veure les {count} restants",
+    newTab: "s'obre en una altra pestanya",
+  },
   footer: {
     tagline:
       "Assessorament genètic per a persones adultes i les seves famílies, a Barcelona.",

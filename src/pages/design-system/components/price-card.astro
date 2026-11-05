@@ -1,0 +1,65 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Button, PriceCard } from "../../../design-system/components";
+
+const usage =
+  '<PriceCard name="Primera visita" price="120 €" note="Descontable si…" description="…">\n  <Button href="/reservar/">Ver horarios</Button>\n</PriceCard>';
+
+const rows: PropRow[] = [
+  {
+    name: "name",
+    type: "string",
+    default: "—",
+    description: "Nombre de la visita. Es un h3.",
+  },
+  {
+    name: "price",
+    type: "string",
+    default: "—",
+    description: "Precio ya formateado (Intl.NumberFormat en la página).",
+  },
+  {
+    name: "note",
+    type: "string",
+    default: "—",
+    description: "Opcional: cómo se descuenta o qué incluye.",
+  },
+  {
+    name: "description",
+    type: "string",
+    default: "—",
+    description: "Qué se hace en la visita.",
+  },
+  {
+    name: "children",
+    type: "ReactNode",
+    default: "—",
+    description: "La acción de la tarjeta, al pie.",
+  },
+];
+---
+
+<ComponentPage
+  item="price-card"
+  intro={
+    "Las visitas de la página de reserva: el precio siempre visible, sin que haya que preguntar."
+  }
+  importLine={'import { PriceCard } from "design-system/components";'}
+  usage={usage}
+  component="PriceCard"
+  rows={rows}
+  notes={[
+    "El precio nunca se esconde: es un requisito del brief.",
+    "El formato de la moneda lo decide la página según el idioma (120 € en es/ca, €120 en en).",
+  ]}
+>
+  <PriceCard
+    name="Primera visita"
+    price="120 €"
+    note="Descontable si después te haces un estudio genético."
+    description="Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un plan."
+  >
+    <Button href="#demo">Ver horarios</Button>
+  </PriceCard>
+</ComponentPage>

@@ -7,12 +7,15 @@ export interface SplitProps extends ComponentPropsWithoutRef<"div"> {
   ratio?: number;
   /** `head`: separación de una cabecera de sección. `wide`: más aire entre columnas en pantallas anchas. */
   gap?: "head" | "wide";
+  /** Alineación vertical de las columnas en pantallas anchas. */
+  align?: "center" | "start";
 }
 
 /** Dos bloques apilados en móvil y en dos columnas, centrados en vertical, desde 48 rem. */
 export function Split({
   ratio = 1,
   gap = "head",
+  align = "center",
   className,
   style,
   ...props
@@ -21,6 +24,7 @@ export function Split({
     <div
       className={cx(styles.split, className)}
       data-gap={gap}
+      data-align={align}
       style={{ "--split-ratio": `${ratio}fr`, ...style } as CSSProperties}
       {...props}
     />

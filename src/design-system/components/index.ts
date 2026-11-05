@@ -18,6 +18,7 @@ export {
   type MarkerListProps,
 } from "./MarkerList/MarkerList";
 export { MobileMenu, type MobileMenuProps } from "./MobileMenu/MobileMenu";
+export { PriceCard, type PriceCardProps } from "./PriceCard/PriceCard";
 export { Portrait, type PortraitProps } from "./Portrait/Portrait";
 export {
   Container,
@@ -36,3 +37,8 @@ export {
   type StepsProps,
 } from "./Steps/Steps";
 export { Wordmark, type WordmarkProps } from "./Wordmark/Wordmark";
+export {
+  PublicationList,
+  type PublicationItem,
+  type PublicationListProps,
+} from "./PublicationList/PublicationList";

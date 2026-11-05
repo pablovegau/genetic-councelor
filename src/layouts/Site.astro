@@ -5,10 +5,18 @@ import SiteHeader from "../components/SiteHeader.astro";
 import "../styles/site.css";
 import Base from "./Base.astro";
 
+interface Props {
+  /** Título y descripción de la página; sin ellos, los de la portada. */
+  title?: string;
+  description?: string;
+}
+
 const copy = getCopy(Astro.currentLocale);
+const { title = copy.meta.title, description = copy.meta.description } =
+  Astro.props;
 ---
 
-<Base title={copy.meta.title} description={copy.meta.description}>
+<Base title={title} description={description}>
   <SiteHeader slot="header" />
   <slot />
   <SiteFooter slot="footer" />

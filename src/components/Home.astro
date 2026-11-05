@@ -1,6 +1,7 @@
 ---
 import avatar from "../assets/mg-3149.webp";
 import portrait from "../assets/mg-3199.webp";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCopy } from "../i18n";
 import {
   Button,
@@ -17,6 +18,8 @@ import { Text } from "../design-system/primitives";
 import styles from "./Home.module.css";
 
 const copy = getCopy(Astro.currentLocale);
+const book = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "reservar");
+const aboutHref = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "sobre-mi");
 const { site, hero, situations, process, about, closing, tree } = copy;
 
 const markers = [
@@ -28,7 +31,7 @@ const markers = [
 const situationItems = situations.items.map(({ title, text }, i) => ({
   title,
   text,
-  href: "#cita",
+  href: book,
   ...markers[i]!,
 }));
 
@@ -86,7 +89,7 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
         </Text>
         <div class={styles.heroActions}>
           <div class={styles.heroCta}>
-            <Button href="#cita">{site.book}</Button>
+            <Button href={book}>{site.book}</Button>
           </div>
           <div class={styles.heroByline}>
             <Byline avatar={avatar} name={site.brand} description={hero.role} />
@@ -129,7 +132,7 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
             {paragraph}
           </Text>
         ))}
-        <Link href="#sobre-mi">{about.link}</Link>
+        <Link href={aboutHref}>{about.link}</Link>
       </div>
     </Split>
   </Section>
@@ -169,7 +172,7 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
         </Text>
       </div>
       <div class={styles.closingAction}>
-        <Button href="#cita">{site.book}</Button>
+        <Button href={book}>{site.book}</Button>
       </div>
     </Split>
   </Section>

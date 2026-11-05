@@ -1,0 +1,11 @@
+---
+import BookingPage from "../../components/BookingPage.astro";
+import Site from "../../layouts/Site.astro";
+import { getCopy } from "../../i18n";
+
+const { booking } = getCopy(Astro.currentLocale);
+---
+
+<Site title={booking.meta.title} description={booking.meta.description}>
+  <BookingPage />
+</Site>

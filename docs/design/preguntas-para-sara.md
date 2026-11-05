@@ -38,7 +38,9 @@ Pasos que ya constan en el brief: videollamada; preparar la información persona
 
 ### Contacto, reserva y legal
 
-- [ ] Herramienta de reserva.
+- [ ] Cal.com: URL real de los eventos (`primera-visita`, `seguimiento`) y si se cobra al reservar con Stripe o en la consulta. Las visitas son siempre online.
+- [ ] Qué fue exactamente el «manual SEHH 2024» (¿autora, colaboradora?) para redactarlo bien en «Prensa y divulgación».
+- [ ] Su ORCID (afina la búsqueda de publicaciones y los datos estructurados) y qué variantes de nombre usa en los artículos.
 - [ ] Correo propio de la web.
 - [ ] Redes: si tiene LinkedIn o Instagram (están en el pie como marcadores).
 - [ ] Datos para el aviso legal: domicilio y NIF, que la normativa suele exigir a una persona física (confirmarlo con quien revise los textos legales).
