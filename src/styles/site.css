@@ -226,9 +226,6 @@
   place-items: center;
   border-radius: 50%;
 }
-.icon-btn:hover {
-  background: color-mix(in srgb, currentColor 10%, transparent);
-}
 .icon-btn svg {
   width: var(--space-6);
   height: var(--space-6);
@@ -237,25 +234,6 @@
   stroke-width: 2;
   stroke-linecap: round;
 }
-/* Interruptor de esquema: muestra el icono del esquema en el que estás (sol en claro, luna en oscuro). */
-.scheme-btn .icon-moon {
-  display: none;
-}
-html[data-scheme="dark"] .scheme-btn .icon-sun {
-  display: none;
-}
-html[data-scheme="dark"] .scheme-btn .icon-moon {
-  display: block;
-}
-@media (prefers-color-scheme: dark) {
-  html:not([data-scheme="light"]) .scheme-btn .icon-sun {
-    display: none;
-  }
-  html:not([data-scheme="light"]) .scheme-btn .icon-moon {
-    display: block;
-  }
-}
-
 /* ---- Hero --------------------------------------------------------- */
 .hero {
   display: grid;
@@ -720,7 +698,6 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 }
 
 /* ---- Hovers básicos ---------------------------------------------------- */
-.icon-btn,
 .nav-inline a,
 .langs a,
 .link,
@@ -734,9 +711,6 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
     color var(--dur) var(--ease),
     text-decoration-thickness var(--dur) var(--ease);
 }
-.icon-btn svg {
-  transition: transform var(--dur) var(--ease);
-}
 .link:hover,
 .list a:hover {
   text-decoration-thickness: 2px;
@@ -744,8 +718,5 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 @media (prefers-reduced-motion: no-preference) {
   .list li:hover svg {
     transform: scale(1.3);
-  }
-  .icon-btn:hover svg {
-    transform: rotate(12deg);
   }
 }

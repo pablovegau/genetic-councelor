@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { Button, MobileMenu } from "../design-system/components";
 import { getCopy } from "../i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
+import SchemeToggle from "./SchemeToggle.astro";
 
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
@@ -30,22 +31,7 @@ const nav = [
       <Button className="cta cta-sm" size="sm" href="#cita">
         {site.book}
       </Button>
-      <button
-        class="icon-btn scheme-btn"
-        type="button"
-        data-scheme-toggle
-        data-to-dark={site.toDark}
-        data-to-light={site.toLight}
-        aria-label={site.toDark}
-      >
-        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"></path>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"></path>
-        </svg>
-      </button>
+      <SchemeToggle toDark={site.toDark} toLight={site.toLight} />
       <div class="menu-btn">
         <MobileMenu
           client:idle
@@ -61,34 +47,3 @@ const nav = [
     </div>
   </div>
 </header>
-
-<script>
-  const root = document.documentElement;
-  const media = matchMedia("(prefers-color-scheme: dark)");
-  const toggle = document.querySelector<HTMLButtonElement>(
-    "[data-scheme-toggle]"
-  );
-  const effective = () =>
-    root.dataset.scheme ?? (media.matches ? "dark" : "light");
-  const sync = () => {
-    if (!toggle) return;
-    toggle.setAttribute(
-      "aria-label",
-      (effective() === "dark"
-        ? toggle.dataset.toLight
-        : toggle.dataset.toDark) ?? ""
-    );
-  };
-  toggle?.addEventListener("click", () => {
-    const next = effective() === "dark" ? "light" : "dark";
-    root.dataset.scheme = next;
-    try {
-      localStorage.setItem("scheme", next);
-    } catch {
-      // Sin almacenamiento: el cambio vale solo para esta visita.
-    }
-    sync();
-  });
-  media.addEventListener("change", sync);
-  sync();
-</script>
