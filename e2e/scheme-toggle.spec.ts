@@ -63,3 +63,106 @@ test("con movimiento reducido el cambio es instantáneo", async ({ page }) => {
   await expect.poll(() => disc(page), { timeout: 500 }).toBeGreaterThan(0.7);
   expect(await opacityOf(page, ".stars circle")).toBe(1);
 });
+
+// El cambio de esquema se hace con una View Transition: un fundido corto de toda la página.
+// Se envuelve `startViewTransition` para contar las llamadas y leer la duración de su animación.
+const watchTransitions = (page: Page) =>
+  page.addInitScript(() => {
+    const w = window as unknown as {
+      __transitions: number;
+      __durations: number[];
+    };
+    w.__transitions = 0;
+    w.__durations = [];
+    const original = document.startViewTransition?.bind(document);
+    if (!original) return;
+    document.startViewTransition = (callback) => {
+      w.__transitions++;
+      const transition = original(callback);
+      transition.ready
+        .then(() => {
+          w.__durations = document
+            .getAnimations()
+            .filter((animation) =>
+              String(
+                (animation.effect as KeyframeEffect | null)?.pseudoElement
+              ).includes("view-transition")
+            )
+            .map(
+              (animation) =>
+                animation.effect?.getComputedTiming().duration as number
+            );
+        })
+        .catch(() => undefined);
+      return transition;
+    };
+  });
+
+const readTransitions = (page: Page) =>
+  page.evaluate(() => {
+    const w = window as unknown as {
+      __transitions: number;
+      __durations: number[];
+    };
+    return { count: w.__transitions, durations: w.__durations };
+  });
+
+const scheme = (page: Page) =>
+  page.evaluate(() => document.documentElement.dataset.scheme);
+
+test("cambiar de esquema hace un fundido corto de toda la página", async ({
+  page,
+}) => {
+  await page.emulateMedia({
+    colorScheme: "light",
+    reducedMotion: "no-preference",
+  });
+  await watchTransitions(page);
+  await page.goto("/");
+  test.skip(
+    !(await page.evaluate(() => "startViewTransition" in document)),
+    "este navegador no tiene View Transitions"
+  );
+
+  await toggle(page).click();
+  await expect.poll(() => scheme(page)).toBe("dark");
+  await expect.poll(async () => (await readTransitions(page)).count).toBe(1);
+  // 200 ms: rápido, pero no brusco.
+  await expect
+    .poll(async () => (await readTransitions(page)).durations)
+    .toContain(200);
+});
+
+test("con movimiento reducido el esquema cambia sin fundido", async ({
+  page,
+}) => {
+  await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
+  await watchTransitions(page);
+  await page.goto("/");
+
+  await toggle(page).click();
+  await expect.poll(() => scheme(page)).toBe("dark");
+  expect((await readTransitions(page)).count).toBe(0);
+});
+
+test("sin View Transitions el esquema cambia igual, de golpe", async ({
+  page,
+}) => {
+  await page.emulateMedia({
+    colorScheme: "light",
+    reducedMotion: "no-preference",
+  });
+  await page.addInitScript(() => {
+    (
+      document as unknown as { startViewTransition?: unknown }
+    ).startViewTransition = undefined;
+  });
+  await page.goto("/");
+
+  await toggle(page).click();
+  await expect.poll(() => scheme(page)).toBe("dark");
+  await expect(toggle(page)).toHaveAttribute(
+    "aria-label",
+    "Cambiar a modo claro"
+  );
+});

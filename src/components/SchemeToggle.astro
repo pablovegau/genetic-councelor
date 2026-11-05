@@ -232,8 +232,7 @@ const stars = [
         : toggle.dataset.toDark) ?? ""
     );
   };
-  toggle?.addEventListener("click", () => {
-    const next = effective() === "dark" ? "light" : "dark";
+  const apply = (next: string) => {
     root.dataset.scheme = next;
     try {
       localStorage.setItem("scheme", next);
@@ -241,7 +240,31 @@ const stars = [
       // Sin almacenamiento: el cambio vale solo para esta visita.
     }
     sync();
+  };
+  toggle?.addEventListener("click", () => {
+    const next = effective() === "dark" ? "light" : "dark";
+    // Fundido corto de toda la página (View Transition). Sin soporte o con movimiento reducido,
+    // el esquema cambia de golpe, como antes.
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || reduced) apply(next);
+    else document.startViewTransition(() => apply(next));
   });
   media.addEventListener("change", sync);
   sync();
 </script>
+
+<style is:global>
+  /* Fundido del cambio de esquema: rápido, pero no brusco. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none;
+    }
+  }
+</style>
