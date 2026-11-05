@@ -26,7 +26,7 @@ Funnel Display (titulares) y Funnel Sans (texto), servidas desde el propio domin
 
 ## Estructura de la home
 
-Hero, «Sobre mí» justo debajo, situaciones, primera visita (4 pasos horizontales con iconos), valoraciones, cierre y pie; menú con selector ES/CA/EN, «Reservar cita» e interruptor de esquema. Fotos solo de estudio por ahora.
+Hero, «Sobre mí» justo debajo, situaciones, primera visita (4 pasos horizontales con iconos), cierre y pie (sin valoraciones: el brief dice que no habrá testimonios); menú con selector ES/CA/EN, «Reservar cita» e interruptor de esquema. Fotos solo de estudio por ahora.
 
 ## Dónde está
 
