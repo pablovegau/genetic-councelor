@@ -1,0 +1,49 @@
+@layer base, components, props;
+
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: var(--button-padding-y-md) var(--button-padding-x-md);
+    border: 0;
+    border-radius: var(--button-radius);
+    background-color: var(--button-bg-default);
+    color: var(--button-fg);
+    font-family: inherit;
+    font-size: var(--button-font-size-md);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-line-height-tight);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color var(--motion-duration-interaction)
+      var(--motion-easing-default);
+  }
+
+  .button[data-size="sm"] {
+    padding: var(--button-padding-y-sm) var(--button-padding-x-sm);
+    font-size: var(--button-font-size-sm);
+  }
+
+  .button:hover {
+    background-color: var(--button-bg-hover);
+  }
+
+  .button:active {
+    background-color: var(--button-bg-active);
+  }
+
+  .button:focus-visible {
+    outline: var(--border-width-2) solid var(--color-focus-ring);
+    outline-offset: var(--border-width-2);
+  }
+
+  .button:disabled,
+  .button[data-disabled] {
+    background-color: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+  }
+}

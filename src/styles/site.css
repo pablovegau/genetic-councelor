@@ -13,8 +13,6 @@
   --gray-2: var(--color-tint-orange);
   --gray-3: var(--color-tint-violet);
   --ink-bg: light-dark(var(--color-text-default), var(--color-bg-surface));
-  --cta-bg: var(--c3);
-  --cta-fg: var(--on-c3);
   --dur: var(--motion-duration-interaction);
   --ease: var(--motion-easing-default);
   --font-display: var(--font-family-display);
@@ -62,12 +60,15 @@
   padding: 0;
   list-style: none;
 }
-.site a {
-  color: inherit;
-}
-.site :focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 3px;
+/* En la capa base: los componentes del design system (Button) tienen su propio color y foco. */
+@layer base {
+  .site a {
+    color: inherit;
+  }
+  .site :focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 3px;
+  }
 }
 .site h1,
 .site h2,
@@ -93,20 +94,9 @@
   stroke: var(--c3);
   fill: none;
 }
+/* El aspecto del botón es del componente Button; aquí solo su posición en cada rejilla. */
 .cta {
-  display: inline-block;
   justify-self: start;
-  padding: var(--space-4) var(--space-6);
-  border-radius: 999px;
-  background: var(--cta-bg);
-  color: var(--cta-fg) !important;
-  text-decoration: none;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.cta-sm {
-  padding: var(--space-2) var(--space-4);
-  font-size: 0.95rem;
 }
 .link {
   font-weight: 600;
@@ -594,7 +584,7 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 }
 @media (min-width: 30rem) {
   .top-actions .cta-sm {
-    display: inline-block;
+    display: inline-flex;
   }
 }
 @media (min-width: 48rem) {
@@ -764,7 +754,6 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 }
 
 /* ---- Hovers básicos ---------------------------------------------------- */
-.cta,
 .icon-btn,
 .nav-inline a,
 .langs a,
@@ -782,24 +771,11 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 .icon-btn svg {
   transition: transform var(--dur) var(--ease);
 }
-.cta:hover {
-  box-shadow: 0 var(--space-2) var(--space-5)
-    color-mix(in srgb, var(--color-text-default) 28%, transparent);
-}
-.cta:active {
-  box-shadow: none;
-}
 .link:hover,
 .list a:hover {
   text-decoration-thickness: 2px;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .cta:hover {
-    transform: translateY(-2px);
-  }
-  .cta:active {
-    transform: translateY(0);
-  }
   .list li:hover svg {
     transform: scale(1.3);
   }
