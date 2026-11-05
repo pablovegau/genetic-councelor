@@ -34,7 +34,10 @@ jobs:
       - run: pnpm coverage
       - run: pnpm build
       # Accesibilidad, humo y regresión visual contra el sitio compilado.
+      # Firefox no arranca si $HOME no es del usuario actual (en el contenedor es /github/home).
       - run: pnpm exec playwright test
+        env:
+          HOME: /root
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
