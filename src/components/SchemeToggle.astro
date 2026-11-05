@@ -48,7 +48,7 @@ const stars = [
         height="24"
       >
         <rect width="24" height="24" fill="white"></rect>
-        <circle class="bite" cx="17" cy="7" r="8.3" fill="black"></circle>
+        <circle class="bite" cx="17" cy="7" r="8" fill="black"></circle>
       </mask>
       <mask
         id="scheme-body"
@@ -90,7 +90,11 @@ const stars = [
   /* --dark: 0 con el sol y 1 con la luna. Es la única variable que cambia entre esquemas. */
   .scheme-btn {
     --dark: 0;
-    --morph: 1000ms;
+    /* Tiempos: el morph del círculo, y rayos y estrellas escalonados. Todo se asienta en ~0,7 s. */
+    --morph: 500ms;
+    /* Un solo grosor de trazo. Si cambia, hay que ajustar el radio del círculo que recorta (en el
+       marcado: su radio menos medio trazo) y el de la máscara del borde (.body: más medio trazo). */
+    --stroke: 2px;
   }
 
   :global(:root[data-scheme="dark"]) .scheme-btn {
@@ -116,14 +120,14 @@ const stars = [
 
   /* Círculo central: de r = 4,5 (sol) a r = 9 (luna). */
   .disc {
-    stroke-width: 1.4px;
+    stroke-width: var(--stroke);
     r: calc(4.5px * (1 + var(--dark)));
     transition: r var(--morph);
   }
 
-  /* Máscara del borde interior: de r = 5,2 a r = 9,7 (el radio de la luna más medio trazo). */
+  /* Máscara del borde interior: de r = 5,5 a r = 10 (el radio del círculo más medio trazo). */
   .body {
-    r: calc(5.2px + var(--dark) * 4.5px);
+    r: calc(5.5px + var(--dark) * 4.5px);
     transition: r var(--morph);
   }
 
@@ -135,21 +139,22 @@ const stars = [
   }
 
   .rim {
-    stroke-width: 1.4px;
+    stroke-width: var(--stroke);
   }
 
   /* Rayos: al amanecer aparecen escalonados; al anochecer se apagan enseguida. */
   .rays {
-    stroke-width: 2px;
+    stroke-width: var(--stroke);
   }
 
   .rays line {
     opacity: calc(1 - var(--dark));
-    transition: opacity calc(100ms + (1 - var(--dark)) * 200ms) ease
-      calc((1 - var(--dark)) * (500ms + var(--i) * 70ms));
+    transition: opacity calc(80ms + (1 - var(--dark)) * 120ms) ease
+      calc((1 - var(--dark)) * (150ms + var(--i) * 35ms));
   }
 
-  /* Estrellas: al anochecer aparecen escalonadas y tarde; al amanecer se apagan enseguida. */
+  /* Estrellas: al anochecer aparecen escalonadas, algo después de que asome la luna; al amanecer se
+     apagan enseguida. */
   .stars {
     fill: currentcolor;
     stroke: none;
@@ -157,48 +162,22 @@ const stars = [
 
   .stars circle {
     opacity: var(--dark);
-    transform-box: fill-box;
-    transform-origin: center;
-    transition: opacity calc(120ms + var(--dark) * 780ms)
+    transition: opacity calc(100ms + var(--dark) * 250ms)
       cubic-bezier(0.22, 0.61, 0.36, 1)
-      calc(var(--dark) * (800ms + var(--i) * 120ms));
+      calc(var(--dark) * (200ms + var(--i) * 60ms));
   }
 
-  /* Al pasar el ratón el sol y las estrellas laten un poco. */
+  /* Al pasar el ratón los rayos del sol laten un poco (la luna no se mueve). */
   @media (prefers-reduced-motion: no-preference) {
     .scheme-btn:hover .rays {
       transform-origin: 12px 12px;
       animation: pulse-rays 300ms ease-in-out infinite alternate;
-    }
-
-    .scheme-btn:hover .stars circle {
-      animation: pulse-star ease-in-out infinite alternate;
-    }
-
-    .scheme-btn:hover .stars circle:nth-child(1) {
-      animation-duration: 400ms;
-    }
-
-    .scheme-btn:hover .stars circle:nth-child(2) {
-      animation-duration: 350ms;
-      animation-delay: 150ms;
-    }
-
-    .scheme-btn:hover .stars circle:nth-child(3) {
-      animation-duration: 450ms;
-      animation-delay: 80ms;
     }
   }
 
   @keyframes pulse-rays {
     to {
       transform: scale(0.95);
-    }
-  }
-
-  @keyframes pulse-star {
-    to {
-      transform: scale(0.8);
     }
   }
 
