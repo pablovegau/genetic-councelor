@@ -18,7 +18,7 @@ jobs:
     # Mantener la versión igual que la de @playwright/test.
     container:
       image: mcr.microsoft.com/playwright:v1.64.1-noble
-      options: --ipc=host
+      options: --ipc=host --security-opt seccomp=unconfined
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
