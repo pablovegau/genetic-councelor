@@ -10,8 +10,11 @@ export interface MobileMenuProps {
   links: { label: string; href: string }[];
   /** Lo que va bajo los enlaces: selector de idioma, botón de reservar… */
   children?: ReactNode;
-  /** Dibujo decorativo de fondo (un SVG). Se atenúa y desenfoca; queda oculto a los lectores de pantalla. */
-  decoration?: ReactNode;
+  /**
+   * Partes de la página que quedan inertes mientras el menú está abierto. La cabecera no va aquí:
+   * sigue usable (cambiar de esquema, etc.) y solo se cierra con la X, Escape o eligiendo un enlace.
+   */
+  inertSelector?: string;
 }
 
 // Debe coincidir con el breakpoint de la media query del CSS (48rem, como el resto del sitio).
@@ -19,7 +22,8 @@ const desktop = "(min-width: 48rem)";
 
 /**
  * Menú de móvil: un botón de hamburguesa que pasa a X y un panel lateral con cristal esmerilado.
- * Base UI Dialog pone el foco, el Escape, el bloqueo del scroll y el `inert` del resto de la página.
+ * Es un diálogo no modal de Base UI: pone el foco y gestiona Escape, pero no cierra al clicar fuera ni
+ * bloquea la cabecera. Solo se cierra con la X (el propio botón), Escape o eligiendo un enlace.
  * Es una isla: hidratar con `client:idle`.
  */
 export function MobileMenu({
@@ -28,7 +32,7 @@ export function MobileMenu({
   closeLabel,
   links,
   children,
-  decoration,
+  inertSelector = "main, footer",
 }: MobileMenuProps) {
   const [open, setOpen] = useState(false);
   const firstLink = useRef<HTMLAnchorElement>(null);
@@ -42,8 +46,27 @@ export function MobileMenu({
     return () => query.removeEventListener("change", close);
   }, []);
 
+  // Abierto: la página de detrás queda inerte y sin scroll, pero la cabecera sigue libre.
+  useEffect(() => {
+    if (!open) return;
+    const inerted = [...document.querySelectorAll<HTMLElement>(inertSelector)];
+    inerted.forEach((element) => (element.inert = true));
+    const root = document.documentElement;
+    const overflow = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      inerted.forEach((element) => (element.inert = false));
+      root.style.overflow = overflow;
+    };
+  }, [open, inertSelector]);
+
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={setOpen}
+      modal={false}
+      disablePointerDismissal
+    >
       <Dialog.Trigger
         className={styles.trigger}
         aria-label={open ? closeLabel : openLabel}
@@ -60,14 +83,6 @@ export function MobileMenu({
           }}
         >
           <Dialog.Title className={styles.title}>{label}</Dialog.Title>
-          {/* Transparente y encima del botón de abrir, que es el que se ve hecho X. */}
-          <Dialog.Close className={styles.close} aria-label={closeLabel} />
-          {decoration && (
-            // Capa propia, fuera del scroll: no suma altura al contenido ni intercepta clics.
-            <div className={styles.decoration} aria-hidden="true">
-              {decoration}
-            </div>
-          )}
           <div className={styles.scroll}>
             <nav aria-label={label} className={styles.nav}>
               <ul className={styles.list}>

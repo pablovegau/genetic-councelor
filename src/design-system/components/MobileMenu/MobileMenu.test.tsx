@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { userEvent } from "vitest/browser";
 import { MobileMenu } from "./MobileMenu";
 
@@ -8,19 +8,32 @@ const links = [
   { label: "Contacto", href: "#contacto" },
 ];
 
-const renderMenu = () =>
+const renderMenu = (extra?: { onOutside?: () => void }) =>
   render(
-    <MobileMenu
-      label="Principal"
-      openLabel="Abrir el menú"
-      closeLabel="Cerrar el menú"
-      links={links}
-    >
-      <a href="#cita">Reservar cita</a>
-    </MobileMenu>
+    <>
+      <header>
+        <button type="button" onClick={extra?.onOutside}>
+          Cambiar esquema
+        </button>
+        <MobileMenu
+          label="Principal"
+          openLabel="Abrir el menú"
+          closeLabel="Cerrar el menú"
+          links={links}
+          inertSelector="[data-page]"
+        >
+          <a href="#cita">Reservar cita</a>
+        </MobileMenu>
+      </header>
+      <main data-page>
+        <a href="#detras">Contenido de la página</a>
+      </main>
+    </>
   );
 
 const trigger = () => screen.getByRole("button", { name: "Abrir el menú" });
+const closeButton = () =>
+  screen.getByRole("button", { name: "Cerrar el menú" });
 
 describe("MobileMenu", () => {
   it("cerrado solo muestra el botón: el panel no está en el documento", () => {
@@ -39,6 +52,20 @@ describe("MobileMenu", () => {
     await waitFor(() =>
       expect(screen.getByRole("link", { name: "Sobre mí" })).toHaveFocus()
     );
+  });
+
+  it("el mismo botón, ya hecho X, lo cierra", async () => {
+    renderMenu();
+    await userEvent.click(trigger());
+    await screen.findByRole("link", { name: "Sobre mí" });
+    expect(closeButton()).toHaveAttribute("aria-expanded", "true");
+
+    await userEvent.click(closeButton());
+
+    await waitFor(() =>
+      expect(screen.queryByRole("link", { name: "Sobre mí" })).toBeNull()
+    );
+    expect(trigger()).toBeVisible();
   });
 
   it("Escape lo cierra y devuelve el foco al botón", async () => {
@@ -66,59 +93,34 @@ describe("MobileMenu", () => {
     );
   });
 
-  it("el botón de cerrar tiene nombre accesible y cierra el menú", async () => {
-    renderMenu();
+  it("clicar fuera del panel no lo cierra y deja usar el resto de la cabecera", async () => {
+    const onOutside = vi.fn();
+    renderMenu({ onOutside });
     await userEvent.click(trigger());
+    await screen.findByRole("link", { name: "Sobre mí" });
+
     await userEvent.click(
-      await screen.findByRole("button", { name: "Cerrar el menú" })
+      screen.getByRole("button", { name: "Cambiar esquema" })
     );
 
-    await waitFor(() =>
-      expect(screen.queryByRole("link", { name: "Sobre mí" })).toBeNull()
-    );
+    expect(onOutside).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("link", { name: "Sobre mí" })).toBeVisible();
   });
 
-  it("el foco no sale del panel con el tabulador", async () => {
+  it("mientras está abierto la página de detrás queda inerte y el scroll bloqueado, y se libera al cerrar", async () => {
     renderMenu();
+    const page = () => document.querySelector("[data-page]") as HTMLElement;
+    expect(page().inert).toBe(false);
+
     await userEvent.click(trigger());
     await screen.findByRole("link", { name: "Sobre mí" });
+    expect(page().inert).toBe(true);
+    expect(getComputedStyle(document.documentElement).overflow).toBe("hidden");
 
-    for (let i = 0; i < 6; i++) await userEvent.tab();
-
-    const dialog = screen.getByRole("dialog");
-    expect(dialog.contains(document.activeElement)).toBe(true);
-  });
-
-  it("el adorno se pinta dentro del panel pero no se anuncia ni intercepta clics", async () => {
-    render(
-      <MobileMenu
-        label="Principal"
-        openLabel="Abrir el menú"
-        closeLabel="Cerrar el menú"
-        links={links}
-        decoration={
-          <svg data-testid="decoration" role="img" aria-label="Árbol" />
-        }
-      />
+    await userEvent.click(closeButton());
+    await waitFor(() => expect(page().inert).toBe(false));
+    expect(getComputedStyle(document.documentElement).overflow).not.toBe(
+      "hidden"
     );
-    await userEvent.click(trigger());
-    await screen.findByRole("link", { name: "Sobre mí" });
-
-    const decoration = screen.getByTestId("decoration");
-    expect(screen.getByRole("dialog")).toContainElement(decoration);
-    // Oculto a lectores de pantalla aunque el contenido pasado tenga rol.
-    expect(screen.queryByRole("img", { name: "Árbol" })).toBeNull();
-    expect(
-      getComputedStyle(decoration.parentElement as HTMLElement).pointerEvents
-    ).toBe("none");
-  });
-
-  it("sin adorno no pinta la capa", async () => {
-    renderMenu();
-    await userEvent.click(trigger());
-    await screen.findByRole("link", { name: "Sobre mí" });
-    expect(
-      screen.getByRole("dialog").querySelector("[aria-hidden]")
-    ).toBeNull();
   });
 });

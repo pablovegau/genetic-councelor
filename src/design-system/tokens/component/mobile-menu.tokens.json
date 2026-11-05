@@ -44,14 +44,6 @@
     "easing": {
       "$type": "cubicBezier",
       "$value": "{easing.standard}"
-    },
-    "decoration-blur": {
-      "$type": "dimension",
-      "$value": "{blur.xs}"
-    },
-    "decoration-opacity": {
-      "$type": "number",
-      "$value": "{opacity.decor}"
     }
   }
 }

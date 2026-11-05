@@ -26,7 +26,9 @@ test("se abre y se cierra con el botón y con Escape", async ({ page }) => {
   await page.goto("/");
   await open(page);
   await expect(dialog(page)).toBeVisible();
-  await expect(page.getByRole("link", { name: "Sobre mí" })).toBeFocused();
+  await expect(
+    dialog(page).getByRole("link", { name: "Sobre mí" })
+  ).toBeFocused();
 
   await page.keyboard.press("Escape");
   await expect(dialog(page)).toBeHidden();
@@ -39,36 +41,61 @@ test("se abre y se cierra con el botón y con Escape", async ({ page }) => {
   await expect(dialog(page)).toBeHidden();
 });
 
-test("el foco queda atrapado en el panel y el resto de la página está inerte", async ({
+test("clicar fuera del panel no lo cierra: la cabecera sigue libre (p. ej. cambiar el esquema)", async ({
   page,
 }) => {
   await page.goto("/");
   await open(page);
+  const before = await page.evaluate(
+    () => document.documentElement.dataset.scheme ?? "sistema"
+  );
 
-  for (let i = 0; i < 8; i++) {
-    await page.keyboard.press("Tab");
-    // Base UI redirige el foco con unas guardas invisibles: se espera a que vuelva dentro.
-    await expect
-      .poll(() =>
-        page.evaluate(() =>
-          document
-            .querySelector('[role="dialog"]')
-            ?.contains(document.activeElement)
-        )
-      )
-      .toBe(true);
-  }
-  // Nada de la página de detrás se puede leer con un lector de pantalla.
-  await expect(page.getByRole("heading", { level: 1 })).toHaveCount(0);
+  await page.getByRole("button", { name: /Cambiar a modo/ }).click();
+  await expect(dialog(page)).toBeVisible();
+  const after = await page.evaluate(
+    () => document.documentElement.dataset.scheme ?? "sistema"
+  );
+  expect(after).not.toBe(before);
+
+  // Un clic en el hueco que rodea a la tarjeta tampoco lo cierra.
+  await page.mouse.click(5, 400);
+  await expect(dialog(page)).toBeVisible();
 });
 
-test("bloquea el scroll de la página mientras está abierto", async ({
+test("la página de detrás queda inerte y la cabecera, no", async ({ page }) => {
+  await page.goto("/");
+  await open(page);
+  await expect(page.locator("main")).toHaveJSProperty("inert", true);
+  await expect(page.locator("footer")).toHaveJSProperty("inert", true);
+  await expect(page.locator("header")).toHaveJSProperty("inert", false);
+
+  await page.getByRole("button", { name: "Cerrar el menú" }).click();
+  await expect(dialog(page)).toBeHidden();
+  await expect(page.locator("main")).toHaveJSProperty("inert", false);
+});
+
+test("con el teclado se llega a la cabecera desde el panel", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await open(page);
+  // Mayús+Tab desde el primer enlace sube a la cabecera: el interruptor de esquema o el botón.
+  await page.keyboard.press("Shift+Tab");
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.activeElement?.closest("header") !== null)
+    )
+    .toBe(true);
+});
+
+test("bloquea el scroll de la página mientras está abierto (la cabecera no se va)", async ({
   page,
 }) => {
   await page.goto("/");
   await open(page);
   await page.mouse.wheel(0, 600);
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  await expect(page.locator("html")).toHaveCSS("overflow", "hidden");
 });
 
 test("elegir un enlace o cambiar de idioma lleva a su sitio y cierra el panel", async ({
@@ -76,7 +103,7 @@ test("elegir un enlace o cambiar de idioma lleva a su sitio y cierra el panel", 
 }) => {
   await page.goto("/");
   await open(page);
-  await page.getByRole("link", { name: "Contacto" }).click();
+  await dialog(page).getByRole("link", { name: "Contacto" }).click();
   await expect(dialog(page)).toBeHidden();
   await expect(page).toHaveURL(/#contacto$/);
 });

@@ -17,7 +17,6 @@ const usage = `<MobileMenu
   closeLabel="Cerrar el menú"
   links={[{ label: "Sobre mí", href: "#sobre-mi" }]}
 >
-  <TreeBackdrop slot="decoration" />
   <Button href="#cita">Reservar cita</Button>
 </MobileMenu>`;
 
@@ -49,11 +48,11 @@ const rows: PropRow[] = [
       "Enlaces de navegación, en grande. El primero recibe el foco al abrir.",
   },
   {
-    name: "decoration",
-    type: "ReactNode (slot decoration)",
-    default: "—",
+    name: "inertSelector",
+    type: "string",
+    default: '"main, footer"',
     description:
-      'Dibujo de fondo, un SVG. Se atenúa, se desenfoca y queda oculto a los lectores de pantalla. En Astro: <TreeBackdrop slot="decoration" />.',
+      "Selector CSS de lo que queda inerte mientras el menú está abierto. La cabecera no debe estar incluida.",
   },
   {
     name: "children",
@@ -74,11 +73,6 @@ const tokens = [
   ["--mobile-menu-inset-bottom", "Hueco inferior (space.3)"],
   ["--mobile-menu-padding", "Relleno interior (space.6)"],
   ["--mobile-menu-gap", "Separación entre bloques (space.2)"],
-  [
-    "--mobile-menu-decoration-opacity",
-    "Opacidad del dibujo de fondo (opacity.decor)",
-  ],
-  ["--mobile-menu-decoration-blur", "Desenfoque del dibujo de fondo (blur.xs)"],
   ["--mobile-menu-duration", "Duración de la entrada (duration.normal)"],
   ["--mobile-menu-easing", "Curva de la entrada (easing.standard)"],
 ];
@@ -157,17 +151,24 @@ const tokens = [
     <DocSection id="a11y" title="Accesibilidad">
       <Notes>
         <li>
-          Es un diálogo modal de Base UI: el foco se queda dentro del panel, el
-          resto de la página queda inerte, Escape lo cierra y el foco vuelve al
-          botón.
+          Es un diálogo no modal de Base UI: el menú solo se cierra con la X (el
+          propio botón de la hamburguesa), con Escape o al elegir un enlace.
+          Clicar fuera no lo cierra.
         </li>
         <li>
-          Al abrir, el foco va al primer enlace. Elegir cualquier enlace del
-          panel lo cierra.
+          La cabecera sigue libre mientras está abierto, así que se puede
+          cambiar el esquema de color o lo que haya en ella. Escape devuelve el
+          foco al botón.
         </li>
         <li>
-          Mientras está abierto la página de detrás no hace scroll; si la
-          pantalla es baja, el contenido del panel sí.
+          La página de detrás (por defecto <code>main</code> y
+          <code>footer</code>, ajustable con <code>inertSelector</code>) queda
+          inerte y sin scroll. Si la pantalla es baja, el contenido del panel sí
+          hace scroll.
+        </li>
+        <li>
+          Al abrir, el foco va al primer enlace. El orden de tabulación sigue el
+          del documento: con Mayús+Tab se sube a la cabecera.
         </li>
         <li>
           Con <code>prefers-reduced-motion</code> no hay transiciones.
@@ -175,11 +176,6 @@ const tokens = [
         <li>
           Al ensanchar la ventana a escritorio se cierra solo y libera el
           scroll.
-        </li>
-        <li>
-          La X que se ve es el propio botón de abrir; el botón de cerrar del
-          panel es invisible y ocupa su sitio. Si cambia la geometría de la
-          cabecera, hay que mantener esa coincidencia.
         </li>
       </Notes>
     </DocSection>

@@ -1,24 +1,12 @@
 {
-  "$description": "Efectos: desenfoque (backdrop-filter y filter) y opacidad de los adornos.",
+  "$description": "Efectos: desenfoque (backdrop-filter).",
   "blur": {
     "$type": "dimension",
-    "xs": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      }
-    },
     "md": {
       "$value": {
         "value": 16,
         "unit": "px"
       }
-    }
-  },
-  "opacity": {
-    "$type": "number",
-    "decor": {
-      "$value": 0.12
     }
   }
 }

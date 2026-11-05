@@ -3,7 +3,6 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { Button, MobileMenu } from "../design-system/components";
 import { getCopy } from "../i18n";
 import LanguageSwitcher from "./LanguageSwitcher.astro";
-import TreeBackdrop from "./TreeBackdrop.astro";
 
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
@@ -55,7 +54,6 @@ const nav = [
           closeLabel={site.closeMenu}
           links={nav}
         >
-          <TreeBackdrop slot="decoration" />
           <LanguageSwitcher />
           <Button href="#cita">{site.book}</Button>
         </MobileMenu>
