@@ -1,0 +1,20 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getCopy, locales } from "../i18n";
+
+const locale = Astro.currentLocale ?? "es";
+const { site } = getCopy(locale);
+---
+
+<div class="langs" role="group" aria-label={site.languages}>
+  {locales.map(({ code }) => (
+    <a
+      href={getRelativeLocaleUrl(code)}
+      lang={code}
+      hreflang={code}
+      aria-current={code === locale ? "true" : undefined}
+    >
+      {code.toUpperCase()}
+    </a>
+  ))}
+</div>

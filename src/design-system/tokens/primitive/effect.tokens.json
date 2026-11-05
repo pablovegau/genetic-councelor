@@ -1,0 +1,12 @@
+{
+  "$description": "Efectos: desenfoque (backdrop-filter).",
+  "blur": {
+    "$type": "dimension",
+    "md": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    }
+  }
+}

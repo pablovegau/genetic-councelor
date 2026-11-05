@@ -213,11 +213,11 @@
   align-items: center;
   gap: var(--space-1);
 }
+.bar-langs,
 .top-actions .cta-sm {
   display: none;
 }
-.icon-btn,
-.nav-pop > button {
+.icon-btn {
   all: unset;
   cursor: pointer;
   width: var(--space-10);
@@ -226,12 +226,7 @@
   place-items: center;
   border-radius: 50%;
 }
-.icon-btn:hover,
-.nav-pop > button:hover {
-  background: color-mix(in srgb, currentColor 10%, transparent);
-}
-.icon-btn svg,
-.nav-pop > button svg {
+.icon-btn svg {
   width: var(--space-6);
   height: var(--space-6);
   fill: none;
@@ -239,55 +234,6 @@
   stroke-width: 2;
   stroke-linecap: round;
 }
-/* Interruptor de esquema: muestra el icono del esquema en el que estás (sol en claro, luna en oscuro). */
-.scheme-btn .icon-moon {
-  display: none;
-}
-html[data-scheme="dark"] .scheme-btn .icon-sun {
-  display: none;
-}
-html[data-scheme="dark"] .scheme-btn .icon-moon {
-  display: block;
-}
-@media (prefers-color-scheme: dark) {
-  html:not([data-scheme="light"]) .scheme-btn .icon-sun {
-    display: none;
-  }
-  html:not([data-scheme="light"]) .scheme-btn .icon-moon {
-    display: block;
-  }
-}
-.nav-pop {
-  inset: 0 0 0 auto;
-  width: min(20rem, 85vw);
-  height: 100dvh;
-  margin: 0;
-  border: 0;
-  padding: var(--space-4) var(--space-6) var(--space-8);
-  background: var(--color-bg-page);
-  color: var(--color-text-default);
-  font-family: var(--font-text);
-  box-shadow: -1rem 0 3rem #0004;
-  display: none;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-.nav-pop:popover-open {
-  display: flex;
-}
-.nav-pop > button {
-  align-self: flex-end;
-}
-.nav-pop a:not(.cta) {
-  font: 600 1.8rem/1.1 var(--font-display);
-  letter-spacing: -0.03em;
-  text-decoration: none;
-}
-.nav-pop .cta {
-  margin-top: auto;
-  text-align: center;
-}
-
 /* ---- Hero --------------------------------------------------------- */
 .hero {
   display: grid;
@@ -582,17 +528,15 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
     gap: 0;
   }
 }
-@media (min-width: 30rem) {
-  .top-actions .cta-sm {
-    display: inline-flex;
-  }
-}
 @media (min-width: 48rem) {
   .nav-inline {
     display: flex;
   }
-  .menu-btn {
-    display: none;
+  .bar-langs {
+    display: block;
+  }
+  .top-actions .cta-sm {
+    display: inline-flex;
   }
   .hero {
     grid-template-columns: 1.05fr 1fr;
@@ -754,7 +698,6 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 }
 
 /* ---- Hovers básicos ---------------------------------------------------- */
-.icon-btn,
 .nav-inline a,
 .langs a,
 .link,
@@ -768,9 +711,6 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
     color var(--dur) var(--ease),
     text-decoration-thickness var(--dur) var(--ease);
 }
-.icon-btn svg {
-  transition: transform var(--dur) var(--ease);
-}
 .link:hover,
 .list a:hover {
   text-decoration-thickness: 2px;
@@ -778,8 +718,5 @@ html[data-scheme="dark"] .scheme-btn .icon-moon {
 @media (prefers-reduced-motion: no-preference) {
   .list li:hover svg {
     transform: scale(1.3);
-  }
-  .icon-btn:hover svg {
-    transform: rotate(12deg);
   }
 }

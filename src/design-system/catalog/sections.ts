@@ -100,6 +100,12 @@ export const catalogGroups: CatalogGroup[] = [
         description:
           "Botón de acción en violeta; con href es un enlace con el mismo aspecto.",
       },
+      {
+        slug: "mobile-menu",
+        label: "MobileMenu",
+        description:
+          "Menú de móvil: hamburguesa que pasa a X y panel lateral con cristal esmerilado.",
+      },
     ],
   },
 ];

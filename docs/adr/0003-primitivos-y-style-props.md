@@ -29,8 +29,8 @@ El catálogo es una página interna de Astro (`/design-system/`), siempre con `n
 
 Los componentes del design system están en React, pero la web es estática. Astro solo envía JavaScript de React cuando el componente lleva una directiva `client:*`; sin ella es una plantilla que se convierte en HTML durante el build.
 
-- **Sin `client:*` por defecto.** Contenido, enlaces y botones que navegan (Button con `href`) van siempre como HTML estático. La home no debe contener ninguna isla.
+- **Sin `client:*` por defecto.** Contenido, enlaces y botones que navegan (Button con `href`) van siempre como HTML estático. La home tiene una sola isla, el menú móvil (`MobileMenu`, con `Dialog` de Base UI), hidratada con `client:idle`.
 - **Isla solo con comportamiento real** (menú con diálogo, acordeón, formularios, probadores del catálogo), y con la directiva más tardía posible: `client:idle` o `client:visible` antes que `client:load`.
 - **Un único componente.** No se duplican los componentes en `.astro`: un Button dentro de una isla ya hidratada no añade coste, y mantener dos versiones las haría divergir.
 - **Un `<button>` con `onClick` suelto** en una página de Astro exigiría hidratarlo: se evita; si la acción puede ser un enlace o un formulario nativo, se usa eso.
-- Lo vigila un test de humo (`e2e/smoke.spec.ts`): ninguna de las tres home contiene `astro-island`.
+- Lo vigila un test de humo (`e2e/smoke.spec.ts`): cada una de las tres home contiene exactamente una `astro-island`, la del menú, con `client="idle"`. Una isla nueva obliga a decidirlo aquí y a actualizar el test.

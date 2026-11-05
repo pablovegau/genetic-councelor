@@ -1,5 +1,13 @@
 ---
 import { getCopy } from "../i18n";
+import {
+  carrierDotRadius,
+  circleRadius,
+  squareSize,
+  treeLines,
+  treeNodes,
+  treeViewBox,
+} from "./family-tree-geometry";
 
 const { tree } = getCopy(Astro.currentLocale);
 ---
@@ -7,7 +15,7 @@ const { tree } = getCopy(Astro.currentLocale);
 <div class="tree-wrap">
   <svg
     class="tree"
-    viewBox="37.5 9 345 272"
+    viewBox={treeViewBox}
     role="group"
     aria-label={tree.ariaLabel}
     fill="none"
@@ -16,101 +24,33 @@ const { tree } = getCopy(Astro.currentLocale);
     stroke-linecap="round"
     stroke-linejoin="round"
   >
-    <path
-      class="line"
-      pathLength="1"
-      d="M128 40H272M200 40V100M70 100H270M70 100V130M170 100V130M270 100V130"
-    ></path>
-    <path
-      class="line"
-      pathLength="1"
-      d="M288 148H332M310 148V205M270 205H350M270 205V232M350 205V232M70 166V232"
-    ></path>
-    <rect
-      class="node"
-      style="--i:0"
-      data-text={tree.man.text}
-      data-label={tree.man.label}
-      x="92"
-      y="22"
-      width="36"
-      height="36"
-    ></rect>
-    <circle
-      class="node"
-      style="--i:1"
-      data-text={tree.woman.text}
-      data-label={tree.woman.label}
-      cx="290"
-      cy="40"
-      r="18"
-    ></circle>
-    <circle
-      class="node"
-      style="--i:2"
-      data-text={tree.woman.text}
-      data-label={tree.woman.label}
-      cx="70"
-      cy="148"
-      r="18"
-    ></circle>
-    <rect
-      class="node f2"
-      style="--i:3"
-      data-text={tree.manAffected.text}
-      data-label={tree.manAffected.label}
-      x="152"
-      y="130"
-      width="36"
-      height="36"
-    ></rect>
-    <circle
-      class="node f1"
-      style="--i:4"
-      data-text={tree.womanAffected.text}
-      data-label={tree.womanAffected.label}
-      cx="270"
-      cy="148"
-      r="18"
-    ></circle>
-    <rect
-      class="node"
-      style="--i:5"
-      data-text={tree.man.text}
-      data-label={tree.man.label}
-      x="332"
-      y="130"
-      width="36"
-      height="36"
-    ></rect>
-    <g
-      class="node"
-      style="--i:6"
-      data-text={tree.carrier.text}
-      data-label={tree.carrier.label}
-    >
-      <circle class="s3" cx="70" cy="250" r="18"></circle>
-      <circle class="f3" cx="70" cy="250" r="6"></circle>
-    </g>
-    <circle
-      class="node f3"
-      style="--i:7"
-      data-text={tree.womanAffected.text}
-      data-label={tree.womanAffected.label}
-      cx="270"
-      cy="250"
-      r="18"
-    ></circle>
-    <rect
-      class="node f2"
-      style="--i:8"
-      data-text={tree.manAffected.text}
-      data-label={tree.manAffected.label}
-      x="332"
-      y="232"
-      width="36"
-      height="36"
-    ></rect>
+    {treeLines.map((d) => (
+      <path class="line" pathLength="1" d={d} />
+    ))}
+    {treeNodes.map((node, i) => {
+      const attrs = {
+        class: node.fill ? `node ${node.fill}` : "node",
+        style: `--i:${i}`,
+        "data-text": tree[node.symbol].text,
+        "data-label": tree[node.symbol].label,
+      };
+      return node.shape === "square" ? (
+        <rect
+          {...attrs}
+          x={node.x}
+          y={node.y}
+          width={squareSize}
+          height={squareSize}
+        />
+      ) : node.shape === "circle" ? (
+        <circle {...attrs} cx={node.cx} cy={node.cy} r={circleRadius} />
+      ) : (
+        <g {...attrs}>
+          <circle class="s3" cx={node.cx} cy={node.cy} r={circleRadius} />
+          <circle class="f3" cx={node.cx} cy={node.cy} r={carrierDotRadius} />
+        </g>
+      );
+    })}
   </svg>
   <p class="tree-caption" aria-live="polite" data-default={tree.caption}>
     {tree.caption}

@@ -1,5 +1,5 @@
 {
-  "$description": "Roles de color, tema default, esquema claro. action = violeta (bot\u00f3n, enlaces); accent = naranja (apoyos); danger = rojo (errores y avisos, no decoraci\u00f3n); tint = fondos de secci\u00f3n con un toque de cada color.",
+  "$description": "Roles de color, tema default, esquema claro. action = violeta (botón, enlaces); accent = naranja (apoyos); danger = rojo (errores y avisos, no decoración); tint = fondos de sección con un toque de cada color.",
   "color": {
     "$type": "color",
     "bg": {
@@ -11,6 +11,9 @@
       },
       "subtle": {
         "$value": "{color.neutral.100}"
+      },
+      "overlay": {
+        "$value": "{color.glass.light}"
       }
     },
     "text": {

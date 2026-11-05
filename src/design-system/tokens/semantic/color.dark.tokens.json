@@ -11,6 +11,9 @@
       },
       "subtle": {
         "$value": "{color.neutral.800}"
+      },
+      "overlay": {
+        "$value": "{color.glass.dark}"
       }
     },
     "text": {

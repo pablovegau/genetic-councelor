@@ -44,12 +44,23 @@ export default defineConfig({
     {
       name: "mobile-light",
       use: { ...mobile, colorScheme: "light" },
-      testMatch: /(a11y|vrt)\.spec\.ts/,
+      testMatch: /(a11y|vrt|menu)\.spec\.ts/,
     },
     {
       name: "mobile-dark",
       use: { ...mobile, colorScheme: "dark" },
-      testMatch: /(a11y|vrt)\.spec\.ts/,
+      testMatch: /(a11y|vrt|menu)\.spec\.ts/,
+    },
+    // El interruptor de esquema anima con transformaciones que Safari y Firefox trataban distinto.
+    {
+      name: "firefox",
+      use: { ...desktop, browserName: "firefox", colorScheme: "light" },
+      testMatch: /scheme-toggle\.spec\.ts/,
+    },
+    {
+      name: "webkit",
+      use: { ...desktop, browserName: "webkit", colorScheme: "light" },
+      testMatch: /scheme-toggle\.spec\.ts/,
     },
   ],
 });

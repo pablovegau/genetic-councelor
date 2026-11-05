@@ -19,6 +19,9 @@
         },
         {
           "$ref": "primitive/motion.tokens.json"
+        },
+        {
+          "$ref": "primitive/effect.tokens.json"
         }
       ]
     },
@@ -36,6 +39,9 @@
       "sources": [
         {
           "$ref": "component/button.tokens.json"
+        },
+        {
+          "$ref": "component/mobile-menu.tokens.json"
         }
       ]
     }

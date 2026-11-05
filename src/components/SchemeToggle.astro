@@ -1,0 +1,249 @@
+---
+// Interruptor de esquema claro/oscuro con un icono que pasa de sol a luna (y de luna a sol).
+// Basado en el icono de Pablo (CodePen): sol con rayos, luna creciente hecha con máscaras y estrellas.
+// Sin JavaScript de animación: el estado sale del esquema de la página (`data-scheme` o el del
+// sistema) y las transiciones las hace el CSS, que anima `r` y `cx` de los círculos.
+// OJO: en CSS esos valores llevan unidad (`9px`). Sin ella (`r: 9`) Chromium lo acepta, pero Safari y
+// Firefox descartan la regla y la luna no llega a formarse.
+interface Props {
+  toDark: string;
+  toLight: string;
+}
+
+const { toDark, toLight } = Astro.props;
+const rays = [
+  [12, 3, 12, 4],
+  [18.36, 5.64, 17.66, 6.34],
+  [21, 12, 20, 12],
+  [18.36, 18.36, 17.66, 17.66],
+  [12, 21, 12, 20],
+  [5.64, 18.36, 6.34, 17.66],
+  [3, 12, 4, 12],
+  [5.64, 5.64, 6.34, 6.34],
+];
+const stars = [
+  { cx: 17, cy: 7, r: 1.5 },
+  { cx: 18, cy: 12, r: 1.2 },
+  { cx: 13, cy: 4, r: 1 },
+];
+---
+
+<button
+  class="icon-btn scheme-btn"
+  type="button"
+  data-scheme-toggle
+  data-to-dark={toDark}
+  data-to-light={toLight}
+  aria-label={toDark}
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- Máscaras con área fija: no dependen de la caja del elemento que enmascaran. -->
+      <mask
+        id="scheme-bite"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+      >
+        <rect width="24" height="24" fill="white"></rect>
+        <circle class="bite" cx="17" cy="7" r="8" fill="black"></circle>
+      </mask>
+      <mask
+        id="scheme-body"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+      >
+        <rect width="24" height="24" fill="black"></rect>
+        <circle class="body" cx="12" cy="12" r="5.2" fill="white"></circle>
+      </mask>
+    </defs>
+
+    <!-- Borde interior de la luna: el contorno del círculo que la recorta, dentro del cuerpo. -->
+    <circle class="rim" cx="17" cy="7" r="9" mask="url(#scheme-body)"></circle>
+    <!-- Sol (círculo pequeño) que crece hasta ser el cuerpo de la luna, con un mordisco. -->
+    <circle
+      class="disc"
+      cx="12"
+      cy="12"
+      r="4.5"
+      mask="url(#scheme-bite)"
+    ></circle>
+    <g class="rays">
+      {rays.map(([x1, y1, x2, y2], i) => (
+        <line x1={x1} y1={y1} x2={x2} y2={y2} style={`--i:${i}`} />
+      ))}
+    </g>
+    <g class="stars">
+      {stars.map((star, i) => (
+        <circle cx={star.cx} cy={star.cy} r={star.r} style={`--i:${i}`} />
+      ))}
+    </g>
+  </svg>
+</button>
+
+<style>
+  /* --dark: 0 con el sol y 1 con la luna. Es la única variable que cambia entre esquemas. */
+  .scheme-btn {
+    --dark: 0;
+    /* Tiempos: el morph del círculo, y rayos y estrellas escalonados. Todo se asienta en ~0,7 s. */
+    --morph: 500ms;
+    /* Un solo grosor de trazo. Si cambia, hay que ajustar el radio del círculo que recorta (en el
+       marcado: su radio menos medio trazo) y el de la máscara del borde (.body: más medio trazo). */
+    --stroke: 2px;
+  }
+
+  :global(:root[data-scheme="dark"]) .scheme-btn {
+    --dark: 1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-scheme="light"])) .scheme-btn {
+      --dark: 1;
+    }
+  }
+
+  svg {
+    fill: none;
+    stroke: currentcolor;
+    stroke-linecap: round;
+  }
+
+  /* Las máscaras no heredan el trazo del SVG: un contorno en su contenido las dejaría abiertas. */
+  mask {
+    stroke: none;
+  }
+
+  /* Círculo central: de r = 4,5 (sol) a r = 9 (luna). */
+  .disc {
+    stroke-width: var(--stroke);
+    r: calc(4.5px * (1 + var(--dark)));
+    transition: r var(--morph);
+  }
+
+  /* Máscara del borde interior: de r = 5,5 a r = 10 (el radio del círculo más medio trazo). */
+  .body {
+    r: calc(5.5px + var(--dark) * 4.5px);
+    transition: r var(--morph);
+  }
+
+  /* El círculo que recorta entra desde la derecha al hacerse de noche (cx de 32 a 17). */
+  .rim,
+  .bite {
+    cx: calc(17px + (1 - var(--dark)) * 15px);
+    transition: cx var(--morph);
+  }
+
+  .rim {
+    stroke-width: var(--stroke);
+  }
+
+  /* Rayos: al amanecer aparecen escalonados; al anochecer se apagan enseguida. */
+  .rays {
+    stroke-width: var(--stroke);
+  }
+
+  .rays line {
+    opacity: calc(1 - var(--dark));
+    transition: opacity calc(80ms + (1 - var(--dark)) * 120ms) ease
+      calc((1 - var(--dark)) * (150ms + var(--i) * 35ms));
+  }
+
+  /* Estrellas: al anochecer aparecen escalonadas, algo después de que asome la luna; al amanecer se
+     apagan enseguida. */
+  .stars {
+    fill: currentcolor;
+    stroke: none;
+  }
+
+  .stars circle {
+    opacity: var(--dark);
+    transition: opacity calc(100ms + var(--dark) * 250ms)
+      cubic-bezier(0.22, 0.61, 0.36, 1)
+      calc(var(--dark) * (200ms + var(--i) * 60ms));
+  }
+
+  /* Al pasar el ratón el icono cambia de color (sin movimiento, igual en sol y luna). */
+  .scheme-btn {
+    transition: color var(--motion-duration-interaction)
+      var(--motion-easing-default);
+  }
+
+  .scheme-btn:hover {
+    color: var(--color-action-bg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .disc,
+    .body,
+    .rim,
+    .bite,
+    .rays line,
+    .stars circle,
+    .scheme-btn {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const media = matchMedia("(prefers-color-scheme: dark)");
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-scheme-toggle]"
+  );
+  const effective = () =>
+    root.dataset.scheme ?? (media.matches ? "dark" : "light");
+  // La etiqueta dice a qué esquema se pasa al pulsar.
+  const sync = () => {
+    if (!toggle) return;
+    toggle.setAttribute(
+      "aria-label",
+      (effective() === "dark"
+        ? toggle.dataset.toLight
+        : toggle.dataset.toDark) ?? ""
+    );
+  };
+  const apply = (next: string) => {
+    root.dataset.scheme = next;
+    try {
+      localStorage.setItem("scheme", next);
+    } catch {
+      // Sin almacenamiento: el cambio vale solo para esta visita.
+    }
+    sync();
+  };
+  toggle?.addEventListener("click", () => {
+    const next = effective() === "dark" ? "light" : "dark";
+    // Fundido corto de toda la página (View Transition). Sin soporte o con movimiento reducido,
+    // el esquema cambia de golpe, como antes.
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Con el menú móvil abierto tampoco: el cristal esmerilado del panel no entra bien en la captura
+    // y, al terminar el fundido, su desenfoque saltaba de golpe.
+    const menuOpen = document.querySelector("[data-popup-open]") !== null;
+    if (!document.startViewTransition || reduced || menuOpen) apply(next);
+    else document.startViewTransition(() => apply(next));
+  });
+  media.addEventListener("change", sync);
+  sync();
+</script>
+
+<style is:global>
+  /* Fundido del cambio de esquema: rápido, pero no brusco. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 200ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none;
+    }
+  }
+</style>
