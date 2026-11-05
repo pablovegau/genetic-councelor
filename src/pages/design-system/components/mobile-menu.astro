@@ -1,0 +1,245 @@
+---
+import CatalogLayout from "../../../design-system/catalog/CatalogLayout.astro";
+import CodeLine from "../../../design-system/catalog/CodeLine.astro";
+import CopyButton from "../../../design-system/catalog/CopyButton.astro";
+import DocPage from "../../../design-system/catalog/DocPage.astro";
+import DocSection from "../../../design-system/catalog/DocSection.astro";
+import Notes from "../../../design-system/catalog/Notes.astro";
+import PropsTable from "../../../design-system/catalog/PropsTable.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Button, MobileMenu } from "../../../design-system/components";
+import { Text } from "../../../design-system/primitives";
+
+const usage = `<MobileMenu
+  client:idle
+  label="Principal"
+  openLabel="Abrir el menú"
+  closeLabel="Cerrar el menú"
+  links={[{ label: "Sobre mí", href: "#sobre-mi" }]}
+>
+  <Button href="#cita">Reservar cita</Button>
+</MobileMenu>`;
+
+const rows: PropRow[] = [
+  {
+    name: "label",
+    type: "string",
+    default: "—",
+    description:
+      "Nombre accesible del menú de navegación y del diálogo. Obligatoria.",
+  },
+  {
+    name: "openLabel",
+    type: "string",
+    default: "—",
+    description: "Nombre accesible del botón cuando el menú está cerrado.",
+  },
+  {
+    name: "closeLabel",
+    type: "string",
+    default: "—",
+    description: "Nombre accesible del botón cuando el menú está abierto.",
+  },
+  {
+    name: "links",
+    type: "{ label: string; href: string }[]",
+    default: "—",
+    description:
+      "Enlaces de navegación, en grande. El primero recibe el foco al abrir.",
+  },
+  {
+    name: "children",
+    type: "ReactNode",
+    default: "—",
+    description:
+      "Contenido bajo los enlaces, pegado al fondo del panel: selector de idioma, botón de reservar…",
+  },
+];
+
+const tokens = [
+  ["--mobile-menu-bg", "Fondo de cristal (color.bg.overlay)"],
+  ["--mobile-menu-border", "Borde interior (color.border.default)"],
+  ["--mobile-menu-blur", "Desenfoque del fondo (blur.md)"],
+  ["--mobile-menu-radius", "Radio de la tarjeta (radius.surface)"],
+  ["--mobile-menu-inset-top", "Hueco superior, bajo la cabecera (space.16)"],
+  ["--mobile-menu-inset-x", "Hueco lateral (space.3)"],
+  ["--mobile-menu-inset-bottom", "Hueco inferior (space.3)"],
+  ["--mobile-menu-padding", "Relleno interior (space.6)"],
+  ["--mobile-menu-gap", "Separación entre bloques (space.2)"],
+  ["--mobile-menu-duration", "Duración de la entrada (duration.normal)"],
+  ["--mobile-menu-easing", "Curva de la entrada (easing.standard)"],
+];
+---
+
+<CatalogLayout group="components" item="mobile-menu">
+  <DocPage>
+    <DocSection
+      id="usage"
+      title="Uso"
+      description="La navegación de la cabecera en pantallas pequeñas. Por debajo de 48 rem muestra la hamburguesa; a partir de ahí desaparece y la cabecera lleva los enlaces."
+    >
+      <CodeLine
+        code={'import { MobileMenu } from "design-system/components";'}
+        label="Copiar la importación"
+      />
+      <div class="code">
+        <pre><code>{usage}</code></pre>
+        <CopyButton value={usage} label="Copiar el ejemplo" />
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="demo"
+      title="Prueba"
+      description="Estrecha la ventana por debajo de 48 rem para ver el botón y abrir el panel."
+    >
+      <div class="stage">
+        <span class="wide-note">
+          <Text as="span" size="2" color="muted">
+            Con la ventana ancha el menú no se muestra: es el comportamiento
+            previsto.
+          </Text>
+        </span>
+        <MobileMenu
+          client:idle
+          label="Principal"
+          openLabel="Abrir el menú"
+          closeLabel="Cerrar el menú"
+          links={[
+            { label: "Sobre mí", href: "#demo" },
+            { label: "Contacto", href: "#demo" },
+          ]}
+        >
+          <Button href="#demo">Reservar cita</Button>
+        </MobileMenu>
+      </div>
+    </DocSection>
+
+    <DocSection
+      id="props"
+      title="Props"
+      description="Es una isla de React: hidrátala con client:idle."
+    >
+      <PropsTable component="MobileMenu" rows={rows} />
+    </DocSection>
+
+    <DocSection
+      id="tokens"
+      title="Tokens"
+      description="Tokens de componente: alias de los semánticos y primitivos, así que el esquema oscuro llega solo."
+    >
+      <ul class="tokens">
+        {tokens.map(([name, description]) => (
+          <li>
+            <code>{name}</code>
+            <Text as="span" size="2" color="muted">
+              {description}
+            </Text>
+            <CopyButton value={`var(${name})`} label={`Copiar var(${name})`} />
+          </li>
+        ))}
+      </ul>
+    </DocSection>
+
+    <DocSection id="a11y" title="Accesibilidad">
+      <Notes>
+        <li>
+          Es un diálogo modal de Base UI: el foco se queda dentro del panel, el
+          resto de la página queda inerte, Escape lo cierra y el foco vuelve al
+          botón.
+        </li>
+        <li>
+          Al abrir, el foco va al primer enlace. Elegir cualquier enlace del
+          panel lo cierra.
+        </li>
+        <li>
+          Mientras está abierto la página de detrás no hace scroll; si la
+          pantalla es baja, el contenido del panel sí.
+        </li>
+        <li>
+          Con <code>prefers-reduced-motion</code> no hay transiciones.
+        </li>
+        <li>
+          Al ensanchar la ventana a escritorio se cierra solo y libera el
+          scroll.
+        </li>
+        <li>
+          La X que se ve es el propio botón de abrir; el botón de cerrar del
+          panel es invisible y ocupa su sitio. Si cambia la geometría de la
+          cabecera, hay que mantener esa coincidencia.
+        </li>
+      </Notes>
+    </DocSection>
+  </DocPage>
+</CatalogLayout>
+
+<style>
+  .code {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-surface);
+  }
+
+  .code pre {
+    min-inline-size: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .code code {
+    font-size: var(--font-size-2);
+  }
+
+  .stage {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    min-block-size: var(--space-16);
+    padding: var(--space-6);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-subtle);
+  }
+
+  .wide-note {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .wide-note {
+      display: block;
+    }
+  }
+
+  .tokens {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tokens li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-2) var(--space-3);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-control);
+  }
+
+  .tokens code {
+    font-size: var(--font-size-2);
+  }
+
+  .tokens li :global(button) {
+    margin-inline-start: auto;
+  }
+</style>

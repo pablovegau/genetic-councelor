@@ -44,12 +44,12 @@ export default defineConfig({
     {
       name: "mobile-light",
       use: { ...mobile, colorScheme: "light" },
-      testMatch: /(a11y|vrt)\.spec\.ts/,
+      testMatch: /(a11y|vrt|menu)\.spec\.ts/,
     },
     {
       name: "mobile-dark",
       use: { ...mobile, colorScheme: "dark" },
-      testMatch: /(a11y|vrt)\.spec\.ts/,
+      testMatch: /(a11y|vrt|menu)\.spec\.ts/,
     },
   ],
 });

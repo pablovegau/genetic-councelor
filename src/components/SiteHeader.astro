@@ -1,7 +1,8 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Button } from "../design-system/components";
-import { getCopy, locales } from "../i18n";
+import { Button, MobileMenu } from "../design-system/components";
+import { getCopy } from "../i18n";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
@@ -22,17 +23,8 @@ const nav = [
         <a href={href}>{label}</a>
       ))}
     </nav>
-    <div class="langs" role="group" aria-label={site.languages}>
-      {locales.map(({ code }) => (
-        <a
-          href={getRelativeLocaleUrl(code)}
-          lang={code}
-          hreflang={code}
-          aria-current={code === locale ? "true" : undefined}
-        >
-          {code.toUpperCase()}
-        </a>
-      ))}
+    <div class="bar-langs">
+      <LanguageSwitcher />
     </div>
     <div class="top-actions">
       <Button className="cta cta-sm" size="sm" href="#cita">
@@ -54,35 +46,19 @@ const nav = [
           <path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"></path>
         </svg>
       </button>
-      <button
-        class="icon-btn menu-btn"
-        type="button"
-        popovertarget="menu"
-        aria-label={site.openMenu}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 8h16M4 16h16"></path>
-        </svg>
-      </button>
+      <div class="menu-btn">
+        <MobileMenu
+          client:idle
+          label={site.mainNav}
+          openLabel={site.openMenu}
+          closeLabel={site.closeMenu}
+          links={nav}
+        >
+          <LanguageSwitcher />
+          <Button href="#cita">{site.book}</Button>
+        </MobileMenu>
+      </div>
     </div>
-    <nav id="menu" popover class="nav-pop" aria-label={site.mainNav}>
-      <button
-        type="button"
-        popovertarget="menu"
-        popovertargetaction="hide"
-        aria-label={site.closeMenu}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18"></path>
-        </svg>
-      </button>
-      {nav.map(({ label, href }) => (
-        <a href={href}>{label}</a>
-      ))}
-      <Button className="cta" href="#cita">
-        {site.book}
-      </Button>
-    </nav>
   </div>
 </header>
 
@@ -115,13 +91,4 @@ const nav = [
   });
   media.addEventListener("change", sync);
   sync();
-
-  // Al elegir un enlace del menú móvil, el panel se cierra.
-  document
-    .querySelectorAll<HTMLElement>("#menu a")
-    .forEach((link) =>
-      link.addEventListener("click", () =>
-        document.querySelector<HTMLElement>("#menu")?.hidePopover()
-      )
-    );
 </script>

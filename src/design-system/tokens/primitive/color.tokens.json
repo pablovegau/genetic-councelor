@@ -1,5 +1,5 @@
 {
-  "$description": "Rampas de color en oklch, de 50 (m\u00e1s claro) a 950 (m\u00e1s oscuro), con la luminosidad bajando en cada paso. Sin significado: los roles viven en semantic/. neutral lleva un matiz fr\u00edo casi imperceptible; violet, orange y red son las rampas de marca.",
+  "$description": "Rampas de color en oklch, de 50 (más claro) a 950 (más oscuro), con la luminosidad bajando en cada paso. Sin significado: los roles viven en semantic/. neutral lleva un matiz frío casi imperceptible; violet, orange y red son las rampas de marca.",
   "color": {
     "$type": "color",
     "white": {
@@ -283,6 +283,22 @@
         "$value": {
           "colorSpace": "oklch",
           "components": [0.22, 0.085, 17]
+        }
+      }
+    },
+    "glass": {
+      "light": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.985, 0.003, 285],
+          "alpha": 0.82
+        }
+      },
+      "dark": {
+        "$value": {
+          "colorSpace": "oklch",
+          "components": [0.16, 0.01, 285],
+          "alpha": 0.8
         }
       }
     }

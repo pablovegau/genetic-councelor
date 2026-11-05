@@ -51,7 +51,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [x] Tipografía semántica como tokens (cinco alias por estilo, sin el tipo compuesto `typography`). Falta el componente de texto que los use, con la reducción de los titulares en móvil.
 - [ ] Interruptor de esquema: `data-scheme` + `localStorage` + script en el `<head>` para evitar el parpadeo, cuando exista el componente.
 - [ ] Fotos de Sara con fondo blanco de plató en modo oscuro: decidir marco/tarjeta, recorte o zona clara.
-- [ ] Menú móvil del repo antiguo como componente: conservar la X, la tarjeta lateral y el botón de reservar abajo; corregir panel con scroll en pantallas bajas, `inert` cuando está cerrado, `prefers-reduced-motion`, breakpoint más alto y selector ES/CA/EN.
+- [x] Menú móvil del repo antiguo como componente (`MobileMenu`, con `Dialog` de Base UI): hamburguesa que pasa a X, tarjeta lateral con cristal esmerilado, botón de reservar y selector ES/CA/EN abajo, foco atrapado, `inert` fuera, Escape, scroll bloqueado, scroll interno en pantallas bajas, `prefers-reduced-motion` y cierre al pasar a escritorio. Sin el círculo decorativo (decisión de Pablo). Breakpoint en 48 rem: subirlo si la cabecera no cabe.
 
 ## Diseño
 - [x] Dirección visual elegida tras varias rondas de prototipos (ver `docs/design/direccion-visual.md`). Falta la revisión con Sara.

@@ -1,0 +1,49 @@
+{
+  "$description": "Tokens del menú móvil: panel lateral con cristal esmerilado. Solo alias.",
+  "mobile-menu": {
+    "bg": {
+      "$type": "color",
+      "$value": "{color.bg.overlay}"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{color.border.default}"
+    },
+    "radius": {
+      "$type": "dimension",
+      "$value": "{radius.surface}"
+    },
+    "blur": {
+      "$type": "dimension",
+      "$value": "{blur.md}"
+    },
+    "inset-top": {
+      "$type": "dimension",
+      "$value": "{space.16}"
+    },
+    "inset-x": {
+      "$type": "dimension",
+      "$value": "{space.3}"
+    },
+    "inset-bottom": {
+      "$type": "dimension",
+      "$value": "{space.3}"
+    },
+    "padding": {
+      "$type": "dimension",
+      "$value": "{space.6}"
+    },
+    "gap": {
+      "$type": "dimension",
+      "$value": "{space.2}"
+    },
+    "duration": {
+      "$type": "duration",
+      "$value": "{duration.normal}"
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "$value": "{easing.standard}"
+    }
+  }
+}
