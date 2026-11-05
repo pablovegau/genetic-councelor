@@ -103,7 +103,7 @@
 
   .decoration svg {
     position: absolute;
-    inset-block-end: 14%;
+    inset-block-end: -8%;
     inset-inline-end: -88%;
     inline-size: 140%;
     block-size: auto;
