@@ -47,7 +47,9 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Props que faltan según se necesiten: márgenes, props responsivos, sombras.
 - [ ] Set de iconos definitivo (hoy 4 trazos placeholder) y favicon.
 - [x] Button (`src/design-system/components/Button`, Base UI para el botón y `<a>` con `href`): solo primario, tamaños md y sm, hover de solo color (sin subir ni sombra, decisión de Pablo). Tokens de componente en `tokens/component/button.tokens.json`. Pendiente más adelante: icono, variantes y trabajar mejor el hover/active.
-- [ ] Componentes mayores. Los tokens de componente se crean con cada componente.
+- [x] Componentes extraídos de la home (ver `docs/adr/0003-primitivos-y-style-props.md`, última sección): Section/Container, Split, Link, Wordmark, Byline, Portrait, MarkerList, Steps, LanguageSwitch, Footer (React) y FamilyTree y SchemeToggle (Astro, con script mínimo). Cada uno con tests, página de catálogo y, si procede, tokens de componente (`section`, `steps`). `SiteHeader`, `SiteFooter` y `Home` solo los componen.
+- [ ] Componentes mayores que aún no existen (formulario de reserva, FAQ, tarjetas de precio). Los tokens de componente se crean con cada componente.
+- [ ] Revisar tras extraer: los titulares de la home usan ahora las variantes de `Text` (`heading-1`/`heading-2`) en vez de los `clamp()` de la maqueta, y el texto de los párrafos es `text` (1 rem). Cambio visual pequeño; ajustar con `size` si algo se ve flojo.
 - [x] Tipografía semántica como tokens (cinco alias por estilo, sin el tipo compuesto `typography`). Falta el componente de texto que los use, con la reducción de los titulares en móvil.
 - [x] Interruptor de esquema (`SchemeToggle.astro`): `data-scheme` + `localStorage` + script en el `<head>` contra el parpadeo, y un icono que pasa de sol a luna con estrellas (de un CodePen de Pablo). Anima `r` y `cx` por CSS **con unidad** (`9px`): sin ella Chromium lo acepta y Safari y Firefox no, y la luna no se forma. Una prueba corre en Chromium, WebKit y Firefox. El cambio de esquema se hace con una View Transition (fundido de 200 ms de toda la página); con movimiento reducido o sin soporte cambia de golpe, y un cambio del esquema del sistema sigue siendo instantáneo.
 - [ ] Fotos de Sara con fondo blanco de plató en modo oscuro: decidir marco/tarjeta, recorte o zona clara.
@@ -55,7 +57,7 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 
 ## Diseño
 - [x] Dirección visual elegida tras varias rondas de prototipos (ver `docs/design/direccion-visual.md`). Falta la revisión con Sara.
-- [x] Home real a partir de la maqueta, en es/ca/en (`src/components/Home.astro`, textos en `src/i18n/`). Los textos de ca y en son traducciones del español, pendientes de revisar. Los estilos están en `src/styles/site.css` y falta migrarlos a componentes del DS; los enlaces de reserva, legal y redes apuntan a anclas hasta tener herramienta de reserva y textos.
+- [x] Home real a partir de la maqueta, en es/ca/en (`src/components/Home.astro`, textos en `src/i18n/`). Los textos de ca y en son traducciones del español, pendientes de revisar. Las piezas viven en el design system (`src/design-system/components/`) y `src/styles/site.css` solo guarda los ajustes globales; los enlaces de reserva, legal y redes apuntan a anclas hasta tener herramienta de reserva y textos.
 - [ ] Esqueleto previsible, lo que falta: precios, FAQ y una puerta por cada situación.
 - [ ] Árbol genealógico como elemento visual: aspecto de dibujo a mano, generado por ordenador.
 

@@ -1,0 +1,40 @@
+@layer base, components, props;
+
+@layer components {
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .avatar {
+    flex: none;
+    inline-size: var(--space-12);
+    block-size: var(--space-12);
+    overflow: hidden;
+    border-radius: 50%;
+    /* Las fotos tienen el blanco del plató: el fondo evita un hueco mientras carga. */
+    background: #f0f0f2;
+  }
+
+  .avatar img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: none;
+    object-fit: cover;
+    /* Recorte a la cara de la foto de Sara. */
+    transform: scale(2.3);
+    transform-origin: 50% 25%;
+  }
+
+  .name {
+    display: block;
+    font-family: var(--font-family-display);
+    letter-spacing: calc(var(--font-tracking-snug) * 1em);
+  }
+
+  .role {
+    display: block;
+  }
+}

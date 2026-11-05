@@ -1,0 +1,28 @@
+import type { ComponentPropsWithoutRef, CSSProperties } from "react";
+import { cx } from "../../primitives/cx";
+import styles from "./Split.module.css";
+
+export interface SplitProps extends ComponentPropsWithoutRef<"div"> {
+  /** Cuánto más ancha es la primera columna que la segunda en pantallas anchas (1 = iguales). */
+  ratio?: number;
+  /** `head`: separación de una cabecera de sección. `wide`: más aire entre columnas en pantallas anchas. */
+  gap?: "head" | "wide";
+}
+
+/** Dos bloques apilados en móvil y en dos columnas, centrados en vertical, desde 48 rem. */
+export function Split({
+  ratio = 1,
+  gap = "head",
+  className,
+  style,
+  ...props
+}: SplitProps) {
+  return (
+    <div
+      className={cx(styles.split, className)}
+      data-gap={gap}
+      style={{ "--split-ratio": `${ratio}fr`, ...style } as CSSProperties}
+      {...props}
+    />
+  );
+}

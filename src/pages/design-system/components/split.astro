@@ -1,0 +1,48 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Split } from "../../../design-system/components";
+import { Box, Text } from "../../../design-system/primitives";
+
+const usage =
+  '<Split ratio={1.25} gap="wide">\n  <div>…</div>\n  <div>…</div>\n</Split>';
+
+const rows: PropRow[] = [
+  {
+    name: "ratio",
+    type: "number",
+    default: "1",
+    description:
+      "Cuánto más ancha es la primera columna que la segunda en pantallas anchas (1 = iguales).",
+  },
+  {
+    name: "gap",
+    type: '"head" | "wide"',
+    default: '"head"',
+    description:
+      "Separación entre bloques: la de una cabecera de sección o más aire entre columnas en pantallas anchas.",
+  },
+];
+---
+
+<ComponentPage
+  item="split"
+  intro={"El esquema de las secciones de la home: hero, «Sobre mí» y cierre."}
+  importLine={'import { Split } from "design-system/components";'}
+  usage={usage}
+  component="Split"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Hay que ensanchar la ventana a 48 rem o más para ver las dos columnas.",
+  ]}
+>
+  <Split ratio={1.6}>
+    <Box bg="subtle" p="4" radius="control">
+      <Text>Primera columna (1,6)</Text>
+    </Box>
+    <Box bg="subtle" p="4" radius="control">
+      <Text>Segunda columna</Text>
+    </Box>
+  </Split>
+</ComponentPage>

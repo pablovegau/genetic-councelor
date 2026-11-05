@@ -1,4 +1,4 @@
-// Geometría del árbol genealógico de ejemplo, compartida por el árbol del hero y el adorno del menú.
+// Geometría del árbol genealógico de ejemplo.
 export const treeViewBox = "37.5 9 345 272";
 
 export const treeLines = [

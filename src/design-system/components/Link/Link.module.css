@@ -1,0 +1,59 @@
+@layer base, components, props;
+
+@layer components {
+  .link {
+    color: inherit;
+    transition:
+      color var(--motion-duration-interaction) var(--motion-easing-default),
+      text-decoration-thickness var(--motion-duration-interaction)
+        var(--motion-easing-default);
+  }
+
+  .link:focus-visible {
+    outline: var(--border-width-2) solid currentcolor;
+    outline-offset: var(--border-width-2);
+  }
+
+  .link[data-variant="emphasis"],
+  .link[data-variant="title"] {
+    text-underline-offset: 0.25em;
+  }
+
+  .link[data-variant="emphasis"] {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .link[data-variant="title"] {
+    font-family: var(--typography-heading-5-font-family);
+    font-size: var(--typography-heading-5-font-size);
+    font-weight: var(--typography-heading-5-font-weight);
+    line-height: var(--typography-heading-5-line-height);
+    letter-spacing: calc(var(--typography-heading-5-letter-spacing) * 1em);
+    text-decoration-thickness: 1px;
+  }
+
+  .link[data-variant="emphasis"]:hover,
+  .link[data-variant="title"]:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .link[data-variant="nav"] {
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+  }
+
+  .link[data-variant="nav"]:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+  }
+
+  .link[data-variant="muted"] {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .link[data-variant="muted"]:hover {
+    color: var(--color-text-default);
+    text-decoration: underline;
+  }
+}

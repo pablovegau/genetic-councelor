@@ -1,0 +1,51 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { LanguageSwitch } from "../../../design-system/components";
+
+const usage =
+  '<LanguageSwitch label="Idiomas" current="es" items={[{ code: "es", href: "/" }, { code: "ca", href: "/ca/" }]} />';
+
+const rows: PropRow[] = [
+  {
+    name: "label",
+    type: "string",
+    default: "—",
+    description: "Nombre accesible del grupo.",
+  },
+  {
+    name: "items",
+    type: "{ code: string; href: string }[]",
+    default: "—",
+    description:
+      "Idiomas. El código se muestra en mayúsculas y va en lang y hreflang.",
+  },
+  {
+    name: "current",
+    type: "string",
+    default: "—",
+    description: "Código del idioma actual: lleva aria-current.",
+  },
+];
+---
+
+<ComponentPage
+  item="language-switch"
+  intro={"El selector de idioma de la cabecera y del menú móvil."}
+  importLine={'import { LanguageSwitch } from "design-system/components";'}
+  usage={usage}
+  component="LanguageSwitch"
+  rows={rows}
+  tokens={[]}
+  notes={["Son enlaces de verdad a cada versión: funcionan sin JavaScript."]}
+>
+  <LanguageSwitch
+    label="Idiomas"
+    current="ca"
+    items={[
+      { code: "es", href: "#demo" },
+      { code: "ca", href: "#demo" },
+      { code: "en", href: "#demo" },
+    ]}
+  />
+</ComponentPage>

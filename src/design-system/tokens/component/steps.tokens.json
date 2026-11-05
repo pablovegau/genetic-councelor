@@ -1,0 +1,21 @@
+{
+  "$description": "Tokens de la lista de pasos: tamaño del número y separaciones. Solo alias.",
+  "steps": {
+    "marker": {
+      "$type": "dimension",
+      "$value": "{space.10}"
+    },
+    "icon": {
+      "$type": "dimension",
+      "$value": "{space.16}"
+    },
+    "gap": {
+      "$type": "dimension",
+      "$value": "{space.6}"
+    },
+    "row-gap": {
+      "$type": "dimension",
+      "$value": "{space.8}"
+    }
+  }
+}

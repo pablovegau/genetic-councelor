@@ -1,0 +1,45 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Link } from "../../../design-system/components";
+
+const usage =
+  '<Link href="#sobre-mi">Conoce a Sara</Link>\n<Link variant="nav" href="#contacto">Contacto</Link>';
+
+const rows: PropRow[] = [
+  {
+    name: "variant",
+    type: '"emphasis" | "title" | "nav" | "muted"',
+    default: '"emphasis"',
+    description:
+      "Énfasis: negrita y subrayado. Título: grande, para entradas. Nav: sin subrayado hasta el hover. Muted: gris, para pies y listas.",
+  },
+];
+---
+
+<ComponentPage
+  item="link"
+  intro={
+    "Para los enlaces que no son un botón de acción: dentro de un párrafo, en la navegación, en listas y en el pie."
+  }
+  importLine={'import { Link } from "design-system/components";'}
+  usage={usage}
+  component="Link"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Es un <code>&lt;a&gt;</code> con el foco visible y el color heredado del contexto.",
+    "Una acción que navega y debe verse como botón es un Button con <code>href</code>, no un Link.",
+  ]}
+>
+  <Link href="#demo">Conoce a Sara</Link>
+  <Link variant="title" href="#demo">
+    Tengo antecedentes familiares
+  </Link>
+  <Link variant="nav" href="#demo">
+    Contacto
+  </Link>
+  <Link variant="muted" href="#demo">
+    Política de privacidad
+  </Link>
+</ComponentPage>

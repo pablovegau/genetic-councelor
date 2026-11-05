@@ -29,7 +29,7 @@ const stars = [
 ---
 
 <button
-  class="icon-btn scheme-btn"
+  class="scheme-btn"
   type="button"
   data-scheme-toggle
   data-to-dark={toDark}
@@ -107,7 +107,26 @@ const stars = [
     }
   }
 
+  /* Botón redondo sin aspecto propio: solo el icono. */
+  .scheme-btn {
+    all: unset;
+    cursor: pointer;
+    box-sizing: border-box;
+    inline-size: var(--space-10);
+    block-size: var(--space-10);
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+  }
+
+  .scheme-btn:focus-visible {
+    outline: var(--border-width-2) solid currentcolor;
+    outline-offset: var(--border-width-2);
+  }
+
   svg {
+    inline-size: var(--space-6);
+    block-size: var(--space-6);
     fill: none;
     stroke: currentcolor;
     stroke-linecap: round;

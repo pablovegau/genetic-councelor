@@ -1,0 +1,71 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Footer } from "../../../design-system/components";
+
+const usage =
+  '<Footer brand="…" tagline="…" columns={[{ title: "Páginas", links: [{ label: "Inicio", href: "/" }] }]} base="© 2026" />';
+
+const rows: PropRow[] = [
+  {
+    name: "brand",
+    type: "string",
+    default: "—",
+    description: "Nombre de marca.",
+  },
+  {
+    name: "tagline",
+    type: "string",
+    default: "—",
+    description: "Frase bajo la marca.",
+  },
+  {
+    name: "columns",
+    type: "{ title: string; links: { label: string; href?: string }[] }[]",
+    default: "—",
+    description:
+      "Columnas. Un elemento sin href es solo texto (p. ej. un dato pendiente).",
+  },
+  {
+    name: "base",
+    type: "string",
+    default: "—",
+    description: "Línea final (copyright).",
+  },
+];
+---
+
+<ComponentPage
+  item="footer"
+  intro={"El pie de la web."}
+  importLine={'import { Footer } from "design-system/components";'}
+  usage={usage}
+  component="Footer"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Es un <code>&lt;footer&gt;</code> (rol contentinfo) sobre una Section de tono tinta.",
+  ]}
+>
+  <Footer
+    brand="Sara Torres-Esquius"
+    tagline="Asesoramiento genético para adultos y sus familias."
+    base="© 2026 Sara Torres-Esquius"
+    columns={[
+      {
+        title: "Páginas",
+        links: [
+          { label: "Inicio", href: "#demo" },
+          { label: "Contacto", href: "#demo" },
+        ],
+      },
+      {
+        title: "Contacto",
+        links: [
+          { label: "Correo: pendiente" },
+          { label: "LinkedIn", href: "#demo" },
+        ],
+      },
+    ]}
+  />
+</ComponentPage>

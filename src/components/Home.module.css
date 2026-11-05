@@ -1,0 +1,116 @@
+/* Composición de la home: cómo se colocan las piezas del design system en cada sección. */
+
+/* Cabecera de sección: título, entradilla y contenido, con el ritmo de la página. */
+.stack {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.stack > .lead {
+  margin-block-start: calc(var(--space-6) * -0.5);
+}
+
+.title {
+  max-inline-size: 20ch;
+}
+
+.lead {
+  max-inline-size: 38rem;
+}
+
+.copy {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: var(--space-4);
+}
+
+.copy p {
+  max-inline-size: 32rem;
+}
+
+/* ---- Hero ---------------------------------------------------------- */
+.heroCopy {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: var(--space-5);
+}
+
+.heroTitle {
+  max-inline-size: 12ch;
+}
+
+.heroText {
+  max-inline-size: 32rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* ---- Cierre -------------------------------------------------------- */
+.closing {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .stack {
+    gap: var(--space-8);
+  }
+
+  .stack > .lead {
+    margin-block-start: calc(var(--space-8) * -0.5);
+  }
+
+  .closingAction {
+    justify-self: end;
+  }
+}
+
+/* Hero en móvil: título, texto, árbol, botón centrado, nota y firma. Los envoltorios se aplanan
+   (`display: contents`) para reordenar sus hijos como elementos de una sola rejilla. */
+@media (max-width: 47.99rem) {
+  .hero {
+    gap: var(--space-5);
+  }
+
+  .heroCopy,
+  .heroActions {
+    display: contents;
+  }
+
+  .heroTitle {
+    order: 1;
+  }
+
+  .heroText {
+    order: 2;
+  }
+
+  .heroTree {
+    order: 3;
+    justify-self: center;
+  }
+
+  .heroCta {
+    order: 4;
+    justify-self: center;
+  }
+
+  .heroNote {
+    order: 5;
+    justify-self: center;
+    margin-block-start: calc(var(--space-2) * -1);
+    text-align: center;
+  }
+
+  .heroByline {
+    order: 6;
+    justify-self: center;
+  }
+}

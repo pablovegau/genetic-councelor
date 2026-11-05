@@ -1,0 +1,74 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Section } from "../../../design-system/components";
+import { Text } from "../../../design-system/primitives";
+
+const usage =
+  '<Section tone="violet" band="action">\n  …contenido…\n</Section>\n\n<Container pad="bar">…barra de la cabecera…</Container>';
+
+const rows: PropRow[] = [
+  {
+    name: "tone",
+    type: '"none" | "violet" | "orange" | "ink"',
+    default: '"none"',
+    description:
+      "Fondo: sin color, tinte violeta, tinte naranja o tinta (oscuro con texto claro en los dos esquemas).",
+  },
+  {
+    name: "band",
+    type: '"none" | "action" | "accent"',
+    default: '"none"',
+    description: "Franja de color en el borde superior.",
+  },
+  {
+    name: "pad",
+    type: '"section" | "start" | "end" | "bar"',
+    default: '"section"',
+    description:
+      "Relleno vertical: normal, menos arriba (primera sección), menos abajo (pie) o de barra (cabecera).",
+  },
+  {
+    name: "as",
+    type: '"section" | "div" | "footer"',
+    default: '"section"',
+    description: "Etiqueta de la banda.",
+  },
+];
+---
+
+<ComponentPage
+  item="section"
+  intro={
+    "Cada sección de la home: ocupa todo el ancho y pone su contenido en un Container con el ancho máximo y el margen del sitio."
+  }
+  importLine={'import { Section } from "design-system/components";'}
+  usage={usage}
+  component="Section"
+  rows={rows}
+  tokens={[
+    ["--section-pad-y", "Relleno vertical (space.12; space.20 desde 48 rem)"],
+    ["--section-gutter", "Margen lateral (space.5; space.8 desde 48 rem)"],
+    ["--section-band-size", "Grosor de la franja (space.2)"],
+    [
+      "--section-start-pad-top",
+      "Aire superior de la primera sección (space.6)",
+    ],
+    ["--section-end-pad-bottom", "Aire inferior del pie (space.6)"],
+    ["--section-bar-pad-y", "Relleno de la barra de cabecera (space.4)"],
+  ]}
+  notes={[
+    "El tono <code>ink</code> redefine <code>--color-text-default</code> y <code>--color-text-muted</code> dentro de la banda: Text, Link y el resto leen el contraste correcto sin saberlo.",
+    "La banda expone <code>--section-bg</code>, <code>--section-band</code> y <code>--section-on-band</code> para que sus hijos (Steps) casen con ella.",
+  ]}
+>
+  <Section tone="violet" band="action">
+    <Text>Tono violeta con franja de acción.</Text>
+  </Section>
+  <Section tone="orange" band="accent">
+    <Text>Tono naranja con franja de acento.</Text>
+  </Section>
+  <Section tone="ink">
+    <Text color="muted">Tinta: texto claro en claro y en oscuro.</Text>
+  </Section>
+</ComponentPage>

@@ -34,3 +34,15 @@ Los componentes del design system están en React, pero la web es estática. Ast
 - **Un único componente.** No se duplican los componentes en `.astro`: un Button dentro de una isla ya hidratada no añade coste, y mantener dos versiones las haría divergir.
 - **Un `<button>` con `onClick` suelto** en una página de Astro exigiría hidratarlo: se evita; si la acción puede ser un enlace o un formulario nativo, se usa eso.
 - Lo vigila un test de humo (`e2e/smoke.spec.ts`): cada una de las tres home contiene exactamente una `astro-island`, la del menú, con `client="idle"`. Una isla nueva obliga a decidirlo aquí y a actualizar el test.
+
+## Qué se extrae al design system y cómo
+
+Todo lo que se repite en la home o tiene reglas propias de diseño vive en `src/design-system/components/`; la home y la cabecera solo componen. Qué va a cada sitio:
+
+- **React + CSS Modules** para piezas de presentación (Section/Container, Split, Link, Wordmark, Byline, Portrait, MarkerList, Steps, LanguageSwitch, Footer): se renderizan a HTML durante el build, sin `client:*`, y se prueban con Vitest en un Chromium real.
+- **Astro** para piezas con comportamiento que se resuelve con un script de unas líneas, para no abrir una isla de React: `FamilyTree` (explica cada símbolo al enfocarlo) y `SchemeToggle` (esquema, View Transition). Reciben textos por props: el design system no importa i18n.
+- **Base UI solo donde da comportamiento que no queremos reescribir**: `Button` (estado deshabilitado, teclado) y `Dialog` en `MobileMenu` (foco, Escape). Una lista, un pie o una sección no ganan nada con Base UI, y un enlace de texto tampoco; ahí se usa HTML semántico.
+- **La cabecera y el pie del sitio** (`SiteHeader`, `SiteFooter`) y `Home` se quedan en `src/components/`: son composiciones con i18n y con la isla del menú, que Astro solo puede colocar desde un `.astro`.
+- **Tokens de componente** (`section`, `steps`, además de `button` y `mobile-menu`) solo con alias. El resto de decisiones de estilo usan semánticos o primitivos directamente.
+- **Capas CSS:** los resets de `site.css` van en `@layer base`, para que los componentes (`@layer components`) fijen sus márgenes sin pelear con el sitio.
+- **Tono tinta:** `Section tone="ink"` redefine `--color-text-default` y `--color-text-muted` dentro de la banda, así que Text, Link y Button leen el contraste correcto sin saber que están sobre fondo oscuro.

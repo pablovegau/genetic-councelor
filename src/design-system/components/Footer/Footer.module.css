@@ -1,0 +1,61 @@
+@layer base, components, props;
+
+@layer components {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  .about {
+    grid-column: 1 / -1;
+  }
+
+  .about .tagline {
+    max-inline-size: 22rem;
+    margin-block-start: var(--space-2);
+  }
+
+  .grid .title {
+    margin-block-end: var(--space-3);
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .links {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .links [data-pending] {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-block-start: var(--space-10);
+    padding-block: var(--space-5) var(--space-2);
+    border-block-start: 1px solid
+      color-mix(in srgb, currentcolor 20%, transparent);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-2);
+  }
+
+  @media (min-width: 48rem) {
+    .grid {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    }
+
+    .about {
+      grid-column: auto;
+    }
+  }
+}
