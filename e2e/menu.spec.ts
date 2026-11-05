@@ -62,6 +62,56 @@ test("clicar fuera del panel no lo cierra: la cabecera sigue libre (p. ej. cambi
   await expect(dialog(page)).toBeVisible();
 });
 
+test("con el menú abierto el esquema cambia sin fundido de página: el desenfoque del panel no parpadea", async ({
+  page,
+}) => {
+  await page.emulateMedia({
+    colorScheme: "light",
+    reducedMotion: "no-preference",
+  });
+  await page.addInitScript(() => {
+    const w = window as unknown as { __transitions: number };
+    w.__transitions = 0;
+    const start = document.startViewTransition?.bind(document);
+    if (!start) return;
+    document.startViewTransition = (...args: Parameters<typeof start>) => {
+      w.__transitions++;
+      return start(...args);
+    };
+  });
+  await page.goto("/");
+
+  // Cerrado, el cambio sí hace el fundido (si el navegador lo soporta).
+  const supported = await page.evaluate(
+    () => "startViewTransition" in document
+  );
+  await open(page);
+  await page.getByRole("button", { name: /Cambiar a modo/ }).click();
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.dataset.scheme))
+    .toBe("dark");
+  expect(
+    await page.evaluate(
+      () => (window as unknown as { __transitions: number }).__transitions
+    )
+  ).toBe(0);
+
+  await page.getByRole("button", { name: "Cerrar el menú" }).click();
+  await expect(dialog(page)).toBeHidden();
+  await page.getByRole("button", { name: /Cambiar a modo/ }).click();
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.dataset.scheme))
+    .toBe("light");
+  if (supported)
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () => (window as unknown as { __transitions: number }).__transitions
+        )
+      )
+      .toBe(1);
+});
+
 test("la página de detrás queda inerte y la cabecera, no", async ({ page }) => {
   await page.goto("/");
   await open(page);
