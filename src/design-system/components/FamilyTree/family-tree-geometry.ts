@@ -88,7 +88,7 @@ export const treeNodes: TreeNode[] = [
 ];
 
 /** Flecha del probando (II.2): el cuerpo y la punta, apuntando al símbolo desde arriba a la izquierda. */
-export const probandArrow = "M111 109L134 132M134 132H122M134 132V120";
+export const probandArrow = "M107 105L130 128M130 128H118M130 128V116";
 
 /** Lado de los cuadrados y radio de los círculos. */
 export const squareSize = 36;
