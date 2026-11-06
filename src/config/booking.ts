@@ -1,10 +1,10 @@
-// Reserva con Cal.com (servidor europeo). Los slugs de los eventos son los que hay que crear en la
+// Reserva con Cal.com (cal.eu cerró el 1 de noviembre de 2026). Los slugs de los eventos son los que hay que crear en la
 // cuenta de Cal.com; hasta confirmarlos con Sara, el enlace puede no existir.
 export const cal = {
-  /** Origen de Cal.com en la UE. */
-  origin: "https://cal.eu",
+  /** Origen de Cal.com. */
+  origin: "https://cal.com",
   /** Script del embed, que solo se carga cuando la persona elige un hueco. */
-  embedScript: "https://app.cal.eu/embed/embed.js",
+  embedScript: "https://app.cal.com/embed/embed.js",
   /** Usuario de Sara en Cal.com. */
   user: "sara-torres-esquius",
 } as const;

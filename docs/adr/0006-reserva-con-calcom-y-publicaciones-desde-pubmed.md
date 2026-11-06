@@ -15,6 +15,7 @@ El éxito de la web es una reserva (`docs/design/brief.md`). La web antigua ya u
 - La página `/reservar/` muestra las dos visitas con su precio (120 € la primera, descontable si hay estudio genético; 90 € el seguimiento) y un botón por visita.
 - Cada botón es un **enlace directo** a su evento de Cal.com. Con JavaScript, un script mínimo carga el embed de Cal.com **solo cuando se elige una visita** y lo muestra en la página, con el enlace directo como alternativa. La home y la página de reserva no cargan nada de terceros antes de elegir.
 - La web **no pide datos de salud** ni tiene formulario de contacto: no hay campos en ninguna página. El contacto escrito llegará con el correo propio de la web.
+- Cuenta individual en `cal.com` (revisado en cal.com/europe el 2026-11-06): cal.eu cerró el 1 de noviembre de 2026. El alojamiento europeo («todos los datos se almacenan y procesan dentro de la UE») es solo para el plan Organizations, que es de pago (la página no da precio; solo los antiguos Teams de cal.eu lo reciben gratis). Las cuentas individuales se alojan en EE. UU. Por eso los datos de reserva (nombre y correo) se tratan fuera de la UE: hay que citarlo en la política de privacidad como encargado del tratamiento. No se recogen datos de salud y las visitas, por Meet, no se graban. Si hiciera falta residencia europea, la salida es Organizations.
 - Eventos, usuario y precios en `src/config/booking.ts`. Los slugs (`primera-visita`, `seguimiento`) hay que crearlos en Cal.com; un test comprueba el enlace, no que el evento exista.
 
 **Publicaciones.**
