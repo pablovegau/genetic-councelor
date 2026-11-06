@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import publications from "../src/data/publications.json" with { type: "json" };
 
 // Reserva con Cal.com: un script de terceros que solo debe cargarse cuando la persona elige una visita.
-const embed = "https://app.cal.eu/embed/embed.js";
+const embed = "https://app.cal.com/embed/embed.js";
 
 test("los precios están a la vista, sin pedirlos", async ({ page }) => {
   await page.goto("/reservar/");
@@ -54,7 +54,7 @@ test("al elegir una visita se carga el calendario de esa visita y queda un enlac
   expect(JSON.stringify(calls[1])).toContain(
     "sara-torres-esquius/primera-visita"
   );
-  expect(JSON.stringify(calls[0])).toContain("https://cal.eu");
+  expect(JSON.stringify(calls[0])).toContain("https://cal.com");
 
   await expect(
     page.getByText("Elige una de las visitas de arriba")
@@ -63,7 +63,7 @@ test("al elegir una visita se carga el calendario de esa visita y queda un enlac
     page.getByRole("link", { name: /Ábrelo en una página nueva/ })
   ).toHaveAttribute(
     "href",
-    "https://cal.eu/sara-torres-esquius/primera-visita"
+    "https://cal.com/sara-torres-esquius/primera-visita"
   );
 });
 
@@ -89,7 +89,7 @@ test("elegir la otra visita cambia el calendario sin cargar el script dos veces"
   expect(JSON.stringify(calls[2])).toContain("sara-torres-esquius/seguimiento");
   await expect(
     page.getByRole("link", { name: /Ábrelo en una página nueva/ })
-  ).toHaveAttribute("href", "https://cal.eu/sara-torres-esquius/seguimiento");
+  ).toHaveAttribute("href", "https://cal.com/sara-torres-esquius/seguimiento");
 });
 
 test("sin JavaScript cada visita es un enlace directo a su página de Cal.com", async ({
@@ -107,7 +107,7 @@ test("sin JavaScript cada visita es un enlace directo a su página de Cal.com", 
     page.getByRole("link", { name: "Ver horarios" }).first()
   ).toHaveAttribute(
     "href",
-    "https://cal.eu/sara-torres-esquius/primera-visita"
+    "https://cal.com/sara-torres-esquius/primera-visita"
   );
   await context.close();
 });
