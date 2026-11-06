@@ -101,7 +101,7 @@
     .steps::before {
       content: "";
       position: absolute;
-      inset-block-start: 0;
+      inset-block-start: calc(var(--steps-marker) / 2);
       inset-inline: calc((100% - 3 * var(--steps-gap)) / 8);
       block-size: 2px;
       margin-block-start: -1px;
