@@ -111,3 +111,22 @@ for (const { path } of versions) {
     await expect(islands).toHaveAttribute("component-export", "MobileMenu");
   });
 }
+
+test("la línea de los pasos atraviesa el centro de los números", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const steps = page.locator("ol[class*='steps']");
+  const marker = steps.locator("[class*='marker']").first();
+  await marker.scrollIntoViewIfNeeded();
+  const lineCenter = await steps.evaluate((el) => {
+    const style = getComputedStyle(el, "::before");
+    return parseFloat(style.top) + parseFloat(style.marginTop) + 1;
+  });
+  const [box, stepsBox] = await Promise.all([
+    marker.boundingBox(),
+    steps.boundingBox(),
+  ]);
+  const markerCenter = box!.y + box!.height / 2 - stepsBox!.y;
+  expect(Math.abs(markerCenter - lineCenter)).toBeLessThan(1);
+});
