@@ -10,6 +10,12 @@
     text-decoration: none;
   }
 
+  .wordmark[data-mark] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
   @media (max-width: 29.99rem) {
     .wordmark[data-fit] {
       font-size: 1rem;

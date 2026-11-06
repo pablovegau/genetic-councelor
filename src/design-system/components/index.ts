@@ -36,6 +36,7 @@ export {
   type StepItem,
   type StepsProps,
 } from "./Steps/Steps";
+export { BrandMark, type BrandMarkProps } from "./BrandMark/BrandMark";
 export { Wordmark, type WordmarkProps } from "./Wordmark/Wordmark";
 export {
   PublicationList,

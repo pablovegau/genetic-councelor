@@ -5,6 +5,7 @@ import {
   Container,
   Link,
   MobileMenu,
+  BrandMark,
   Wordmark,
 } from "../design-system/components";
 import SchemeToggle from "../design-system/components/SchemeToggle/SchemeToggle.astro";
@@ -25,7 +26,8 @@ const nav = [
   <Container pad="bar">
     <div class="bar">
       <div class="brand">
-        <Wordmark fit href={home}>
+        <Wordmark fit mark href={home}>
+          <BrandMark />
           {site.brand}
         </Wordmark>
       </div>

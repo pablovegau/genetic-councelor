@@ -7,12 +7,15 @@ export interface WordmarkProps extends ComponentPropsWithoutRef<"a"> {
   as?: "a" | "strong";
   /** En pantallas muy estrechas baja un poco el tamaño y no parte el nombre en dos líneas. */
   fit?: boolean;
+  /** El hijo incluye el símbolo (BrandMark) junto al nombre: los pone en fila. */
+  mark?: boolean;
 }
 
 /** El nombre del sitio en la tipografía de titulares. */
 export function Wordmark({
   as: Tag = "a",
   fit,
+  mark,
   className,
   ...props
 }: WordmarkProps) {
@@ -20,6 +23,7 @@ export function Wordmark({
     <Tag
       className={cx(styles.wordmark, className)}
       data-fit={fit ? "" : undefined}
+      data-mark={mark ? "" : undefined}
       {...props}
     />
   );
