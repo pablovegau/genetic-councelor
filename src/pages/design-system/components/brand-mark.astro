@@ -1,0 +1,52 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { BrandMark, Wordmark } from "../../../design-system/components";
+
+const usage = "<BrandMark />";
+
+const rows: PropRow[] = [
+  {
+    name: "title",
+    type: "string",
+    default: "—",
+    description:
+      "Nombre accesible. Sin él el símbolo es decorativo, para ir junto al nombre escrito.",
+  },
+];
+---
+
+<ComponentPage
+  item="brand-mark"
+  intro={
+    "El símbolo de la marca: un círculo (una persona, según la NSGC) y la flecha de la persona que consulta, colocada arriba a la izquierda como en el árbol. Mide 1,5 em y hereda el color del texto; la flecha usa el rojo del probando."
+  }
+  importLine={'import { BrandMark } from "design-system/components";'}
+  usage={usage}
+  component="BrandMark"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Sin relleno ni punto a propósito: en un árbol, un relleno es «afectado» y un punto es «portador», y el logo no debe sugerir una condición.",
+    "El favicon (<code>public/favicon.svg</code>) es el mismo dibujo, con colores para esquema claro y oscuro.",
+  ]}
+>
+  <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+    <BrandMark
+      title="Símbolo"
+      style={{ inlineSize: "6rem", blockSize: "6rem" }}
+    />
+    <BrandMark
+      title="Símbolo"
+      style={{ inlineSize: "3rem", blockSize: "3rem" }}
+    />
+    <BrandMark
+      title="Símbolo"
+      style={{ inlineSize: "1rem", blockSize: "1rem" }}
+    />
+    <Wordmark as="strong" mark>
+      <BrandMark />
+      Sara Torres-Esquius
+    </Wordmark>
+  </div>
+</ComponentPage>

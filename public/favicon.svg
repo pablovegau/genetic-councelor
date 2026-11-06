@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    .person { stroke: #1a1a1f; }
+    .arrow { stroke: #d6285a; }
+    @media (prefers-color-scheme: dark) {
+      .person { stroke: #f5f5f7; }
+      .arrow { stroke: #ff7a8f; }
+    }
+  </style>
+  <circle class="person" cx="20" cy="20" r="8" />
+  <path class="arrow" d="M4 4L12 12M12 12H6M12 12V6" />
+</svg>

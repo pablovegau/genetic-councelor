@@ -1,0 +1,18 @@
+@layer base, components, props;
+
+@layer components {
+  .mark {
+    inline-size: 1.5em;
+    block-size: 1.5em;
+    flex: none;
+  }
+
+  .person {
+    stroke: currentcolor;
+  }
+
+  /* El rojo de la flecha es el mismo que el del probando en el árbol de la portada. */
+  .arrow {
+    stroke: var(--color-danger-bg);
+  }
+}

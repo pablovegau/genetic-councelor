@@ -119,6 +119,12 @@ export const catalogGroups: CatalogGroup[] = [
           "Enlace de texto con cuatro variantes: énfasis, título, navegación y apagado.",
       },
       {
+        slug: "brand-mark",
+        label: "BrandMark",
+        description:
+          "El símbolo de la marca: un círculo y la flecha del probando, como en el árbol.",
+      },
+      {
         slug: "wordmark",
         label: "Wordmark",
         description:
