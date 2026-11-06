@@ -58,8 +58,14 @@ const rows: PropRow[] = [
     caption="Toca un símbolo."
     generation="Generación"
     symbols={{
-      man: { label: "Hombre", text: "Un cuadrado es un hombre." },
-      woman: { label: "Mujer", text: "Un círculo es una mujer." },
+      man: {
+        label: "Hombre no afecto",
+        text: "Un cuadrado vacío es un hombre no afecto.",
+      },
+      woman: {
+        label: "Mujer no afecta",
+        text: "Un círculo vacío es una mujer no afecta.",
+      },
       manCarrier: {
         label: "Hombre portador",
         text: "Un punto: porta la variante sin síntomas.",

@@ -27,8 +27,14 @@ export const es: Copy = {
     generation: "Generación",
     ariaLabel: "Árbol genealógico de ejemplo con tres generaciones",
     caption: "Toca un símbolo y te explicamos cómo se lee un árbol familiar.",
-    man: { label: "Hombre", text: "Cuadrado: un hombre." },
-    woman: { label: "Mujer", text: "Círculo: una mujer." },
+    man: {
+      label: "Hombre no afecto",
+      text: "Cuadrado vacío: un hombre no afecto.",
+    },
+    woman: {
+      label: "Mujer no afecta",
+      text: "Círculo vacío: una mujer no afecta.",
+    },
     manCarrier: {
       label: "Hombre portador",
       text: "Cuadrado con un punto en el centro: un hombre portador, sin síntomas de la condición.",

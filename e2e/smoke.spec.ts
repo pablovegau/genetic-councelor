@@ -91,11 +91,14 @@ test("el interruptor de esquema cambia el tema y se recuerda al recargar", async
 test("el árbol explica cada símbolo al enfocarlo", async ({ page }) => {
   await page.goto("/en/");
   await page
-    .getByRole("button", { name: "Woman, generation II", exact: true })
+    .getByRole("button", {
+      name: "Unaffected woman, generation II",
+      exact: true,
+    })
     .first()
     .focus();
   await expect(page.locator(".tree-caption")).toHaveText(
-    "Generation II. Circle: a woman."
+    "Generation II. Empty circle: an unaffected woman."
   );
 });
 

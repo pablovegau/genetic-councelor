@@ -27,8 +27,14 @@ export const en: Copy = {
     generation: "Generation",
     ariaLabel: "Example family tree with three generations",
     caption: "Tap a symbol and we'll show you how to read a family tree.",
-    man: { label: "Man", text: "Square: a man." },
-    woman: { label: "Woman", text: "Circle: a woman." },
+    man: {
+      label: "Unaffected man",
+      text: "Empty square: an unaffected man.",
+    },
+    woman: {
+      label: "Unaffected woman",
+      text: "Empty circle: an unaffected woman.",
+    },
     manCarrier: {
       label: "Male carrier",
       text: "Square with a dot in the centre: a male carrier, with no symptoms of the condition.",

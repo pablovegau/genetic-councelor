@@ -27,8 +27,14 @@ export const ca: Copy = {
     generation: "Generació",
     ariaLabel: "Arbre genealògic d'exemple amb tres generacions",
     caption: "Toca un símbol i t'expliquem com es llegeix un arbre familiar.",
-    man: { label: "Home", text: "Quadrat: un home." },
-    woman: { label: "Dona", text: "Cercle: una dona." },
+    man: {
+      label: "Home no afectat",
+      text: "Quadrat buit: un home no afectat.",
+    },
+    woman: {
+      label: "Dona no afectada",
+      text: "Cercle buit: una dona no afectada.",
+    },
     manCarrier: {
       label: "Home portador",
       text: "Quadrat amb un punt al centre: un home portador, sense símptomes de la condició.",
