@@ -111,3 +111,14 @@ Sara propuso: más de 48 h y reagendas, se mantiene la reserva; cancelas con men
 - Entre 24 h y 48 h: reagendar una vez sin coste; si cancelas, no hay reembolso.
 - Con menos de 24 h o sin presentarse: se pierde la reserva.
 - Revisar con el gestor o abogado el derecho de desistimiento de 14 días de los contratos a distancia antes de publicar.
+
+## Política de privacidad: puntos a incluir
+
+Modelo: los textos de seagen.org que Sara ya revisó (aviso legal, privacidad, cookies). Además:
+
+- Cal.com como encargado del tratamiento de los datos de reserva (nombre y correo). La cuenta individual se aloja en EE. UU. (cal.com/europe, revisado el 2026-11-06); el alojamiento europeo es solo del plan Organizations, de pago. Citar la transferencia internacional y sus garantías.
+- Stripe para la reserva de 20 € y el pago posterior.
+- Correo del dominio: Cloudflare Email Routing y Resend.
+- Meet para las visitas: no se graban.
+- No se recogen datos de salud al reservar; el árbol familiar y los informes se tratan en la consulta, no en la web.
+- Cookies: la web no usa analítica ni cookies propias; el script de Cal.com solo se carga al elegir una visita.
