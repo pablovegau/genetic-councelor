@@ -13,8 +13,17 @@ export const treeLines = [
 
 /** Una misma condición lleva siempre el mismo color: a (violeta) y b (naranja). */
 export type TreeCondition = "a" | "b";
+/** Cada símbolo dice si es un hombre (cuadrado) o una mujer (círculo) y su estado. */
 export type TreeSymbol =
-  "man" | "woman" | "carrier" | "affected" | "otherCondition" | "proband";
+  | "man"
+  | "woman"
+  | "manCarrier"
+  | "womanCarrier"
+  | "manAffected"
+  | "womanAffected"
+  | "manOther"
+  | "womanOther"
+  | "proband";
 
 export interface TreeNode {
   shape: "square" | "circle";
@@ -38,7 +47,7 @@ export const treeNodes: TreeNode[] = [
     shape: "circle",
     cx: 240,
     cy: 40,
-    symbol: "carrier",
+    symbol: "womanCarrier",
     carrier: true,
   },
   // II
@@ -47,7 +56,7 @@ export const treeNodes: TreeNode[] = [
     shape: "square",
     cx: 70,
     cy: 148,
-    symbol: "carrier",
+    symbol: "manCarrier",
     carrier: true,
   },
   {
@@ -55,7 +64,7 @@ export const treeNodes: TreeNode[] = [
     shape: "circle",
     cx: 150,
     cy: 148,
-    symbol: "carrier",
+    symbol: "womanCarrier",
     carrier: true,
   },
   {
@@ -63,7 +72,7 @@ export const treeNodes: TreeNode[] = [
     shape: "square",
     cx: 250,
     cy: 148,
-    symbol: "otherCondition",
+    symbol: "manOther",
     fill: "b",
   },
   { generation: "II", shape: "circle", cx: 330, cy: 148, symbol: "woman" },
@@ -73,7 +82,7 @@ export const treeNodes: TreeNode[] = [
     shape: "square",
     cx: 110,
     cy: 250,
-    symbol: "affected",
+    symbol: "manAffected",
     fill: "a",
   },
   {
@@ -81,7 +90,7 @@ export const treeNodes: TreeNode[] = [
     shape: "circle",
     cx: 250,
     cy: 250,
-    symbol: "otherCondition",
+    symbol: "womanOther",
     fill: "b",
   },
   { generation: "III", shape: "square", cx: 330, cy: 250, symbol: "man" },

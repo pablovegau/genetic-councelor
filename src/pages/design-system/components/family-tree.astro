@@ -28,7 +28,7 @@ const rows: PropRow[] = [
   },
   {
     name: "symbols",
-    type: 'Record<"man" | "woman" | "carrier" | "affected" | "otherCondition" | "proband", { label; text }>',
+    type: 'Record<"man" | "woman" | "manCarrier" | "womanCarrier" | "manAffected" | "womanAffected" | "manOther" | "womanOther" | "proband", { label; text }>',
     default: "—",
     description: "Nombre accesible y explicación de cada símbolo.",
   },
@@ -60,16 +60,28 @@ const rows: PropRow[] = [
     symbols={{
       man: { label: "Hombre", text: "Un cuadrado es un hombre." },
       woman: { label: "Mujer", text: "Un círculo es una mujer." },
-      carrier: {
-        label: "Portadora",
+      manCarrier: {
+        label: "Hombre portador",
         text: "Un punto: porta la variante sin síntomas.",
       },
-      affected: {
-        label: "Con la condición",
+      womanCarrier: {
+        label: "Mujer portadora",
+        text: "Un punto: porta la variante sin síntomas.",
+      },
+      manAffected: {
+        label: "Hombre con la condición",
         text: "Relleno: tiene la condición.",
       },
-      otherCondition: {
-        label: "Otra condición",
+      womanAffected: {
+        label: "Mujer con la condición",
+        text: "Relleno: tiene la condición.",
+      },
+      manOther: {
+        label: "Hombre con otra condición",
+        text: "Otro color: otra condición.",
+      },
+      womanOther: {
+        label: "Mujer con otra condición",
         text: "Otro color: otra condición.",
       },
       proband: {

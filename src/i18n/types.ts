@@ -32,9 +32,12 @@ export interface Copy {
     caption: string;
     man: TreeNodeCopy;
     woman: TreeNodeCopy;
-    carrier: TreeNodeCopy;
-    affected: TreeNodeCopy;
-    otherCondition: TreeNodeCopy;
+    manCarrier: TreeNodeCopy;
+    womanCarrier: TreeNodeCopy;
+    manAffected: TreeNodeCopy;
+    womanAffected: TreeNodeCopy;
+    manOther: TreeNodeCopy;
+    womanOther: TreeNodeCopy;
     proband: TreeNodeCopy;
   };
   situations: {

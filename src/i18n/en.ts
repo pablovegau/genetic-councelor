@@ -29,17 +29,29 @@ export const en: Copy = {
     caption: "Tap a symbol and we'll show you how to read a family tree.",
     man: { label: "Man", text: "Square: a man." },
     woman: { label: "Woman", text: "Circle: a woman." },
-    carrier: {
-      label: "Carrier",
-      text: "A dot in the centre: a carrier, with no symptoms of the condition.",
+    manCarrier: {
+      label: "Male carrier",
+      text: "Square with a dot in the centre: a male carrier, with no symptoms of the condition.",
     },
-    affected: {
-      label: "Person with the condition",
-      text: "Fully filled: a person with the condition being studied. Each condition always has the same colour.",
+    womanCarrier: {
+      label: "Female carrier",
+      text: "Circle with a dot in the centre: a female carrier, with no symptoms of the condition.",
     },
-    otherCondition: {
-      label: "Person with another condition",
-      text: "Another colour: a person with a different condition, for example colon cancer.",
+    manAffected: {
+      label: "Man with the condition",
+      text: "Filled square: a man with the condition being studied. Each condition always has the same colour.",
+    },
+    womanAffected: {
+      label: "Woman with the condition",
+      text: "Filled circle: a woman with the condition being studied. Each condition always has the same colour.",
+    },
+    manOther: {
+      label: "Man with another condition",
+      text: "Square in another colour: a man with a different condition, for example colon cancer.",
+    },
+    womanOther: {
+      label: "Woman with another condition",
+      text: "Circle in another colour: a woman with a different condition, for example colon cancer.",
     },
     proband: {
       label: "Person consulting",

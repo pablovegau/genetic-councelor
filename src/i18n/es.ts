@@ -29,17 +29,29 @@ export const es: Copy = {
     caption: "Toca un símbolo y te explicamos cómo se lee un árbol familiar.",
     man: { label: "Hombre", text: "Cuadrado: un hombre." },
     woman: { label: "Mujer", text: "Círculo: una mujer." },
-    carrier: {
-      label: "Persona portadora",
-      text: "Un punto en el centro: una persona portadora, sin síntomas de la condición.",
+    manCarrier: {
+      label: "Hombre portador",
+      text: "Cuadrado con un punto en el centro: un hombre portador, sin síntomas de la condición.",
     },
-    affected: {
-      label: "Persona con la condición",
-      text: "Relleno entero: una persona con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    womanCarrier: {
+      label: "Mujer portadora",
+      text: "Círculo con un punto en el centro: una mujer portadora, sin síntomas de la condición.",
     },
-    otherCondition: {
-      label: "Persona con otra condición",
-      text: "Otro color: una persona con una condición distinta, por ejemplo cáncer de colon.",
+    manAffected: {
+      label: "Hombre con la condición",
+      text: "Cuadrado relleno: un hombre con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    womanAffected: {
+      label: "Mujer con la condición",
+      text: "Círculo relleno: una mujer con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    manOther: {
+      label: "Hombre con otra condición",
+      text: "Cuadrado de otro color: un hombre con una condición distinta, por ejemplo cáncer de colon.",
+    },
+    womanOther: {
+      label: "Mujer con otra condición",
+      text: "Círculo de otro color: una mujer con una condición distinta, por ejemplo cáncer de colon.",
     },
     proband: {
       label: "Persona que consulta",
