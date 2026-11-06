@@ -4,7 +4,7 @@ import type { PropRow } from "../../../design-system/catalog/prop-docs";
 import FamilyTree from "../../../design-system/components/FamilyTree/FamilyTree.astro";
 
 const usage =
-  '<FamilyTree ariaLabel="…" caption="…" symbols={{ man: { label, text }, … }} />';
+  '<FamilyTree ariaLabel="…" caption="…" symbols={{ man: { label, text }, … }} generation="Generación" />';
 
 const rows: PropRow[] = [
   {
@@ -20,8 +20,15 @@ const rows: PropRow[] = [
     description: "Frase bajo el dibujo cuando no hay ningún símbolo activo.",
   },
   {
+    name: "generation",
+    type: "string",
+    default: "—",
+    description:
+      "Palabra «Generación»: cada símbolo dice su número romano en el texto interactivo.",
+  },
+  {
     name: "symbols",
-    type: 'Record<"man" | "woman" | "manAffected" | "womanAffected" | "carrier", { label; text }>',
+    type: 'Record<"man" | "woman" | "carrier" | "affected" | "otherCondition" | "proband", { label; text }>',
     default: "—",
     description: "Nombre accesible y explicación de cada símbolo.",
   },
@@ -31,7 +38,7 @@ const rows: PropRow[] = [
 <ComponentPage
   item="family-tree"
   intro={
-    "La ilustración del hero. Es un componente Astro con un script mínimo (sin isla de React)."
+    "La ilustración del hero: tres generaciones según las guías de la NSGC, con el hombre a la izquierda de cada pareja. Una misma condición lleva siempre el mismo color. Es un componente Astro con un script mínimo (sin isla de React)."
   }
   importLine={
     'import FamilyTree from "design-system/components/FamilyTree/FamilyTree.astro";'
@@ -49,20 +56,25 @@ const rows: PropRow[] = [
   <FamilyTree
     ariaLabel="Árbol familiar de ejemplo"
     caption="Toca un símbolo."
+    generation="Generación"
     symbols={{
       man: { label: "Hombre", text: "Un cuadrado es un hombre." },
       woman: { label: "Mujer", text: "Un círculo es una mujer." },
-      manAffected: {
-        label: "Hombre afectado",
-        text: "Relleno: tiene la condición.",
-      },
-      womanAffected: {
-        label: "Mujer afectada",
-        text: "Relleno: tiene la condición.",
-      },
       carrier: {
         label: "Portadora",
-        text: "Un punto: porta la variante sin tener la condición.",
+        text: "Un punto: porta la variante sin síntomas.",
+      },
+      affected: {
+        label: "Con la condición",
+        text: "Relleno: tiene la condición.",
+      },
+      otherCondition: {
+        label: "Otra condición",
+        text: "Otro color: otra condición.",
+      },
+      proband: {
+        label: "Persona que consulta",
+        text: "La flecha señala al probando.",
       },
     }}
   />

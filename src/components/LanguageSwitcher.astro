@@ -5,9 +5,13 @@ import { getCopy, locales } from "../i18n";
 
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
+// La misma página en cada idioma: se quita el prefijo del idioma actual de la ruta.
+const page = Astro.url.pathname
+  .replace(/^\/(ca|en)(?=\/|$)/, "")
+  .replace(/^\/|\/$/g, "");
 const items = locales.map(({ code }) => ({
   code,
-  href: getRelativeLocaleUrl(code),
+  href: getRelativeLocaleUrl(code, page),
 }));
 ---
 

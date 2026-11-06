@@ -27,13 +27,15 @@ export interface Copy {
     confidential: string;
   };
   tree: {
+    generation: string;
     ariaLabel: string;
     caption: string;
     man: TreeNodeCopy;
     woman: TreeNodeCopy;
-    manAffected: TreeNodeCopy;
-    womanAffected: TreeNodeCopy;
     carrier: TreeNodeCopy;
+    affected: TreeNodeCopy;
+    otherCondition: TreeNodeCopy;
+    proband: TreeNodeCopy;
   };
   situations: {
     title: string;
@@ -57,6 +59,36 @@ export interface Copy {
     link: string;
   };
   closing: { title: string; lead: string };
+  booking: {
+    meta: { title: string; description: string };
+    title: string;
+    lead: string;
+    visitsTitle: string;
+    first: { name: string; note: string; description: string };
+    followup: { name: string; description: string };
+    choose: string;
+    embedTitle: string;
+    embedHint: string;
+    fallback: string;
+    privacy: string;
+    thirdParty: string;
+  };
+  aboutPage: {
+    meta: { title: string; description: string };
+    lead: string;
+    careerTitle: string;
+    career: string[];
+    pressTitle: string;
+    press: string[];
+    publicationsTitle: string;
+    publicationsLead: string;
+    /** Con `{count}`: el número de publicaciones. */
+    total: string;
+    /** Con `{count}`: las que quedan por ver. */
+    more: string;
+    newTab: string;
+  };
+
   footer: {
     tagline: string;
     pages: string;

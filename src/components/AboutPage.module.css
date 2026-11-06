@@ -1,0 +1,23 @@
+.intro {
+  display: grid;
+  align-content: center;
+  gap: var(--space-4);
+}
+
+.title {
+  max-inline-size: 20ch;
+}
+
+.block {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

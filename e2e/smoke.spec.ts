@@ -91,10 +91,12 @@ test("el interruptor de esquema cambia el tema y se recuerda al recargar", async
 test("el árbol explica cada símbolo al enfocarlo", async ({ page }) => {
   await page.goto("/en/");
   await page
-    .getByRole("button", { name: "Woman", exact: true })
+    .getByRole("button", { name: "Woman, generation II", exact: true })
     .first()
     .focus();
-  await expect(page.locator(".tree-caption")).toHaveText("Circle: a woman.");
+  await expect(page.locator(".tree-caption")).toHaveText(
+    "Generation II. Circle: a woman."
+  );
 });
 
 // Una sola isla en la home: el menú móvil, y diferida (ADR 0003).

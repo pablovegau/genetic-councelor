@@ -1,0 +1,85 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { PublicationList } from "../../../design-system/components";
+
+const usage =
+  '<PublicationList items={items} moreLabel="Ver las 21 restantes" newTabLabel="se abre en otra pestaña" />';
+
+const rows: PropRow[] = [
+  {
+    name: "items",
+    type: "{ id; title; journal; year; authors; url }[]",
+    default: "—",
+    description:
+      "Publicaciones, ya ordenadas (la más reciente primero). Los autores van formateados.",
+  },
+  {
+    name: "visible",
+    type: "number",
+    default: "—",
+    description: "Cuántas se ven siempre. Por defecto 5.",
+  },
+  {
+    name: "moreLabel",
+    type: "string",
+    default: "—",
+    description: "Texto del desplegable con el resto.",
+  },
+  {
+    name: "newTabLabel",
+    type: "string",
+    default: "—",
+    description:
+      "Aviso para lectores de pantalla: el enlace abre otra pestaña.",
+  },
+];
+---
+
+<ComponentPage
+  item="publication-list"
+  intro={
+    "Las publicaciones científicas de Sara, de PubMed: las más recientes siempre visibles y «ver más» para el resto."
+  }
+  importLine={'import { PublicationList } from "design-system/components";'}
+  usage={usage}
+  component="PublicationList"
+  rows={rows}
+  notes={[
+    "El desplegable es un <code>&lt;details&gt;</code> nativo: funciona sin JavaScript y con teclado.",
+    "Los datos salen de <code>src/data/publications.json</code>, que actualiza una tarea semanal desde PubMed (<code>pnpm publications</code>).",
+  ]}
+>
+  <PublicationList
+    visible={2}
+    moreLabel="Ver la restante"
+    newTabLabel="se abre en otra pestaña"
+    items={[
+      {
+        id: "1",
+        title: "Hair bulb and oral mucosa DNA for prompt germline testing",
+        journal: "Blood cancer journal",
+        year: "2026",
+        authors: "Balbastre-Úbeda F, Torres-Esquius S et al.",
+        url: "#demo",
+      },
+      {
+        id: "2",
+        title:
+          "Performance and clinical utility of Spanish germ line genetic testing",
+        journal: "Blood advances",
+        year: "2026",
+        authors: "Torres-Esquius S, Ramil-López G et al.",
+        url: "#demo",
+      },
+      {
+        id: "3",
+        title: "RAD51-based homologous recombination deficiency",
+        journal: "NPJ breast cancer",
+        year: "2025",
+        authors: "Llop-Guevara A et al.",
+        url: "#demo",
+      },
+    ]}
+  />
+</ComponentPage>

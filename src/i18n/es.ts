@@ -24,21 +24,26 @@ export const es: Copy = {
     confidential: "Todo lo que nos cuentes es confidencial.",
   },
   tree: {
+    generation: "Generación",
     ariaLabel: "Árbol genealógico de ejemplo con tres generaciones",
     caption: "Toca un símbolo y te explicamos cómo se lee un árbol familiar.",
     man: { label: "Hombre", text: "Cuadrado: un hombre." },
     woman: { label: "Mujer", text: "Círculo: una mujer." },
-    manAffected: {
-      label: "Hombre con la condición",
-      text: "Cuadrado relleno: un hombre con la condición que se estudia.",
-    },
-    womanAffected: {
-      label: "Mujer con la condición",
-      text: "Círculo relleno: una mujer con la condición que se estudia.",
-    },
     carrier: {
-      label: "Mujer portadora",
-      text: "Círculo con un punto: una mujer portadora, sin síntomas.",
+      label: "Persona portadora",
+      text: "Un punto en el centro: una persona portadora, sin síntomas de la condición.",
+    },
+    affected: {
+      label: "Persona con la condición",
+      text: "Relleno entero: una persona con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    otherCondition: {
+      label: "Persona con otra condición",
+      text: "Otro color: una persona con una condición distinta, por ejemplo cáncer de colon.",
+    },
+    proband: {
+      label: "Persona que consulta",
+      text: "La flecha señala a la persona que consulta, el punto de partida del árbol.",
     },
   },
   situations: {
@@ -108,6 +113,65 @@ export const es: Copy = {
   closing: {
     title: "Empieza por tu primera visita.",
     lead: "Reservas en pocos pasos y eliges el día que mejor te venga. Todo lo que nos cuentes es confidencial.",
+  },
+  booking: {
+    meta: {
+      title: "Reservar cita · Sara Torres-Esquius",
+      description:
+        "Reserva tu primera visita de asesoramiento genético por videollamada: precios a la vista y sin datos de salud al reservar.",
+    },
+    title: "Reserva tu primera visita",
+    lead: "Elige el día y la hora que mejor te vengan. Las visitas son siempre por videollamada, así que puedes hacerlas desde casa.",
+    visitsTitle: "Elige tu visita",
+    first: {
+      name: "Primera visita",
+      note: "Descontable si después te haces un estudio genético.",
+      description:
+        "Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un plan.",
+    },
+    followup: {
+      name: "Seguimiento",
+      description:
+        "Para retomar el plan y resolver las dudas que surjan después de la primera visita.",
+    },
+    choose: "Ver horarios",
+    embedTitle: "Elige día y hora",
+    embedHint:
+      "Elige una de las visitas de arriba y aquí verás los horarios disponibles.",
+    fallback: "¿No ves el calendario? Ábrelo en una página nueva.",
+    privacy: "Al reservar no te pedimos datos de salud.",
+    thirdParty:
+      "El calendario lo ofrece Cal.com y solo se carga cuando eliges una visita.",
+  },
+  aboutPage: {
+    meta: {
+      title: "Sobre mí · Sara Torres-Esquius",
+      description:
+        "Trayectoria, prensa y publicaciones científicas de Sara Torres-Esquius, asesora genética en Barcelona.",
+    },
+    lead: "Asesora genética en Barcelona. Acompaña a personas adultas y a sus familias a entender el riesgo genético y a tomar decisiones con calma.",
+    careerTitle: "Trayectoria",
+    career: [
+      "Más de 10 años de experiencia en genética.",
+      "Asesora genética en el Hospital Vall d'Hebron desde 2021.",
+      "Asesora genética en la Clínica Corachan-IDOC desde 2025.",
+      "Vocal de la Junta Directiva de SEAGen.",
+      "Profesora vinculada en la UAB desde 2025.",
+    ],
+    pressTitle: "Prensa y divulgación",
+    press: [
+      "El País",
+      "La Vanguardia",
+      "RTVE",
+      "Onda Cero",
+      "Telemadrid",
+      "Manual SEHH (2024)",
+    ],
+    publicationsTitle: "Publicaciones",
+    publicationsLead: "Artículos en revistas científicas, tomados de PubMed.",
+    total: "{count} publicaciones en PubMed.",
+    more: "Ver las {count} restantes",
+    newTab: "se abre en otra pestaña",
   },
   footer: {
     tagline:

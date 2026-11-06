@@ -1,0 +1,90 @@
+---
+import portrait from "../assets/mg-3199.webp";
+import {
+  Portrait,
+  PublicationList,
+  Section,
+  Split,
+} from "../design-system/components";
+import { Text } from "../design-system/primitives";
+import { getCopy } from "../i18n";
+import publications from "../data/publications.json";
+import { formatAuthors } from "../lib/publications";
+import styles from "./AboutPage.module.css";
+
+const { site, about, aboutPage } = getCopy(Astro.currentLocale);
+const items = publications.map((publication) => ({
+  id: publication.id,
+  title: publication.title,
+  journal: publication.journal,
+  year: publication.year,
+  authors: formatAuthors(publication.authors),
+  url: publication.url,
+}));
+const count = (template: string, n: number) =>
+  template.replace("{count}", String(n));
+---
+
+<Section pad="start">
+  <Split ratio={1.25} gap="wide">
+    <Portrait
+      src={portrait.src}
+      width={portrait.width}
+      height={portrait.height}
+      alt={about.imageAlt}
+    />
+    <div class={styles.intro}>
+      <Text as="h1" variant="heading-2" className={styles.title}>
+        {site.brand}
+      </Text>
+      <Text variant="text-lg" color="muted">
+        {aboutPage.lead}
+      </Text>
+    </div>
+  </Split>
+</Section>
+
+<Section tone="violet" band="action">
+  <Split gap="wide" align="start">
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {aboutPage.careerTitle}
+      </Text>
+      <ul class={styles.list}>
+        {aboutPage.career.map((fact) => (
+          <li>
+            <Text>{fact}</Text>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {aboutPage.pressTitle}
+      </Text>
+      <ul class={styles.list}>
+        {aboutPage.press.map((outlet) => (
+          <li>
+            <Text>{outlet}</Text>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Split>
+</Section>
+
+<Section id="publicaciones">
+  <div class={styles.block}>
+    <Text as="h2" variant="heading-3">
+      {aboutPage.publicationsTitle}
+    </Text>
+    <Text variant="text-lg" color="muted">
+      {`${aboutPage.publicationsLead} ${count(aboutPage.total, items.length)}`}
+    </Text>
+    <PublicationList
+      items={items}
+      moreLabel={count(aboutPage.more, Math.max(items.length - 5, 0))}
+      newTabLabel={aboutPage.newTab}
+    />
+  </div>
+</Section>

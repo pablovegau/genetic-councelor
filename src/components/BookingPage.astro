@@ -1,0 +1,164 @@
+---
+import { Button, PriceCard, Section } from "../design-system/components";
+import { Text } from "../design-system/primitives";
+import { cal, calLink, calUrl, visits, type VisitKey } from "../config/booking";
+import { getCopy } from "../i18n";
+import styles from "./BookingPage.module.css";
+
+const locale = Astro.currentLocale ?? "es";
+const { booking, hero } = getCopy(locale);
+const euro = new Intl.NumberFormat(locale, {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+});
+const cards: {
+  key: VisitKey;
+  name: string;
+  description: string;
+  note?: string;
+}[] = [
+  { key: "first", ...booking.first },
+  { key: "followup", ...booking.followup },
+];
+---
+
+<div
+  data-booking
+  data-origin={cal.origin}
+  data-script={cal.embedScript}
+  data-locale={locale}
+>
+  <Section pad="start">
+    <div class={styles.intro}>
+      <Text as="h1" variant="heading-2" className={styles.title}>
+        {booking.title}
+      </Text>
+      <Text variant="text-lg" color="muted" className={styles.lead}>
+        {booking.lead}
+      </Text>
+      <Text size="2" color="muted">
+        {`${booking.privacy} ${hero.confidential}`}
+      </Text>
+    </div>
+  </Section>
+
+  <Section tone="violet" band="action" id="visitas">
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {booking.visitsTitle}
+      </Text>
+      <div class={styles.cards}>
+        {cards.map(({ key, name, description, note }) => (
+          <PriceCard
+            name={name}
+            price={euro.format(visits[key].price)}
+            note={note}
+            description={description}
+          >
+            <Button
+              href={calUrl(key)}
+              data-cal-event={calLink(key)}
+              aria-describedby="embed-hint"
+            >
+              {booking.choose}
+            </Button>
+          </PriceCard>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  <Section id="calendario">
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {booking.embedTitle}
+      </Text>
+      <Text id="embed-hint" color="muted" data-hint>
+        {booking.embedHint}
+      </Text>
+      <div
+        id="cal-inline"
+        class={styles.stage}
+        data-stage
+        aria-live="polite"
+      ></div>
+      <Text size="2" color="muted" data-fallback hidden>
+        <a href={calUrl("first")} data-fallback-link>
+          {booking.fallback}
+        </a>
+      </Text>
+      <Text size="2" color="muted">
+        {booking.thirdParty}
+      </Text>
+    </div>
+  </Section>
+</div>
+
+<script>
+  // El calendario de Cal.com (un script de terceros) solo se carga cuando se elige una visita.
+  // Sin JavaScript, el botón de cada visita es un enlace directo a su página de Cal.com.
+  type CalCommand = (...args: unknown[]) => void;
+  type CalQueue = CalCommand & {
+    loaded?: boolean;
+    q?: unknown[];
+    ns?: Record<string, unknown>;
+  };
+  const w = window as unknown as { Cal?: CalQueue };
+
+  const root = document.querySelector<HTMLElement>("[data-booking]")!;
+  const { origin = "", script = "", locale = "es" } = root.dataset;
+  const stage = root.querySelector<HTMLElement>("[data-stage]")!;
+  const hint = root.querySelector<HTMLElement>("[data-hint]")!;
+  const fallback = root.querySelector<HTMLElement>("[data-fallback]")!;
+  const fallbackLink = root.querySelector<HTMLAnchorElement>(
+    "[data-fallback-link]"
+  )!;
+  let started = false;
+
+  // Cola de comandos de Cal.com: guarda las llamadas hasta que carga su script.
+  const start = () => {
+    if (started) return;
+    started = true;
+    const queue: CalQueue = function (...args) {
+      (queue.q ??= []).push(args);
+    };
+    w.Cal = queue;
+    document.head.appendChild(document.createElement("script")).src = script;
+    w.Cal("init", { origin });
+  };
+
+  const theme = () => {
+    const chosen = document.documentElement.dataset.scheme;
+    if (chosen) return chosen;
+    return matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+
+  root
+    .querySelectorAll<HTMLAnchorElement>("[data-cal-event]")
+    .forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const calLink = link.dataset.calEvent!;
+        event.preventDefault();
+        start();
+        stage.replaceChildren();
+        w.Cal!("inline", {
+          elementOrSelector: stage,
+          calLink,
+          layout: "month_view",
+          config: { locale, theme: theme() },
+        });
+        hint.hidden = true;
+        fallbackLink.href = link.href;
+        fallback.hidden = false;
+        stage.scrollIntoView({
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+          block: "start",
+        });
+      });
+    });
+</script>

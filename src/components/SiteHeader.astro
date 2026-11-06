@@ -14,8 +14,9 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 const locale = Astro.currentLocale ?? "es";
 const { site } = getCopy(locale);
 const home = getRelativeLocaleUrl(locale);
+const book = getRelativeLocaleUrl(locale, "reservar");
 const nav = [
-  { label: site.nav.about, href: "#sobre-mi" },
+  { label: site.nav.about, href: getRelativeLocaleUrl(locale, "sobre-mi") },
   { label: site.nav.contact, href: "#contacto" },
 ];
 ---
@@ -40,7 +41,7 @@ const nav = [
       </div>
       <div class="actions">
         <div class="book">
-          <Button size="sm" href="#cita">
+          <Button size="sm" href={book}>
             {site.book}
           </Button>
         </div>
@@ -53,7 +54,7 @@ const nav = [
           links={nav}
         >
           <LanguageSwitcher />
-          <Button href="#cita">{site.book}</Button>
+          <Button href={book}>{site.book}</Button>
         </MobileMenu>
       </div>
     </div>

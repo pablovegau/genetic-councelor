@@ -1,0 +1,30 @@
+@layer base, components, props;
+
+@layer components {
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border: var(--border-width-1) solid var(--color-border-default);
+    border-radius: var(--radius-surface);
+    background-color: var(--color-bg-surface);
+  }
+
+  .card .price {
+    margin-block-start: var(--space-1);
+  }
+
+  .card .note {
+    margin-block-end: var(--space-2);
+  }
+
+  .card .description {
+    flex: 1;
+    margin-block-end: var(--space-4);
+  }
+
+  .action {
+    display: flex;
+  }
+}

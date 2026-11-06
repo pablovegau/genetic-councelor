@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { catalogPages } from "../src/design-system/catalog/sections";
+import { sitePages } from "./pages";
 
 // Las capturas se generan y se comparan solo en Linux, dentro de la imagen de Playwright
 // que también usa la CI: el renderizado cambia con el sistema. En local, `pnpm test:e2e:docker`.
@@ -18,12 +19,13 @@ for (const { name, path } of catalogPages) {
   });
 }
 
-// La home en cada idioma, entera. Antes de capturar se cargan las imágenes diferidas y las fuentes;
+// La home y las páginas del sitio en cada idioma, enteras. Antes de capturar se cargan las imágenes diferidas y las fuentes;
 // las animaciones (el árbol se dibuja al cargar) las lleva Playwright a su estado final.
 const homes = [
   { name: "home-es", path: "/" },
   { name: "home-ca", path: "/ca/" },
   { name: "home-en", path: "/en/" },
+  ...sitePages,
 ];
 
 for (const { name, path } of homes) {

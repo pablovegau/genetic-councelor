@@ -1,0 +1,57 @@
+name: Update publications
+
+# Cada semana (y a mano) descarga las publicaciones de Sara desde PubMed. Si hay cambios, abre una PR
+# con src/data/publications.json; la web se reconstruye al fusionarla. Si PubMed falla, el script
+# sale con error y NO toca el fichero: se sigue publicando la última lista buena.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm publications
+        env:
+          NCBI_EMAIL: ${{ vars.NCBI_EMAIL }}
+          NCBI_API_KEY: ${{ secrets.NCBI_API_KEY }}
+      - name: Open a pull request if the list changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet src/data/publications.json; then
+            echo "Sin cambios en las publicaciones."
+            exit 0
+          fi
+          branch="chore/update-publications"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add src/data/publications.json
+          git commit -m "Update publications from PubMed"
+          git push --force origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
+            gh pr create --base main --head "$branch" \
+              --title "Update publications from PubMed" \
+              --body "Lista de publicaciones regenerada con \`pnpm publications\`. Revisa que sean de Sara antes de fusionar."
+          fi
+          # Los commits hechos con el GITHUB_TOKEN no lanzan workflows: se lanza la CI sobre la rama
+          # para que la PR tenga su comprobación \`verify\`.
+          curl --fail -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/dispatches" \
+            -d "{\"ref\":\"$branch\"}"

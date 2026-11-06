@@ -14,40 +14,57 @@ Lista revisada contra `docs/design/brief.md`, `docs/prompts/01-home.md` y `CONTE
 - El árbol genealógico sigue las guías de la NSGC.
 - **No habrá testimonios de consultantes** (decisión del brief: se quita la sección de valoraciones).
 
-## Pendiente para Sara
+## Respondido por Sara (2026-11-05)
 
-### Primera visita (el brief pide revisarla con ella palabra por palabra)
+### Reserva y cobro
 
-- [ ] Duración de la visita.
-- [ ] Confirmar lo que se puso de ejemplo y no está en el brief: el cuestionario previo, el resumen por escrito y los 60 minutos.
-- [ ] Qué debe preparar la persona antes de la cita.
+- [x] Cobro: reserva de 20 € al reservar (Stripe desde Cal.com) y, al terminar la sesión, un correo con el enlace de pago del resto. **Política de cancelación propuesta por Sara, pendiente de cerrar:** más de 48 h y quieres reagendar, se mantiene la reserva; cancelas con menos de 24 h, pierdes la reserva; cancelas 48 h antes, reembolso del 50 %. Los tramos se solapan; ver propuesta de redacción en `docs/TODO.md`.
+- [x] Videollamada: Google Meet, si se puede configurar bien. De momento, correo del dominio redirigido con Cloudflare y Resend al correo personal de Sara.
+- [x] Tipos de visita: primera visita (120 €) y seguimiento (90 €). Pendiente valorar los precios y si hace falta otra visita (por ejemplo, entrega de resultados).
 
-Pasos que ya constan en el brief: videollamada; preparar la información personal y familiar relevante; dibujar el árbol de tres generaciones; fijar expectativas y dudas; acordar un plan y pactar un estudio genético o no; agendar seguimiento. Mensaje clave: un estudio genético no es una sentencia y asesorarse no implica hacerse un estudio.
+### Correo, dominio y redes
+
+- [x] Dominio `saratorresesquius.com`. Una sola dirección de contacto, a decidir entre `info@` y `contacto@` (Sara propone `info@` en vez de `sara@`).
+- [x] LinkedIn: https://www.linkedin.com/in/saratorresesquius/. Instagram: aún no existe, se creará.
+
+### Legal
+
+- [x] NIF: el DNI, porque es autónoma (el número va en el aviso legal; no se guarda en el repo hasta publicar). Modelo para aviso legal, privacidad y cookies: los textos de seagen.org que Sara ya revisó.
+- [ ] Domicilio: pendiente de confirmar con el gestor si basta una dirección profesional en lugar de la de casa.
+
+### Primera visita
+
+- [x] Duración: unos 60 minutos, puede alargarse o acortarse según el caso y, si se alarga, no cuesta más.
+- [x] Al reservar llega un correo de confirmación con un enlace a una página de la web que explica qué preparar. Después se entrega un informe de la consulta con lo básico.
+- [x] Qué preparar: árbol familiar de al menos tres generaciones (patologías relevantes para el motivo de consulta) e informes médicos personales relacionados con el motivo. Sara lo detallará.
 
 ### Textos
 
-- [ ] Titular de la home: el brief lo deja pendiente y pide elegir entre tres opciones. «Dibujamos tu árbol familiar y lo entendemos juntos» es una propuesta, no una decisión.
-- [ ] Las preguntas que más le hacen, para las FAQ.
-- [ ] Confirmar las objeciones asumidas: qué me van a decir, si me obligan a hacerme un estudio, qué pasa con mis datos y cuánto cuesta.
-- [ ] Redacción de «la consulta es independiente del hospital» y de la frase de confidencialidad junto al botón de reservar.
+- [x] Titular de la home y FAQ: Sara lo piensa estos días (deberes).
+- [x] FAQ de partida (a reescribir y revisar): qué implica un estudio genético (muestra de sangre, saliva o pelo), cuánto tarda (de dos semanas a un mes desde que la muestra llega al laboratorio) y si dice qué enfermedad tendré (no: se analiza un conjunto de genes ligado al motivo de consulta).
+- [x] Objeción «me obligan a hacerme un estudio»: no. En la visita se explican los estudios posibles, sus implicaciones, beneficios y limitaciones, y la persona decide. El precio de cada estudio se informa al exponerlo.
+- [x] «Independiente del hospital»: es una consulta privada, como la de un fisioterapeuta.
+- [x] Frase de confidencialidad: se mantiene la actual.
 
-### Árbol genealógico
+### Sobre Sara
 
-- [ ] Qué símbolos NSGC quiere mostrar en la web y cuáles no.
-- [ ] Si los rellenos de color pueden dar a entender algo que no quiere (hoy son decoración; las explicaciones al pasar el ratón son de ejemplo).
+- [x] Manual SEHH 2024: autora de uno de los capítulos. Sara pasará el enlace, hoy está roto.
+- [x] ORCID: https://orcid.org/0000-0001-7540-7284. Las 26 publicaciones de PubMed son todas suyas.
+- [x] Fotos: se mantienen las actuales; más material gráfico cuando se pueda.
 
-### Contacto, reserva y legal
+### Árbol genealógico (hecho)
 
-- [ ] Herramienta de reserva.
-- [ ] Correo propio de la web.
-- [ ] Redes: si tiene LinkedIn o Instagram (están en el pie como marcadores).
-- [ ] Datos para el aviso legal: domicilio y NIF, que la normativa suele exigir a una persona física (confirmarlo con quien revise los textos legales).
-- [ ] Dominio.
+- [x] Guías NSGC, hombre a la izquierda en cada pareja. I.1 sano, I.2 portadora (punto). II.1 y II.2 portadores (II.2 es el probando, con flecha), II.3 con otra condición (cáncer de colon) y II.4 sana. III.1 con la condición de los puntos; III.2 con cáncer; III.3 sano. Una misma condición lleva siempre el mismo color (violeta y naranja); el rojo, libre, es la flecha del probando.
 
-### Fotos e idiomas
+### Idiomas
 
-- [ ] Qué foto va en cada sección y si hará fotos de consulta más adelante.
-- [ ] Quién revisa el catalán y el inglés.
+- [x] Las traducciones al catalán y al inglés las hago yo y las revisáis vosotros.
+
+## Pendiente (decidimos nosotros, no Sara)
+
+- [ ] Qué edición de Google Workspace y cuenta de Cal.com (`cal.com`, no `cal.eu`). Pablo lo está configurando.
+- [ ] Cuándo quitar el `noindex` y publicar.
+- [ ] Las visitas no se graban.
 
 ## Decisiones de diseño derivadas del brief (no son de Sara)
 

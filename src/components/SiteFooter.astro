@@ -6,13 +6,15 @@ import { getCopy } from "../i18n";
 const locale = Astro.currentLocale ?? "es";
 const { site, footer } = getCopy(locale);
 const home = getRelativeLocaleUrl(locale);
+const about = getRelativeLocaleUrl(locale, "sobre-mi");
+const book = getRelativeLocaleUrl(locale, "reservar");
 const columns = [
   {
     title: footer.pages,
     links: [
       { label: footer.home, href: home },
-      { label: site.nav.about, href: "#sobre-mi" },
-      { label: site.book, href: "#cita" },
+      { label: site.nav.about, href: about },
+      { label: site.book, href: book },
       { label: site.nav.contact, href: "#contacto" },
     ],
   },

@@ -1,48 +1,94 @@
-// Geometría del árbol genealógico de ejemplo.
+// Geometría del árbol genealógico de ejemplo (guías de la NSGC): tres generaciones, el hombre a la
+// izquierda de cada pareja y una flecha en la persona que consulta (el probando).
 export const treeViewBox = "37.5 9 345 272";
 
 export const treeLines = [
-  "M128 40H272M200 40V100M70 100H270M70 100V130M170 100V130M270 100V130",
-  "M288 148H332M310 148V205M270 205H350M270 205V232M350 205V232M70 166V232",
+  // Generación I: pareja y sus dos hijos (II.2 y II.3).
+  "M178 40H222M200 40V100M150 100H250M150 100V130M250 100V130",
+  // II.1 + II.2 y su hijo (III.1).
+  "M88 148H132M110 148V232",
+  // II.3 + II.4 y sus dos hijos (III.2 y III.3).
+  "M268 148H312M290 148V205M250 205H330M250 205V232M330 205V232",
 ];
 
-export type TreeFill = "f1" | "f2" | "f3";
+/** Una misma condición lleva siempre el mismo color: a (violeta) y b (naranja). */
+export type TreeCondition = "a" | "b";
 export type TreeSymbol =
-  "man" | "woman" | "manAffected" | "womanAffected" | "carrier";
+  "man" | "woman" | "carrier" | "affected" | "otherCondition" | "proband";
 
-interface NodeBase {
-  symbol: TreeSymbol;
-  fill?: TreeFill;
-}
-export interface SquareNode extends NodeBase {
-  shape: "square";
-  x: number;
-  y: number;
-}
-export interface CircleNode extends NodeBase {
-  shape: "circle";
+export interface TreeNode {
+  shape: "square" | "circle";
+  /** Generación a la que pertenece (se dice en el texto interactivo, no en el dibujo). */
+  generation: "I" | "II" | "III";
+  /** Centro del símbolo. */
   cx: number;
   cy: number;
+  symbol: Exclude<TreeSymbol, "proband">;
+  /** Relleno entero: la persona tiene esa condición. */
+  fill?: TreeCondition;
+  /** Punto en el centro: portador o portadora sin síntomas de la condición a. */
+  carrier?: boolean;
 }
-/** Círculo con un punto dentro: una mujer portadora. */
-export interface CarrierNode extends NodeBase {
-  shape: "carrier";
-  cx: number;
-  cy: number;
-}
-export type TreeNode = SquareNode | CircleNode | CarrierNode;
 
 export const treeNodes: TreeNode[] = [
-  { shape: "square", symbol: "man", x: 92, y: 22 },
-  { shape: "circle", symbol: "woman", cx: 290, cy: 40 },
-  { shape: "circle", symbol: "woman", cx: 70, cy: 148 },
-  { shape: "square", symbol: "manAffected", fill: "f2", x: 152, y: 130 },
-  { shape: "circle", symbol: "womanAffected", fill: "f1", cx: 270, cy: 148 },
-  { shape: "square", symbol: "man", x: 332, y: 130 },
-  { shape: "carrier", symbol: "carrier", cx: 70, cy: 250 },
-  { shape: "circle", symbol: "womanAffected", fill: "f3", cx: 270, cy: 250 },
-  { shape: "square", symbol: "manAffected", fill: "f2", x: 332, y: 232 },
+  // I
+  { generation: "I", shape: "square", cx: 160, cy: 40, symbol: "man" },
+  {
+    generation: "I",
+    shape: "circle",
+    cx: 240,
+    cy: 40,
+    symbol: "carrier",
+    carrier: true,
+  },
+  // II
+  {
+    generation: "II",
+    shape: "square",
+    cx: 70,
+    cy: 148,
+    symbol: "carrier",
+    carrier: true,
+  },
+  {
+    generation: "II",
+    shape: "circle",
+    cx: 150,
+    cy: 148,
+    symbol: "carrier",
+    carrier: true,
+  },
+  {
+    generation: "II",
+    shape: "square",
+    cx: 250,
+    cy: 148,
+    symbol: "otherCondition",
+    fill: "b",
+  },
+  { generation: "II", shape: "circle", cx: 330, cy: 148, symbol: "woman" },
+  // III
+  {
+    generation: "III",
+    shape: "square",
+    cx: 110,
+    cy: 250,
+    symbol: "affected",
+    fill: "a",
+  },
+  {
+    generation: "III",
+    shape: "circle",
+    cx: 250,
+    cy: 250,
+    symbol: "otherCondition",
+    fill: "b",
+  },
+  { generation: "III", shape: "square", cx: 330, cy: 250, symbol: "man" },
 ];
+
+/** Flecha del probando (II.2): el cuerpo y la punta, apuntando al símbolo desde arriba a la izquierda. */
+export const probandArrow = "M111 109L134 132M134 132H122M134 132V120";
 
 /** Lado de los cuadrados y radio de los círculos. */
 export const squareSize = 36;

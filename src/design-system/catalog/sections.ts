@@ -177,6 +177,18 @@ export const catalogGroups: CatalogGroup[] = [
         description:
           "Interruptor claro/oscuro con un icono que pasa de sol a luna.",
       },
+      {
+        slug: "price-card",
+        label: "PriceCard",
+        description:
+          "Tarjeta de una visita con su precio a la vista y una acción.",
+      },
+      {
+        slug: "publication-list",
+        label: "PublicationList",
+        description:
+          "Publicaciones con las más recientes a la vista y el resto en un desplegable nativo.",
+      },
     ],
   },
 ];

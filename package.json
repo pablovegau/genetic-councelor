@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "publications": "node scripts/update-publications.ts",
     "tokens": "tz build && node scripts/build-style-props.ts",
     "dev": "pnpm tokens && astro dev",
     "build": "pnpm typecheck && astro build",
