@@ -24,21 +24,26 @@ export const es: Copy = {
     confidential: "Todo lo que nos cuentes es confidencial.",
   },
   tree: {
+    generation: "Generación",
     ariaLabel: "Árbol genealógico de ejemplo con tres generaciones",
     caption: "Toca un símbolo y te explicamos cómo se lee un árbol familiar.",
     man: { label: "Hombre", text: "Cuadrado: un hombre." },
     woman: { label: "Mujer", text: "Círculo: una mujer." },
-    manAffected: {
-      label: "Hombre con la condición",
-      text: "Cuadrado relleno: un hombre con la condición que se estudia.",
-    },
-    womanAffected: {
-      label: "Mujer con la condición",
-      text: "Círculo relleno: una mujer con la condición que se estudia.",
-    },
     carrier: {
-      label: "Mujer portadora",
-      text: "Círculo con un punto: una mujer portadora, sin síntomas.",
+      label: "Persona portadora",
+      text: "Un punto en el centro: una persona portadora, sin síntomas de la condición.",
+    },
+    affected: {
+      label: "Persona con la condición",
+      text: "Relleno entero: una persona con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    otherCondition: {
+      label: "Persona con otra condición",
+      text: "Otro color: una persona con una condición distinta, por ejemplo cáncer de colon.",
+    },
+    proband: {
+      label: "Persona que consulta",
+      text: "La flecha señala a la persona que consulta, el punto de partida del árbol.",
     },
   },
   situations: {

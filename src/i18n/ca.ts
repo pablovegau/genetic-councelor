@@ -24,21 +24,26 @@ export const ca: Copy = {
     confidential: "Tot el que ens expliquis és confidencial.",
   },
   tree: {
+    generation: "Generació",
     ariaLabel: "Arbre genealògic d'exemple amb tres generacions",
     caption: "Toca un símbol i t'expliquem com es llegeix un arbre familiar.",
     man: { label: "Home", text: "Quadrat: un home." },
     woman: { label: "Dona", text: "Cercle: una dona." },
-    manAffected: {
-      label: "Home amb la condició",
-      text: "Quadrat ple: un home amb la condició que s'estudia.",
-    },
-    womanAffected: {
-      label: "Dona amb la condició",
-      text: "Cercle ple: una dona amb la condició que s'estudia.",
-    },
     carrier: {
-      label: "Dona portadora",
-      text: "Cercle amb un punt: una dona portadora, sense símptomes.",
+      label: "Persona portadora",
+      text: "Un punt al centre: una persona portadora, sense símptomes de la condició.",
+    },
+    affected: {
+      label: "Persona amb la condició",
+      text: "Ple del tot: una persona amb la condició que s'estudia. Cada condició porta sempre el mateix color.",
+    },
+    otherCondition: {
+      label: "Persona amb una altra condició",
+      text: "Un altre color: una persona amb una condició diferent, per exemple càncer de còlon.",
+    },
+    proband: {
+      label: "Persona que consulta",
+      text: "La fletxa assenyala la persona que consulta, el punt de partida de l'arbre.",
     },
   },
   situations: {

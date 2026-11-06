@@ -27,13 +27,15 @@ export interface Copy {
     confidential: string;
   };
   tree: {
+    generation: string;
     ariaLabel: string;
     caption: string;
     man: TreeNodeCopy;
     woman: TreeNodeCopy;
-    manAffected: TreeNodeCopy;
-    womanAffected: TreeNodeCopy;
     carrier: TreeNodeCopy;
+    affected: TreeNodeCopy;
+    otherCondition: TreeNodeCopy;
+    proband: TreeNodeCopy;
   };
   situations: {
     title: string;

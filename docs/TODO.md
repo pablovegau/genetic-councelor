@@ -102,3 +102,12 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Ver el vídeo entero y rellenar la lista de comprobación de la guía.
 - [ ] Pasar el enlace al repo del autor (en la descripción del vídeo) con su archivo de prompts, para compararlo con el brief.
 - [x] Commit y push de Astro, fotos, guía y TODO.
+
+## Reserva: política de cancelación (propuesta, pendiente de Sara y de revisión legal)
+
+Sara propuso: más de 48 h y reagendas, se mantiene la reserva; cancelas con menos de 24 h, pierdes la reserva; cancelas 48 h antes, reembolso del 50 %. Los tramos de 24 h y 48 h se solapan, así que se propone:
+
+- Con 48 h o más: reagendar sin coste (se mantiene la reserva de 20 €) o cancelar con reembolso del 50 %.
+- Entre 24 h y 48 h: reagendar una vez sin coste; si cancelas, no hay reembolso.
+- Con menos de 24 h o sin presentarse: se pierde la reserva.
+- Revisar con el gestor o abogado el derecho de desistimiento de 14 días de los contratos a distancia antes de publicar.

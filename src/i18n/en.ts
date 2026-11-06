@@ -24,21 +24,26 @@ export const en: Copy = {
     confidential: "Everything you tell us is confidential.",
   },
   tree: {
+    generation: "Generation",
     ariaLabel: "Example family tree with three generations",
     caption: "Tap a symbol and we'll show you how to read a family tree.",
     man: { label: "Man", text: "Square: a man." },
     woman: { label: "Woman", text: "Circle: a woman." },
-    manAffected: {
-      label: "Man with the condition",
-      text: "Filled square: a man with the condition being studied.",
-    },
-    womanAffected: {
-      label: "Woman with the condition",
-      text: "Filled circle: a woman with the condition being studied.",
-    },
     carrier: {
-      label: "Female carrier",
-      text: "Circle with a dot: a female carrier, with no symptoms.",
+      label: "Carrier",
+      text: "A dot in the centre: a carrier, with no symptoms of the condition.",
+    },
+    affected: {
+      label: "Person with the condition",
+      text: "Fully filled: a person with the condition being studied. Each condition always has the same colour.",
+    },
+    otherCondition: {
+      label: "Person with another condition",
+      text: "Another colour: a person with a different condition, for example colon cancer.",
+    },
+    proband: {
+      label: "Person consulting",
+      text: "The arrow points to the person consulting, the starting point of the tree.",
     },
   },
   situations: {

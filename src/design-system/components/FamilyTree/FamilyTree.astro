@@ -2,6 +2,7 @@
 import {
   carrierDotRadius,
   circleRadius,
+  probandArrow,
   squareSize,
   treeLines,
   treeNodes,
@@ -16,9 +17,12 @@ interface Props {
   caption: string;
   /** Qué es cada símbolo: su nombre accesible y la explicación que sale bajo el árbol. */
   symbols: Record<TreeSymbol, { label: string; text: string }>;
+  /** Palabra «Generación»: el número romano de cada símbolo se dice en su texto, no en el dibujo. */
+  generation: string;
 }
 
-const { ariaLabel, caption, symbols } = Astro.props;
+const { ariaLabel, caption, symbols, generation } = Astro.props;
+const half = squareSize / 2;
 ---
 
 <div class="tree-wrap" data-family-tree>
@@ -36,30 +40,38 @@ const { ariaLabel, caption, symbols } = Astro.props;
     {treeLines.map((d) => (
       <path class="line" pathLength="1" d={d} />
     ))}
-    {treeNodes.map((node, i) => {
-      const attrs = {
-        class: node.fill ? `node ${node.fill}` : "node",
-        style: `--i:${i}`,
-        "data-text": symbols[node.symbol].text,
-        "data-label": symbols[node.symbol].label,
-      };
-      return node.shape === "square" ? (
-        <rect
-          {...attrs}
-          x={node.x}
-          y={node.y}
-          width={squareSize}
-          height={squareSize}
-        />
-      ) : node.shape === "circle" ? (
-        <circle {...attrs} cx={node.cx} cy={node.cy} r={circleRadius} />
-      ) : (
-        <g {...attrs}>
-          <circle class="s3" cx={node.cx} cy={node.cy} r={circleRadius} />
-          <circle class="f3" cx={node.cx} cy={node.cy} r={carrierDotRadius} />
-        </g>
-      );
-    })}
+    {treeNodes.map((node, i) => (
+      <g
+        class={node.fill ? `node cond-${node.fill}` : "node"}
+        style={`--i:${i}`}
+        data-text={`${generation} ${node.generation}. ${symbols[node.symbol].text}`}
+        data-label={`${symbols[node.symbol].label}, ${generation.toLowerCase()} ${node.generation}`}
+      >
+        {node.shape === "square" ? (
+          <rect
+            class="shape"
+            x={node.cx - half}
+            y={node.cy - half}
+            width={squareSize}
+            height={squareSize}
+          />
+        ) : (
+          <circle class="shape" cx={node.cx} cy={node.cy} r={circleRadius} />
+        )}
+        {node.carrier && (
+          <circle class="dot" cx={node.cx} cy={node.cy} r={carrierDotRadius} />
+        )}
+      </g>
+    ))}
+    <g
+      class="node arrow"
+      style={`--i:${treeNodes.length}`}
+      data-text={`${generation} II. ${symbols.proband.text}`}
+      data-label={`${symbols.proband.label}, ${generation.toLowerCase()} II`}
+    >
+      <path class="hit" d={probandArrow} />
+      <path class="arrow-line" d={probandArrow} />
+    </g>
   </svg>
   <p class="tree-caption" aria-live="polite" data-default={caption}>
     {caption}
@@ -126,30 +138,32 @@ const { ariaLabel, caption, symbols } = Astro.props;
     transition: transform 0.15s;
   }
 
-  .f1 {
-    fill: var(--color-danger-bg);
-    stroke: var(--color-danger-bg);
+  /* Los símbolos sin color se rellenan con el fondo: al crecer con el hover tapan los trazos de detrás. */
+  .shape {
+    fill: var(--color-bg-page);
   }
 
-  .f2 {
-    fill: var(--color-accent-bg);
-    stroke: var(--color-accent-bg);
-  }
-
-  .f3 {
+  /* Una misma condición, el mismo color: a = violeta, b = naranja. */
+  .cond-a .shape,
+  .dot {
     fill: var(--color-action-bg);
     stroke: var(--color-action-bg);
   }
 
-  .s3 {
-    fill: none;
-    stroke: var(--color-action-bg);
+  .cond-b .shape {
+    fill: var(--color-accent-bg);
+    stroke: var(--color-accent-bg);
   }
 
-  /* Los símbolos sin color se rellenan con el fondo: al crecer con el hover tapan los trazos de detrás. */
-  .node:not(.f1):not(.f2):not(.f3),
-  .node .s3 {
-    fill: var(--color-bg-page);
+  /* La flecha del probando usa el color que queda libre; el trazo ancho transparente agranda la zona táctil. */
+  .arrow-line {
+    stroke: var(--color-danger-bg);
+    stroke-width: 3.5;
+  }
+
+  .hit {
+    stroke: transparent;
+    stroke-width: 18;
   }
 
   .node:hover,
