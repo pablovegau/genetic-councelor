@@ -103,14 +103,18 @@ Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía de
 - [ ] Pasar el enlace al repo del autor (en la descripción del vídeo) con su archivo de prompts, para compararlo con el brief.
 - [x] Commit y push de Astro, fotos, guía y TODO.
 
-## Reserva: política de cancelación (propuesta, pendiente de Sara y de revisión legal)
+## Reserva: condiciones (publicadas en `/condiciones-de-reserva/`)
 
-Sara propuso: más de 48 h y reagendas, se mantiene la reserva; cancelas con menos de 24 h, pierdes la reserva; cancelas 48 h antes, reembolso del 50 %. Los tramos de 24 h y 48 h se solapan, así que se propone:
+Decidido el 2026-11-08 (versión sencilla; se mejora si falla algo):
 
-- Con 48 h o más: reagendar sin coste (se mantiene la reserva de 20 €) o cancelar con reembolso del 50 %.
-- Entre 24 h y 48 h: reagendar una vez sin coste; si cancelas, no hay reembolso.
-- Con menos de 24 h o sin presentarse: se pierde la reserva.
-- Revisar con el gestor o abogado el derecho de desistimiento de 14 días de los contratos a distancia antes de publicar.
+- Pago íntegro al reservar, con Stripe (120 € la primera visita, 90 € el seguimiento).
+- Hasta 48 h antes: cambio de fecha o cancelación gratis, reembolso del 100 %. Con menos de 48 h o sin conectarse: sin reembolso.
+- Si cancela Sara o falla la videollamada por su parte: cambio de fecha o 100 %, a elección de la persona.
+- Reembolso al mismo método de pago, tramitado en un máximo de 5 días hábiles.
+- **Sin descuento ni IVA en el texto, a propósito.** La nota «Descontable si después te haces un estudio genético» sigue en `/reservar/`, sin condiciones definidas: definir plazo y estudios (propuesta: 30 días, cualquier estudio) o quitarla.
+- [ ] Revisión legal del desistimiento (14 días). Con una reserva para dentro de menos de 14 días, el desistimiento puede chocar con «menos de 48 h, sin reembolso».
+- [ ] Configurar en Cal.com una casilla de aceptación en la reserva: «Quiero que la consulta empiece dentro de los 14 días de desistimiento». El texto de la web ya lo promete.
+- [ ] Igualar el reembolso en Cal.com: reembolso del 100 % si se cancela con 48 h o más de antelación.
 
 ## Política de privacidad: puntos a incluir
 

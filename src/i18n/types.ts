@@ -65,7 +65,7 @@ export interface Copy {
     updated: string;
     onlySpanish: string;
     /** Descripción de cada página legal, en el orden de `footer.legalLinks`. */
-    descriptions: [string, string, string];
+    descriptions: [string, string, string, string];
   };
   closing: { title: string; lead: string };
   booking: {
@@ -75,6 +75,7 @@ export interface Copy {
     visitsTitle: string;
     first: { name: string; note: string; description: string };
     followup: { name: string; description: string };
+    terms: { text: string; link: string };
     choose: string;
     embedTitle: string;
     embedHint: string;

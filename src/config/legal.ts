@@ -32,4 +32,5 @@ export const legalSlugs = [
   "aviso-legal",
   "politica-de-privacidad",
   "politica-de-cookies",
+  "condiciones-de-reserva",
 ] as const;

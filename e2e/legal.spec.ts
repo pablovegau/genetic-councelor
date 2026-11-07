@@ -4,23 +4,38 @@ const locales = [
   {
     prefix: "",
     lang: "es",
-    links: ["Aviso legal", "Política de privacidad", "Política de cookies"],
+    links: [
+      "Aviso legal",
+      "Política de privacidad",
+      "Política de cookies",
+      "Condiciones de reserva",
+    ],
   },
   {
     prefix: "/ca",
     lang: "ca",
-    links: ["Avís legal", "Política de privacitat", "Política de cookies"],
+    links: [
+      "Avís legal",
+      "Política de privacitat",
+      "Política de cookies",
+      "Condicions de reserva",
+    ],
   },
   {
     prefix: "/en",
     lang: "en",
-    links: ["Legal notice", "Privacy policy", "Cookie policy"],
+    links: ["Legal notice", "Privacy policy", "Cookie policy", "Booking terms"],
   },
 ];
-const slugs = ["aviso-legal", "politica-de-privacidad", "politica-de-cookies"];
+const slugs = [
+  "aviso-legal",
+  "politica-de-privacidad",
+  "politica-de-cookies",
+  "condiciones-de-reserva",
+];
 
 for (const { prefix, links } of locales) {
-  test(`${prefix || "/"} enlaza las tres páginas legales desde el pie`, async ({
+  test(`${prefix || "/"} enlaza las cuatro páginas legales desde el pie`, async ({
     page,
   }) => {
     await page.goto(`${prefix}/`);
@@ -102,4 +117,43 @@ test("el aspecto solo se guarda en el navegador al pulsar el botón", async ({
   await expect
     .poll(() => page.evaluate(() => localStorage.getItem("scheme")))
     .not.toBeNull();
+});
+
+test("las condiciones de reserva dicen lo acordado y nada que no esté decidido", async ({
+  page,
+}) => {
+  await page.goto("/condiciones-de-reserva/");
+  // Intl pone un espacio duro entre la cifra y el euro: se normaliza para comparar.
+  const text = (await page.getByRole("main").innerText()).replace(
+    /\u00a0/g,
+    " "
+  );
+  expect(text).toContain("120 €");
+  expect(text).toContain("90 €");
+  expect(text).toContain("48 horas");
+  expect(text).toContain("100 %");
+  expect(text).toContain("5 días hábiles");
+  expect(text).toContain("14 días naturales");
+  // El descuento, el IVA y los marcadores pendientes no se publican.
+  expect(text).not.toMatch(/COMPLETAR|descuent|descont/i);
+  expect(text).not.toMatch(/\bIVA\b/);
+});
+
+for (const { prefix, lang } of locales) {
+  test(`${prefix || "/"} /reservar/ enlaza las condiciones junto a los precios`, async ({
+    page,
+  }) => {
+    await page.goto(`${prefix}/reservar/`);
+    await expect(page.locator("html")).toHaveAttribute("lang", lang);
+    await expect(
+      page.getByRole("main").getByRole("link", { name: /condici|terms/i })
+    ).toHaveAttribute("href", `${prefix}/condiciones-de-reserva/`);
+  });
+}
+
+test("el aviso legal enlaza las condiciones de reserva", async ({ page }) => {
+  await page.goto("/aviso-legal/");
+  await expect(
+    page.getByRole("main").getByRole("link", { name: "condiciones de reserva" })
+  ).toHaveAttribute("href", "/condiciones-de-reserva/");
 });
