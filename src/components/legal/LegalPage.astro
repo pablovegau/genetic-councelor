@@ -1,0 +1,35 @@
+---
+import { Section } from "../../design-system/components";
+import { Text } from "../../design-system/primitives";
+import { legalUpdated } from "../../config/legal";
+import { getCopy } from "../../i18n";
+import styles from "./LegalPage.module.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const locale = Astro.currentLocale ?? "es";
+const { legal } = getCopy(locale);
+const updated = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
+  new Date(legalUpdated)
+);
+---
+
+<Section pad="start">
+  <div class={styles.page}>
+    <Text as="h1" variant="heading-2">
+      {title}
+    </Text>
+    <Text size="2" color="muted">{`${legal.updated}: ${updated}`}</Text>
+    {locale !== "es" && (
+      <Text size="2" color="muted" className={styles.note}>
+        {legal.onlySpanish}
+      </Text>
+    )}
+    <div class={styles.prose} lang="es">
+      <slot />
+    </div>
+  </div>
+</Section>

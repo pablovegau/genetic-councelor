@@ -1,0 +1,15 @@
+---
+import PrivacyPolicy from "../../components/legal/PrivacyPolicy.astro";
+import LegalPage from "../../components/legal/LegalPage.astro";
+import Site from "../../layouts/Site.astro";
+import { getCopy } from "../../i18n";
+
+const { footer, legal } = getCopy(Astro.currentLocale);
+const title = footer.legalLinks[1];
+---
+
+<Site title={title} description={legal.descriptions[1]}>
+  <LegalPage title={title}>
+    <PrivacyPolicy />
+  </LegalPage>
+</Site>

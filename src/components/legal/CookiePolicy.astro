@@ -1,0 +1,99 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { legalSlugs, owner } from "../../config/legal";
+
+const locale = Astro.currentLocale ?? "es";
+const privacy = getRelativeLocaleUrl(locale, legalSlugs[1]);
+---
+
+<p>
+  Una cookie es un pequeño archivo que un sitio web guarda en tu dispositivo al
+  visitarlo. Algunas son necesarias para que el sitio funcione; otras sirven
+  para medir las visitas o mostrar publicidad.
+</p>
+
+<h2>En resumen</h2>
+<ul>
+  <li>Este sitio no usa cookies propias.</li>
+  <li>
+    No usa herramientas de analítica, ni de publicidad, ni de redes sociales, ni
+    ninguna otra que siga tu navegación.
+  </li>
+  <li>
+    Por eso no muestra un aviso de cookies: no hay nada que aceptar o rechazar
+    para navegar.
+  </li>
+</ul>
+
+<h2>Lo que el sitio guarda en tu navegador</h2>
+<div class="block">
+  <h3>Aspecto claro u oscuro</h3>
+  <dl>
+    <div>
+      <dt>Qué es</dt>
+      <dd>
+        Un dato llamado <code>scheme</code> en el almacenamiento local del
+        navegador (<code>localStorage</code>).
+      </dd>
+    </div>
+    <div>
+      <dt>Para qué sirve</dt>
+      <dd>
+        Recordar si prefieres el aspecto claro o el oscuro. Solo se guarda si
+        pulsas el botón de cambio de aspecto.
+      </dd>
+    </div>
+    <div>
+      <dt>Tipo y duración</dt>
+      <dd>
+        Técnico, de preferencia, propio. Permanece hasta que borres los datos
+        del sitio en tu navegador. No se envía a ningún servidor.
+      </dd>
+    </div>
+  </dl>
+</div>
+
+<h2>Servicios de terceros que eliges usar</h2>
+<p>
+  Al reservar una cita intervienen servicios de otras empresas. Solo se cargan
+  cuando eliges una visita, no al abrir la página:
+</p>
+<ul>
+  <li>
+    <strong>Cal.com</strong> (calendario de reservas): al elegir una visita se
+    carga su calendario, que puede guardar en tu navegador los datos técnicos
+    necesarios para funcionar. Consulta su{" "}
+    <a href="https://cal.com/privacy">política de privacidad</a>.
+  </li>
+  <li>
+    <strong>Stripe</strong> (pago de la reserva): el pago se hace en su entorno
+    seguro, con sus propias cookies. Consulta su{" "}
+    <a href="https://stripe.com/es/privacy">política de privacidad</a>.
+  </li>
+</ul>
+<p>
+  Si no quieres cargar el calendario en esta página, puedes escribir a{" "}
+  <a href={`mailto:${owner.email}`}>{owner.email}</a>.
+</p>
+
+<h2>Cómo gestionar las cookies</h2>
+<p>
+  Puedes ver, bloquear o borrar las cookies y los datos de un sitio desde la
+  configuración de tu navegador. Cada navegador y cada dispositivo se configuran
+  por separado. Si bloqueas las cookies de terceros, el calendario o el pago
+  podrían no funcionar. Encontrarás más información general en{" "}
+  <a href="https://www.aboutcookies.org">aboutcookies.org</a>.
+</p>
+
+<h2>Responsable y derechos</h2>
+<p>
+  La responsable es {owner.name}. Los datos de contacto y cómo ejercer tus
+  derechos están en la <a href={privacy}>política de privacidad</a>.
+</p>
+
+<h2>Cambios en esta política</h2>
+<p>
+  Esta política se actualizará si el sitio empieza a usar otras cookies o
+  herramientas. La versión vigente es siempre la publicada aquí, y esta versión
+  en castellano prevalece sobre cualquier traducción.
+</p>

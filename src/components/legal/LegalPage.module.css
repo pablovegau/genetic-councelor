@@ -1,0 +1,78 @@
+.page {
+  display: grid;
+  gap: var(--space-3);
+  max-inline-size: 46rem;
+}
+
+.note {
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--color-border-strong);
+}
+
+.prose {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: var(--space-4);
+  line-height: 1.65;
+}
+
+.prose :global(h2) {
+  margin-block-start: var(--space-5);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-6);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+}
+
+.prose :global(h3) {
+  margin-block-start: var(--space-3);
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-4);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose :global(ul) {
+  display: grid;
+  gap: var(--space-2);
+  padding-inline-start: var(--space-5);
+  list-style: disc;
+}
+
+.prose :global(dl) {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.prose :global(dt) {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-2);
+}
+
+.prose :global(dd) {
+  margin: 0;
+}
+
+/* Cada tratamiento de datos: un bloque con su título y sus datos. */
+.prose :global(.block) {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md, 0.5rem);
+}
+
+.prose :global(.block h3) {
+  margin: 0;
+}
+
+.prose :global(a) {
+  color: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-underline-offset: 0.2em;
+}
+
+.prose :global(.pending) {
+  background: color-mix(in srgb, var(--color-accent-bg) 18%, transparent);
+  padding-inline: var(--space-1);
+}

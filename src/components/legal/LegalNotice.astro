@@ -1,0 +1,122 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { legalSlugs, owner, pendingField } from "../../config/legal";
+
+const locale = Astro.currentLocale ?? "es";
+const [, privacy, cookies] = legalSlugs.map((slug) =>
+  getRelativeLocaleUrl(locale, slug)
+);
+---
+
+<p>
+  En cumplimiento del artículo 10 de la Ley 34/2002, de servicios de la sociedad
+  de la información y de comercio electrónico (LSSI-CE), se facilitan los datos
+  de la persona titular de este sitio web.
+</p>
+
+<h2>Titular</h2>
+<dl>
+  <div>
+    <dt>Titular</dt>
+    <dd>{owner.name}, persona física (profesional autónoma)</dd>
+  </div>
+  <div>
+    <dt>NIF</dt>
+    <dd>{owner.nif ?? <span class="pending">{pendingField}</span>}</dd>
+  </div>
+  <div>
+    <dt>Domicilio</dt>
+    <dd>{owner.address ?? <span class="pending">{pendingField}</span>}</dd>
+  </div>
+  <div>
+    <dt>Correo electrónico</dt>
+    <dd>
+      <a href={`mailto:${owner.email}`}>{owner.email}</a>
+    </dd>
+  </div>
+  <div>
+    <dt>Sitio web</dt>
+    <dd>{owner.web}</dd>
+  </div>
+  <div>
+    <dt>Actividad</dt>
+    <dd>Asesoramiento genético en consulta privada, por videollamada.</dd>
+  </div>
+</dl>
+
+<h2>1. Objeto</h2>
+<p>
+  Este sitio web informa sobre el asesoramiento genético que ofrece {owner.name}
+  y permite reservar una cita. Quien lo utiliza adquiere la condición de persona
+  usuaria y acepta este aviso legal. La titular puede modificarlo en cualquier
+  momento publicando la nueva versión en el sitio.
+</p>
+
+<h2>2. Acceso y uso</h2>
+<ul>
+  <li>
+    El acceso y la navegación por el sitio son gratuitos y no requieren
+    registro. La reserva y la consulta son servicios de pago, con los precios
+    visibles en la web.
+  </li>
+  <li>
+    Los servicios están dirigidos a personas adultas. No se ofrecen consultas a
+    menores de edad.
+  </li>
+  <li>
+    La persona usuaria se compromete a usar el sitio conforme a la ley, a la
+    buena fe y al orden público, sin dañar los sistemas ni los contenidos, y a
+    facilitar datos veraces al reservar.
+  </li>
+</ul>
+
+<h2>3. Carácter informativo</h2>
+<p>
+  Los contenidos del sitio son divulgativos. No sustituyen a la consulta de
+  asesoramiento genético, no constituyen un diagnóstico ni una recomendación
+  médica personalizada y no sirven para atender una urgencia. Ante una urgencia
+  médica, acude a los servicios de urgencias.
+</p>
+
+<h2>4. Responsabilidad</h2>
+<p>
+  La titular procura que la información sea correcta y esté actualizada, pero no
+  garantiza la disponibilidad continua del sitio ni la ausencia de errores. No
+  responde de los daños derivados de fallos técnicos, de causas de fuerza mayor
+  ni del funcionamiento de servicios de terceros, como la gestión de reservas,
+  los pagos o las videollamadas.
+</p>
+
+<h2>5. Enlaces</h2>
+<p>
+  El sitio enlaza a páginas de terceros, como PubMed, LinkedIn o la página de
+  reservas. La titular no controla esos sitios ni responde de sus contenidos o
+  de sus políticas. Si detectas un enlace que pueda infringir la ley, escribe a{" "}
+  <a href={`mailto:${owner.email}`}>{owner.email}</a> y se revisará.
+</p>
+
+<h2>6. Propiedad intelectual</h2>
+<p>
+  Los textos, el diseño, las imágenes y la programación del sitio pertenecen a
+  la titular o se usan con autorización de quien tiene los derechos. Quedan
+  prohibidas su reproducción, distribución o comunicación pública sin permiso
+  previo y por escrito, salvo la cita de breves fragmentos indicando la fuente.
+  Los derechos sobre las marcas y contenidos de terceros que aparezcan en el
+  sitio corresponden a sus titulares.
+</p>
+
+<h2>7. Datos personales y cookies</h2>
+<p>
+  El tratamiento de datos personales se explica en la{" "}
+  <a href={privacy}>política de privacidad</a>, y el uso de cookies y del
+  almacenamiento del navegador, en la <a href={cookies}>política de cookies</a>.
+</p>
+
+<h2>8. Ley aplicable y jurisdicción</h2>
+<p>
+  Este aviso se rige por la legislación española. Para cualquier controversia
+  serán competentes los juzgados y tribunales que correspondan conforme a la
+  normativa aplicable, incluida la de protección de personas consumidoras y
+  usuarias. Esta versión en castellano es la que prevalece sobre cualquier
+  traducción.
+</p>

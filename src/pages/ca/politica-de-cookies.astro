@@ -1,0 +1,15 @@
+---
+import CookiePolicy from "../../components/legal/CookiePolicy.astro";
+import LegalPage from "../../components/legal/LegalPage.astro";
+import Site from "../../layouts/Site.astro";
+import { getCopy } from "../../i18n";
+
+const { footer, legal } = getCopy(Astro.currentLocale);
+const title = footer.legalLinks[2];
+---
+
+<Site title={title} description={legal.descriptions[2]}>
+  <LegalPage title={title}>
+    <CookiePolicy />
+  </LegalPage>
+</Site>

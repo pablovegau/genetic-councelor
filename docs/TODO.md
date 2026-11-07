@@ -122,3 +122,19 @@ Modelo: los textos de seagen.org que Sara ya revisó (aviso legal, privacidad, c
 - Meet para las visitas: no se graban.
 - No se recogen datos de salud al reservar; el árbol familiar y los informes se tratan en la consulta, no en la web.
 - Cookies: la web no usa analítica ni cookies propias; el script de Cal.com solo se carga al elegir una visita.
+
+## Páginas legales (borrador del 2026-11-07, pendiente de revisión legal)
+
+Páginas: `/aviso-legal/`, `/politica-de-privacidad/`, `/politica-de-cookies/` (en `src/components/legal/`). Estructura tomada de seagen.org, con el texto redactado para esta web. Solo hay versión en castellano: en `/ca/` y `/en/` se muestra el mismo texto con un aviso en el idioma de la página.
+
+- [ ] **Fijar `PUBLIC_LEGAL_NIF` y `PUBLIC_LEGAL_ADDRESS` en Vercel** (Production y Preview) y en `.env.local`. No están en el repositorio porque es público. Mientras falten, las páginas muestran «Pendiente de completar», y con `PUBLIC_ALLOW_INDEXING=true` el build falla a propósito (`src/config/legal.ts`).
+- [ ] Domicilio: confirmar con el gestor si basta una dirección profesional en lugar de la de casa.
+- [ ] Que lo revise un abogado o el gestor. Puntos concretos:
+  - Consulta con datos de salud: base jurídica (art. 9 RGPD), información y consentimiento previos a la visita, y plazo de conservación de la documentación.
+  - Transferencias a EE. UU. (Cal.com, Stripe, Google, Vercel, Resend, Cloudflare): garantías y qué decir de cada una; confirmar con cada proveedor su mecanismo.
+  - Si el calendario de Cal.com, que se carga al elegir una visita, obliga a un aviso de cookies con consentimiento. Hoy la web dice que no usa cookies propias y no muestra aviso.
+  - Derecho de desistimiento de 14 días y política de cancelación (ver arriba).
+  - Obligaciones propias de la actividad sanitaria que deban constar en el aviso legal (colegiación, etc.).
+- [ ] Qué hace Cal.com con las notas del evento: la política dice que en la reserva solo se piden nombre y correo. Comprobarlo al configurar los eventos.
+- [ ] Traducir al catalán y al inglés cuando el texto en castellano esté revisado.
+- [ ] Actualizar `legalUpdated` en `src/config/legal.ts` cada vez que cambie algún texto.

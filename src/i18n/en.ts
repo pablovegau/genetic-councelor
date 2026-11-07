@@ -200,4 +200,14 @@ export const en: Copy = {
     contact: "Contact",
     copyright: "© 2026 Sara Torres-Esquius",
   },
+  legal: {
+    updated: "Last reviewed",
+    onlySpanish:
+      "This legal text is only available in Spanish. The Spanish version is the one that prevails.",
+    descriptions: [
+      "Details of the site owner, terms of use and liability.",
+      "What personal data is processed when you book and during the consultation, why, and what rights you have.",
+      "What this site stores in your browser and which third-party services are involved.",
+    ],
+  },
 };
