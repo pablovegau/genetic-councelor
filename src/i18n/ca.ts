@@ -152,7 +152,7 @@ export const ca: Copy = {
         "Per reprendre el pla i resoldre els dubtes que sorgeixin després de la primera visita.",
     },
     terms: {
-      text: "Cancel·lació gratuïta fins a 48 h abans.",
+      text: "Preus amb IVA inclòs. Cancel·lació gratuïta fins a 48 h abans.",
       link: "Veure les condicions",
     },
     choose: "Veure horaris",

@@ -4,7 +4,7 @@ import type { PropRow } from "../../../design-system/catalog/prop-docs";
 import { Button, PriceCard } from "../../../design-system/components";
 
 const usage =
-  '<PriceCard name="Primera visita" price="120 €" note="Descontable si…" description="…">\n  <Button href="/reservar/">Ver horarios</Button>\n</PriceCard>';
+  '<PriceCard name="Primera visita" price="120 €" note="Dura unos 60 minutos." description="…">\n  <Button href="/reservar/">Ver horarios</Button>\n</PriceCard>';
 
 const rows: PropRow[] = [
   {
@@ -23,7 +23,8 @@ const rows: PropRow[] = [
     name: "note",
     type: "string",
     default: "—",
-    description: "Opcional: cómo se descuenta o qué incluye.",
+    description:
+      "Opcional: una aclaración corta bajo el precio, por ejemplo la duración.",
   },
   {
     name: "description",
@@ -57,7 +58,7 @@ const rows: PropRow[] = [
   <PriceCard
     name="Primera visita"
     price="120 €"
-    note="Descontable si después te haces un estudio genético."
+    note="Dura unos 60 minutos."
     description="Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un plan."
   >
     <Button href="#demo">Ver horarios</Button>

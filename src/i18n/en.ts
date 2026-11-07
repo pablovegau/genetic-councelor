@@ -152,7 +152,7 @@ export const en: Copy = {
         "To pick the plan back up and answer any questions that come up after the first visit.",
     },
     terms: {
-      text: "Free cancellation up to 48 h before.",
+      text: "Prices include VAT. Free cancellation up to 48 h before.",
       link: "See the terms",
     },
     choose: "See available times",

@@ -6,7 +6,7 @@ Lista revisada contra `docs/design/brief.md`, `docs/prompts/01-home.md` y `CONTE
 
 - Voz: «nosotros» en la home y los servicios; tercera persona en la trayectoria.
 - Solo consultantes adultos; los menores quedan fuera de alcance.
-- Precios visibles: primera visita 120 €, descontable si se hace un estudio genético; seguimiento 90 €.
+- Precios visibles: primera visita 120 €, seguimiento 90 €. Los precios incluyen IVA. El descuento de la primera visita «si se hace un estudio» está en el brief, pero no se anuncia en la web hasta definir sus condiciones (plazo y estudios).
 - Sin teléfono. Titular legal: Sara Torres-Esquius, persona física.
 - Trayectoria que se puede mencionar, siempre como texto y sin logos: más de 10 años en genética; asesora genética en el Hospital Vall d'Hebron (desde 2021) y en la Clínica Corachan-IDOC (desde 2025); vocal de la Junta Directiva de SEAGen; profesora vinculada en la UAB (desde 2025); publicaciones; prensa y manual SEHH 2024.
 - Situaciones: cáncer hereditario, reproductivo (preconcepcional y prenatal), cardiogenética, enfermedades raras y resultados de tests comerciales.
