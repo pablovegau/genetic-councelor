@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { contactEmail } from "../config/contact";
+import { contactEmail, linkedinUrl } from "../config/contact";
 import { Footer } from "../design-system/components";
 import { getCopy } from "../i18n";
 
@@ -27,8 +27,7 @@ const columns = [
     title: footer.contact,
     links: [
       { label: contactEmail, href: `mailto:${contactEmail}` },
-      { label: "LinkedIn", href: "#contacto" },
-      { label: "Instagram", href: "#contacto" },
+      { label: "LinkedIn", href: linkedinUrl },
     ],
   },
 ];

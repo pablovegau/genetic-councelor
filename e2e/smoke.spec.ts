@@ -135,7 +135,7 @@ test("la línea de los pasos atraviesa el centro de los números", async ({
 });
 
 for (const { path, lang } of versions) {
-  test(`${path} enlaza el correo de contacto en el pie`, async ({ page }) => {
+  test(`${path} enlaza el correo y el LinkedIn en el pie`, async ({ page }) => {
     await page.goto(path);
     await expect(page.locator("html")).toHaveAttribute("lang", lang);
     await expect(
@@ -143,5 +143,8 @@ for (const { path, lang } of versions) {
         .getByRole("contentinfo")
         .getByRole("link", { name: "contact@saratorresesquius.com" })
     ).toHaveAttribute("href", "mailto:contact@saratorresesquius.com");
+    await expect(
+      page.getByRole("contentinfo").getByRole("link", { name: "LinkedIn" })
+    ).toHaveAttribute("href", "https://www.linkedin.com/in/saratorresesquius/");
   });
 }
