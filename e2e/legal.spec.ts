@@ -178,3 +178,57 @@ for (const path of [
     );
   });
 }
+
+// Las condiciones de reserva están traducidas: mismas cifras y reglas, en el idioma de la página.
+const termsByLocale = [
+  {
+    path: "/ca/condiciones-de-reserva/",
+    lang: "ca",
+    title: "Condicions de reserva",
+    contains: [
+      "120 €",
+      "90 €",
+      "48 hores",
+      "100 %",
+      "5 dies hàbils",
+      "14 dies naturals",
+      "Els preus inclouen l'IVA",
+    ],
+    absent: ["48 horas", "días hábiles", "només està disponible en castellà"],
+  },
+  {
+    path: "/en/condiciones-de-reserva/",
+    lang: "en",
+    title: "Booking terms",
+    contains: [
+      "€120",
+      "€90",
+      "48 hours",
+      "100 %",
+      "5 working days",
+      "14 calendar days",
+      "Prices include VAT",
+    ],
+    absent: ["48 horas", "días hábiles", "only available in Spanish"],
+  },
+];
+
+for (const { path, lang, title, contains, absent } of termsByLocale) {
+  test(`${path} está traducida y dice lo mismo que la versión en castellano`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+    await expect(page.locator("main [lang]").first()).toHaveAttribute(
+      "lang",
+      lang
+    );
+    const text = (await page.getByRole("main").innerText()).replace(
+      /\u00a0/g,
+      " "
+    );
+    for (const phrase of contains) expect(text).toContain(phrase);
+    for (const phrase of absent) expect(text).not.toContain(phrase);
+    expect(text).not.toMatch(/COMPLETAR/);
+  });
+}

@@ -1,0 +1,99 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { visits } from "../../config/booking";
+import { legalSlugs, owner } from "../../config/legal";
+
+const privacy = getRelativeLocaleUrl("en", legalSlugs[1]);
+const mail = `mailto:${owner.email}`;
+const euro = new Intl.NumberFormat("en", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+});
+---
+
+<p>
+  Here is, in a few lines, what each visit costs, how to pay and what happens if
+  you need to change or cancel your appointment.
+</p>
+
+<h2>Prices and what each visit includes</h2>
+<p>Visits are always by video call. Prices include VAT.</p>
+<div class="block">
+  <h3>First visit: {euro.format(visits.first.price)}</h3>
+  <p>
+    We draw your family tree together, answer your questions and agree on a
+    plan. It lasts about 60 minutes. It can run longer or shorter depending on
+    your case and, if it runs longer, it costs no more.
+  </p>
+</div>
+<div class="block">
+  <h3>Follow-up: {euro.format(visits.followup.price)}</h3>
+  <p>
+    To pick the plan back up and answer the questions that come up after the
+    first visit.
+  </p>
+</div>
+<p>After the consultation you receive a report with the essentials.</p>
+
+<h2>How to pay</h2>
+<p>
+  The price of the visit is paid when you book, online, with Stripe. The
+  appointment is confirmed once the payment is complete. We never see your full
+  card details. More information in the <a href={privacy}>privacy policy</a>.
+</p>
+
+<h2>Changing the date or cancelling</h2>
+<ul>
+  <li>
+    <strong>Up to 48 hours before the appointment:</strong> you can change the
+    date or cancel at no cost and we refund 100 % of what you paid.
+  </li>
+  <li>
+    <strong>Less than 48 hours before, or if you don't connect:</strong> no
+    refund.
+  </li>
+  <li>
+    <strong>
+      If we cancel, or the video call can't take place because of a technical
+      failure on our side:
+    </strong>{" "}
+    you choose between a new date or 100 % of the amount.
+  </li>
+</ul>
+<p>
+  To change or cancel, use the link in the confirmation email or write to{" "}
+  <a href={mail}>{owner.email}</a>.
+</p>
+
+<h2>How we refund you</h2>
+<p>
+  The refund goes back to the same payment method you used. We process it within
+  5 working days at most. After that, your bank may take a few more days to show
+  it.
+</p>
+
+<h2>Right of withdrawal</h2>
+<p>
+  When you buy at a distance you have the right to withdraw, without giving a
+  reason, within 14 calendar days of booking. To do so, write to{" "}
+  <a href={mail}>{owner.email}</a> and tell us you withdraw.
+</p>
+<p>
+  There is one exception. If you ask us to hold the consultation before those 14
+  days are over, for example by booking a date within that period, and the
+  consultation takes place in full, you can no longer withdraw, because the
+  service has been provided. When you book, we will ask you to confirm that you
+  want the consultation to start within the period.
+</p>
+
+<h2>Contact</h2>
+<p>
+  If you have any questions about these terms, write to{" "}
+  <a href={mail}>{owner.email}</a>.
+</p>
+
+<p>
+  This text is a translation of the Spanish original. If the two differ, the
+  Spanish terms prevail.
+</p>

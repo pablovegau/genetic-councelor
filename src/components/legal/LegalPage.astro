@@ -7,9 +7,11 @@ import styles from "./LegalPage.module.css";
 
 interface Props {
   title: string;
+  /** El texto ya está en el idioma de la página: no se avisa de que es en castellano. */
+  translated?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, translated = false } = Astro.props;
 const locale = Astro.currentLocale ?? "es";
 const { legal } = getCopy(locale);
 const updated = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
@@ -23,12 +25,12 @@ const updated = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
       {title}
     </Text>
     <Text size="2" color="muted">{`${legal.updated}: ${updated}`}</Text>
-    {locale !== "es" && (
+    {locale !== "es" && !translated && (
       <Text size="2" color="muted" className={styles.note}>
         {legal.onlySpanish}
       </Text>
     )}
-    <div class={styles.prose} lang="es">
+    <div class={styles.prose} lang={translated ? locale : "es"}>
       <slot />
     </div>
   </div>

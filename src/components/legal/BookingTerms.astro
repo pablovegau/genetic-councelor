@@ -1,98 +1,15 @@
 ---
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { visits } from "../../config/booking";
-import { legalSlugs, owner } from "../../config/legal";
+import BookingTermsCa from "./BookingTermsCa.astro";
+import BookingTermsEn from "./BookingTermsEn.astro";
+import BookingTermsEs from "./BookingTermsEs.astro";
 
 const locale = Astro.currentLocale ?? "es";
-const [, privacy] = legalSlugs.map((slug) =>
-  getRelativeLocaleUrl(locale, slug)
-);
-const mail = `mailto:${owner.email}`;
-const euro = new Intl.NumberFormat("es", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-});
 ---
 
-<p>
-  Aquí tienes, en pocas líneas, lo que cuesta cada visita, cómo se paga y qué
-  pasa si necesitas cambiar o cancelar la cita.
-</p>
-
-<h2>Precios y qué incluye cada visita</h2>
-<p>Las visitas son siempre por videollamada. Los precios incluyen el IVA.</p>
-<div class="block">
-  <h3>Primera visita: {euro.format(visits.first.price)}</h3>
-  <p>
-    Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un
-    plan. Dura unos 60 minutos. Puede alargarse o acortarse según tu caso y, si
-    se alarga, no cuesta más.
-  </p>
-</div>
-<div class="block">
-  <h3>Seguimiento: {euro.format(visits.followup.price)}</h3>
-  <p>
-    Para retomar el plan y resolver las dudas que surjan después de la primera
-    visita.
-  </p>
-</div>
-<p>Después de la consulta recibes un informe con lo más básico.</p>
-
-<h2>Cómo se paga</h2>
-<p>
-  El importe de la visita se paga al reservar, en línea, con Stripe. La cita
-  queda confirmada cuando se completa el pago. Nosotros no vemos los datos
-  completos de tu tarjeta. Más información en la{" "}
-  <a href={privacy}>política de privacidad</a>.
-</p>
-
-<h2>Cambiar la fecha o cancelar</h2>
-<ul>
-  <li>
-    <strong>Hasta 48 horas antes de la cita:</strong> puedes cambiar la fecha o
-    cancelar sin coste y te devolvemos el 100 % de lo que has pagado.
-  </li>
-  <li>
-    <strong>Con menos de 48 horas, o si no te conectas:</strong> no hay
-    reembolso.
-  </li>
-  <li>
-    <strong>
-      Si cancelamos nosotros, o la videollamada no puede hacerse por un fallo
-      técnico por nuestra parte:
-    </strong>{" "}
-    eliges entre cambiar la fecha o recibir el 100 % del importe.
-  </li>
-</ul>
-<p>
-  Para cambiar o cancelar, usa el enlace del correo de confirmación o escribe a{" "}
-  <a href={mail}>{owner.email}</a>.
-</p>
-
-<h2>Cómo te devolvemos el dinero</h2>
-<p>
-  El reembolso se hace al mismo método de pago que usaste. Lo tramitamos en un
-  máximo de 5 días hábiles. Después, tu banco puede tardar unos días más en
-  reflejarlo.
-</p>
-
-<h2>Derecho de desistimiento</h2>
-<p>
-  Al contratar a distancia tienes derecho a desistir, sin dar explicaciones, en
-  los 14 días naturales siguientes a la reserva. Para hacerlo, escríbenos a{" "}
-  <a href={mail}>{owner.email}</a> y dinos que desistes.
-</p>
-<p>
-  Hay una excepción. Si nos pides que la consulta se haga antes de que acaben
-  esos 14 días, por ejemplo reservando una fecha dentro de ese plazo, y la
-  consulta se realiza por completo, ya no podrás desistir, porque el servicio
-  está prestado. Al reservar, te pediremos que confirmes que quieres que la
-  consulta empiece dentro del plazo.
-</p>
-
-<h2>Contacto</h2>
-<p>
-  Si tienes cualquier duda sobre estas condiciones, escribe a{" "}
-  <a href={mail}>{owner.email}</a>.
-</p>
+{locale === "ca" ? (
+  <BookingTermsCa />
+) : locale === "en" ? (
+  <BookingTermsEn />
+) : (
+  <BookingTermsEs />
+)}
