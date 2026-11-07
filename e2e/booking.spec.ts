@@ -49,9 +49,15 @@ test("al elegir una visita se carga el calendario de esa visita y queda un enlac
   const calls = await page.evaluate(
     () => (window as unknown as { Cal: { q: unknown[][] } }).Cal.q
   );
-  expect(calls.map(([command]) => command)).toEqual(["init", "inline"]);
-  expect(JSON.stringify(calls[1])).toContain(
-    "sara-torres-esquius/primera-visita"
+  expect(calls.map(([command]) => command)).toEqual([
+    "init",
+    "on",
+    "on",
+    "inline",
+    "ui",
+  ]);
+  expect(JSON.stringify(calls[3])).toContain(
+    "saratorresesquius/primera-visita"
   );
   expect(JSON.stringify(calls[0])).toContain("https://cal.com");
 
@@ -60,10 +66,7 @@ test("al elegir una visita se carga el calendario de esa visita y queda un enlac
   ).toBeHidden();
   await expect(
     page.getByRole("link", { name: /Ábrelo en una página nueva/ })
-  ).toHaveAttribute(
-    "href",
-    "https://cal.com/sara-torres-esquius/primera-visita"
-  );
+  ).toHaveAttribute("href", "https://cal.com/saratorresesquius/primera-visita");
 });
 
 test("elegir la otra visita cambia el calendario sin cargar el script dos veces", async ({
@@ -82,13 +85,19 @@ test("elegir la otra visita cambia el calendario sin cargar el script dos veces"
   );
   expect(calls.map(([command]) => command)).toEqual([
     "init",
+    "on",
+    "on",
     "inline",
+    "ui",
+    "on",
+    "on",
     "inline",
+    "ui",
   ]);
-  expect(JSON.stringify(calls[2])).toContain("sara-torres-esquius/seguimiento");
+  expect(JSON.stringify(calls[7])).toContain("saratorresesquius/seguimiento");
   await expect(
     page.getByRole("link", { name: /Ábrelo en una página nueva/ })
-  ).toHaveAttribute("href", "https://cal.com/sara-torres-esquius/seguimiento");
+  ).toHaveAttribute("href", "https://cal.com/saratorresesquius/seguimiento");
 });
 
 test("sin JavaScript cada visita es un enlace directo a su página de Cal.com", async ({
@@ -104,10 +113,7 @@ test("sin JavaScript cada visita es un enlace directo a su página de Cal.com", 
   await expect(page.getByRole("link", { name: "Ver horarios" })).toHaveCount(2);
   await expect(
     page.getByRole("link", { name: "Ver horarios" }).first()
-  ).toHaveAttribute(
-    "href",
-    "https://cal.com/sara-torres-esquius/primera-visita"
-  );
+  ).toHaveAttribute("href", "https://cal.com/saratorresesquius/primera-visita");
   await context.close();
 });
 
@@ -200,3 +206,135 @@ test.describe("publicaciones", () => {
     expect(publications.length).toBeGreaterThan(0);
   });
 });
+
+// ---- Calendario de Cal.com: preselección, estados y tema (el build de pruebas tiene las reservas activas) ----
+type CalCall = [string, Record<string, unknown>];
+const queue = (page: import("@playwright/test").Page) =>
+  page.evaluate(
+    () => (window as unknown as { Cal: { q: CalCall[] } }).Cal.q as CalCall[]
+  );
+const stubEmbed = (page: import("@playwright/test").Page) =>
+  page.route(embed, (route) =>
+    route.fulfill({ status: 200, contentType: "text/javascript", body: "" })
+  );
+
+test("?visita=seguimiento abre ese calendario sin pulsar nada", async ({
+  page,
+}) => {
+  await stubEmbed(page);
+  await page.goto("/reservar/?visita=seguimiento");
+  await expect(page.locator(`script[src="${embed}"]`)).toHaveCount(1);
+  const inline = (await queue(page)).find(([command]) => command === "inline");
+  expect(inline![1].calLink).toBe("saratorresesquius/seguimiento");
+  await expect(
+    page.getByRole("link", { name: /Ábrelo en una página nueva/ })
+  ).toHaveAttribute("href", "https://cal.com/saratorresesquius/seguimiento");
+});
+
+test("#primera-visita también preselecciona, y una visita que no existe no carga nada", async ({
+  page,
+}) => {
+  await stubEmbed(page);
+  await page.goto("/reservar/#primera-visita");
+  const inline = (await queue(page)).find(([command]) => command === "inline");
+  expect(inline![1].calLink).toBe("saratorresesquius/primera-visita");
+
+  const requested: string[] = [];
+  await page.route(/cal\.(eu|com)/, (route) => {
+    requested.push(route.request().url());
+    return route.fulfill({ status: 200, body: "" });
+  });
+  await page.goto("/ca/reservar/?visita=otra-cosa");
+  await page.waitForLoadState("networkidle");
+  expect(requested).toEqual([]);
+});
+
+test("mientras carga se ve «Cargando el calendario…» y desaparece cuando Cal.com avisa", async ({
+  page,
+}) => {
+  await stubEmbed(page);
+  await page.goto("/reservar/");
+  await page.getByRole("link", { name: "Ver horarios" }).first().click();
+  const loading = page.getByText("Cargando el calendario…");
+  await expect(loading).toBeVisible();
+  // Cal.com avisa con linkReady: se ejecuta el callback que la página dejó en su cola.
+  await page.evaluate(() => {
+    const q = (window as unknown as { Cal: { q: unknown[][] } }).Cal.q;
+    const ready = q.find(
+      ([command, options]) =>
+        command === "on" &&
+        (options as { action: string }).action === "linkReady"
+    )!;
+    (ready[1] as { callback: () => void }).callback();
+  });
+  await expect(loading).toBeHidden();
+});
+
+test("si el calendario no carga se explica y queda el enlace a una página nueva", async ({
+  page,
+}) => {
+  await page.route(embed, (route) => route.abort());
+  await page.goto("/reservar/");
+  await page.getByRole("link", { name: "Ver horarios" }).first().click();
+  await expect(page.getByRole("alert")).toHaveText(
+    "No hemos podido cargar el calendario. Prueba a abrirlo en una página nueva."
+  );
+  await expect(page.getByText("Cargando el calendario…")).toBeHidden();
+  const fallback = page.getByRole("link", {
+    name: /Ábrelo en una página nueva/,
+  });
+  await expect(fallback).toHaveAttribute(
+    "href",
+    "https://cal.com/saratorresesquius/primera-visita"
+  );
+  await expect(fallback).toHaveAttribute("target", "_blank");
+  await expect(fallback).toHaveAttribute("rel", "noopener noreferrer");
+});
+
+test("si Cal.com no responde en 15 s también se muestra el error", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await stubEmbed(page);
+  await page.goto("/reservar/");
+  await page.getByRole("link", { name: "Ver horarios" }).first().click();
+  await expect(page.getByText("Cargando el calendario…")).toBeVisible();
+  await page.clock.fastForward(16_000);
+  await expect(page.getByRole("alert")).toBeVisible();
+});
+
+for (const scheme of ["light", "dark"] as const) {
+  test(`el calendario recibe el tema ${scheme} y el color de acción del sitio`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ colorScheme: scheme });
+    await stubEmbed(page);
+    await page.goto("/reservar/");
+    await page.getByRole("link", { name: "Ver horarios" }).first().click();
+    const ui = (await queue(page)).find(
+      ([command]) => command === "ui"
+    )![1] as {
+      theme: string;
+      layout: string;
+      styles: { branding: { brandColor: string } };
+    };
+    expect(ui.theme).toBe(scheme);
+    expect(ui.layout).toBe("month_view");
+    expect(ui.styles.branding.brandColor).toMatch(/^#[0-9a-f]{6}$/);
+  });
+}
+
+for (const [path, locale] of [
+  ["/reservar/", "es"],
+  ["/ca/reservar/", "ca"],
+  ["/en/reservar/", "en"],
+] as const) {
+  test(`${path} pide el calendario en su idioma`, async ({ page }) => {
+    await stubEmbed(page);
+    await page.goto(`${path}?visita=primera-visita`);
+    const inline = (await queue(page)).find(
+      ([command]) => command === "inline"
+    );
+    expect(JSON.stringify(inline![1].config)).toContain(`"locale":"${locale}"`);
+  });
+}

@@ -77,6 +77,12 @@ export interface Copy {
     followup: { name: string; description: string };
     terms: { text: string; link: string };
     choose: string;
+    /** Mientras carga el calendario de Cal.com. */
+    loading: string;
+    /** Si el calendario no carga; junto al enlace de respaldo. */
+    error: string;
+    /** Con las reservas desactivadas; va seguido del correo de contacto. */
+    soon: string;
     embedTitle: string;
     embedHint: string;
     fallback: string;

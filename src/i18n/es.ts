@@ -156,13 +156,17 @@ export const es: Copy = {
       link: "Ver condiciones",
     },
     choose: "Ver horarios",
+    loading: "Cargando el calendario…",
+    error:
+      "No hemos podido cargar el calendario. Prueba a abrirlo en una página nueva.",
+    soon: "Las reservas se abrirán muy pronto. Mientras tanto, escríbenos a",
     embedTitle: "Elige día y hora",
     embedHint:
       "Elige una de las visitas de arriba y aquí verás los horarios disponibles.",
     fallback: "¿No ves el calendario? Ábrelo en una página nueva.",
     privacy: "Al reservar no te pedimos datos de salud.",
     thirdParty:
-      "El calendario lo ofrece Cal.com y solo se carga cuando eliges una visita.",
+      "Al pulsar «Ver horarios» se carga el calendario de Cal.com, un servicio alojado en EE. UU. Hasta entonces no se carga nada suyo.",
   },
   aboutPage: {
     meta: {

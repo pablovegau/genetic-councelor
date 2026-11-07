@@ -2,7 +2,15 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Button, Link, PriceCard, Section } from "../design-system/components";
 import { Text } from "../design-system/primitives";
-import { cal, calLink, calUrl, visits, type VisitKey } from "../config/booking";
+import {
+  bookingEnabled,
+  cal,
+  calLink,
+  calUrl,
+  visits,
+  type VisitKey,
+} from "../config/booking";
+import { contactEmail } from "../config/contact";
 import { getCopy } from "../i18n";
 import styles from "./BookingPage.module.css";
 
@@ -26,8 +34,8 @@ const cards: {
 
 <div
   data-booking
-  data-origin={cal.origin}
-  data-script={cal.embedScript}
+  data-origin={bookingEnabled ? cal.origin : undefined}
+  data-script={bookingEnabled ? cal.embedScript : undefined}
   data-locale={locale}
 >
   <Section pad="start">
@@ -56,112 +64,212 @@ const cards: {
             price={euro.format(visits[key].price)}
             description={description}
           >
-            <Button
-              href={calUrl(key)}
-              data-cal-event={calLink(key)}
-              aria-describedby="embed-hint"
-            >
-              {booking.choose}
-            </Button>
+            {bookingEnabled && (
+              <Button
+                href={calUrl(key)}
+                data-cal-event={calLink(key)}
+                data-visit={visits[key].slug}
+                aria-describedby="embed-hint"
+              >
+                {booking.choose}
+              </Button>
+            )}
           </PriceCard>
         ))}
       </div>
+      {!bookingEnabled && (
+        <Text variant="text-lg" data-booking-soon>
+          {booking.soon}{" "}
+          <Link href={`mailto:${contactEmail}`}>{contactEmail}</Link>
+        </Text>
+      )}
       <Text size="2">
-        {booking.terms.text} <Link href={termsUrl}>{booking.terms.link}</Link>
+        {`${booking.terms.text} `}
+        <Link href={termsUrl}>{booking.terms.link}</Link>
       </Text>
     </div>
   </Section>
 
-  <Section id="calendario">
-    <div class={styles.block}>
-      <Text as="h2" variant="heading-3">
-        {booking.embedTitle}
-      </Text>
-      <Text id="embed-hint" color="muted" data-hint>
-        {booking.embedHint}
-      </Text>
-      <div
-        id="cal-inline"
-        class={styles.stage}
-        data-stage
-        aria-live="polite"
-      ></div>
-      <Text size="2" color="muted" data-fallback hidden>
-        <a href={calUrl("first")} data-fallback-link>
-          {booking.fallback}
-        </a>
-      </Text>
-      <Text size="2" color="muted">
-        {booking.thirdParty}
-      </Text>
-    </div>
-  </Section>
+  {bookingEnabled && (
+    <Section id="calendario">
+      <div class={styles.block}>
+        <Text as="h2" variant="heading-3">
+          {booking.embedTitle}
+        </Text>
+        <Text id="embed-hint" color="muted" data-hint>
+          {booking.embedHint}
+        </Text>
+        <Text color="muted" role="status" data-loading hidden>
+          {booking.loading}
+        </Text>
+        <Text role="alert" data-error hidden>
+          {booking.error}
+        </Text>
+        <div id="cal-inline" class={styles.stage} data-stage />
+        <Text size="2" color="muted" data-fallback hidden>
+          <a
+            href={calUrl("first")}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-fallback-link
+          >
+            {booking.fallback}
+          </a>
+        </Text>
+        <Text size="2" color="muted">
+          {booking.thirdParty}
+        </Text>
+      </div>
+    </Section>
+  )}
 </div>
 
 <script>
-  // El calendario de Cal.com (un script de terceros) solo se carga cuando se elige una visita.
-  // Sin JavaScript, el botón de cada visita es un enlace directo a su página de Cal.com.
+  // El calendario de Cal.com (un script de terceros) solo se carga cuando se elige una visita con
+  // «Ver horarios», o cuando la URL trae ?visita=… o #… con una visita. Con las reservas desactivadas
+  // la página no tiene calendario y este script no hace nada. Sin JavaScript, el botón de cada
+  // visita es un enlace directo a su página de Cal.com.
   type CalCommand = (...args: unknown[]) => void;
-  type CalQueue = CalCommand & {
-    loaded?: boolean;
-    q?: unknown[];
-    ns?: Record<string, unknown>;
-  };
+  type CalQueue = CalCommand & { q?: unknown[] };
   const w = window as unknown as { Cal?: CalQueue };
 
   const root = document.querySelector<HTMLElement>("[data-booking]")!;
-  const { origin = "", script = "", locale = "es" } = root.dataset;
-  const stage = root.querySelector<HTMLElement>("[data-stage]")!;
-  const hint = root.querySelector<HTMLElement>("[data-hint]")!;
-  const fallback = root.querySelector<HTMLElement>("[data-fallback]")!;
-  const fallbackLink = root.querySelector<HTMLAnchorElement>(
-    "[data-fallback-link]"
-  )!;
-  let started = false;
+  const stage = root.querySelector<HTMLElement>("[data-stage]");
+  if (stage) {
+    const { origin = "", script = "", locale = "es" } = root.dataset;
+    const hint = root.querySelector<HTMLElement>("[data-hint]")!;
+    const loading = root.querySelector<HTMLElement>("[data-loading]")!;
+    const error = root.querySelector<HTMLElement>("[data-error]")!;
+    const fallback = root.querySelector<HTMLElement>("[data-fallback]")!;
+    const fallbackLink = root.querySelector<HTMLAnchorElement>(
+      "[data-fallback-link]"
+    )!;
+    const buttons = [
+      ...root.querySelectorAll<HTMLAnchorElement>("[data-cal-event]"),
+    ];
+    const timeout = 15000;
+    let started = false;
+    let visit = 0;
+    let timer = 0;
 
-  // Cola de comandos de Cal.com: guarda las llamadas hasta que carga su script.
-  const start = () => {
-    if (started) return;
-    started = true;
-    const queue: CalQueue = function (...args) {
-      (queue.q ??= []).push(args);
+    const reduced = () =>
+      matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const theme = () => {
+      const chosen = document.documentElement.dataset.scheme;
+      if (chosen) return chosen;
+      return matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
     };
-    w.Cal = queue;
-    document.head.appendChild(document.createElement("script")).src = script;
-    w.Cal("init", { origin });
-  };
 
-  const theme = () => {
-    const chosen = document.documentElement.dataset.scheme;
-    if (chosen) return chosen;
-    return matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
+    // El color de acción del sitio (en cualquier formato CSS) como #rrggbb, que es lo que pide Cal.com.
+    const brand = () => {
+      const probe = document.body.appendChild(document.createElement("span"));
+      probe.style.color = "var(--color-action-bg)";
+      const color = getComputedStyle(probe).color;
+      probe.remove();
+      const context = document.createElement("canvas").getContext("2d");
+      if (!context) return undefined;
+      context.fillStyle = color;
+      context.fillRect(0, 0, 1, 1);
+      const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
+      return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+    };
 
-  root
-    .querySelectorAll<HTMLAnchorElement>("[data-cal-event]")
-    .forEach((link) => {
-      link.addEventListener("click", (event) => {
-        const calLink = link.dataset.calEvent!;
+    const style = () => {
+      const color = brand();
+      return {
+        theme: theme(),
+        layout: "month_view",
+        styles: { branding: { brandColor: color } },
+        cssVarsPerTheme: {
+          light: { "cal-brand": color },
+          dark: { "cal-brand": color },
+        },
+      };
+    };
+
+    const fail = (token: number) => {
+      if (token !== visit) return;
+      clearTimeout(timer);
+      loading.hidden = true;
+      error.hidden = false;
+      fallback.hidden = false;
+    };
+
+    // Cola de comandos de Cal.com: guarda las llamadas hasta que carga su script.
+    const start = () => {
+      if (started) return;
+      started = true;
+      const queue: CalQueue = function (...args) {
+        (queue.q ??= []).push(args);
+      };
+      w.Cal = queue;
+      const tag = document.head.appendChild(document.createElement("script"));
+      tag.src = script;
+      tag.addEventListener("error", () => fail(visit));
+      w.Cal("init", { origin });
+    };
+
+    const show = (button: HTMLAnchorElement) => {
+      const calLink = button.dataset.calEvent!;
+      const token = ++visit;
+      start();
+      stage.replaceChildren();
+      hint.hidden = true;
+      error.hidden = true;
+      loading.hidden = false;
+      fallbackLink.href = button.href;
+      fallback.hidden = false;
+      clearTimeout(timer);
+      timer = window.setTimeout(() => fail(token), timeout);
+      w.Cal!("on", {
+        action: "linkReady",
+        callback: () => {
+          if (token !== visit) return;
+          clearTimeout(timer);
+          loading.hidden = true;
+        },
+      });
+      w.Cal!("on", { action: "linkFailed", callback: () => fail(token) });
+      w.Cal!("inline", {
+        elementOrSelector: stage,
+        calLink,
+        layout: "month_view",
+        config: { locale, theme: theme(), layout: "month_view" },
+      });
+      w.Cal!("ui", style());
+      stage.scrollIntoView({
+        behavior: reduced() ? "auto" : "smooth",
+        block: "start",
+      });
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", (event) => {
         event.preventDefault();
-        start();
-        stage.replaceChildren();
-        w.Cal!("inline", {
-          elementOrSelector: stage,
-          calLink,
-          layout: "month_view",
-          config: { locale, theme: theme() },
-        });
-        hint.hidden = true;
-        fallbackLink.href = link.href;
-        fallback.hidden = false;
-        stage.scrollIntoView({
-          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-            ? "auto"
-            : "smooth",
-          block: "start",
-        });
+        show(button);
       });
     });
+
+    // Un enlace con ?visita=primera-visita (o #seguimiento) abre ese calendario directamente.
+    const fromUrl = () => {
+      const wanted =
+        new URLSearchParams(location.search).get("visita") ??
+        location.hash.slice(1);
+      const button = buttons.find((item) => item.dataset.visit === wanted);
+      if (button) show(button);
+    };
+    fromUrl();
+    addEventListener("hashchange", fromUrl);
+
+    // Si cambia el modo claro u oscuro con el calendario abierto, el calendario lo sigue.
+    new MutationObserver(() => {
+      if (started) w.Cal!("ui", style());
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-scheme"],
+    });
+  }
 </script>

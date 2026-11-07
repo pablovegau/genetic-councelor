@@ -13,7 +13,7 @@ const base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 const file = new URL("../src/data/publications.json", import.meta.url);
 
 // PubMed pide identificarse (tool y, si hay, email) y limita las peticiones sin clave.
-const identity = new URLSearchParams({ tool: "sara-torres-esquius-web" });
+const identity = new URLSearchParams({ tool: "saratorresesquius-web" });
 if (process.env.NCBI_EMAIL) identity.set("email", process.env.NCBI_EMAIL);
 if (process.env.NCBI_API_KEY) identity.set("api_key", process.env.NCBI_API_KEY);
 

@@ -156,13 +156,17 @@ export const ca: Copy = {
       link: "Veure les condicions",
     },
     choose: "Veure horaris",
+    loading: "Carregant el calendari…",
+    error:
+      "No hem pogut carregar el calendari. Prova d'obrir-lo en una pàgina nova.",
+    soon: "Les reserves s'obriran molt aviat. Mentrestant, escriu-nos a",
     embedTitle: "Tria dia i hora",
     embedHint:
       "Tria una de les visites de dalt i aquí veuràs els horaris disponibles.",
     fallback: "No veus el calendari? Obre'l en una pàgina nova.",
     privacy: "En reservar no et demanem dades de salut.",
     thirdParty:
-      "El calendari l'ofereix Cal.com i només es carrega quan tries una visita.",
+      "En prémer «Veure horaris» es carrega el calendari de Cal.com, un servei allotjat als EUA. Fins aleshores no es carrega res seu.",
   },
   aboutPage: {
     meta: {

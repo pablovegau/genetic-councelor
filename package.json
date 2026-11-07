@@ -18,7 +18,7 @@
     "test": "pnpm tokens && vitest run",
     "test:watch": "vitest",
     "coverage": "pnpm tokens && vitest run --coverage",
-    "test:e2e": "KEEP_CATALOG=true pnpm build && playwright test",
+    "test:e2e": "KEEP_CATALOG=true PUBLIC_CAL_BOOKING_ENABLED=true pnpm build && playwright test",
     "test:e2e:docker": "sh scripts/e2e-docker.sh",
     "test:vrt:update": "sh scripts/e2e-docker.sh vrt --update-snapshots"
   },
