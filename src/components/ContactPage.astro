@@ -1,0 +1,37 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Button, Link, Section } from "../design-system/components";
+import { Text } from "../design-system/primitives";
+import { contactEmail, responseDays } from "../config/contact";
+import { getCopy } from "../i18n";
+import styles from "./BookingPage.module.css";
+
+const locale = Astro.currentLocale ?? "es";
+const { contact, site } = getCopy(locale);
+const book = getRelativeLocaleUrl(locale, "reservar");
+---
+
+<Section pad="start">
+  <div class={styles.intro}>
+    <Text as="h1" variant="heading-2" className={styles.title}>
+      {contact.title}
+    </Text>
+    <Text variant="text-lg" color="muted">
+      {contact.lead}
+    </Text>
+    <Text variant="text-lg">
+      {`${contact.emailLabel}: `}
+      <Link href={`mailto:${contactEmail}`}>{contactEmail}</Link>
+    </Text>
+    <Text color="muted">
+      {contact.response.replace("{days}", responseDays)}
+    </Text>
+    <Text size="2" color="muted">
+      {contact.health}
+    </Text>
+    <Text>{contact.bookText}</Text>
+    <div>
+      <Button href={book}>{site.book}</Button>
+    </div>
+  </div>
+</Section>

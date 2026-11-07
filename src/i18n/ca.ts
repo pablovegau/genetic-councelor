@@ -10,6 +10,7 @@ export const ca: Copy = {
     brand: "Sara Torres-Esquius",
     mainNav: "Principal",
     nav: { about: "Sobre mi", contact: "Contacte" },
+    jobTitle: "Assessora genètica",
     book: "Reserva cita",
     languages: "Idioma",
     openMenu: "Obre el menú",
@@ -21,6 +22,8 @@ export const ca: Copy = {
     title: "Dibuixem el teu arbre familiar i l'entenem junts.",
     text: "La història de la teva família diu molt de la teva salut. A la primera visita l'ordenem, veiem què té sentit fer i t'expliquem cada pas amb calma. Sense presses i sense tecnicismes.",
     role: "Assessora genètica a Barcelona",
+    price:
+      "Primera visita {price} (IVA inclòs), per videotrucada. Cancel·lació gratuïta fins a 48 h abans.",
     confidential: "Tot el que ens expliquis és confidencial.",
   },
   tree: {
@@ -93,9 +96,9 @@ export const ca: Copy = {
       {
         when: "Abans",
         title: "Ens expliques el bàsic",
-        text: "En reservar omples un breu qüestionari sobre els teus antecedents. Si tens informes o resultats anteriors, els pots adjuntar.",
+        text: "En reservar ens expliques, si vols, el motiu de la teva consulta. A la visita repassarem la teva història amb calma.",
         key: "Què necessites",
-        value: "Els teus informes mèdics, si en tens",
+        value: "Els teus informes mèdics a mà, si en tens",
       },
       {
         when: "Durant",
@@ -114,7 +117,7 @@ export const ca: Copy = {
       {
         when: "Després",
         title: "T'acompanyem",
-        text: "Reps un resum per escrit. Si decideixes fer un estudi, t'expliquem el consentiment informat i com rebràs el resultat.",
+        text: "Reps un informe per escrit amb el que hem tractat i la nostra valoració. Si decideixes fer un estudi genètic, el laboratori t'ho explica i et fa signar el consentiment informat, i rebràs el seu resultat juntament amb la nostra valoració.",
         key: "Seguiment",
         value: "Visita de seguiment si la necessites",
       },
@@ -136,7 +139,7 @@ export const ca: Copy = {
     meta: {
       title: "Reservar cita · Sara Torres-Esquius",
       description:
-        "Reserva la teva primera visita d'assessorament genètic per videotrucada: preus a la vista i sense dades de salut en reservar.",
+        "Reserva la teva primera visita d'assessorament genètic per videotrucada: preus a la vista i només el motiu de la teva consulta en reservar.",
     },
     title: "Reserva la teva primera visita",
     lead: "Tria el dia i l'hora que et vagin millor. Les visites són sempre per videotrucada, així que les pots fer des de casa.",
@@ -164,9 +167,24 @@ export const ca: Copy = {
     embedHint:
       "Tria una de les visites de dalt i aquí veuràs els horaris disponibles.",
     fallback: "No veus el calendari? Obre'l en una pàgina nova.",
-    privacy: "En reservar no et demanem dades de salut.",
+    privacy:
+      "En reservar només et demanem el motiu de la teva consulta (el pots explicar amb les teves paraules, per exemple què et preocupa). No hi incloguis informes ni resultats mèdics: els revisarem junts a la visita.",
     thirdParty:
       "En prémer «Veure horaris» es carrega el calendari de Cal.com, un servei allotjat als EUA. Fins aleshores no es carrega res seu.",
+  },
+  contact: {
+    meta: {
+      title: "Contacte · Sara Torres-Esquius",
+      description:
+        "Escriu a Sara Torres-Esquius, assessora genètica a Barcelona, o reserva la teva primera visita per videotrucada.",
+    },
+    title: "Contacte",
+    lead: "Escriu-nos per resoldre un dubte abans de reservar o si necessites canviar una cita.",
+    emailLabel: "Correu electrònic",
+    response: "Et responem en {days} dies hàbils.",
+    health:
+      "Per correu, millor no ens enviïs informes ni dades de salut: els revisarem junts a la visita.",
+    bookText: "Prefereixes reservar directament?",
   },
   aboutPage: {
     meta: {

@@ -155,7 +155,7 @@ test("elegir un enlace o cambiar de idioma lleva a su sitio y cierra el panel", 
   await open(page);
   await dialog(page).getByRole("link", { name: "Contacto" }).click();
   await expect(dialog(page)).toBeHidden();
-  await expect(page).toHaveURL(/#contacto$/);
+  await expect(page).toHaveURL(/\/contacto\/$/);
 });
 
 test("desde el menú se cambia de idioma", async ({ page }) => {

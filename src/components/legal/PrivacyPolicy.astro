@@ -14,7 +14,8 @@ const mail = `mailto:${owner.email}`;
   Esta política explica qué datos personales se tratan cuando usas este sitio y
   reservas una cita, para qué se usan y qué derechos tienes. Solo se piden los
   datos necesarios para cada gestión, no se ceden a terceros salvo obligación
-  legal o para prestar el servicio, y no se usan para otros fines.
+  legal o para prestar el servicio (incluido el laboratorio, si decides hacerte
+  un estudio), y no se usan para otros fines.
 </p>
 
 <h2>Responsable del tratamiento</h2>
@@ -47,8 +48,18 @@ const mail = `mailto:${owner.email}`;
     <div>
       <dt>Datos</dt>
       <dd>
-        Nombre, correo electrónico y fecha y hora elegidas. En la reserva no
-        hace falta escribir datos de salud, y te pedimos que no lo hagas.
+        Nombre, correo electrónico y fecha y hora elegidas. Además, el motivo de
+        tu consulta, que es un campo de texto libre y opcional.
+      </dd>
+    </div>
+    <div>
+      <dt>Motivo de la consulta</dt>
+      <dd>
+        {/* REVISAR por gestor/DPO: base jurídica de los datos de salud que la persona escriba por su cuenta en el campo libre (art. 9.2.a RGPD) y si hace falta una casilla de consentimiento expreso en la reserva. */}
+        Si en ese campo escribes datos de salud, los trataremos con tu
+        consentimiento, solo para atender tu consulta. Te pedimos que no
+        incluyas informes ni resultados médicos ni adjuntes documentos por ese
+        medio: los revisaremos juntos en la visita.
       </dd>
     </div>
     <div>
@@ -188,6 +199,18 @@ const mail = `mailto:${owner.email}`;
   edad. Sobre las cookies, mira la <a href={cookies}>política de cookies</a>.
 </p>
 
+<h2>Laboratorio de genética</h2>
+{/* REVISAR por gestor/DPO: base jurídica de la comunicación de datos al laboratorio (consentimiento explícito, art. 9.2.a RGPD, y consentimiento informado propio del laboratorio) y si el laboratorio es responsable independiente o encargado. */}
+<p>
+  Solo si decides hacerte un estudio genético, tus datos se comunican a un
+  laboratorio independiente, principalmente Health in Code u otro laboratorio de
+  genética. Se hace con tu consentimiento informado, con la finalidad de
+  realizar el estudio y entregarte el resultado. El laboratorio te factura y te
+  cobra directamente, y trata tus datos según su propia política de privacidad y
+  el consentimiento que firmas con él. Si no te haces el estudio, no se comunica
+  ningún dato al laboratorio.
+</p>
+
 <h2>Quién más accede a tus datos</h2>
 <p>
   Para prestar el servicio se usan proveedores que actúan como encargados del
@@ -228,8 +251,9 @@ const mail = `mailto:${owner.email}`;
   </li>
 </ul>
 <p>
-  Fuera de estos proveedores, solo se comunicarán datos a las administraciones y
-  autoridades competentes cuando exista una obligación legal.
+  Fuera de estos proveedores y del laboratorio (solo si decides hacerte un
+  estudio), solo se comunicarán datos a las administraciones y autoridades
+  competentes cuando exista una obligación legal.
 </p>
 
 <h2>Tus derechos</h2>

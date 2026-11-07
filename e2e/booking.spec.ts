@@ -117,13 +117,13 @@ test("sin JavaScript cada visita es un enlace directo a su página de Cal.com", 
   await context.close();
 });
 
-test("al reservar no se piden datos de salud: la página no tiene campos de texto", async ({
+test("al reservar solo se pide el motivo, que se rellena en el calendario: la página no tiene campos", async ({
   page,
 }) => {
   await page.goto("/reservar/");
   await expect(page.locator("input, textarea, select")).toHaveCount(0);
   await expect(
-    page.getByText("Al reservar no te pedimos datos de salud.", {
+    page.getByText("Al reservar solo te pedimos el motivo de tu consulta", {
       exact: false,
     })
   ).toBeVisible();
