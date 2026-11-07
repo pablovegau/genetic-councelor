@@ -13,6 +13,8 @@ export interface Copy {
     brand: string;
     mainNav: string;
     nav: { about: string; contact: string };
+    /** Ocupación de Sara en los datos estructurados. */
+    jobTitle: string;
     book: string;
     languages: string;
     openMenu: string;
@@ -24,6 +26,8 @@ export interface Copy {
     title: string;
     text: string;
     role: string;
+    /** Con `{price}`: el precio de la primera visita. */
+    price: string;
     confidential: string;
   };
   tree: {
@@ -88,6 +92,16 @@ export interface Copy {
     fallback: string;
     privacy: string;
     thirdParty: string;
+  };
+  contact: {
+    meta: { title: string; description: string };
+    title: string;
+    lead: string;
+    emailLabel: string;
+    /** Con `{days}`: los días hábiles de respuesta. */
+    response: string;
+    health: string;
+    bookText: string;
   };
   aboutPage: {
     meta: { title: string; description: string };

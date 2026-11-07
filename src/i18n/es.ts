@@ -10,6 +10,7 @@ export const es: Copy = {
     brand: "Sara Torres-Esquius",
     mainNav: "Principal",
     nav: { about: "Sobre mí", contact: "Contacto" },
+    jobTitle: "Asesora genética",
     book: "Reservar cita",
     languages: "Idioma",
     openMenu: "Abrir el menú",
@@ -21,6 +22,8 @@ export const es: Copy = {
     title: "Dibujamos tu árbol familiar y lo entendemos juntos.",
     text: "La historia de tu familia dice mucho sobre tu salud. En la primera visita la ordenamos, vemos qué tiene sentido hacer y te explicamos cada paso con calma. Sin prisas y sin tecnicismos.",
     role: "Asesora genética en Barcelona",
+    price:
+      "Primera visita {price} (IVA incluido), por videollamada. Cancelación gratuita hasta 48 h antes.",
     confidential: "Todo lo que nos cuentes es confidencial.",
   },
   tree: {
@@ -93,9 +96,9 @@ export const es: Copy = {
       {
         when: "Antes",
         title: "Nos cuentas lo básico",
-        text: "Al reservar rellenas un breve cuestionario sobre tus antecedentes. Si tienes informes o resultados anteriores, puedes adjuntarlos.",
+        text: "Al reservar nos cuentas, si quieres, el motivo de tu consulta. En la visita repasaremos tu historia con calma.",
         key: "Qué necesitas",
-        value: "Tus informes médicos, si los tienes",
+        value: "Tus informes médicos a mano, si los tienes",
       },
       {
         when: "Durante",
@@ -114,7 +117,7 @@ export const es: Copy = {
       {
         when: "Después",
         title: "Te acompañamos",
-        text: "Recibes un resumen por escrito. Si decides hacer un estudio, te explicamos el consentimiento informado y cómo recibirás el resultado.",
+        text: "Recibes un informe por escrito con lo que hemos tratado y nuestra valoración. Si decides hacer un estudio genético, el laboratorio te explica y te hace firmar el consentimiento informado, y recibirás su resultado junto con nuestra valoración.",
         key: "Seguimiento",
         value: "Visita de seguimiento si la necesitas",
       },
@@ -136,7 +139,7 @@ export const es: Copy = {
     meta: {
       title: "Reservar cita · Sara Torres-Esquius",
       description:
-        "Reserva tu primera visita de asesoramiento genético por videollamada: precios a la vista y sin datos de salud al reservar.",
+        "Reserva tu primera visita de asesoramiento genético por videollamada: precios a la vista y solo el motivo de tu consulta al reservar.",
     },
     title: "Reserva tu primera visita",
     lead: "Elige el día y la hora que mejor te vengan. Las visitas son siempre por videollamada, así que puedes hacerlas desde casa.",
@@ -164,9 +167,24 @@ export const es: Copy = {
     embedHint:
       "Elige una de las visitas de arriba y aquí verás los horarios disponibles.",
     fallback: "¿No ves el calendario? Ábrelo en una página nueva.",
-    privacy: "Al reservar no te pedimos datos de salud.",
+    privacy:
+      "Al reservar solo te pedimos el motivo de tu consulta (puedes contarlo con tus palabras, por ejemplo qué te preocupa). No incluyas informes ni resultados médicos: los revisaremos juntos en la visita.",
     thirdParty:
       "Al pulsar «Ver horarios» se carga el calendario de Cal.com, un servicio alojado en EE. UU. Hasta entonces no se carga nada suyo.",
+  },
+  contact: {
+    meta: {
+      title: "Contacto · Sara Torres-Esquius",
+      description:
+        "Escribe a Sara Torres-Esquius, asesora genética en Barcelona, o reserva tu primera visita por videollamada.",
+    },
+    title: "Contacto",
+    lead: "Escríbenos para resolver una duda antes de reservar o si necesitas cambiar una cita.",
+    emailLabel: "Correo electrónico",
+    response: "Te respondemos en {days} días hábiles.",
+    health:
+      "Por correo, mejor no nos envíes informes ni datos de salud: los revisaremos juntos en la visita.",
+    bookText: "¿Prefieres reservar directamente?",
   },
   aboutPage: {
     meta: {

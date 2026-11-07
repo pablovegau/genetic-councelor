@@ -1,5 +1,9 @@
 ---
-import { Font } from "astro:assets";
+import { Font, getImage } from "astro:assets";
+import photo from "../assets/mg-3199.webp";
+import { contactEmail, linkedinUrl } from "../config/contact";
+import { visits } from "../config/booking";
+import { getCopy } from "../i18n";
 import "../design-system/tokens.generated.css";
 import "../design-system/style-props.generated.css";
 import "../design-system/base.css";
@@ -29,6 +33,86 @@ const alternates = locales.map(({ code }) => ({
   code,
   href: absolute(getRelativeLocaleUrl(code, page)),
 }));
+
+// Imagen para compartir: la foto principal de Sara recortada a 1200×630 (formato de Open Graph).
+const share = await getImage({
+  src: photo,
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  position: "top",
+  format: "jpeg",
+  quality: 80,
+});
+const shareUrl = absolute(share.src);
+const copy = getCopy(locale);
+const ogLocales = { es: "es_ES", ca: "ca_ES", en: "en_GB" } as const;
+const ogLocale = ogLocales[locale as keyof typeof ogLocales] ?? "es_ES";
+
+// Datos estructurados: Sara (Person) y su servicio (ProfessionalService) con el precio de cada visita.
+const siteName = copy.site.brand;
+const visitOffers = [
+  { name: copy.booking.first.name, price: visits.first.price },
+  { name: copy.booking.followup.name, price: visits.followup.price },
+];
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": absolute("/#sara"),
+      name: siteName,
+      jobTitle: copy.site.jobTitle,
+      url: absolute(getRelativeLocaleUrl(locale)),
+      image: shareUrl,
+      email: contactEmail,
+      sameAs: [linkedinUrl],
+      knowsLanguage: locales.map(({ code }) => code),
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Barcelona",
+        addressCountry: "ES",
+      },
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": absolute("/#servicio"),
+      name: `${siteName} · ${copy.site.jobTitle}`,
+      url: absolute(getRelativeLocaleUrl(locale)),
+      description: copy.meta.description,
+      image: shareUrl,
+      provider: { "@id": absolute("/#sara") },
+      areaServed: "ES",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Barcelona",
+        addressCountry: "ES",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: contactEmail,
+        availableLanguage: locales.map(({ code }) => code),
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: copy.booking.visitsTitle,
+        itemListElement: visitOffers.map(({ name, price }) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name },
+          price,
+          priceCurrency: "EUR",
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            price,
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: true,
+          },
+        })),
+      },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -51,6 +135,38 @@ const alternates = locales.map(({ code }) => ({
     )}
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    {translated && (
+      <>
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={siteName} />
+        <meta property="og:title" content={title} />
+        {description && (
+          <meta property="og:description" content={description} />
+        )}
+        <meta property="og:url" content={absolute(pathname)} />
+        <meta property="og:locale" content={ogLocale} />
+        {Object.entries(ogLocales)
+          .filter(([code]) => code !== locale)
+          .map(([, value]) => (
+            <meta property="og:locale:alternate" content={value} />
+          ))}
+        <meta property="og:image" content={shareUrl} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={siteName} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        {description && (
+          <meta name="twitter:description" content={description} />
+        )}
+        <meta name="twitter:image" content={shareUrl} />
+        <meta name="twitter:image:alt" content={siteName} />
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      </>
+    )}
     <Font cssVariable="--font-funnel-display" preload={[{ subset: "latin" }]} />
     <Font cssVariable="--font-funnel-sans" preload={[{ subset: "latin" }]} />
     <script is:inline>

@@ -139,6 +139,39 @@ test("las condiciones de reserva dicen lo acordado y nada que no esté decidido"
   // El descuento y los marcadores pendientes no se publican.
   expect(text).not.toMatch(/COMPLETAR|descuent|descont/i);
   expect(text).toContain("Los precios incluyen el IVA");
+  expect(text).toContain("recibes factura de cada visita");
+  expect(text).toContain("informe por escrito");
+});
+
+test("las condiciones aclaran que el estudio genético lo cobra el laboratorio y no Sara", async ({
+  page,
+}) => {
+  await page.goto("/condiciones-de-reserva/");
+  const section = page
+    .getByRole("heading", { name: "Si necesitas un estudio genético" })
+    .locator("xpath=following-sibling::p[1]");
+  await expect(section).toContainText("laboratorio independiente");
+  await expect(section).toContainText("Health in Code");
+  await expect(section).toContainText("te cobra directamente a ti");
+  await expect(section).toContainText(
+    "no cobramos ni gestionamos ese pago ni recibimos comisión"
+  );
+  await expect(section).toContainText("no incluye el estudio");
+});
+
+test("la política de privacidad recoge el laboratorio y el motivo de la consulta", async ({
+  page,
+}) => {
+  await page.goto("/politica-de-privacidad/");
+  const main = page.getByRole("main");
+  await expect(
+    main.getByRole("heading", { name: "Laboratorio de genética" })
+  ).toBeVisible();
+  const text = await main.innerText();
+  expect(text).toContain("Solo si decides hacerte un estudio genético");
+  expect(text).toContain("Health in Code");
+  expect(text).toContain("campo de texto libre y opcional");
+  expect(text).toContain("no incluyas informes ni resultados médicos");
 });
 
 for (const { prefix, lang } of locales) {
@@ -193,6 +226,10 @@ const termsByLocale = [
       "5 dies hàbils",
       "14 dies naturals",
       "Els preus inclouen l'IVA",
+      "Si necessites un estudi genètic",
+      "Health in Code",
+      "ni rebem comissió",
+      "factura de cada visita",
     ],
     absent: ["48 horas", "días hábiles", "només està disponible en castellà"],
   },
@@ -208,6 +245,10 @@ const termsByLocale = [
       "5 working days",
       "14 calendar days",
       "Prices include VAT",
+      "If you need genetic testing",
+      "Health in Code",
+      "receive no commission",
+      "invoice for each visit",
     ],
     absent: ["48 horas", "días hábiles", "only available in Spanish"],
   },

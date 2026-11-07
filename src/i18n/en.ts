@@ -10,6 +10,7 @@ export const en: Copy = {
     brand: "Sara Torres-Esquius",
     mainNav: "Main",
     nav: { about: "About me", contact: "Contact" },
+    jobTitle: "Genetic counsellor",
     book: "Book an appointment",
     languages: "Language",
     openMenu: "Open the menu",
@@ -21,6 +22,8 @@ export const en: Copy = {
     title: "We draw your family tree and understand it together.",
     text: "Your family's history says a lot about your health. In the first visit we put it in order, see what makes sense to do and explain every step calmly. No rush and no jargon.",
     role: "Genetic counsellor in Barcelona",
+    price:
+      "First visit {price} (VAT included), by video call. Free cancellation up to 48 h before.",
     confidential: "Everything you tell us is confidential.",
   },
   tree: {
@@ -93,9 +96,9 @@ export const en: Copy = {
       {
         when: "Before",
         title: "You tell us the basics",
-        text: "When you book, you fill in a short questionnaire about your history. If you have previous reports or results, you can attach them.",
+        text: "When you book, you can tell us why you are coming. At the visit we will go over your history without rushing.",
         key: "What you need",
-        value: "Your medical reports, if you have them",
+        value: "Your medical reports to hand, if you have them",
       },
       {
         when: "During",
@@ -114,7 +117,7 @@ export const en: Copy = {
       {
         when: "Afterwards",
         title: "We stay with you",
-        text: "You get a written summary. If you decide to have a test, we explain informed consent and how you will receive the result.",
+        text: "You get a written report with what we covered and our assessment. If you decide to have genetic testing, the laboratory explains it and has you sign the informed consent, and you will receive its result together with our assessment.",
         key: "Follow-up",
         value: "A follow-up visit if you need one",
       },
@@ -136,7 +139,7 @@ export const en: Copy = {
     meta: {
       title: "Book a visit · Sara Torres-Esquius",
       description:
-        "Book your first genetic counselling visit by video call: prices up front and no health data needed to book.",
+        "Book your first genetic counselling visit by video call: prices up front and only the reason for your visit needed to book.",
     },
     title: "Book your first visit",
     lead: "Choose the day and time that suit you best. Visits are always by video call, so you can have them from home.",
@@ -163,9 +166,24 @@ export const en: Copy = {
     embedHint:
       "Choose one of the visits above and the available times will appear here.",
     fallback: "Can't see the calendar? Open it in a new page.",
-    privacy: "We don't ask for health data when you book.",
+    privacy:
+      "When you book we only ask for the reason for your visit (you can put it in your own words, for example what worries you). Please don't include medical reports or results: we will go over them together at the visit.",
     thirdParty:
       "When you press “See available times” the Cal.com calendar loads; it is a service hosted in the US. Nothing of theirs loads before that.",
+  },
+  contact: {
+    meta: {
+      title: "Contact · Sara Torres-Esquius",
+      description:
+        "Write to Sara Torres-Esquius, genetic counsellor in Barcelona, or book your first visit by video call.",
+    },
+    title: "Contact",
+    lead: "Write to us to ask a question before booking or if you need to change an appointment.",
+    emailLabel: "Email",
+    response: "We reply within {days} working days.",
+    health:
+      "By email, please don't send reports or health data: we will go over them together at the visit.",
+    bookText: "Prefer to book straight away?",
   },
   aboutPage: {
     meta: {

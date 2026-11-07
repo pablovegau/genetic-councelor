@@ -18,7 +18,10 @@ const euro = new Intl.NumberFormat("ca", {
 </p>
 
 <h2>Preus i què inclou cada visita</h2>
-<p>Les visites són sempre per videotrucada. Els preus inclouen l'IVA.</p>
+<p>
+  Les visites són sempre per videotrucada. Els preus inclouen l'IVA i reps
+  factura de cada visita.
+</p>
 <div class="block">
   <h3>Primera visita: {euro.format(visits.first.price)}</h3>
   <p>
@@ -34,7 +37,20 @@ const euro = new Intl.NumberFormat("ca", {
     primera visita.
   </p>
 </div>
-<p>Després de la consulta reps un informe amb el més bàsic.</p>
+<p>
+  Després de cada visita reps un informe per escrit amb els punts tractats i la
+  valoració d'assessorament genètic.
+</p>
+
+<h2>Si necessites un estudi genètic</h2>
+<p>
+  Si veiem que un estudi genètic té sentit en el teu cas, t'ho indiquem.
+  L'estudi el fa un laboratori independent (principalment Health in Code), que
+  et factura i et cobra directament a tu, després que hi signis el consentiment
+  informat. Nosaltres no cobrem ni gestionem aquest pagament ni rebem comissió.
+  El preu de la visita no inclou l'estudi. Si hi ha estudi, reps també el
+  resultat del laboratori i la nostra valoració.
+</p>
 
 <h2>Com es paga</h2>
 <p>

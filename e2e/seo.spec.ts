@@ -61,3 +61,71 @@ test("el catálogo del design system no declara versiones por idioma", async ({
   await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(0);
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
 });
+
+for (const path of paths) {
+  test(`${path} tiene Open Graph y Twitter Card con la imagen de 1200×630`, async ({
+    page,
+    request,
+  }) => {
+    await page.goto(path);
+    const meta = (selector: string) =>
+      page.locator(selector).getAttribute("content");
+    const title = await page.title();
+    expect(await meta('meta[property="og:title"]')).toBe(title);
+    expect(await meta('meta[name="twitter:title"]')).toBe(title);
+    expect(await meta('meta[property="og:url"]')).toBe(`${origin}${path}`);
+    expect(await meta('meta[name="twitter:card"]')).toBe("summary_large_image");
+    expect(await meta('meta[property="og:image:width"]')).toBe("1200");
+    expect(await meta('meta[property="og:image:height"]')).toBe("630");
+    const locale = path.startsWith("/ca/")
+      ? "ca_ES"
+      : path.startsWith("/en/")
+        ? "en_GB"
+        : "es_ES";
+    expect(await meta('meta[property="og:locale"]')).toBe(locale);
+    const description = await meta('meta[name="description"]');
+    expect(await meta('meta[property="og:description"]')).toBe(description);
+    const image = (await meta('meta[property="og:image"]'))!;
+    expect(image.startsWith(origin)).toBe(true);
+    expect((await request.get(local(image))).status()).toBe(200);
+  });
+}
+
+const structured = [
+  { path: "/", job: "Asesora genética", first: "Primera visita" },
+  { path: "/ca/", job: "Assessora genètica", first: "Primera visita" },
+  { path: "/en/", job: "Genetic counsellor", first: "First visit" },
+];
+for (const { path, job, first } of structured) {
+  test(`${path} declara a Sara (Person) y el servicio con el precio de las dos visitas`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const raw = await page
+      .locator('script[type="application/ld+json"]')
+      .innerText();
+    const graph = JSON.parse(raw)["@graph"];
+    const person = graph.find(
+      (n: { "@type": string }) => n["@type"] === "Person"
+    );
+    expect(person).toMatchObject({
+      name: "Sara Torres-Esquius",
+      jobTitle: job,
+      address: { addressLocality: "Barcelona" },
+      sameAs: ["https://www.linkedin.com/in/saratorresesquius/"],
+    });
+    const service = graph.find(
+      (n: { "@type": string }) => n["@type"] === "ProfessionalService"
+    );
+    expect(service.contactPoint.availableLanguage).toEqual(["es", "ca", "en"]);
+    const offers = service.hasOfferCatalog.itemListElement;
+    expect(offers.map((o: { price: number }) => o.price)).toEqual([120, 90]);
+    expect(offers[0].itemOffered.name).toBe(first);
+    for (const offer of offers) {
+      expect(offer.priceSpecification.valueAddedTaxIncluded).toBe(true);
+      expect(offer.priceCurrency).toBe("EUR");
+    }
+    // Sin teléfono en ningún sitio.
+    expect(raw).not.toMatch(/telephone/i);
+  });
+}

@@ -15,11 +15,17 @@ import {
 } from "../design-system/components";
 import FamilyTree from "../design-system/components/FamilyTree/FamilyTree.astro";
 import { Text } from "../design-system/primitives";
+import { visits } from "../config/booking";
 import styles from "./Home.module.css";
 
 const copy = getCopy(Astro.currentLocale);
 const book = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "reservar");
 const aboutHref = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "sobre-mi");
+const price = new Intl.NumberFormat(Astro.currentLocale ?? "es", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+}).format(visits.first.price);
 const { site, hero, situations, process, about, closing, tree } = copy;
 
 const markers = [
@@ -90,6 +96,9 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
         <div class={styles.heroActions}>
           <div class={styles.heroCta}>
             <Button href={book}>{site.book}</Button>
+            <Text variant="text-sm" color="muted" className={styles.heroPrice}>
+              {hero.price.replace("{price}", price)}
+            </Text>
           </div>
           <div class={styles.heroByline}>
             <Byline avatar={avatar} name={site.brand} description={hero.role} />

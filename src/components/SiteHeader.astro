@@ -18,7 +18,7 @@ const home = getRelativeLocaleUrl(locale);
 const book = getRelativeLocaleUrl(locale, "reservar");
 const nav = [
   { label: site.nav.about, href: getRelativeLocaleUrl(locale, "sobre-mi") },
-  { label: site.nav.contact, href: "#contacto" },
+  { label: site.nav.contact, href: getRelativeLocaleUrl(locale, "contacto") },
 ];
 ---
 
