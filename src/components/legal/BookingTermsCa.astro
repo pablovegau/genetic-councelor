@@ -1,0 +1,100 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { visits } from "../../config/booking";
+import { legalSlugs, owner } from "../../config/legal";
+
+const privacy = getRelativeLocaleUrl("ca", legalSlugs[1]);
+const mail = `mailto:${owner.email}`;
+const euro = new Intl.NumberFormat("ca", {
+  style: "currency",
+  currency: "EUR",
+  maximumFractionDigits: 0,
+});
+---
+
+<p>
+  Aquí tens, en poques línies, què costa cada visita, com es paga i què passa si
+  necessites canviar o cancel·lar la cita.
+</p>
+
+<h2>Preus i què inclou cada visita</h2>
+<p>Les visites són sempre per videotrucada. Els preus inclouen l'IVA.</p>
+<div class="block">
+  <h3>Primera visita: {euro.format(visits.first.price)}</h3>
+  <p>
+    Dibuixem junts el teu arbre familiar, resolem els teus dubtes i acordem un
+    pla. Dura uns 60 minuts. Pot allargar-se o escurçar-se segons el teu cas i,
+    si s'allarga, no costa més.
+  </p>
+</div>
+<div class="block">
+  <h3>Seguiment: {euro.format(visits.followup.price)}</h3>
+  <p>
+    Per reprendre el pla i resoldre els dubtes que sorgeixin després de la
+    primera visita.
+  </p>
+</div>
+<p>Després de la consulta reps un informe amb el més bàsic.</p>
+
+<h2>Com es paga</h2>
+<p>
+  L'import de la visita es paga en reservar, en línia, amb Stripe. La cita queda
+  confirmada quan es completa el pagament. Nosaltres no veiem les dades
+  completes de la teva targeta. Més informació a la{" "}
+  <a href={privacy}>política de privacitat</a>.
+</p>
+
+<h2>Canviar la data o cancel·lar</h2>
+<ul>
+  <li>
+    <strong>Fins a 48 hores abans de la cita:</strong> pots canviar la data o
+    cancel·lar sense cost i et retornem el 100 % del que has pagat.
+  </li>
+  <li>
+    <strong>Amb menys de 48 hores, o si no et connectes:</strong> no hi ha
+    reemborsament.
+  </li>
+  <li>
+    <strong>
+      Si cancel·lem nosaltres, o la videotrucada no es pot fer per un error
+      tècnic per la nostra part:
+    </strong>{" "}
+    tries entre canviar la data o rebre el 100 % de l'import.
+  </li>
+</ul>
+<p>
+  Per canviar o cancel·lar, fes servir l'enllaç del correu de confirmació o
+  escriu a <a href={mail}>{owner.email}</a>.
+</p>
+
+<h2>Com et retornem els diners</h2>
+<p>
+  El reemborsament es fa al mateix mètode de pagament que has fet servir. El
+  tramitem en un màxim de 5 dies hàbils. Després, el teu banc pot tardar uns
+  dies més a reflectir-lo.
+</p>
+
+<h2>Dret de desistiment</h2>
+<p>
+  Quan contractes a distància tens dret a desistir, sense donar explicacions, en
+  els 14 dies naturals següents a la reserva. Per fer-ho, escriu-nos a{" "}
+  <a href={mail}>{owner.email}</a> i digues-nos que desisteixes.
+</p>
+<p>
+  Hi ha una excepció. Si ens demanes que la consulta es faci abans que acabin
+  aquests 14 dies, per exemple reservant una data dins d'aquest termini, i la
+  consulta es fa per complet, ja no podràs desistir, perquè el servei ja està
+  prestat. En reservar, et demanarem que confirmis que vols que la consulta
+  comenci dins del termini.
+</p>
+
+<h2>Contacte</h2>
+<p>
+  Si tens qualsevol dubte sobre aquestes condicions, escriu a{" "}
+  <a href={mail}>{owner.email}</a>.
+</p>
+
+<p>
+  Aquest text és una traducció del castellà. En cas de discrepància, prevalen
+  les condicions en castellà.
+</p>
