@@ -27,19 +27,37 @@ export const es: Copy = {
     generation: "Generación",
     ariaLabel: "Árbol genealógico de ejemplo con tres generaciones",
     caption: "Toca un símbolo y te explicamos cómo se lee un árbol familiar.",
-    man: { label: "Hombre", text: "Cuadrado: un hombre." },
-    woman: { label: "Mujer", text: "Círculo: una mujer." },
-    carrier: {
-      label: "Persona portadora",
-      text: "Un punto en el centro: una persona portadora, sin síntomas de la condición.",
+    man: {
+      label: "Hombre no afecto",
+      text: "Cuadrado vacío: un hombre no afecto.",
     },
-    affected: {
-      label: "Persona con la condición",
-      text: "Relleno entero: una persona con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    woman: {
+      label: "Mujer no afecta",
+      text: "Círculo vacío: una mujer no afecta.",
     },
-    otherCondition: {
-      label: "Persona con otra condición",
-      text: "Otro color: una persona con una condición distinta, por ejemplo cáncer de colon.",
+    manCarrier: {
+      label: "Hombre portador",
+      text: "Cuadrado con un punto en el centro: un hombre portador, sin síntomas de la condición.",
+    },
+    womanCarrier: {
+      label: "Mujer portadora",
+      text: "Círculo con un punto en el centro: una mujer portadora, sin síntomas de la condición.",
+    },
+    manAffected: {
+      label: "Hombre con la condición",
+      text: "Cuadrado relleno: un hombre con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    womanAffected: {
+      label: "Mujer con la condición",
+      text: "Círculo relleno: una mujer con la condición que se estudia. Cada condición lleva siempre el mismo color.",
+    },
+    manOther: {
+      label: "Hombre con otra condición",
+      text: "Cuadrado de otro color: un hombre con una condición distinta, por ejemplo cáncer de colon.",
+    },
+    womanOther: {
+      label: "Mujer con otra condición",
+      text: "Círculo de otro color: una mujer con una condición distinta, por ejemplo cáncer de colon.",
     },
     proband: {
       label: "Persona que consulta",
@@ -185,7 +203,6 @@ export const es: Copy = {
       "Política de cookies",
     ],
     contact: "Contacto",
-    email: "Correo: pendiente",
     copyright: "© 2026 Sara Torres-Esquius",
   },
 };

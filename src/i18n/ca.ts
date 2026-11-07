@@ -27,19 +27,37 @@ export const ca: Copy = {
     generation: "Generació",
     ariaLabel: "Arbre genealògic d'exemple amb tres generacions",
     caption: "Toca un símbol i t'expliquem com es llegeix un arbre familiar.",
-    man: { label: "Home", text: "Quadrat: un home." },
-    woman: { label: "Dona", text: "Cercle: una dona." },
-    carrier: {
-      label: "Persona portadora",
-      text: "Un punt al centre: una persona portadora, sense símptomes de la condició.",
+    man: {
+      label: "Home no afectat",
+      text: "Quadrat buit: un home no afectat.",
     },
-    affected: {
-      label: "Persona amb la condició",
-      text: "Ple del tot: una persona amb la condició que s'estudia. Cada condició porta sempre el mateix color.",
+    woman: {
+      label: "Dona no afectada",
+      text: "Cercle buit: una dona no afectada.",
     },
-    otherCondition: {
-      label: "Persona amb una altra condició",
-      text: "Un altre color: una persona amb una condició diferent, per exemple càncer de còlon.",
+    manCarrier: {
+      label: "Home portador",
+      text: "Quadrat amb un punt al centre: un home portador, sense símptomes de la condició.",
+    },
+    womanCarrier: {
+      label: "Dona portadora",
+      text: "Cercle amb un punt al centre: una dona portadora, sense símptomes de la condició.",
+    },
+    manAffected: {
+      label: "Home amb la condició",
+      text: "Quadrat ple: un home amb la condició que s'estudia. Cada condició porta sempre el mateix color.",
+    },
+    womanAffected: {
+      label: "Dona amb la condició",
+      text: "Cercle ple: una dona amb la condició que s'estudia. Cada condició porta sempre el mateix color.",
+    },
+    manOther: {
+      label: "Home amb una altra condició",
+      text: "Quadrat d'un altre color: un home amb una condició diferent, per exemple càncer de còlon.",
+    },
+    womanOther: {
+      label: "Dona amb una altra condició",
+      text: "Cercle d'un altre color: una dona amb una condició diferent, per exemple càncer de còlon.",
     },
     proband: {
       label: "Persona que consulta",
@@ -181,7 +199,6 @@ export const ca: Copy = {
     legal: "Legal",
     legalLinks: ["Avís legal", "Política de privacitat", "Política de cookies"],
     contact: "Contacte",
-    email: "Correu: pendent",
     copyright: "© 2026 Sara Torres-Esquius",
   },
 };
