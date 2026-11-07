@@ -2,8 +2,8 @@ import react from "@astrojs/react";
 import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
-  // URL pública. Canonical y sitemap salen de aquí. Cambiar al tener dominio definitivo.
-  site: "https://genetic-councelor.vercel.app",
+  // URL pública (dominio definitivo). Canonical y sitemap salen de aquí.
+  site: "https://www.saratorresesquius.com",
   integrations: [react()],
   // Fuentes servidas desde el propio dominio (se descargan en el build y se cachean). Funnel cubre
   // latin y latin-ext: ñ, ç, acentos y la l·l del catalán.

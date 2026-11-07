@@ -41,6 +41,14 @@
   max-inline-size: 12ch;
 }
 
+/* Tablet: el titular comparte fila con el árbol y su columna crece con el ancho. A 80 px la palabra
+   más larga no cabe hasta unos 1070 px; el tamaño sigue el ancho de la columna y llega a 80 px ahí. */
+@media (min-width: 48rem) {
+  .heroTitle {
+    font-size: min(var(--font-size-11), calc(8.4vw - 10px));
+  }
+}
+
 .heroText {
   max-inline-size: 32rem;
 }

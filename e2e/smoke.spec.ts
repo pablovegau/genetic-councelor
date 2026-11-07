@@ -148,3 +148,25 @@ for (const { path, lang } of versions) {
     ).toHaveAttribute("href", "https://www.linkedin.com/in/saratorresesquius/");
   });
 }
+
+// En tablet el titular y el árbol comparten fila: no se pueden pisar en ningún idioma.
+for (const { path } of versions) {
+  for (const width of [768, 820, 900, 1024, 1100]) {
+    test(`${path} el titular no se solapa con el árbol a ${width} px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path);
+      const [title, tree] = await Promise.all([
+        page.locator("h1").boundingBox(),
+        page.locator("[data-family-tree]").boundingBox(),
+      ]);
+      expect(title!.x + title!.width).toBeLessThanOrEqual(tree!.x);
+      // Y ninguna palabra desborda la caja del titular.
+      const overflow = await page
+        .locator("h1")
+        .evaluate((h1) => h1.scrollWidth - h1.clientWidth);
+      expect(overflow).toBeLessThanOrEqual(1);
+    });
+  }
+}
