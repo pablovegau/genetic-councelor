@@ -1,0 +1,280 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { legalSlugs, owner, pendingField } from "../../config/legal";
+
+const locale = Astro.currentLocale ?? "es";
+const [notice, , cookies] = legalSlugs.map((slug) =>
+  getRelativeLocaleUrl(locale, slug)
+);
+const mail = `mailto:${owner.email}`;
+---
+
+<p>
+  Esta política explica qué datos personales se tratan cuando usas este sitio y
+  reservas una cita, para qué se usan y qué derechos tienes. Solo se piden los
+  datos necesarios para cada gestión, no se ceden a terceros salvo obligación
+  legal o para prestar el servicio, y no se usan para otros fines.
+</p>
+
+<h2>Responsable del tratamiento</h2>
+<dl>
+  <div>
+    <dt>Identidad</dt>
+    <dd>{owner.name}, persona física (profesional autónoma)</dd>
+  </div>
+  <div>
+    <dt>NIF</dt>
+    <dd>{owner.nif ?? <span class="pending">{pendingField}</span>}</dd>
+  </div>
+  <div>
+    <dt>Domicilio</dt>
+    <dd>{owner.address ?? <span class="pending">{pendingField}</span>}</dd>
+  </div>
+  <div>
+    <dt>Correo electrónico</dt>
+    <dd>
+      <a href={mail}>{owner.email}</a>
+    </dd>
+  </div>
+</dl>
+
+<h2>Qué datos se tratan, para qué y con qué base</h2>
+
+<div class="block">
+  <h3>Reservar una cita</h3>
+  <dl>
+    <div>
+      <dt>Datos</dt>
+      <dd>
+        Nombre, correo electrónico y fecha y hora elegidas. En la reserva no
+        hace falta escribir datos de salud, y te pedimos que no lo hagas.
+      </dd>
+    </div>
+    <div>
+      <dt>Finalidad</dt>
+      <dd>Gestionar la reserva y enviarte la confirmación y los avisos.</dd>
+    </div>
+    <div>
+      <dt>Base jurídica</dt>
+      <dd>
+        Aplicación de medidas precontractuales y ejecución del contrato (art.
+        6.1.b RGPD).
+      </dd>
+    </div>
+    <div>
+      <dt>Conservación</dt>
+      <dd>
+        Mientras dure la relación y, después, durante los plazos en que puedan
+        surgir responsabilidades.
+      </dd>
+    </div>
+  </dl>
+</div>
+
+<div class="block">
+  <h3>Pagar la reserva y la consulta</h3>
+  <dl>
+    <div>
+      <dt>Datos</dt>
+      <dd>
+        Los datos de pago los trata Stripe. La titular no ve ni guarda los datos
+        completos de tu tarjeta; recibe la confirmación del pago.
+      </dd>
+    </div>
+    <div>
+      <dt>Finalidad</dt>
+      <dd>Cobrar la reserva y la consulta.</dd>
+    </div>
+    <div>
+      <dt>Base jurídica</dt>
+      <dd>Ejecución del contrato (art. 6.1.b RGPD).</dd>
+    </div>
+    <div>
+      <dt>Conservación</dt>
+      <dd>Los plazos que exige la normativa fiscal y mercantil.</dd>
+    </div>
+  </dl>
+</div>
+
+<div class="block">
+  <h3>Escribir por correo electrónico</h3>
+  <dl>
+    <div>
+      <dt>Datos</dt>
+      <dd>
+        Tu nombre, tu correo y el contenido del mensaje. Te recomendamos no
+        enviar datos de salud por correo.
+      </dd>
+    </div>
+    <div>
+      <dt>Finalidad</dt>
+      <dd>Atender tu consulta o tu solicitud de información.</dd>
+    </div>
+    <div>
+      <dt>Base jurídica</dt>
+      <dd>Tu consentimiento, que das al escribirnos (art. 6.1.a RGPD).</dd>
+    </div>
+    <div>
+      <dt>Conservación</dt>
+      <dd>
+        El tiempo necesario para atenderte y, después, el de posibles
+        responsabilidades.
+      </dd>
+    </div>
+  </dl>
+</div>
+
+<div class="block">
+  <h3>La consulta por videollamada</h3>
+  <dl>
+    <div>
+      <dt>Datos</dt>
+      <dd>
+        Los datos personales, familiares y de salud que compartas durante la
+        consulta. Esta web no los recoge. La videollamada se hace con Google
+        Meet y no se graba.
+      </dd>
+    </div>
+    <div>
+      <dt>Finalidad</dt>
+      <dd>
+        Prestarte el asesoramiento genético y elaborar el informe de la
+        consulta.
+      </dd>
+    </div>
+    <div>
+      <dt>Base jurídica</dt>
+      <dd>
+        Tu consentimiento explícito (art. 9.2.a RGPD) para los datos de salud.
+        Antes de la visita se te informa de cómo se tratan.
+      </dd>
+    </div>
+    <div>
+      <dt>Conservación</dt>
+      <dd>
+        Los plazos que exija la normativa aplicable a la documentación de la
+        consulta.
+      </dd>
+    </div>
+  </dl>
+</div>
+
+<div class="block">
+  <h3>Facturación</h3>
+  <dl>
+    <div>
+      <dt>Datos</dt>
+      <dd>Nombre, NIF y datos de facturación.</dd>
+    </div>
+    <div>
+      <dt>Finalidad</dt>
+      <dd>Emitir facturas y cumplir las obligaciones fiscales y contables.</dd>
+    </div>
+    <div>
+      <dt>Base jurídica</dt>
+      <dd>Obligación legal (art. 6.1.c RGPD).</dd>
+    </div>
+    <div>
+      <dt>Conservación</dt>
+      <dd>Los plazos que exige la normativa fiscal y mercantil.</dd>
+    </div>
+  </dl>
+</div>
+
+<p>
+  Esta web no usa analítica ni publicidad, no envía comunicaciones comerciales y
+  no toma decisiones automatizadas con tus datos. No se dirige a menores de
+  edad. Sobre las cookies, mira la <a href={cookies}>política de cookies</a>.
+</p>
+
+<h2>Quién más accede a tus datos</h2>
+<p>
+  Para prestar el servicio se usan proveedores que actúan como encargados del
+  tratamiento. Algunos están en Estados Unidos u otros países fuera del Espacio
+  Económico Europeo; esas transferencias se amparan en las garantías que prevé
+  el RGPD, como las decisiones de adecuación o las cláusulas contractuales tipo.
+  Puedes pedir más información escribiendo al correo del responsable.
+</p>
+<ul>
+  <li>
+    <strong>Cal.com</strong>: gestión de reservas. Cuenta individual alojada en
+    Estados Unidos (<a href="https://cal.com/privacy">política de privacidad</a>
+    ).
+  </li>
+  <li>
+    <strong>Stripe</strong>: pagos (
+    <a href="https://stripe.com/es/privacy">política de privacidad</a>).
+  </li>
+  <li>
+    <strong>Google</strong>: videollamadas con Meet (
+    <a href="https://policies.google.com/privacy">política de privacidad</a>).
+  </li>
+  <li>
+    <strong>Cloudflare</strong> y <strong>Resend</strong>: reenvío y envío del
+    correo del dominio (
+    <a href="https://www.cloudflare.com/privacypolicy/">
+      política de Cloudflare
+    </a>
+    , <a href="https://resend.com/legal/privacy-policy">política de Resend</a>).
+  </li>
+  <li>
+    <strong>Vercel</strong>: alojamiento de este sitio (
+    <a href="https://vercel.com/legal/privacy-policy">política de privacidad</a>
+    ).
+  </li>
+</ul>
+<p>
+  Fuera de estos proveedores, solo se comunicarán datos a las administraciones y
+  autoridades competentes cuando exista una obligación legal.
+</p>
+
+<h2>Tus derechos</h2>
+<p>
+  Puedes ejercer estos derechos escribiendo a <a href={mail}>{owner.email}</a>{" "}
+  con el asunto «Protección de datos». Responderemos en el plazo de un mes. Si
+  hay dudas razonables sobre tu identidad, podemos pedirte que la acredites.
+</p>
+<ul>
+  <li>
+    <strong>Acceso:</strong> saber qué datos tratamos de ti.
+  </li>
+  <li>
+    <strong>Rectificación:</strong> corregir datos inexactos o incompletos.
+  </li>
+  <li>
+    <strong>Supresión:</strong> pedir que se eliminen los datos que ya no sean
+    necesarios.
+  </li>
+  <li>
+    <strong>Oposición:</strong> oponerte a un tratamiento.
+  </li>
+  <li>
+    <strong>Limitación:</strong> pedir que se restrinja el uso de tus datos.
+  </li>
+  <li>
+    <strong>Portabilidad:</strong> recibir tus datos en un formato estructurado.
+  </li>
+  <li>
+    <strong>Retirar el consentimiento</strong> cuando se base en él, sin que
+    afecte a lo tratado antes de retirarlo.
+  </li>
+</ul>
+<p>
+  Si crees que tus derechos no se han atendido, puedes reclamar ante la Agencia
+  Española de Protección de Datos (<a href="https://www.aepd.es">aepd.es</a>).
+</p>
+
+<h2>Seguridad</h2>
+<p>
+  Los datos se tratan de forma confidencial y con medidas técnicas y
+  organizativas adecuadas para evitar su pérdida, alteración o acceso no
+  autorizado.
+</p>
+
+<h2>Cambios, idioma y ley aplicable</h2>
+<p>
+  Esta política puede actualizarse para adaptarse a cambios normativos o del
+  servicio; la versión vigente es la publicada aquí. Esta versión en castellano
+  prevalece sobre cualquier traducción. Se rige por la legislación española y,
+  en lo que no se regule aquí, por el <a href={notice}>aviso legal</a>.
+</p>

@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { contactEmail, linkedinUrl } from "../config/contact";
+import { legalSlugs } from "../config/legal";
 import { Footer } from "../design-system/components";
 import { getCopy } from "../i18n";
 
@@ -21,7 +22,10 @@ const columns = [
   },
   {
     title: footer.legal,
-    links: footer.legalLinks.map((label) => ({ label, href: "#contacto" })),
+    links: footer.legalLinks.map((label, i) => ({
+      label,
+      href: getRelativeLocaleUrl(locale, legalSlugs[i]),
+    })),
   },
   {
     title: footer.contact,

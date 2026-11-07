@@ -16,3 +16,8 @@ test-results/
 blob-report/
 e2e/**/*-darwin.png
 .pnpm-store/
+
+# Datos del titular y otras variables locales: no se suben (el repo es público)
+.env
+.env.*
+!.env.example

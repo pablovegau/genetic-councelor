@@ -61,6 +61,12 @@ export interface Copy {
     text: [string, string];
     link: string;
   };
+  legal: {
+    updated: string;
+    onlySpanish: string;
+    /** Descripción de cada página legal, en el orden de `footer.legalLinks`. */
+    descriptions: [string, string, string];
+  };
   closing: { title: string; lead: string };
   booking: {
     meta: { title: string; description: string };

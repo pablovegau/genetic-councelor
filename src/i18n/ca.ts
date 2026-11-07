@@ -201,4 +201,14 @@ export const ca: Copy = {
     contact: "Contacte",
     copyright: "© 2026 Sara Torres-Esquius",
   },
+  legal: {
+    updated: "Darrera revisió",
+    onlySpanish:
+      "Aquest text legal només està disponible en castellà. La versió en castellà és la que preval.",
+    descriptions: [
+      "Dades de la titular del lloc, condicions d'ús i responsabilitat.",
+      "Quines dades personals es tracten en reservar i a la consulta, per a què i quins drets tens.",
+      "Què guarda aquest lloc al teu navegador i quins serveis de tercers hi intervenen.",
+    ],
+  },
 };

@@ -5,7 +5,13 @@ const locales = [
   { code: "en", prefix: "/en" },
 ];
 
-export const sitePages = ["reservar", "sobre-mi"].flatMap((slug) =>
+export const sitePages = [
+  "reservar",
+  "sobre-mi",
+  "aviso-legal",
+  "politica-de-privacidad",
+  "politica-de-cookies",
+].flatMap((slug) =>
   locales.map(({ code, prefix }) => ({
     name: `${slug}-${code}`,
     path: `${prefix}/${slug}/`,
