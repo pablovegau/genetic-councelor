@@ -143,7 +143,6 @@ export const ca: Copy = {
     visitsTitle: "Tria la teva visita",
     first: {
       name: "Primera visita",
-      note: "Descomptable si després et fas un estudi genètic.",
       description:
         "Dibuixem junts el teu arbre familiar, resolem els teus dubtes i acordem un pla.",
     },
@@ -151,6 +150,10 @@ export const ca: Copy = {
       name: "Seguiment",
       description:
         "Per reprendre el pla i resoldre els dubtes que sorgeixin després de la primera visita.",
+    },
+    terms: {
+      text: "Cancel·lació gratuïta fins a 48 h abans.",
+      link: "Veure les condicions",
     },
     choose: "Veure horaris",
     embedTitle: "Tria dia i hora",
@@ -197,7 +200,12 @@ export const ca: Copy = {
     pages: "Pàgines",
     home: "Inici",
     legal: "Legal",
-    legalLinks: ["Avís legal", "Política de privacitat", "Política de cookies"],
+    legalLinks: [
+      "Avís legal",
+      "Política de privacitat",
+      "Política de cookies",
+      "Condicions de reserva",
+    ],
     contact: "Contacte",
     copyright: "© 2026 Sara Torres-Esquius",
   },
@@ -209,6 +217,7 @@ export const ca: Copy = {
       "Dades de la titular del lloc, condicions d'ús i responsabilitat.",
       "Quines dades personals es tracten en reservar i a la consulta, per a què i quins drets tens.",
       "Què guarda aquest lloc al teu navegador i quins serveis de tercers hi intervenen.",
+      "Preus, pagament, cancel·lacions, reemborsaments i dret de desistiment de les visites.",
     ],
   },
 };

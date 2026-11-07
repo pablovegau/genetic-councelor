@@ -11,6 +11,7 @@ export const sitePages = [
   "aviso-legal",
   "politica-de-privacidad",
   "politica-de-cookies",
+  "condiciones-de-reserva",
 ].flatMap((slug) =>
   locales.map(({ code, prefix }) => ({
     name: `${slug}-${code}`,

@@ -143,7 +143,6 @@ export const es: Copy = {
     visitsTitle: "Elige tu visita",
     first: {
       name: "Primera visita",
-      note: "Descontable si después te haces un estudio genético.",
       description:
         "Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un plan.",
     },
@@ -151,6 +150,10 @@ export const es: Copy = {
       name: "Seguimiento",
       description:
         "Para retomar el plan y resolver las dudas que surjan después de la primera visita.",
+    },
+    terms: {
+      text: "Cancelación gratuita hasta 48 h antes.",
+      link: "Ver condiciones",
     },
     choose: "Ver horarios",
     embedTitle: "Elige día y hora",
@@ -201,6 +204,7 @@ export const es: Copy = {
       "Aviso legal",
       "Política de privacidad",
       "Política de cookies",
+      "Condiciones de reserva",
     ],
     contact: "Contacto",
     copyright: "© 2026 Sara Torres-Esquius",
@@ -213,6 +217,7 @@ export const es: Copy = {
       "Datos de la titular del sitio, condiciones de uso y responsabilidad.",
       "Qué datos personales se tratan al reservar y en la consulta, para qué y qué derechos tienes.",
       "Qué guarda este sitio en tu navegador y qué servicios de terceros intervienen.",
+      "Precios, pago, cancelaciones, reembolsos y derecho de desistimiento de las visitas.",
     ],
   },
 };

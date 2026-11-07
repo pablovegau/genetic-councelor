@@ -3,7 +3,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { legalSlugs, owner, pendingField } from "../../config/legal";
 
 const locale = Astro.currentLocale ?? "es";
-const [, privacy, cookies] = legalSlugs.map((slug) =>
+const [, privacy, cookies, terms] = legalSlugs.map((slug) =>
   getRelativeLocaleUrl(locale, slug)
 );
 ---
@@ -57,7 +57,8 @@ const [, privacy, cookies] = legalSlugs.map((slug) =>
   <li>
     El acceso y la navegación por el sitio son gratuitos y no requieren
     registro. La reserva y la consulta son servicios de pago, con los precios
-    visibles en la web.
+    visibles en la web. Las condiciones de pago, cancelación y reembolso están
+    en las <a href={terms}>condiciones de reserva</a>.
   </li>
   <li>
     Los servicios están dirigidos a personas adultas. No se ofrecen consultas a

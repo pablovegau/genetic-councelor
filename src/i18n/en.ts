@@ -143,7 +143,6 @@ export const en: Copy = {
     visitsTitle: "Choose your visit",
     first: {
       name: "First visit",
-      note: "Deducted from the cost if you then have a genetic study.",
       description:
         "Together we draw your family tree, answer your questions and agree on a plan.",
     },
@@ -151,6 +150,10 @@ export const en: Copy = {
       name: "Follow-up",
       description:
         "To pick the plan back up and answer any questions that come up after the first visit.",
+    },
+    terms: {
+      text: "Free cancellation up to 48 h before.",
+      link: "See the terms",
     },
     choose: "See available times",
     embedTitle: "Choose a day and time",
@@ -196,7 +199,12 @@ export const en: Copy = {
     pages: "Pages",
     home: "Home",
     legal: "Legal",
-    legalLinks: ["Legal notice", "Privacy policy", "Cookie policy"],
+    legalLinks: [
+      "Legal notice",
+      "Privacy policy",
+      "Cookie policy",
+      "Booking terms",
+    ],
     contact: "Contact",
     copyright: "© 2026 Sara Torres-Esquius",
   },
@@ -208,6 +216,7 @@ export const en: Copy = {
       "Details of the site owner, terms of use and liability.",
       "What personal data is processed when you book and during the consultation, why, and what rights you have.",
       "What this site stores in your browser and which third-party services are involved.",
+      "Prices, payment, cancellations, refunds and the right of withdrawal for visits.",
     ],
   },
 };
