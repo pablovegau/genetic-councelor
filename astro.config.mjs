@@ -1,10 +1,21 @@
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
   // URL pública (dominio definitivo). Canonical y sitemap salen de aquí.
   site: "https://www.saratorresesquius.com",
-  integrations: [react()],
+  integrations: [
+    react(),
+    // El catálogo del design system no es una página del sitio: no entra en el sitemap.
+    sitemap({
+      filter: (page) => !page.includes("/design-system/"),
+      i18n: {
+        defaultLocale: "es",
+        locales: { es: "es", ca: "ca", en: "en" },
+      },
+    }),
+  ],
   // Fuentes servidas desde el propio dominio (se descargan en el build y se cachean). Funnel cubre
   // latin y latin-ext: ñ, ç, acentos y la l·l del catalán.
   fonts: [

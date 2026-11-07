@@ -3,6 +3,8 @@ import { Font } from "astro:assets";
 import "../design-system/tokens.generated.css";
 import "../design-system/style-props.generated.css";
 import "../design-system/base.css";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { locales } from "../i18n";
 
 interface Props {
   title: string;
@@ -16,6 +18,17 @@ const locale = Astro.currentLocale ?? "es";
 // Hasta publicar con el dominio definitivo la web no se indexa.
 // Al publicar: PUBLIC_ALLOW_INDEXING=true en las variables de entorno de Vercel.
 const indexable = !noindex && import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
+
+// Canonical y versiones por idioma (hreflang). Las páginas del catálogo y la 404 no se traducen.
+const { pathname } = Astro.url;
+const translated =
+  !pathname.startsWith("/design-system") && pathname !== "/404/";
+const absolute = (path: string) => new URL(path, Astro.site).href;
+const page = pathname.replace(/^\/(ca|en)(?=\/|$)/, "").replace(/^\/|\/$/g, "");
+const alternates = locales.map(({ code }) => ({
+  code,
+  href: absolute(getRelativeLocaleUrl(code, page)),
+}));
 ---
 
 <!doctype html>
@@ -28,6 +41,14 @@ const indexable = !noindex && import.meta.env.PUBLIC_ALLOW_INDEXING === "true";
       name="robots"
       content={indexable ? "index, follow" : "noindex, nofollow"}
     />
+    {translated && <link rel="canonical" href={absolute(pathname)} />}
+    {translated &&
+      alternates.map(({ code, href }) => (
+        <link rel="alternate" hreflang={code} href={href} />
+      ))}
+    {translated && (
+      <link rel="alternate" hreflang="x-default" href={alternates[0].href} />
+    )}
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <Font cssVariable="--font-funnel-display" preload={[{ subset: "latin" }]} />
