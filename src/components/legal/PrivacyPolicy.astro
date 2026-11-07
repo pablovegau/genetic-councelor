@@ -1,5 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { bookingEnabled } from "../../config/booking";
 import { legalSlugs, owner, pendingField } from "../../config/legal";
 
 const locale = Astro.currentLocale ?? "es";
@@ -196,11 +197,14 @@ const mail = `mailto:${owner.email}`;
   Puedes pedir más información escribiendo al correo del responsable.
 </p>
 <ul>
-  <li>
-    <strong>Cal.com</strong>: gestión de reservas. Cuenta individual alojada en
-    Estados Unidos (<a href="https://cal.com/privacy">política de privacidad</a>
-    ).
-  </li>
+  {bookingEnabled && (
+    <li>
+      <strong>Cal.com</strong>: gestión de reservas. Su calendario se carga
+      cuando pulsas «Ver horarios» (o abres un enlace con una visita elegida).
+      Cuenta alojada en Estados Unidos (
+      <a href="https://cal.com/privacy">política de privacidad</a>).
+    </li>
+  )}
   <li>
     <strong>Stripe</strong>: pagos (
     <a href="https://stripe.com/es/privacy">política de privacidad</a>).

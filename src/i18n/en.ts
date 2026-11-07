@@ -156,13 +156,16 @@ export const en: Copy = {
       link: "See the terms",
     },
     choose: "See available times",
+    loading: "Loading the calendar…",
+    error: "We couldn't load the calendar. Try opening it in a new page.",
+    soon: "Bookings will open very soon. In the meantime, write to us at",
     embedTitle: "Choose a day and time",
     embedHint:
       "Choose one of the visits above and the available times will appear here.",
     fallback: "Can't see the calendar? Open it in a new page.",
     privacy: "We don't ask for health data when you book.",
     thirdParty:
-      "The calendar is provided by Cal.com and only loads when you choose a visit.",
+      "When you press “See available times” the Cal.com calendar loads; it is a service hosted in the US. Nothing of theirs loads before that.",
   },
   aboutPage: {
     meta: {

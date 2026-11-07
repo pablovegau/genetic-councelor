@@ -232,3 +232,26 @@ for (const { path, lang, title, contains, absent } of termsByLocale) {
     expect(text).not.toMatch(/COMPLETAR/);
   });
 }
+
+// Con las reservas activas, las políticas explican cuándo se carga el calendario de Cal.com.
+test("la política de cookies y la de privacidad explican el calendario de Cal.com", async ({
+  page,
+}) => {
+  await page.goto("/politica-de-cookies/");
+  const cookies = await page.getByRole("main").innerText();
+  expect(cookies).toContain("Cal.com");
+  expect(cookies).toContain("Ver horarios");
+  expect(cookies).toContain("Estados Unidos");
+  expect(cookies).toContain("Stripe");
+  expect(cookies).toContain("Google Meet");
+  await expect(
+    page.getByRole("link", { name: "política de privacidad" }).first()
+  ).toHaveAttribute("href", "https://cal.com/privacy");
+
+  await page.goto("/politica-de-privacidad/");
+  const privacy = await page.getByRole("main").innerText();
+  expect(privacy).toContain("Cal.com");
+  expect(privacy).toContain("Ver horarios");
+  expect(privacy).toContain("Stripe");
+  expect(privacy).toContain("Google");
+});

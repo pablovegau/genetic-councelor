@@ -32,16 +32,22 @@ jobs:
       - run: pnpm typecheck
       # Tokens, tests unitarios y de componentes (Chromium) y umbral de cobertura.
       - run: pnpm coverage
-      # La compilación de producción no incluye el catálogo del design system.
-      - name: Production build leaves the catalog out
+      # La compilación de producción por defecto (sin variables) no incluye el catálogo del design
+      # system, y con las reservas desactivadas no menciona ni enlaza a Cal.com en ningún idioma.
+      - name: Production build with bookings off
         run: |
           pnpm build
           test -f dist/index.html
           test ! -d dist/design-system
-      # Las pruebas sí lo necesitan: se compila con el catálogo.
+          grep -q "Las reservas se abrirán muy pronto" dist/reservar/index.html
+          grep -q "obriran molt aviat" dist/ca/reservar/index.html
+          grep -q "Bookings will open very soon" dist/en/reservar/index.html
+          ! grep -rIil "cal\.com" dist
+      # Las pruebas necesitan el catálogo y las reservas activas (el calendario y sus estados).
       - run: pnpm build
         env:
           KEEP_CATALOG: "true"
+          PUBLIC_CAL_BOOKING_ENABLED: "true"
       # Accesibilidad, humo y regresión visual contra el sitio compilado.
       # Firefox no arranca si $HOME no es del usuario actual (en el contenedor es /github/home).
       - run: pnpm exec playwright test
