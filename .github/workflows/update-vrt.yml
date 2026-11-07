@@ -24,6 +24,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+        env:
+          KEEP_CATALOG: "true"
       - run: pnpm exec playwright test vrt --update-snapshots
       - name: Commit the new baselines
         id: commit

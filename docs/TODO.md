@@ -143,3 +143,8 @@ Páginas: `/aviso-legal/`, `/politica-de-privacidad/`, `/politica-de-cookies/` (
 - [ ] Qué hace Cal.com con las notas del evento: la política dice que en la reserva solo se piden nombre y correo. Comprobarlo al configurar los eventos.
 - [ ] Traducir al catalán y al inglés cuando el texto en castellano esté revisado.
 - [ ] Actualizar `legalUpdated` en `src/config/legal.ts` cada vez que cambie algún texto.
+
+## Catálogo del design system
+
+- El catálogo (`src/pages/design-system`) se ve en `pnpm dev` pero **no se despliega**: `astro.config.mjs` borra `dist/design-system` al compilar salvo que `KEEP_CATALOG=true`. Lo ponen `pnpm test:e2e`, la CI (después de comprobar que la compilación de producción no lo incluye) y `update-vrt`.
+- Si algún día se quiere publicar (por ejemplo como documentación), basta quitar el hook `catalogOnlyInDev`.

@@ -1,12 +1,31 @@
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import { rm } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 import { defineConfig, fontProviders } from "astro/config";
+
+// El catálogo del design system (src/pages/design-system) es una herramienta de trabajo: se ve en
+// `astro dev` pero no se despliega. Las pruebas lo necesitan, y sus compilaciones lo piden con
+// KEEP_CATALOG=true (test:e2e, CI y update-vrt).
+const catalogOnlyInDev = {
+  name: "catalog-only-in-dev",
+  hooks: {
+    "astro:build:done": async ({ dir }) => {
+      if (process.env.KEEP_CATALOG === "true") return;
+      await rm(fileURLToPath(new URL("design-system/", dir)), {
+        recursive: true,
+        force: true,
+      });
+    },
+  },
+};
 
 export default defineConfig({
   // URL pública (dominio definitivo). Canonical y sitemap salen de aquí.
   site: "https://www.saratorresesquius.com",
   integrations: [
     react(),
+    catalogOnlyInDev,
     // El catálogo del design system no es una página del sitio: no entra en el sitemap.
     sitemap({
       filter: (page) => !page.includes("/design-system/"),

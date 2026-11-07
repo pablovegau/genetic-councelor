@@ -32,7 +32,16 @@ jobs:
       - run: pnpm typecheck
       # Tokens, tests unitarios y de componentes (Chromium) y umbral de cobertura.
       - run: pnpm coverage
+      # La compilación de producción no incluye el catálogo del design system.
+      - name: Production build leaves the catalog out
+        run: |
+          pnpm build
+          test -f dist/index.html
+          test ! -d dist/design-system
+      # Las pruebas sí lo necesitan: se compila con el catálogo.
       - run: pnpm build
+        env:
+          KEEP_CATALOG: "true"
       # Accesibilidad, humo y regresión visual contra el sitio compilado.
       # Firefox no arranca si $HOME no es del usuario actual (en el contenedor es /github/home).
       - run: pnpm exec playwright test
