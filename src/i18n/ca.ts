@@ -199,7 +199,6 @@ export const ca: Copy = {
     legal: "Legal",
     legalLinks: ["Avís legal", "Política de privacitat", "Política de cookies"],
     contact: "Contacte",
-    email: "Correu: pendent",
     copyright: "© 2026 Sara Torres-Esquius",
   },
 };

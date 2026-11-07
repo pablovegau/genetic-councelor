@@ -198,7 +198,6 @@ export const en: Copy = {
     legal: "Legal",
     legalLinks: ["Legal notice", "Privacy policy", "Cookie policy"],
     contact: "Contact",
-    email: "Email: pending",
     copyright: "© 2026 Sara Torres-Esquius",
   },
 };

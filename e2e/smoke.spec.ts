@@ -133,3 +133,15 @@ test("la línea de los pasos atraviesa el centro de los números", async ({
   const markerCenter = box!.y + box!.height / 2 - stepsBox!.y;
   expect(Math.abs(markerCenter - lineCenter)).toBeLessThan(1);
 });
+
+for (const { path, lang } of versions) {
+  test(`${path} enlaza el correo de contacto en el pie`, async ({ page }) => {
+    await page.goto(path);
+    await expect(page.locator("html")).toHaveAttribute("lang", lang);
+    await expect(
+      page
+        .getByRole("contentinfo")
+        .getByRole("link", { name: "contact@saratorresesquius.com" })
+    ).toHaveAttribute("href", "mailto:contact@saratorresesquius.com");
+  });
+}

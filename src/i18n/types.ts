@@ -99,7 +99,6 @@ export interface Copy {
     legal: string;
     legalLinks: string[];
     contact: string;
-    email: string;
     copyright: string;
   };
 }

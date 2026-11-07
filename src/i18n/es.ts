@@ -203,7 +203,6 @@ export const es: Copy = {
       "Política de cookies",
     ],
     contact: "Contacto",
-    email: "Correo: pendiente",
     copyright: "© 2026 Sara Torres-Esquius",
   },
 };
