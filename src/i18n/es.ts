@@ -143,7 +143,6 @@ export const es: Copy = {
     visitsTitle: "Elige tu visita",
     first: {
       name: "Primera visita",
-      note: "Descontable si después te haces un estudio genético.",
       description:
         "Dibujamos juntos tu árbol familiar, resolvemos tus dudas y acordamos un plan.",
     },

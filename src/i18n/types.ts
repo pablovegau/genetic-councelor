@@ -73,7 +73,7 @@ export interface Copy {
     title: string;
     lead: string;
     visitsTitle: string;
-    first: { name: string; note: string; description: string };
+    first: { name: string; description: string };
     followup: { name: string; description: string };
     terms: { text: string; link: string };
     choose: string;

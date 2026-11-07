@@ -18,7 +18,6 @@ const cards: {
   key: VisitKey;
   name: string;
   description: string;
-  note?: string;
 }[] = [
   { key: "first", ...booking.first },
   { key: "followup", ...booking.followup },
@@ -51,11 +50,10 @@ const cards: {
         {booking.visitsTitle}
       </Text>
       <div class={styles.cards}>
-        {cards.map(({ key, name, description, note }) => (
+        {cards.map(({ key, name, description }) => (
           <PriceCard
             name={name}
             price={euro.format(visits[key].price)}
-            note={note}
             description={description}
           >
             <Button

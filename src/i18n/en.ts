@@ -143,7 +143,6 @@ export const en: Copy = {
     visitsTitle: "Choose your visit",
     first: {
       name: "First visit",
-      note: "Deducted from the cost if you then have a genetic study.",
       description:
         "Together we draw your family tree, answer your questions and agree on a plan.",
     },

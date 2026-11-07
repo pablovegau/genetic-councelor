@@ -143,7 +143,6 @@ export const ca: Copy = {
     visitsTitle: "Tria la teva visita",
     first: {
       name: "Primera visita",
-      note: "Descomptable si després et fas un estudi genètic.",
       description:
         "Dibuixem junts el teu arbre familiar, resolem els teus dubtes i acordem un pla.",
     },

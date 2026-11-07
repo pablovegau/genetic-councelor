@@ -111,7 +111,7 @@ Decidido el 2026-11-08 (versión sencilla; se mejora si falla algo):
 - Hasta 48 h antes: cambio de fecha o cancelación gratis, reembolso del 100 %. Con menos de 48 h o sin conectarse: sin reembolso.
 - Si cancela Sara o falla la videollamada por su parte: cambio de fecha o 100 %, a elección de la persona.
 - Reembolso al mismo método de pago, tramitado en un máximo de 5 días hábiles.
-- **Sin descuento ni IVA en el texto, a propósito.** La nota «Descontable si después te haces un estudio genético» sigue en `/reservar/`, sin condiciones definidas: definir plazo y estudios (propuesta: 30 días, cualquier estudio) o quitarla.
+- **Sin descuento ni IVA en la web, a propósito.** La nota «Descontable si después te haces un estudio genético» se quitó de `/reservar/` el 2026-11-08. Para volver a ofrecerlo hay que definir plazo y estudios (propuesta: 30 días, cualquier estudio) y publicar las condiciones.
 - [ ] Revisión legal del desistimiento (14 días). Con una reserva para dentro de menos de 14 días, el desistimiento puede chocar con «menos de 48 h, sin reembolso».
 - [ ] Configurar en Cal.com una casilla de aceptación en la reserva: «Quiero que la consulta empiece dentro de los 14 días de desistimiento». El texto de la web ya lo promete.
 - [ ] Igualar el reembolso en Cal.com: reembolso del 100 % si se cancela con 48 h o más de antelación.

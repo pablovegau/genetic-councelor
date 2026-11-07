@@ -8,9 +8,8 @@ test("los precios están a la vista, sin pedirlos", async ({ page }) => {
   await page.goto("/reservar/");
   await expect(page.getByText("120 €", { exact: true })).toBeVisible();
   await expect(page.getByText("90 €", { exact: true })).toBeVisible();
-  await expect(
-    page.getByText("Descontable si después te haces un estudio genético.")
-  ).toBeVisible();
+  // El descuento no se anuncia hasta que haya condiciones publicadas.
+  await expect(page.getByText(/descontable/i)).toHaveCount(0);
 });
 
 test("en inglés el precio sigue el formato del idioma", async ({ page }) => {
