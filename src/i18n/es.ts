@@ -152,7 +152,7 @@ export const es: Copy = {
         "Para retomar el plan y resolver las dudas que surjan después de la primera visita.",
     },
     terms: {
-      text: "Cancelación gratuita hasta 48 h antes.",
+      text: "Precios con IVA incluido. Cancelación gratuita hasta 48 h antes.",
       link: "Ver condiciones",
     },
     choose: "Ver horarios",

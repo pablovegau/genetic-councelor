@@ -11,7 +11,7 @@ export interface PriceCardProps extends Omit<
   name: string;
   /** Precio ya formateado ("120 €"). */
   price: string;
-  /** Qué incluye o cómo se descuenta. */
+  /** Una aclaración corta bajo el precio, por ejemplo la duración. */
   note?: string;
   description: string;
   /** La acción de la tarjeta: normalmente un Button o un enlace. */

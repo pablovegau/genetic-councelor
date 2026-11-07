@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { catalogPages } from "../src/design-system/catalog/sections";
+import { sitePages } from "./pages";
 
 const locales = [
   {
@@ -134,9 +136,9 @@ test("las condiciones de reserva dicen lo acordado y nada que no esté decidido"
   expect(text).toContain("100 %");
   expect(text).toContain("5 días hábiles");
   expect(text).toContain("14 días naturales");
-  // El descuento, el IVA y los marcadores pendientes no se publican.
+  // El descuento y los marcadores pendientes no se publican.
   expect(text).not.toMatch(/COMPLETAR|descuent|descont/i);
-  expect(text).not.toMatch(/\bIVA\b/);
+  expect(text).toContain("Los precios incluyen el IVA");
 });
 
 for (const { prefix, lang } of locales) {
@@ -148,6 +150,7 @@ for (const { prefix, lang } of locales) {
     await expect(
       page.getByRole("main").getByRole("link", { name: /condici|terms/i })
     ).toHaveAttribute("href", `${prefix}/condiciones-de-reserva/`);
+    await expect(page.getByRole("main")).toContainText(/IVA|VAT/);
   });
 }
 
@@ -157,3 +160,21 @@ test("el aviso legal enlaza las condiciones de reserva", async ({ page }) => {
     page.getByRole("main").getByRole("link", { name: "condiciones de reserva" })
   ).toHaveAttribute("href", "/condiciones-de-reserva/");
 });
+
+// Mientras el descuento no tenga condiciones publicadas, no puede aparecer en ninguna página
+// (tampoco en el catálogo del design system, que se despliega con la web).
+for (const path of [
+  "/",
+  "/ca/",
+  "/en/",
+  ...sitePages.map(({ path }) => path),
+  ...catalogPages.map(({ path }) => path),
+]) {
+  test(`${path} no anuncia ningún descuento`, async ({ page }) => {
+    await page.goto(path);
+    const text = await page.locator("body").innerText();
+    expect(text).not.toMatch(
+      /descontable|descuent|descomptable|discount|deducted/i
+    );
+  });
+}
