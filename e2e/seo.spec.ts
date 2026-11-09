@@ -129,3 +129,53 @@ for (const { path, job, first } of structured) {
     expect(raw).not.toMatch(/telephone/i);
   });
 }
+
+test("las fotos de la portada se sirven en varios tamaños y la pequeña pesa poco", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  for (const img of await page.locator("main img[srcset]").all()) {
+    const srcset = (await img.getAttribute("srcset"))!;
+    const candidates = srcset
+      .split(",")
+      .map((entry) => entry.trim().split(/\s+/));
+    expect(candidates.length).toBeGreaterThanOrEqual(3);
+    const [smallest] = candidates;
+    const response = await request.get(smallest![0]!);
+    expect(response.status()).toBe(200);
+    expect((await response.body()).length).toBeLessThan(30_000);
+    await expect(img).toHaveAttribute("sizes", /\S/);
+  }
+  // Ninguna foto se pide en su tamaño original de 2400 px.
+  const widths = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .filter((entry) => /\.(webp|jpe?g)$/.test(entry.name))
+      .map((entry) => (entry as PerformanceResourceTiming).encodedBodySize)
+  );
+  for (const bytes of widths) expect(bytes).toBeLessThan(50_000);
+});
+
+test("el CSS va en el propio HTML: sin hojas de estilo que bloqueen el primer pintado", async ({
+  request,
+}) => {
+  const html = await (await request.get("/")).text();
+  expect(html).not.toMatch(/<link[^>]+rel="stylesheet"/);
+  expect(html).toMatch(/<style[^>]*>[^<]{5000,}/);
+});
+
+test("el icono de hamburguesa se anima con transform, no con top", async ({
+  page,
+}) => {
+  await page.goto("/");
+  test.skip((page.viewportSize()?.width ?? 0) >= 768, "Solo en móvil.");
+  const trigger = page.getByRole("button", { name: /Abrir/ });
+  const props = await trigger.locator("span").evaluate((bar) => {
+    const style = getComputedStyle(bar, "::before");
+    return { transition: style.transitionProperty, top: style.top };
+  });
+  expect(props.transition).toContain("transform");
+  expect(props.transition).not.toContain("top");
+  expect(props.top).toBe("0px");
+});

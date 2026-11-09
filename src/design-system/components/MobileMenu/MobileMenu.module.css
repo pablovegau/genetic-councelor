@@ -33,7 +33,6 @@
     background-color: currentcolor;
     transition:
       transform var(--motion-duration-interaction) var(--motion-easing-default),
-      top var(--motion-duration-interaction) var(--motion-easing-default),
       background-color var(--motion-duration-interaction)
         var(--motion-easing-default);
   }
@@ -46,15 +45,17 @@
   .bars::after {
     content: "";
     position: absolute;
+    top: 0;
     inset-inline-start: 0;
   }
 
+  /* Solo `transform` (y el color): así la animación va en el compositor, sin repintar. */
   .bars::before {
-    top: calc(-1 * var(--space-2));
+    transform: translateY(calc(-1 * var(--space-2)));
   }
 
   .bars::after {
-    top: var(--space-2);
+    transform: translateY(var(--space-2));
   }
 
   .trigger[data-popup-open] .bars {
@@ -62,12 +63,10 @@
   }
 
   .trigger[data-popup-open] .bars::before {
-    top: 0;
     transform: rotate(45deg);
   }
 
   .trigger[data-popup-open] .bars::after {
-    top: 0;
     transform: rotate(-45deg);
   }
 

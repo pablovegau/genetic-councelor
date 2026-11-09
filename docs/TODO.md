@@ -159,3 +159,12 @@ Páginas: `/aviso-legal/`, `/politica-de-privacidad/`, `/politica-de-cookies/` (
 - [ ] Cinco resúmenes se basan solo en el título porque PubMed no tiene abstract (`"basis": "title"` en el JSON): Blood Advances (el más importante), AJH 2026 (TERT), Blood Cancer Journal 2026 (bulbo del pelo), Leukemia 2025 (sideroblastos) y JCO Precision Oncology 2024. Conviene que Sara los reescriba o confirme.
 - Un artículo nuevo que llegue de PubMed no tiene resumen hasta que se añada su nota; se muestra igual, sin resumen.
 - [ ] Prensa: no hay URLs de las entrevistas (El País, La Vanguardia, RTVE, Onda Cero, Telemadrid) ni del capítulo del manual SEHH 2024. Sara las pasa y se enlazan en «Sobre mí».
+
+## Lighthouse (2026-11-09, móvil, www.saratorresesquius.com)
+
+Resultado: Rendimiento 98, Accesibilidad 100, Buenas prácticas 96, SEO 69 (solo por el `noindex`, a propósito hasta publicar).
+
+- Hecho: fotos en varios tamaños (`srcset`, `src/lib/images.ts`), CSS dentro del HTML (`build.inlineStylesheets`), cabeceras de seguridad (`vercel.json`) y animación del icono de hamburguesa solo con `transform`.
+- «Errores de consola» y «2,5 MB de JavaScript sin usar» **no salen en un Chrome limpio** (se comprobó con Playwright): vienen de la barra de Vercel que carga el navegador con sesión de equipo y de las extensiones. Repetir la auditoría en una ventana de incógnito.
+- Sin hacer: CSP (el script del tema, los datos estructurados y el calendario de Cal.com necesitarían hashes; pendiente de decidir), `preload` en HSTS (compromiso difícil de deshacer) y la animación del interruptor de esquema (anima atributos SVG, que no se pueden componer).
+- JavaScript del cliente: la isla del menú móvil (React + Base UI) pesa unos 300 KB; si algún día importa, se puede reescribir sin React.

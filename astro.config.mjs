@@ -21,6 +21,8 @@ const catalogOnlyInDev = {
 };
 
 export default defineConfig({
+  // El CSS (unos 40 KB) va dentro del HTML: sin peticiones que bloqueen el primer pintado.
+  build: { inlineStylesheets: "always" },
   // URL pública (dominio definitivo). Canonical y sitemap salen de aquí.
   site: "https://www.saratorresesquius.com",
   integrations: [
