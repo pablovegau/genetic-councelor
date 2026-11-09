@@ -12,6 +12,11 @@ export {
   type LanguageSwitchProps,
 } from "./LanguageSwitch/LanguageSwitch";
 export { Icon, iconNames, type IconName, type IconProps } from "./Icon/Icon";
+export {
+  PressList,
+  type PressItem,
+  type PressListProps,
+} from "./PressList/PressList";
 export { Link, type LinkProps, type LinkVariant } from "./Link/Link";
 export {
   MarkerList,

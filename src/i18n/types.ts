@@ -114,7 +114,11 @@ export interface Copy {
     careerTitle: string;
     career: string[];
     pressTitle: string;
-    press: string[];
+    pressGroups: {
+      telomeres: { title: string; text: string };
+      other: { title: string };
+    };
+    pressKinds: { interview: string; hospital: string };
     publicationsTitle: string;
     publicationsLead: string;
     /** Con `{count}`: el número de publicaciones. */

@@ -211,14 +211,14 @@ export const en: Copy = {
       "Associate lecturer at the UAB since 2025.",
     ],
     pressTitle: "Press and outreach",
-    press: [
-      "El País",
-      "La Vanguardia",
-      "RTVE",
-      "Onda Cero",
-      "Telemadrid",
-      "SEHH manual (2024)",
-    ],
+    pressGroups: {
+      telomeres: {
+        title: "Adult Telomere Unit, Vall d'Hebron",
+        text: "In September 2025 Vall d'Hebron Hospital presented Spain's first unit devoted to adult telomere biology disorders. Sara is the genetic counsellor on the team.",
+      },
+      other: { title: "Other appearances" },
+    },
+    pressKinds: { interview: "Interview", hospital: "Hospital press release" },
     publicationsTitle: "Publications",
     publicationsLead: "Articles in scientific journals, taken from PubMed.",
     total: "{count} publications on PubMed.",

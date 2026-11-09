@@ -2,12 +2,17 @@
 
 Lista viva: se añade lo que Sara debe confirmar, rellenar o aprobar antes de publicar. Al resolver algo, se marca y se anota la fecha. Lo que decide el equipo (no Sara) está en `docs/TODO.md`.
 
-Última actualización: 2026-11-09.
+Última actualización: 2026-11-10.
 
 ## Para rellenar o confirmar (bloquean la publicación)
 
 - [ ] **Plazo de respuesta al correo.** `/contacto/` dice «Te respondemos en [COMPLETAR] días hábiles». Se fija en `responseDays` (`src/config/contact.ts`). Propuesta: 2 días hábiles.
-- [ ] **Prensa: enlaces.** Faltan las URL de las entrevistas y apariciones (El País, La Vanguardia, RTVE, Onda Cero, Telemadrid) y del capítulo del Manual SEHH 2024 (el enlace que tenía estaba roto). Hoy «Sobre mí» solo lista los nombres. Sin enlace verificado no se publica nada.
+- [ ] **Prensa (propuesta en «Sobre mí»).** 13 enlaces agrupados: 11 sobre la Unidad de Telómeros del Adulto de Vall d'Hebron (la entrevista de RTVE primero y luego por fecha) y 2 en «Otras apariciones» (Gaceta Médica 2024 y El País 2023). Datos en `src/data/press.json`.
+  - [ ] **Titulares por confirmar.** No pude leer RTVE, El Periódico, La Vanguardia (2), La Razón, El Confidencial ni El País, así que sus titulares salen de la URL y llevan `titleFromUrl` en el JSON. El de El Confidencial es solo una descripción. Hay que pegar el titular exacto de cada uno.
+  - [ ] **Fecha de la entrevista de RTVE** («Digue-li ciència»): no la conozco y no se muestra. Confirmar también que es una entrevista a Sara.
+  - [ ] **Enlace de Onda Cero (6 nov 2026)** sobre acoso escolar y perdón (Elena Juan): no habla de genética por lo que se ve en la URL. ¿Es el enlace correcto? No está en la web.
+  - [ ] **Sin enlace, fuera de la web por ahora:** Telemadrid y el capítulo del Manual SEHH 2024 (el enlace que tenía estaba roto). Antes los nombraba la lista de prensa.
+  - [ ] **Texto de la unidad:** «En septiembre de 2025 el Hospital Vall d'Hebron presentó la primera unidad de España dedicada a las alteraciones de la biología de los telómeros en adultos. Sara es asesora genética del equipo.» (según la nota de Vall d'Hebron).
 - [ ] **Resúmenes de las publicaciones (26).** Redactados a partir de los abstracts de PubMed, en español, catalán e inglés (`src/data/publication-notes.json`). Que compruebe que no dicen nada que no sea cierto.
   - [ ] Cinco se basan solo en el título porque PubMed no tiene abstract: Blood Advances 2026 (la más importante), American Journal of Hematology 2026 (TERT), Blood Cancer Journal 2026 (bulbo del pelo y mucosa), Leukemia 2025 (sideroblastos en anillo) y JCO Precision Oncology 2024 (PALB2/RAD51C). Conviene que los reescriba ella.
 - [ ] **Orden de las publicaciones destacadas.** Hoy: 1 Blood Advances, 2 JAMA Network Open 2024, 3 British Journal of Haematology 2024; después, por fecha. Los puestos 4 y 5 están libres. El orden entre 2 y 3 lo puse yo.

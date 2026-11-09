@@ -312,3 +312,47 @@ for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
     });
   }
 }
+
+for (const { path, group, other, interview } of [
+  {
+    path: "/sobre-mi/",
+    group: "Unidad de Telómeros del Adulto, Vall d'Hebron",
+    other: "Otras apariciones",
+    interview: "Entrevista",
+  },
+  {
+    path: "/ca/sobre-mi/",
+    group: "Unitat de Telòmers de l'Adult, Vall d'Hebron",
+    other: "Altres aparicions",
+    interview: "Entrevista",
+  },
+  {
+    path: "/en/sobre-mi/",
+    group: "Adult Telomere Unit, Vall d'Hebron",
+    other: "Other appearances",
+    interview: "Interview",
+  },
+]) {
+  test(`${path}: la prensa se agrupa por la unidad de telómeros y el resto, con la entrevista primero`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const press = page.locator("#prensa");
+    await expect(press.getByRole("heading", { name: group })).toBeVisible();
+    await expect(press.getByRole("heading", { name: other })).toBeVisible();
+    const lists = press.locator("ul");
+    await expect(lists).toHaveCount(2);
+    const first = lists.nth(0).getByRole("listitem");
+    expect(await first.count()).toBe(11);
+    await expect(first.nth(0)).toContainText("RTVE");
+    await expect(first.nth(0)).toContainText(interview);
+    await expect(first.nth(1)).toContainText("La Vanguardia");
+    await expect(lists.nth(1).getByRole("listitem")).toHaveCount(2);
+    // Todos los enlaces abren otra pestaña y los titulares conservan su idioma.
+    for (const link of await press.getByRole("link").all()) {
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("href", /^https:\/\//);
+      await expect(link).toHaveAttribute("lang", /^(es|ca)$/);
+    }
+  });
+}

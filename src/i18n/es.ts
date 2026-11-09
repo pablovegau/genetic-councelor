@@ -212,14 +212,14 @@ export const es: Copy = {
       "Profesora vinculada en la UAB desde 2025.",
     ],
     pressTitle: "Prensa y divulgación",
-    press: [
-      "El País",
-      "La Vanguardia",
-      "RTVE",
-      "Onda Cero",
-      "Telemadrid",
-      "Manual SEHH (2024)",
-    ],
+    pressGroups: {
+      telomeres: {
+        title: "Unidad de Telómeros del Adulto, Vall d'Hebron",
+        text: "En septiembre de 2025 el Hospital Vall d'Hebron presentó la primera unidad de España dedicada a las alteraciones de la biología de los telómeros en adultos. Sara es asesora genética del equipo.",
+      },
+      other: { title: "Otras apariciones" },
+    },
+    pressKinds: { interview: "Entrevista", hospital: "Nota del hospital" },
     publicationsTitle: "Publicaciones",
     publicationsLead: "Artículos en revistas científicas, tomados de PubMed.",
     total: "{count} publicaciones en PubMed.",
