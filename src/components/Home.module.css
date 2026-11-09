@@ -14,6 +14,17 @@
   max-inline-size: 20ch;
 }
 
+.cards {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .lead {
   max-inline-size: 38rem;
 }

@@ -8,6 +8,7 @@ import {
   Byline,
   Link,
   MarkerList,
+  PriceCard,
   Portrait,
   Section,
   Split,
@@ -20,13 +21,28 @@ import styles from "./Home.module.css";
 
 const copy = getCopy(Astro.currentLocale);
 const book = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "reservar");
+const termsHref = getRelativeLocaleUrl(
+  Astro.currentLocale ?? "es",
+  "condiciones-de-reserva"
+);
 const aboutHref = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "sobre-mi");
-const price = new Intl.NumberFormat(Astro.currentLocale ?? "es", {
+const euro = new Intl.NumberFormat(Astro.currentLocale ?? "es", {
   style: "currency",
   currency: "EUR",
   maximumFractionDigits: 0,
-}).format(visits.first.price);
-const { site, hero, situations, process, about, closing, tree } = copy;
+});
+const price = euro.format(visits.first.price);
+const { site, hero, situations, process, about, closing, tree, booking } = copy;
+// Cada tarjeta lleva a /reservar/ con su visita elegida (con las reservas activas abre su calendario).
+const visitCards = [
+  { ...booking.first, visit: visits.first },
+  { ...booking.followup, visit: visits.followup },
+].map(({ name, description, visit }) => ({
+  name,
+  description,
+  price: euro.format(visit.price),
+  href: `${book}?visita=${visit.slug}`,
+}));
 
 const markers = [
   { marker: "circle", tone: "danger" },
@@ -168,6 +184,25 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
         {process.lead}
       </Text>
       <Steps items={steps} />
+    </div>
+  </Section>
+
+  <Section id="visitas">
+    <div class={styles.stack}>
+      <Text as="h2" variant="heading-2" className={styles.title}>
+        {booking.visitsTitle}
+      </Text>
+      <div class={styles.cards}>
+        {visitCards.map(({ name, description, price, href }) => (
+          <PriceCard name={name} price={price} description={description}>
+            <Button href={href}>{booking.choose}</Button>
+          </PriceCard>
+        ))}
+      </div>
+      <Text size="2" color="muted">
+        {`${booking.terms.text} `}
+        <Link href={termsHref}>{booking.terms.link}</Link>
+      </Text>
     </div>
   </Section>
 
