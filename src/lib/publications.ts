@@ -10,6 +10,30 @@ export interface Publication {
   url: string;
 }
 
+/** Texto propio de cada publicación, por su id de PubMed (`src/data/publication-notes.json`). */
+export interface PublicationNote {
+  /** Posición entre las destacadas (1 es la más importante). Sin valor, va por fecha. */
+  featured?: number;
+  /** `title`: PubMed no da el resumen y el texto se basa solo en el título (a revisar con Sara). */
+  basis?: "title";
+  /** Qué cuenta el artículo, en lenguaje llano y en pocas líneas. */
+  summary: Record<"es" | "ca" | "en", string>;
+}
+
+export type PublicationNotes = Record<string, PublicationNote>;
+
+/** Las destacadas primero, por su valor (1, 2, 3…); el resto, en el orden que ya traen (por fecha). */
+export function orderPublications<T extends { id: string }>(
+  items: T[],
+  notes: PublicationNotes
+): T[] {
+  const rank = (item: T) => notes[item.id]?.featured ?? Infinity;
+  return items
+    .map((item, index) => ({ item, index }))
+    .sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index)
+    .map(({ item }) => item);
+}
+
 /** Autora en el formato del índice de autores de PubMed (apellido e inicial). */
 export const authorQuery = '"Torres-Esquius S"[Author]';
 

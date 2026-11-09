@@ -11,6 +11,8 @@ export interface PublicationItem {
   year: string;
   /** Autores ya formateados ("A, B, C et al."). */
   authors: string;
+  /** Qué cuenta el artículo, en pocas líneas y lenguaje llano. */
+  summary?: string;
   /** Página de la publicación (PubMed). */
   url: string;
 }
@@ -47,6 +49,7 @@ function Entry({
         {item.title}
         <span className={styles.hidden}> ({newTabLabel})</span>
       </Link>
+      {item.summary && <Text className={styles.summary}>{item.summary}</Text>}
       <Text size="2" color="muted">
         {item.authors}
       </Text>
@@ -54,7 +57,10 @@ function Entry({
   );
 }
 
-/** Publicaciones con las más recientes a la vista y el resto en un desplegable nativo (sin JavaScript). */
+/**
+ * Publicaciones con las primeras a la vista y el resto en un desplegable nativo (sin JavaScript).
+ * Al desplegarlas todas, el botón desaparece.
+ */
 export function PublicationList({
   items,
   visible = 5,

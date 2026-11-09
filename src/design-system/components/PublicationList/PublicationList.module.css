@@ -25,6 +25,10 @@
     max-inline-size: 48rem;
   }
 
+  .entry .summary {
+    max-inline-size: 44rem;
+  }
+
   .hidden {
     position: absolute;
     inline-size: 1px;
@@ -41,6 +45,11 @@
     text-decoration: underline;
     text-underline-offset: 0.25em;
     cursor: pointer;
+  }
+
+  /* Con todas a la vista, el botón ya no hace falta. */
+  .more[open] > summary {
+    display: none;
   }
 
   .more summary:focus-visible {
