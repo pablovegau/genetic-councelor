@@ -2,6 +2,8 @@
 
 Lista a grandes rasgos. Base: `docs/design/brief.md`, `CONTEXT.md` y la guía del vídeo (`docs/references/tutorial-landing-claude-code.html`).
 
+**Lo que Sara tiene que revisar** está en `docs/revision-sara.md` (lista viva: se añade ahí cada punto nuevo).
+
 **Para empezar a construir solo bloquean:** ver el vídeo (el commit/push y Astro con i18n ya están hechos). Lo de "Pendiente de negocio" se cierra en paralelo.
 
 ## Base técnica
