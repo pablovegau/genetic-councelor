@@ -11,6 +11,16 @@
     grid-column: 1 / -1;
   }
 
+  /* Las columnas pueden encoger por debajo de su contenido (un correo largo con icono) y, en móvil,
+     la última ocupa todo el ancho si queda sola en su fila. */
+  .grid > * {
+    min-inline-size: 0;
+  }
+
+  .grid > :last-child:nth-child(even) {
+    grid-column: 1 / -1;
+  }
+
   .about .tagline {
     max-inline-size: 22rem;
     margin-block-start: var(--space-2);
@@ -24,11 +34,18 @@
   }
 
   .links {
+    overflow-wrap: anywhere;
     display: grid;
     gap: var(--space-2);
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .withIcon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
   }
 
   .links [data-pending] {
@@ -51,7 +68,11 @@
 
   @media (min-width: 48rem) {
     .grid {
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      grid-template-columns: 1.2fr 0.9fr 1fr 1.4fr;
+    }
+
+    .grid > :last-child:nth-child(even) {
+      grid-column: auto;
     }
 
     .about {

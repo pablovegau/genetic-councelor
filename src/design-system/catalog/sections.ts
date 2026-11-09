@@ -119,6 +119,12 @@ export const catalogGroups: CatalogGroup[] = [
           "Enlace de texto con cuatro variantes: énfasis, título, navegación y apagado.",
       },
       {
+        slug: "icon",
+        label: "Icon",
+        description:
+          "Iconos de 1,25 em que heredan el color: correo y logos de redes sociales.",
+      },
+      {
         slug: "brand-mark",
         label: "BrandMark",
         description:

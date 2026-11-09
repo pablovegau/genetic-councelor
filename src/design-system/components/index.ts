@@ -11,6 +11,7 @@ export {
   type LanguageSwitchItem,
   type LanguageSwitchProps,
 } from "./LanguageSwitch/LanguageSwitch";
+export { Icon, iconNames, type IconName, type IconProps } from "./Icon/Icon";
 export { Link, type LinkProps, type LinkVariant } from "./Link/Link";
 export {
   MarkerList,

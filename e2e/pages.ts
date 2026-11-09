@@ -8,6 +8,7 @@ const locales = [
 export const sitePages = [
   "reservar",
   "contacto",
+  "blog",
   "sobre-mi",
   "aviso-legal",
   "politica-de-privacidad",

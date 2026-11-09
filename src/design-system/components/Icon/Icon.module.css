@@ -1,0 +1,9 @@
+@layer base, components, props;
+
+@layer components {
+  .icon {
+    inline-size: 1.25em;
+    block-size: 1.25em;
+    flex: none;
+  }
+}

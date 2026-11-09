@@ -1,0 +1,46 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { Icon, iconNames } from "../../../design-system/components";
+
+const usage = '<Icon name="linkedin" title="LinkedIn" />';
+
+const rows: PropRow[] = [
+  {
+    name: "name",
+    type: iconNames.map((name) => `"${name}"`).join(" | "),
+    default: "—",
+    description: "Qué icono dibujar.",
+  },
+  {
+    name: "title",
+    type: "string",
+    default: "—",
+    description:
+      "Nombre accesible. Sin él el icono es decorativo, para ir junto a un texto.",
+  },
+];
+---
+
+<ComponentPage
+  item="icon"
+  intro="Icono de 1,25 em que hereda el color del texto. El correo es de línea y los logos de redes sociales son siluetas rellenas."
+  importLine={'import { Icon } from "design-system/components";'}
+  usage={usage}
+  component="Icon"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Un icono suelto (solo el logo, sin texto) necesita <code>title</code> o el nombre accesible en el enlace que lo contiene.",
+    "Para añadir otra red social (Instagram…) se añade su silueta en <code>Icon.tsx</code> y una línea en <code>socialLinks</code> (<code>src/config/contact.ts</code>).",
+  ]}
+>
+  <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap">
+    {iconNames.map((name) => (
+      <span style="display:inline-flex;gap:0.5rem;align-items:center">
+        <Icon name={name} />
+        {name}
+      </span>
+    ))}
+  </div>
+</ComponentPage>

@@ -12,7 +12,7 @@ export interface Copy {
   site: {
     brand: string;
     mainNav: string;
-    nav: { about: string; contact: string };
+    nav: { about: string; blog: string; contact: string };
     /** Ocupación de Sara en los datos estructurados. */
     jobTitle: string;
     book: string;
@@ -102,6 +102,13 @@ export interface Copy {
     response: string;
     health: string;
     bookText: string;
+  };
+  blog: {
+    meta: { title: string; description: string };
+    title: string;
+    lead: string;
+    status: string;
+    back: string;
   };
   aboutPage: {
     meta: { title: string; description: string };

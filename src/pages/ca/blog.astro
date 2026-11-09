@@ -1,0 +1,11 @@
+---
+import BlogPage from "../../components/BlogPage.astro";
+import Site from "../../layouts/Site.astro";
+import { getCopy } from "../../i18n";
+
+const { blog } = getCopy(Astro.currentLocale);
+---
+
+<Site title={blog.meta.title} description={blog.meta.description}>
+  <BlogPage />
+</Site>

@@ -9,7 +9,7 @@ export const es: Copy = {
   site: {
     brand: "Sara Torres-Esquius",
     mainNav: "Principal",
-    nav: { about: "Sobre mí", contact: "Contacto" },
+    nav: { about: "Sobre mí", blog: "Blog", contact: "Contacto" },
     jobTitle: "Asesora genética",
     book: "Reservar cita",
     languages: "Idioma",
@@ -185,6 +185,18 @@ export const es: Copy = {
     health:
       "Por correo, mejor no nos envíes informes ni datos de salud: los revisaremos juntos en la visita.",
     bookText: "¿Prefieres reservar directamente?",
+  },
+  blog: {
+    meta: {
+      title: "Blog · Sara Torres-Esquius",
+      description:
+        "El blog de Sara Torres-Esquius sobre genética y asesoramiento genético, en construcción.",
+    },
+    title: "Blog",
+    lead: "Artículos para entender la genética y el asesoramiento genético, sin tecnicismos.",
+    status:
+      "Estamos preparando el blog. Muy pronto encontrarás aquí los primeros artículos.",
+    back: "Volver al inicio",
   },
   aboutPage: {
     meta: {

@@ -9,7 +9,7 @@ export const en: Copy = {
   site: {
     brand: "Sara Torres-Esquius",
     mainNav: "Main",
-    nav: { about: "About me", contact: "Contact" },
+    nav: { about: "About me", blog: "Blog", contact: "Contact" },
     jobTitle: "Genetic counsellor",
     book: "Book an appointment",
     languages: "Language",
@@ -184,6 +184,18 @@ export const en: Copy = {
     health:
       "By email, please don't send reports or health data: we will go over them together at the visit.",
     bookText: "Prefer to book straight away?",
+  },
+  blog: {
+    meta: {
+      title: "Blog · Sara Torres-Esquius",
+      description:
+        "Sara Torres-Esquius's blog on genetics and genetic counselling, under construction.",
+    },
+    title: "Blog",
+    lead: "Articles to understand genetics and genetic counselling, without jargon.",
+    status:
+      "We are getting the blog ready. The first articles will be here very soon.",
+    back: "Back to home",
   },
   aboutPage: {
     meta: {

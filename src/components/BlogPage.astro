@@ -1,0 +1,27 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Link, Section } from "../design-system/components";
+import { Text } from "../design-system/primitives";
+import { getCopy } from "../i18n";
+import styles from "./BookingPage.module.css";
+
+const locale = Astro.currentLocale ?? "es";
+const { blog } = getCopy(locale);
+---
+
+<Section pad="start">
+  <div class={styles.intro}>
+    <Text as="h1" variant="heading-2" className={styles.title}>
+      {blog.title}
+    </Text>
+    <Text variant="text-lg" color="muted">
+      {blog.lead}
+    </Text>
+    <Text variant="text-lg" role="status" data-under-construction>
+      {blog.status}
+    </Text>
+    <Text>
+      <Link href={getRelativeLocaleUrl(locale)}>{blog.back}</Link>
+    </Text>
+  </div>
+</Section>

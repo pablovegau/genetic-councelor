@@ -1,8 +1,10 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { socialLinks } from "../config/contact";
 import {
   Button,
   Container,
+  Icon,
   Link,
   MobileMenu,
   BrandMark,
@@ -18,6 +20,7 @@ const home = getRelativeLocaleUrl(locale);
 const book = getRelativeLocaleUrl(locale, "reservar");
 const nav = [
   { label: site.nav.about, href: getRelativeLocaleUrl(locale, "sobre-mi") },
+  { label: site.nav.blog, href: getRelativeLocaleUrl(locale, "blog") },
   { label: site.nav.contact, href: getRelativeLocaleUrl(locale, "contacto") },
 ];
 ---
@@ -41,6 +44,20 @@ const nav = [
       <div class="langs">
         <LanguageSwitcher />
       </div>
+      <ul class="social">
+        {socialLinks.map(({ name, href, icon }) => (
+          <li>
+            <a
+              {href}
+              aria-label={name}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name={icon} />
+            </a>
+          </li>
+        ))}
+      </ul>
       <div class="actions">
         <div class="book">
           <Button size="sm" href={book}>
@@ -76,6 +93,7 @@ const nav = [
 
   .nav,
   .langs,
+  .social,
   .book {
     display: none;
   }
@@ -97,9 +115,37 @@ const nav = [
 
   /* Escritorio: los enlaces, el idioma y el botón van en la barra; el menú lateral desaparece. */
   @media (min-width: 48rem) {
+    /* Sin margen automático en la marca: el menú se centra entre la marca y el selector de idioma. */
+    .brand {
+      margin-inline-end: 0;
+    }
+
     .nav {
       display: flex;
       gap: var(--space-8);
+      margin-inline: auto;
+    }
+
+    .social {
+      display: flex;
+      gap: var(--space-1);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .social a {
+      display: grid;
+      place-items: center;
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
+      border-radius: 50%;
+      color: inherit;
+      font-size: 1.125rem;
+    }
+
+    .social a:hover {
+      color: var(--color-action-bg);
     }
 
     .langs {
