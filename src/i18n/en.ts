@@ -205,30 +205,41 @@ export const en: Copy = {
     careerTitle: "Career",
     career: [
       {
-        when: "Since 2025",
-        role: "Genetic counsellor",
-        place: "Clínica Corachan-IDOC",
-        kind: "clinic",
+        title: "Clinical practice",
+        items: [
+          {
+            when: "Since 2025",
+            role: "Genetic counsellor",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Since 2021",
+            role: "Genetic counsellor",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Part of the team at the Adult Telomere Unit, the first in Spain, which started in December 2024.",
+          },
+        ],
       },
       {
-        when: "Since 2025",
-        role: "Associate lecturer",
-        place: "Universitat Autònoma de Barcelona (UAB)",
-        kind: "academic",
+        title: "Teaching",
+        items: [
+          {
+            when: "Since 2025",
+            role: "Associate lecturer",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
       },
       {
-        when: "Since 2021",
-        role: "Genetic counsellor",
-        place: "Hospital Vall d'Hebron",
-        detail:
-          "Part of the team at the Adult Telomere Unit, the first in Spain, which started in December 2024.",
-        kind: "clinic",
-      },
-      {
-        when: "Also",
-        role: "Board member",
-        place: "SEAGen, the Spanish Society of Genetic Counselling",
-        kind: "society",
+        title: "Scientific societies",
+        items: [
+          {
+            when: "Currently",
+            role: "Board member",
+            place: "SEAGen, the Spanish Society of Genetic Counselling",
+          },
+        ],
       },
     ],
     educationTitle: "Education",
@@ -239,7 +250,6 @@ export const en: Copy = {
     ],
     facts: [
       "More than 10 years of experience in genetics.",
-      "Specialised in hereditary haematological and solid cancer.",
       "Sees patients in Spanish, Catalan and English.",
     ],
     pressTitle: "Press and outreach",

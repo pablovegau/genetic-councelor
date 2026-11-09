@@ -23,9 +23,10 @@
     block-size: 100%;
     max-inline-size: none;
     object-fit: cover;
-    /* Recorte a la cara de la foto de Sara. */
+    /* Recorte a la cara de la foto de Sara: en la foto, la cara está hacia el 21 % de la altura, y el origen
+       (arriba) deja la cabeza entera y centrada en el círculo. */
     transform: scale(2.3);
-    transform-origin: 50% 25%;
+    transform-origin: 50% 3%;
   }
 
   .name {

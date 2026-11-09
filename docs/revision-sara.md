@@ -30,7 +30,7 @@ Lista viva: se añade lo que Sara debe confirmar, rellenar o aprobar antes de pu
 
 - [ ] **«Sobre mí»: trayectoria y formación.** Nuevos datos, sacados de la ficha de SEAGen, de las notas de prensa y del titular de su LinkedIn (LinkedIn no se puede leer desde aquí):
   - Formación: Grado en Genética (UAB), Máster en Genética Asistencial (UAB), Máster en Comunicación Científica (UPF).
-  - Especialidad: «cáncer hereditario, hematológico y de órganos sólidos».
+  - Sin especialidades a propósito: puede hacer cualquier tipo de asesoramiento genético.
   - «Forma parte del equipo de la Unidad de Telómeros del Adulto, la primera de España, que arrancó en diciembre de 2024» (nota de Vall d'Hebron).
   - Idiomas de atención: español, catalán e inglés (del brief).
   - Que confirme las fechas («desde 2021», «desde 2025») y si quiere añadir más: puestos anteriores (por ejemplo, el grupo de Genética del Cáncer Hereditario del VHIO, que algunas fuentes sitúan entre 2016 y 2023: **no está en la web hasta que lo confirme**), líneas de investigación, sociedades.

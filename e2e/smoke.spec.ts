@@ -366,45 +366,52 @@ for (const { path, group, other, interview } of [
   });
 }
 
-for (const { path, first, last, degree, fact } of [
+for (const { path, groups, first, degree, fact } of [
   {
     path: "/sobre-mi/",
-    first: "Desde 2025",
-    last: "Además",
+    groups: ["Práctica asistencial", "Docencia", "Sociedades científicas"],
+    first: ["Desde 2025", "Corachan-IDOC"],
     degree: "Máster en Genética Asistencial (UAB)",
     fact: "Atiende en español, catalán e inglés.",
   },
   {
     path: "/ca/sobre-mi/",
-    first: "Des del 2025",
-    last: "A més",
+    groups: ["Pràctica assistencial", "Docència", "Societats científiques"],
+    first: ["Des del 2025", "Corachan-IDOC"],
     degree: "Màster en Genètica Assistencial (UAB)",
     fact: "Atén en castellà, català i anglès.",
   },
   {
     path: "/en/sobre-mi/",
-    first: "Since 2025",
-    last: "Also",
+    groups: ["Clinical practice", "Teaching", "Scientific societies"],
+    first: ["Since 2025", "Corachan-IDOC"],
     degree: "Master's in Clinical Genetics (UAB)",
     fact: "Sees patients in Spanish, Catalan and English.",
   },
 ]) {
-  test(`${path}: la trayectoria es una línea de tiempo con formación y tres datos clave`, async ({
+  test(`${path}: la trayectoria va por áreas con lo más reciente primero, y la formación y los datos clave llevan símbolo`, async ({
     page,
   }) => {
     await page.goto(path);
-    const steps = page.locator("ol").first().getByRole("listitem");
-    await expect(steps).toHaveCount(4);
-    await expect(steps.first()).toContainText(first);
-    await expect(steps.first()).toContainText("Corachan-IDOC");
-    await expect(steps.nth(2)).toContainText("Vall d'Hebron");
-    await expect(steps.nth(2)).toContainText("2024");
-    await expect(steps.last()).toContainText(last);
-    await expect(steps.last()).toContainText("SEAGen");
+    // Las áreas de la trayectoria son las <section> anidadas en la banda violeta.
+    const areas = page.locator("main section section");
+    await expect(areas.getByRole("heading", { level: 3 })).toHaveText(groups);
+    // Práctica asistencial: Corachan (2025) antes que Vall d'Hebron (2021).
+    const clinical = areas.first().getByRole("listitem");
+    await expect(clinical).toHaveCount(2);
+    await expect(clinical.nth(0)).toContainText(first[0]!);
+    await expect(clinical.nth(0)).toContainText(first[1]!);
+    await expect(clinical.nth(1)).toContainText("Vall d'Hebron");
+    await expect(clinical.nth(1)).toContainText("2024");
     await expect(page.getByText(degree)).toBeVisible();
     await expect(page.getByText(fact)).toBeVisible();
-    await expect(
-      page.locator("main ul").first().getByRole("listitem")
-    ).toHaveCount(3);
+    // Sin especialidades: puede atender cualquier tipo de asesoramiento genético.
+    await expect(page.locator("main")).not.toContainText(
+      /especializada|specialised|especialitzada/i
+    );
+    // Los datos clave (2) y la formación (3) llevan su símbolo del árbol.
+    const bullets = page.locator("main ul > li > span[aria-hidden]");
+    await expect(bullets).toHaveCount(2 + 3);
+    await expect(page.locator("main h3 > span[aria-hidden]")).toHaveCount(3);
   });
 }

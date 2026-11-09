@@ -206,30 +206,41 @@ export const es: Copy = {
     careerTitle: "Trayectoria",
     career: [
       {
-        when: "Desde 2025",
-        role: "Asesora genética",
-        place: "Clínica Corachan-IDOC",
-        kind: "clinic",
+        title: "Práctica asistencial",
+        items: [
+          {
+            when: "Desde 2025",
+            role: "Asesora genética",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Desde 2021",
+            role: "Asesora genética",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Forma parte del equipo de la Unidad de Telómeros del Adulto, la primera de España, que arrancó en diciembre de 2024.",
+          },
+        ],
       },
       {
-        when: "Desde 2025",
-        role: "Profesora vinculada",
-        place: "Universitat Autònoma de Barcelona (UAB)",
-        kind: "academic",
+        title: "Docencia",
+        items: [
+          {
+            when: "Desde 2025",
+            role: "Profesora vinculada",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
       },
       {
-        when: "Desde 2021",
-        role: "Asesora genética",
-        place: "Hospital Vall d'Hebron",
-        detail:
-          "Forma parte del equipo de la Unidad de Telómeros del Adulto, la primera de España, que arrancó en diciembre de 2024.",
-        kind: "clinic",
-      },
-      {
-        when: "Además",
-        role: "Vocal de la Junta Directiva",
-        place: "SEAGen, Sociedad Española de Asesoramiento Genético",
-        kind: "society",
+        title: "Sociedades científicas",
+        items: [
+          {
+            when: "Actualmente",
+            role: "Vocal de la Junta Directiva",
+            place: "SEAGen, Sociedad Española de Asesoramiento Genético",
+          },
+        ],
       },
     ],
     educationTitle: "Formación",
@@ -240,7 +251,6 @@ export const es: Copy = {
     ],
     facts: [
       "Más de 10 años de experiencia en genética.",
-      "Especializada en cáncer hereditario, hematológico y de órganos sólidos.",
       "Atiende en español, catalán e inglés.",
     ],
     pressTitle: "Prensa y divulgación",

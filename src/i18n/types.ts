@@ -7,14 +7,17 @@ export interface TreeNodeCopy {
   text: string;
 }
 
-export interface CareerItem {
-  /** «Desde 2025», «Además». */
-  when: string;
-  role: string;
-  place: string;
-  detail?: string;
-  /** Forma y color del marcador en la línea de tiempo. */
-  kind: "clinic" | "academic" | "society";
+export interface CareerGroup {
+  /** Área: «Práctica asistencial», «Docencia». */
+  title: string;
+  /** Lo más reciente primero. */
+  items: {
+    /** «Desde 2025». */
+    when: string;
+    role: string;
+    place: string;
+    detail?: string;
+  }[];
 }
 
 export interface Copy {
@@ -122,10 +125,10 @@ export interface Copy {
     meta: { title: string; description: string };
     lead: string;
     careerTitle: string;
-    career: CareerItem[];
+    career: CareerGroup[];
     educationTitle: string;
     education: string[];
-    /** Tres datos clave junto a la presentación, cada uno con su símbolo del árbol. */
+    /** Datos clave junto a la presentación, cada uno con un símbolo del árbol. */
     facts: string[];
     pressTitle: string;
     pressGroups: {

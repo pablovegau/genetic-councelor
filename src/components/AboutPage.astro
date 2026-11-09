@@ -45,26 +45,25 @@ const pressItems = (group: PressEntry["group"]) =>
     url: entry.url,
     label: entry.kind ? aboutPage.pressKinds[entry.kind] : undefined,
   }));
-// Símbolo de cada dato clave, como en el árbol genealógico de la portada.
-const factMarkers = [
-  ["circle", "action"],
-  ["square", "accent"],
-  ["circle", "danger"],
+// Símbolos del árbol genealógico de la portada: marcan las listas (datos clave, áreas y formación).
+const markers = [
+  { shape: "circle", tone: "action" },
+  { shape: "square", tone: "accent" },
+  { shape: "circle", tone: "danger" },
 ] as const;
+const marker = (i: number) => markers[i % markers.length]!;
 const count = (template: string, n: number) =>
   template.replace("{count}", String(n));
 ---
 
 <Section pad="start">
   <Split ratio={1.25} gap="wide">
-    <div class={styles.portrait}>
-      <Portrait
-        src={portrait.src}
-        width={portrait.width}
-        height={portrait.height}
-        alt={about.imageAlt}
-      />
-    </div>
+    <Portrait
+      src={portrait.src}
+      width={portrait.width}
+      height={portrait.height}
+      alt={about.imageAlt}
+    />
     <div class={styles.intro}>
       <Text as="h1" variant="heading-2" className={styles.title}>
         {site.brand}
@@ -77,8 +76,8 @@ const count = (template: string, n: number) =>
           <li>
             <span
               class={styles.marker}
-              data-shape={factMarkers[i]![0]}
-              data-tone={factMarkers[i]![1]}
+              data-shape={marker(i).shape}
+              data-tone={marker(i).tone}
               aria-hidden="true"
             />
             <Text>{fact}</Text>
@@ -95,32 +94,53 @@ const count = (template: string, n: number) =>
       <Text as="h2" variant="heading-3">
         {aboutPage.careerTitle}
       </Text>
-      <ol class={styles.timeline}>
-        {aboutPage.career.map(({ when, role, place, detail, kind }) => (
-          <li data-kind={kind}>
-            <Text size="2" color="muted">
-              {when}
+      <div class={styles.groups}>
+        {aboutPage.career.map(({ title, items }, g) => (
+          <section class={styles.group}>
+            <Text as="h3" variant="heading-5" className={styles.groupTitle}>
+              <span
+                class={styles.marker}
+                data-shape={marker(g).shape}
+                data-tone={marker(g).tone}
+                aria-hidden="true"
+              />
+              {title}
             </Text>
-            <Text as="h3" variant="heading-5">
-              {role}
-            </Text>
-            <Text>{place}</Text>
-            {detail && (
-              <Text size="2" color="muted">
-                {detail}
-              </Text>
-            )}
-          </li>
+            <ul class={styles.entries}>
+              {items.map(({ when, role, place, detail }) => (
+                <li>
+                  <Text size="2" color="muted">
+                    {when}
+                  </Text>
+                  <Text as="strong" className={styles.role}>
+                    {role}
+                  </Text>
+                  <Text>{place}</Text>
+                  {detail && (
+                    <Text size="2" color="muted">
+                      {detail}
+                    </Text>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ol>
+      </div>
     </div>
     <div class={styles.block}>
       <Text as="h2" variant="heading-3">
         {aboutPage.educationTitle}
       </Text>
       <ul class={styles.education}>
-        {aboutPage.education.map((degree) => (
+        {aboutPage.education.map((degree, i) => (
           <li>
+            <span
+              class={styles.marker}
+              data-shape={marker(i).shape}
+              data-tone={marker(i).tone}
+              aria-hidden="true"
+            />
             <Text>{degree}</Text>
           </li>
         ))}

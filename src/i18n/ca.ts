@@ -206,30 +206,41 @@ export const ca: Copy = {
     careerTitle: "Trajectòria",
     career: [
       {
-        when: "Des del 2025",
-        role: "Assessora genètica",
-        place: "Clínica Corachan-IDOC",
-        kind: "clinic",
+        title: "Pràctica assistencial",
+        items: [
+          {
+            when: "Des del 2025",
+            role: "Assessora genètica",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Des del 2021",
+            role: "Assessora genètica",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Forma part de l'equip de la Unitat de Telòmers de l'Adult, la primera de l'Estat, que va arrencar al desembre del 2024.",
+          },
+        ],
       },
       {
-        when: "Des del 2025",
-        role: "Professora vinculada",
-        place: "Universitat Autònoma de Barcelona (UAB)",
-        kind: "academic",
+        title: "Docència",
+        items: [
+          {
+            when: "Des del 2025",
+            role: "Professora vinculada",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
       },
       {
-        when: "Des del 2021",
-        role: "Assessora genètica",
-        place: "Hospital Vall d'Hebron",
-        detail:
-          "Forma part de l'equip de la Unitat de Telòmers de l'Adult, la primera de l'Estat, que va arrencar al desembre del 2024.",
-        kind: "clinic",
-      },
-      {
-        when: "A més",
-        role: "Vocal de la Junta Directiva",
-        place: "SEAGen, Societat Espanyola d'Assessorament Genètic",
-        kind: "society",
+        title: "Societats científiques",
+        items: [
+          {
+            when: "Actualment",
+            role: "Vocal de la Junta Directiva",
+            place: "SEAGen, Societat Espanyola d'Assessorament Genètic",
+          },
+        ],
       },
     ],
     educationTitle: "Formació",
@@ -240,7 +251,6 @@ export const ca: Copy = {
     ],
     facts: [
       "Més de 10 anys d'experiència en genètica.",
-      "Especialitzada en càncer hereditari, hematològic i d'òrgans sòlids.",
       "Atén en castellà, català i anglès.",
     ],
     pressTitle: "Premsa i divulgació",
