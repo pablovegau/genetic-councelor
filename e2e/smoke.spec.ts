@@ -415,3 +415,37 @@ for (const { path, groups, first, degree, fact } of [
     await expect(page.locator("main h3 > span[aria-hidden]")).toHaveCount(3);
   });
 }
+
+for (const path of ["/blog/", "/ca/blog/", "/en/blog/", "/contacto/"]) {
+  test(`${path}: con poco contenido el pie queda pegado al borde de abajo, sin hueco debajo`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const { footerBottom, viewport, scrollHeight } = await page.evaluate(
+      () => ({
+        footerBottom: document.querySelector("footer")!.getBoundingClientRect()
+          .bottom,
+        viewport: window.innerHeight,
+        scrollHeight: document.documentElement.scrollHeight,
+      })
+    );
+    // El pie termina donde termina la página, sin hueco debajo.
+    expect(Math.round(footerBottom)).toBe(scrollHeight);
+    // En escritorio el blog es más corto que la ventana: el pie queda justo en su borde.
+    if (path.includes("blog") && page.viewportSize()!.width >= 1024)
+      expect(scrollHeight).toBe(viewport);
+  });
+}
+
+test("con mucho contenido el pie sigue al final de la página, sin hueco debajo", async ({
+  page,
+}) => {
+  await page.goto("/sobre-mi/");
+  const gap = await page.evaluate(
+    () =>
+      document.documentElement.scrollHeight -
+      (document.querySelector("footer")!.getBoundingClientRect().bottom +
+        window.scrollY)
+  );
+  expect(Math.abs(gap)).toBeLessThanOrEqual(1);
+});
