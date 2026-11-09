@@ -22,8 +22,6 @@ export const ca: Copy = {
     title: "Dibuixem el teu arbre familiar i l'entenem junts.",
     text: "La història de la teva família diu molt de la teva salut. A la primera visita l'ordenem, veiem què té sentit fer i t'expliquem cada pas amb calma. Sense presses i sense tecnicismes.",
     role: "Assessora genètica a Barcelona",
-    price:
-      "Primera visita {price} (IVA inclòs), per videotrucada. Cancel·lació gratuïta fins a 48 h abans.",
     confidential: "Tot el que ens expliquis és confidencial.",
   },
   tree: {

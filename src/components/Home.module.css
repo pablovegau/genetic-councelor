@@ -64,13 +64,6 @@
   max-inline-size: 32rem;
 }
 
-.heroCta {
-  display: grid;
-  justify-items: start;
-  gap: var(--space-2);
-  max-inline-size: 22rem;
-}
-
 .heroActions {
   display: flex;
   flex-wrap: wrap;
@@ -126,8 +119,6 @@
   .heroCta {
     order: 4;
     justify-self: center;
-    justify-items: center;
-    text-align: center;
   }
 
   .heroNote {

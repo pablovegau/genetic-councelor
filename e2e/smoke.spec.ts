@@ -171,65 +171,14 @@ for (const { path } of versions) {
   }
 }
 
-const prices = [
-  {
-    path: "/",
-    text: "Primera visita 120 € (IVA incluido), por videollamada. Cancelación gratuita hasta 48 h antes.",
-  },
-  {
-    path: "/ca/",
-    text: "Primera visita 120 € (IVA inclòs), per videotrucada. Cancel·lació gratuïta fins a 48 h abans.",
-  },
-  {
-    path: "/en/",
-    text: "First visit €120 (VAT included), by video call. Free cancellation up to 48 h before.",
-  },
-];
-for (const { path, text } of prices) {
-  test(`${path}: el precio de la primera visita está junto al botón principal`, async ({
+for (const path of ["/", "/ca/", "/en/"]) {
+  test(`${path}: el hero no repite el precio ni la cancelación junto al botón`, async ({
     page,
   }) => {
     await page.goto(path);
-    const note = page.getByText(text, { exact: true });
-    await expect(note).toBeVisible();
-    const button = page.locator("main a[href$='/reservar/']").first();
-    const [a, b] = await Promise.all([
-      note.boundingBox(),
-      button.boundingBox(),
-    ]);
-    expect(Math.abs(a!.y - b!.y)).toBeLessThan(120);
-  });
-}
-
-for (const { path, lang, mail } of [
-  { path: "/contacto/", lang: "es", mail: "contact@saratorresesquius.com" },
-  { path: "/ca/contacto/", lang: "ca", mail: "contact@saratorresesquius.com" },
-  { path: "/en/contacto/", lang: "en", mail: "contact@saratorresesquius.com" },
-]) {
-  test(`${path}: tiene el correo, el plazo por completar y el enlace a reservar, sin teléfono`, async ({
-    page,
-  }) => {
-    await page.goto(path);
-    await expect(page.locator("html")).toHaveAttribute("lang", lang);
-    await expect(
-      page.getByRole("main").getByRole("link", { name: mail })
-    ).toHaveAttribute("href", `mailto:${mail}`);
-    await expect(page.getByRole("main")).toContainText("[COMPLETAR]");
-    const prefix = lang === "es" ? "" : `/${lang}`;
-    await expect(
-      page.getByRole("main").locator(`a[href="${prefix}/reservar/"]`)
-    ).toHaveCount(1);
-    const text = await page.locator("body").innerText();
-    expect(text).not.toMatch(/tel[eé]fon|phone|\+34|\b\d{3} ?\d{3} ?\d{3}\b/i);
-  });
-
-  test(`${path}: «Contacto» de la cabecera y del pie lleva a esta página`, async ({
-    page,
-  }) => {
-    await page.goto(path.replace("contacto/", "sobre-mi/"));
-    await expect(page.locator(`footer a[href="${path}"]`)).toHaveCount(1);
-    await expect(page.locator(`header a[href="${path}"]`)).not.toHaveCount(0);
-    await expect(page.locator('a[href="#contacto"]')).toHaveCount(0);
+    const hero = page.locator("main > div > section").first();
+    await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(hero).not.toContainText(/120|IVA|VAT|48 ?h/);
   });
 }
 

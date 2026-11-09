@@ -22,8 +22,6 @@ export const es: Copy = {
     title: "Dibujamos tu árbol familiar y lo entendemos juntos.",
     text: "La historia de tu familia dice mucho sobre tu salud. En la primera visita la ordenamos, vemos qué tiene sentido hacer y te explicamos cada paso con calma. Sin prisas y sin tecnicismos.",
     role: "Asesora genética en Barcelona",
-    price:
-      "Primera visita {price} (IVA incluido), por videollamada. Cancelación gratuita hasta 48 h antes.",
     confidential: "Todo lo que nos cuentes es confidencial.",
   },
   tree: {

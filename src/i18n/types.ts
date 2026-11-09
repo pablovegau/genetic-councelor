@@ -26,8 +26,6 @@ export interface Copy {
     title: string;
     text: string;
     role: string;
-    /** Con `{price}`: el precio de la primera visita. */
-    price: string;
     confidential: string;
   };
   tree: {
