@@ -148,3 +148,12 @@ Páginas: `/aviso-legal/`, `/politica-de-privacidad/`, `/politica-de-cookies/` (
 
 - El catálogo (`src/pages/design-system`) se ve en `pnpm dev` pero **no se despliega**: `astro.config.mjs` borra `dist/design-system` al compilar salvo que `KEEP_CATALOG=true`. Lo ponen `pnpm test:e2e`, la CI (después de comprobar que la compilación de producción no lo incluye) y `update-vrt`.
 - Si algún día se quiere publicar (por ejemplo como documentación), basta quitar el hook `catalogOnlyInDev`.
+
+## Publicaciones
+
+- Los datos de PubMed están en `src/data/publications.json` (los actualiza la tarea semanal). Lo que escribimos nosotros va aparte, en `src/data/publication-notes.json`, por id de PubMed: `featured` (1, 2, 3… = las que van primero; el resto, por fecha) y `summary` (es/ca/en, 210 caracteres como máximo).
+- Hoy van primero las de primera autoría: 1 Blood Advances, 2 JAMA Network Open (2024), 3 British Journal of Haematology (2024). El 2 y el 3 los ordené yo por revista; Sara puede cambiarlos. Quedan libres el 4 y el 5.
+- [ ] Sara revisa los 26 resúmenes (los redacté a partir de los abstracts de PubMed).
+- [ ] Cinco resúmenes se basan solo en el título porque PubMed no tiene abstract (`"basis": "title"` en el JSON): Blood Advances (el más importante), AJH 2026 (TERT), Blood Cancer Journal 2026 (bulbo del pelo), Leukemia 2025 (sideroblastos) y JCO Precision Oncology 2024. Conviene que Sara los reescriba o confirme.
+- Un artículo nuevo que llegue de PubMed no tiene resumen hasta que se añada su nota; se muestra igual, sin resumen.
+- [ ] Prensa: no hay URLs de las entrevistas (El País, La Vanguardia, RTVE, Onda Cero, Telemadrid) ni del capítulo del manual SEHH 2024. Sara las pasa y se enlazan en «Sobre mí».

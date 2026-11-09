@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { cleanTitle, formatAuthors, parsePublications } from "./publications";
+import notes from "../data/publication-notes.json";
+import publications from "../data/publications.json";
+import {
+  cleanTitle,
+  formatAuthors,
+  orderPublications,
+  parsePublications,
+  type PublicationNotes,
+} from "./publications";
 
 const article = (overrides: Record<string, unknown> = {}) => ({
   title: "A study of BRCA2 variants.",
@@ -87,5 +95,73 @@ describe("parsePublications", () => {
       "1": article({ fulljournalname: undefined, source: "J Genet" }),
     });
     expect(publication!.journal).toBe("J Genet");
+  });
+});
+
+describe("orderPublications", () => {
+  const items = [{ id: "a" }, { id: "b" }, { id: "c" }, { id: "d" }];
+  const summary = { es: "", ca: "", en: "" };
+
+  it("las destacadas van primero por su valor y el resto sigue en su orden", () => {
+    const ordered = orderPublications(items, {
+      d: { featured: 1, summary },
+      b: { featured: 2, summary },
+    });
+    expect(ordered.map(({ id }) => id)).toEqual(["d", "b", "a", "c"]);
+  });
+
+  it("sin destacadas conserva el orden y no modifica la lista original", () => {
+    const ordered = orderPublications(items, { a: { summary } });
+    expect(ordered.map(({ id }) => id)).toEqual(["a", "b", "c", "d"]);
+    expect(ordered).not.toBe(items);
+  });
+});
+
+describe("publication-notes.json", () => {
+  const data = notes as PublicationNotes;
+  const ids = new Set(publications.map(({ id }) => id));
+
+  it("cada nota es de una publicación que existe y tiene el resumen en los tres idiomas", () => {
+    for (const [id, note] of Object.entries(data)) {
+      expect(
+        ids.has(id),
+        `la nota ${id} no corresponde a ninguna publicación`
+      ).toBe(true);
+      for (const locale of ["es", "ca", "en"] as const) {
+        expect(
+          note.summary[locale].trim().length,
+          `${id} ${locale}`
+        ).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("los resúmenes caben en tres líneas: 210 caracteres como máximo", () => {
+    for (const [id, note] of Object.entries(data)) {
+      for (const locale of ["es", "ca", "en"] as const) {
+        expect(
+          note.summary[locale].length,
+          `${id} ${locale}`
+        ).toBeLessThanOrEqual(210);
+      }
+    }
+  });
+
+  it("los valores de destacada son enteros positivos y no se repiten", () => {
+    const featured = Object.values(data).flatMap((note) =>
+      note.featured === undefined ? [] : [note.featured]
+    );
+    expect(featured.every((n) => Number.isInteger(n) && n > 0)).toBe(true);
+    expect(new Set(featured).size).toBe(featured.length);
+  });
+
+  it("la primera destacada es el artículo de Blood Advances y le siguen las demás primeras autorías", () => {
+    const ordered = orderPublications(publications, data);
+    expect(ordered.slice(0, 3).map(({ id }) => id)).toEqual([
+      "41954619",
+      "38648056",
+      "38639421",
+    ]);
+    expect(ordered[0]!.journal).toBe("Blood advances");
   });
 });

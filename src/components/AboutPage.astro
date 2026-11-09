@@ -9,18 +9,28 @@ import {
 import { Text } from "../design-system/primitives";
 import { getCopy } from "../i18n";
 import publications from "../data/publications.json";
-import { formatAuthors } from "../lib/publications";
+import notes from "../data/publication-notes.json";
+import {
+  formatAuthors,
+  orderPublications,
+  type PublicationNotes,
+} from "../lib/publications";
 import styles from "./AboutPage.module.css";
 
 const { site, about, aboutPage } = getCopy(Astro.currentLocale);
-const items = publications.map((publication) => ({
-  id: publication.id,
-  title: publication.title,
-  journal: publication.journal,
-  year: publication.year,
-  authors: formatAuthors(publication.authors),
-  url: publication.url,
-}));
+const locale = (Astro.currentLocale ?? "es") as "es" | "ca" | "en";
+const publicationNotes = notes as PublicationNotes;
+const items = orderPublications(publications, publicationNotes).map(
+  (publication) => ({
+    id: publication.id,
+    title: publication.title,
+    journal: publication.journal,
+    year: publication.year,
+    authors: formatAuthors(publication.authors),
+    summary: publicationNotes[publication.id]?.summary[locale],
+    url: publication.url,
+  })
+);
 const count = (template: string, n: number) =>
   template.replace("{count}", String(n));
 ---

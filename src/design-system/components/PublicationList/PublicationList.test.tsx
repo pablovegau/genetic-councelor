@@ -56,4 +56,15 @@ describe("PublicationList", () => {
       container.querySelector("details")!.querySelectorAll("li")
     ).toHaveLength(5);
   });
+
+  it("muestra el resumen de cada artículo si lo tiene", () => {
+    render(
+      <PublicationList
+        items={[{ ...item(1), summary: "Qué cuenta el artículo." }, item(2)]}
+        {...props}
+      />
+    );
+    expect(screen.getByText("Qué cuenta el artículo.")).toBeVisible();
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+  });
 });

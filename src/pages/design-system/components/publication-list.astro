@@ -9,10 +9,10 @@ const usage =
 const rows: PropRow[] = [
   {
     name: "items",
-    type: "{ id; title; journal; year; authors; url }[]",
+    type: "{ id; title; journal; year; authors; summary?; url }[]",
     default: "—",
     description:
-      "Publicaciones, ya ordenadas (la más reciente primero). Los autores van formateados.",
+      "Publicaciones, ya ordenadas (primero las destacadas, luego por fecha). Los autores van formateados y el resumen es opcional.",
   },
   {
     name: "visible",
@@ -46,7 +46,8 @@ const rows: PropRow[] = [
   component="PublicationList"
   rows={rows}
   notes={[
-    "El desplegable es un <code>&lt;details&gt;</code> nativo: funciona sin JavaScript y con teclado.",
+    "El desplegable es un <code>&lt;details&gt;</code> nativo: funciona sin JavaScript y con teclado. Al abrirlo, el botón desaparece.",
+    "El resumen (<code>summary</code>) sale de <code>src/data/publication-notes.json</code>, junto con el valor de destacada (<code>featured</code>: 1 es la más importante).",
     "Los datos salen de <code>src/data/publications.json</code>, que actualiza una tarea semanal desde PubMed (<code>pnpm publications</code>).",
   ]}
 >
@@ -61,6 +62,8 @@ const rows: PropRow[] = [
         journal: "Blood cancer journal",
         year: "2026",
         authors: "Balbastre-Úbeda F, Torres-Esquius S et al.",
+        summary:
+          "Propone usar ADN del bulbo del pelo y de la mucosa de la boca para hacer más rápido el estudio genético hereditario.",
         url: "#demo",
       },
       {

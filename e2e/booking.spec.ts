@@ -198,6 +198,83 @@ test.describe("publicaciones", () => {
     await expect(first).toHaveAttribute("rel", /noopener/);
   });
 
+  test("las tres primeras son las destacadas, con la de Blood Advances en cabeza", async ({
+    page,
+  }) => {
+    await page.goto("/sobre-mi/");
+    const items = page.locator("ol").first().getByRole("listitem");
+    await expect(items.nth(0)).toContainText("Blood advances");
+    await expect(items.nth(0)).toContainText(
+      "Performance and clinical utility"
+    );
+    await expect(items.nth(1)).toContainText("JAMA network open");
+    await expect(items.nth(2)).toContainText("British journal of haematology");
+    // A partir de la cuarta, por fecha (la primera sin destacar es la más reciente).
+    await expect(items.nth(3)).toContainText("Blood");
+    await expect(items.nth(3)).toContainText("Molecular Underpinnings");
+  });
+
+  for (const { path, text } of [
+    { path: "/sobre-mi/", text: "Evalúa si los criterios españoles" },
+    { path: "/ca/sobre-mi/", text: "Avalua si els criteris espanyols" },
+    { path: "/en/sobre-mi/", text: "Assesses whether the Spanish criteria" },
+  ]) {
+    test(`${path}: cada publicación lleva su resumen en el idioma de la página`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+      await expect(page.getByText(text, { exact: false })).toBeVisible();
+      // Todas las visibles tienen resumen: más texto que título, revista y autores.
+      const entries = page.locator("ol").first().getByRole("listitem");
+      for (const entry of await entries.all())
+        expect((await entry.locator("p").count()) >= 3).toBe(true);
+    });
+  }
+
+  test("en escritorio cada resumen ocupa tres líneas como mucho", async ({
+    page,
+  }) => {
+    await page.goto("/sobre-mi/");
+    test.skip(
+      (page.viewportSize()?.width ?? 0) < 1024,
+      "El límite de tres líneas se mide en escritorio."
+    );
+    await page.locator("details summary").click();
+    const lines = await page
+      .locator("ol li p:nth-of-type(2)")
+      .evaluateAll((nodes) =>
+        nodes.map((node) => {
+          const style = getComputedStyle(node);
+          return Math.round(
+            node.getBoundingClientRect().height / parseFloat(style.lineHeight)
+          );
+        })
+      );
+    expect(lines.length).toBeGreaterThan(20);
+    expect(Math.max(...lines)).toBeLessThanOrEqual(3);
+  });
+
+  test("al desplegar el resto, el botón desaparece y quedan todas a la vista", async ({
+    page,
+  }) => {
+    await page.goto("/sobre-mi/");
+    const summary = page.getByText(
+      `Ver las ${publications.length - 5} restantes`
+    );
+    await expect(summary).toBeVisible();
+    await summary.click();
+    await expect(summary).toBeHidden();
+    await expect(
+      page.getByRole("listitem").filter({ hasText: "Blood" }).first()
+    ).toBeVisible();
+    await expect(
+      page
+        .locator("ol")
+        .locator("xpath=descendant-or-self::li")
+        .filter({ has: page.getByRole("link") })
+    ).toHaveCount(publications.length);
+  });
+
   test("los datos están ordenados de la más reciente a la más antigua y sin duplicados", () => {
     const years = publications.map(({ year }) => Number(year));
     expect([...years].sort((a, b) => b - a)).toEqual(years);
