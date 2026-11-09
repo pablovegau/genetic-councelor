@@ -204,11 +204,43 @@ export const en: Copy = {
     lead: "Genetic counsellor in Barcelona. She supports adults and their families in understanding genetic risk and making decisions calmly.",
     careerTitle: "Career",
     career: [
+      {
+        when: "Since 2025",
+        role: "Genetic counsellor",
+        place: "Clínica Corachan-IDOC",
+        kind: "clinic",
+      },
+      {
+        when: "Since 2025",
+        role: "Associate lecturer",
+        place: "Universitat Autònoma de Barcelona (UAB)",
+        kind: "academic",
+      },
+      {
+        when: "Since 2021",
+        role: "Genetic counsellor",
+        place: "Hospital Vall d'Hebron",
+        detail:
+          "Part of the team at the Adult Telomere Unit, the first in Spain, which started in December 2024.",
+        kind: "clinic",
+      },
+      {
+        when: "Also",
+        role: "Board member",
+        place: "SEAGen, the Spanish Society of Genetic Counselling",
+        kind: "society",
+      },
+    ],
+    educationTitle: "Education",
+    education: [
+      "Degree in Genetics (UAB)",
+      "Master's in Clinical Genetics (UAB)",
+      "Master's in Science Communication (UPF)",
+    ],
+    facts: [
       "More than 10 years of experience in genetics.",
-      "Genetic counsellor at Hospital Vall d'Hebron since 2021.",
-      "Genetic counsellor at Clínica Corachan-IDOC since 2025.",
-      "Board member of SEAGen.",
-      "Associate lecturer at the UAB since 2025.",
+      "Specialised in hereditary haematological and solid cancer.",
+      "Sees patients in Spanish, Catalan and English.",
     ],
     pressTitle: "Press and outreach",
     pressGroups: {

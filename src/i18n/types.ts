@@ -7,6 +7,16 @@ export interface TreeNodeCopy {
   text: string;
 }
 
+export interface CareerItem {
+  /** «Desde 2025», «Además». */
+  when: string;
+  role: string;
+  place: string;
+  detail?: string;
+  /** Forma y color del marcador en la línea de tiempo. */
+  kind: "clinic" | "academic" | "society";
+}
+
 export interface Copy {
   meta: { title: string; description: string };
   site: {
@@ -112,7 +122,11 @@ export interface Copy {
     meta: { title: string; description: string };
     lead: string;
     careerTitle: string;
-    career: string[];
+    career: CareerItem[];
+    educationTitle: string;
+    education: string[];
+    /** Tres datos clave junto a la presentación, cada uno con su símbolo del árbol. */
+    facts: string[];
     pressTitle: string;
     pressGroups: {
       telomeres: { title: string; text: string };

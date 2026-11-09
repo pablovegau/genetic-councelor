@@ -298,7 +298,16 @@ for (const width of [768, 820, 1024]) {
   });
 }
 
-for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
+for (const path of [
+  "/",
+  "/ca/",
+  "/en/",
+  "/contacto/",
+  "/blog/",
+  "/sobre-mi/",
+  "/ca/sobre-mi/",
+  "/en/sobre-mi/",
+]) {
   for (const width of [320, 360, 390, 768, 820]) {
     test(`${path} no desborda en horizontal a ${width} px`, async ({
       page,
@@ -354,5 +363,48 @@ for (const { path, group, other, interview } of [
       await expect(link).toHaveAttribute("href", /^https:\/\//);
       await expect(link).toHaveAttribute("lang", /^(es|ca)$/);
     }
+  });
+}
+
+for (const { path, first, last, degree, fact } of [
+  {
+    path: "/sobre-mi/",
+    first: "Desde 2025",
+    last: "Además",
+    degree: "Máster en Genética Asistencial (UAB)",
+    fact: "Atiende en español, catalán e inglés.",
+  },
+  {
+    path: "/ca/sobre-mi/",
+    first: "Des del 2025",
+    last: "A més",
+    degree: "Màster en Genètica Assistencial (UAB)",
+    fact: "Atén en castellà, català i anglès.",
+  },
+  {
+    path: "/en/sobre-mi/",
+    first: "Since 2025",
+    last: "Also",
+    degree: "Master's in Clinical Genetics (UAB)",
+    fact: "Sees patients in Spanish, Catalan and English.",
+  },
+]) {
+  test(`${path}: la trayectoria es una línea de tiempo con formación y tres datos clave`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const steps = page.locator("ol").first().getByRole("listitem");
+    await expect(steps).toHaveCount(4);
+    await expect(steps.first()).toContainText(first);
+    await expect(steps.first()).toContainText("Corachan-IDOC");
+    await expect(steps.nth(2)).toContainText("Vall d'Hebron");
+    await expect(steps.nth(2)).toContainText("2024");
+    await expect(steps.last()).toContainText(last);
+    await expect(steps.last()).toContainText("SEAGen");
+    await expect(page.getByText(degree)).toBeVisible();
+    await expect(page.getByText(fact)).toBeVisible();
+    await expect(
+      page.locator("main ul").first().getByRole("listitem")
+    ).toHaveCount(3);
   });
 }

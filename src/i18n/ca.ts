@@ -205,11 +205,43 @@ export const ca: Copy = {
     lead: "Assessora genètica a Barcelona. Acompanya persones adultes i les seves famílies a entendre el risc genètic i a prendre decisions amb calma.",
     careerTitle: "Trajectòria",
     career: [
+      {
+        when: "Des del 2025",
+        role: "Assessora genètica",
+        place: "Clínica Corachan-IDOC",
+        kind: "clinic",
+      },
+      {
+        when: "Des del 2025",
+        role: "Professora vinculada",
+        place: "Universitat Autònoma de Barcelona (UAB)",
+        kind: "academic",
+      },
+      {
+        when: "Des del 2021",
+        role: "Assessora genètica",
+        place: "Hospital Vall d'Hebron",
+        detail:
+          "Forma part de l'equip de la Unitat de Telòmers de l'Adult, la primera de l'Estat, que va arrencar al desembre del 2024.",
+        kind: "clinic",
+      },
+      {
+        when: "A més",
+        role: "Vocal de la Junta Directiva",
+        place: "SEAGen, Societat Espanyola d'Assessorament Genètic",
+        kind: "society",
+      },
+    ],
+    educationTitle: "Formació",
+    education: [
+      "Grau en Genètica (UAB)",
+      "Màster en Genètica Assistencial (UAB)",
+      "Màster en Comunicació Científica (UPF)",
+    ],
+    facts: [
       "Més de 10 anys d'experiència en genètica.",
-      "Assessora genètica a l'Hospital Vall d'Hebron des del 2021.",
-      "Assessora genètica a la Clínica Corachan-IDOC des del 2025.",
-      "Vocal de la Junta Directiva de SEAGen.",
-      "Professora vinculada a la UAB des del 2025.",
+      "Especialitzada en càncer hereditari, hematològic i d'òrgans sòlids.",
+      "Atén en castellà, català i anglès.",
     ],
     pressTitle: "Premsa i divulgació",
     pressGroups: {

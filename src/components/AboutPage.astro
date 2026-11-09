@@ -45,18 +45,26 @@ const pressItems = (group: PressEntry["group"]) =>
     url: entry.url,
     label: entry.kind ? aboutPage.pressKinds[entry.kind] : undefined,
   }));
+// Símbolo de cada dato clave, como en el árbol genealógico de la portada.
+const factMarkers = [
+  ["circle", "action"],
+  ["square", "accent"],
+  ["circle", "danger"],
+] as const;
 const count = (template: string, n: number) =>
   template.replace("{count}", String(n));
 ---
 
 <Section pad="start">
   <Split ratio={1.25} gap="wide">
-    <Portrait
-      src={portrait.src}
-      width={portrait.width}
-      height={portrait.height}
-      alt={about.imageAlt}
-    />
+    <div class={styles.portrait}>
+      <Portrait
+        src={portrait.src}
+        width={portrait.width}
+        height={portrait.height}
+        alt={about.imageAlt}
+      />
+    </div>
     <div class={styles.intro}>
       <Text as="h1" variant="heading-2" className={styles.title}>
         {site.brand}
@@ -64,23 +72,61 @@ const count = (template: string, n: number) =>
       <Text variant="text-lg" color="muted">
         {aboutPage.lead}
       </Text>
+      <ul class={styles.facts}>
+        {aboutPage.facts.map((fact, i) => (
+          <li>
+            <span
+              class={styles.marker}
+              data-shape={factMarkers[i]![0]}
+              data-tone={factMarkers[i]![1]}
+              aria-hidden="true"
+            />
+            <Text>{fact}</Text>
+          </li>
+        ))}
+      </ul>
     </div>
   </Split>
 </Section>
 
 <Section tone="violet" band="action">
-  <div class={styles.block}>
-    <Text as="h2" variant="heading-3">
-      {aboutPage.careerTitle}
-    </Text>
-    <ul class={styles.list}>
-      {aboutPage.career.map((fact) => (
-        <li>
-          <Text>{fact}</Text>
-        </li>
-      ))}
-    </ul>
-  </div>
+  <Split gap="wide" align="start">
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {aboutPage.careerTitle}
+      </Text>
+      <ol class={styles.timeline}>
+        {aboutPage.career.map(({ when, role, place, detail, kind }) => (
+          <li data-kind={kind}>
+            <Text size="2" color="muted">
+              {when}
+            </Text>
+            <Text as="h3" variant="heading-5">
+              {role}
+            </Text>
+            <Text>{place}</Text>
+            {detail && (
+              <Text size="2" color="muted">
+                {detail}
+              </Text>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+    <div class={styles.block}>
+      <Text as="h2" variant="heading-3">
+        {aboutPage.educationTitle}
+      </Text>
+      <ul class={styles.education}>
+        {aboutPage.education.map((degree) => (
+          <li>
+            <Text>{degree}</Text>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Split>
 </Section>
 
 <Section id="prensa" tone="orange" band="accent">

@@ -2,7 +2,7 @@
 
 Lista viva: se añade lo que Sara debe confirmar, rellenar o aprobar antes de publicar. Al resolver algo, se marca y se anota la fecha. Lo que decide el equipo (no Sara) está en `docs/TODO.md`.
 
-Última actualización: 2026-11-10.
+Última actualización: 2026-11-10 (Sobre mí).
 
 ## Para rellenar o confirmar (bloquean la publicación)
 
@@ -27,6 +27,13 @@ Lista viva: se añade lo que Sara debe confirmar, rellenar o aprobar antes de pu
 - [ ] **«Motivo de la consulta» al reservar:** campo de texto libre y opcional. Se le pide al paciente que no incluya informes ni resultados. Hay que configurarlo así en el formulario de Cal.com.
 - [ ] **Página de contacto, blog en construcción y textos de las dos tarjetas de visita** de la home (mismos que `/reservar/`).
 - [ ] **Datos estructurados y vista previa al compartir (Open Graph):** nombre, ocupación «Asesora genética», Barcelona, LinkedIn, precios de las dos visitas con IVA incluido; imagen de compartir: su foto principal recortada a 1200×630. Ver que le gusta la foto elegida.
+
+- [ ] **«Sobre mí»: trayectoria y formación.** Nuevos datos, sacados de la ficha de SEAGen, de las notas de prensa y del titular de su LinkedIn (LinkedIn no se puede leer desde aquí):
+  - Formación: Grado en Genética (UAB), Máster en Genética Asistencial (UAB), Máster en Comunicación Científica (UPF).
+  - Especialidad: «cáncer hereditario, hematológico y de órganos sólidos».
+  - «Forma parte del equipo de la Unidad de Telómeros del Adulto, la primera de España, que arrancó en diciembre de 2024» (nota de Vall d'Hebron).
+  - Idiomas de atención: español, catalán e inglés (del brief).
+  - Que confirme las fechas («desde 2021», «desde 2025») y si quiere añadir más: puestos anteriores (por ejemplo, el grupo de Genética del Cáncer Hereditario del VHIO, que algunas fuentes sitúan entre 2016 y 2023: **no está en la web hasta que lo confirme**), líneas de investigación, sociedades.
 
 ## Legal (con su gestor o abogado)
 
