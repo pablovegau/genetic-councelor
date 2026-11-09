@@ -31,7 +31,6 @@ const euro = new Intl.NumberFormat(Astro.currentLocale ?? "es", {
   currency: "EUR",
   maximumFractionDigits: 0,
 });
-const price = euro.format(visits.first.price);
 const { site, hero, situations, process, about, closing, tree, booking } = copy;
 // Cada tarjeta lleva a /reservar/ con su visita elegida (con las reservas activas abre su calendario).
 const visitCards = [
@@ -112,9 +111,6 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
         <div class={styles.heroActions}>
           <div class={styles.heroCta}>
             <Button href={book}>{site.book}</Button>
-            <Text variant="text-sm" color="muted" className={styles.heroPrice}>
-              {hero.price.replace("{price}", price)}
-            </Text>
           </div>
           <div class={styles.heroByline}>
             <Byline avatar={avatar} name={site.brand} description={hero.role} />

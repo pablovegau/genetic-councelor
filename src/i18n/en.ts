@@ -22,8 +22,6 @@ export const en: Copy = {
     title: "We draw your family tree and understand it together.",
     text: "Your family's history says a lot about your health. In the first visit we put it in order, see what makes sense to do and explain every step calmly. No rush and no jargon.",
     role: "Genetic counsellor in Barcelona",
-    price:
-      "First visit {price} (VAT included), by video call. Free cancellation up to 48 h before.",
     confidential: "Everything you tell us is confidential.",
   },
   tree: {
