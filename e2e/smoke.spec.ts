@@ -232,3 +232,27 @@ for (const { path, lang, mail } of [
     await expect(page.locator('a[href="#contacto"]')).toHaveCount(0);
   });
 }
+
+for (const { path, prefix, names } of [
+  { path: "/", prefix: "", names: ["Primera visita", "Seguimiento"] },
+  { path: "/ca/", prefix: "/ca", names: ["Primera visita", "Seguiment"] },
+  { path: "/en/", prefix: "/en", names: ["First visit", "Follow-up"] },
+]) {
+  test(`${path}: las dos visitas con su precio llevan a reservar con la visita elegida`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const section = page.locator("#visitas");
+    for (const name of names) await expect(section).toContainText(name);
+    const links = section.locator(`a[href^="${prefix}/reservar/?visita="]`);
+    await expect(links).toHaveCount(2);
+    await expect(links.nth(0)).toHaveAttribute(
+      "href",
+      `${prefix}/reservar/?visita=primera-visita`
+    );
+    await expect(links.nth(1)).toHaveAttribute(
+      "href",
+      `${prefix}/reservar/?visita=seguimiento`
+    );
+  });
+}
