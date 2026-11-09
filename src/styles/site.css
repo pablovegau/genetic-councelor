@@ -5,6 +5,18 @@
   font-size: 1.0625rem;
 }
 
+/* Pie siempre abajo: en las páginas cortas (blog, contacto) el contenido crece y empuja el pie hasta
+   el borde de la ventana, en vez de dejarlo flotando a media pantalla. */
+.site {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+}
+
+.site > main {
+  flex: 1 0 auto;
+}
+
 /* Resets en la capa base: los componentes (capa components) pueden fijar sus propios márgenes. */
 @layer base {
   .site img {
