@@ -1,5 +1,6 @@
 ---
 import portrait from "../assets/mg-3199.webp";
+import { responsiveImage } from "../lib/images";
 import {
   Portrait,
   PressList,
@@ -20,6 +21,7 @@ import {
 import { pressGroup, type PressEntry } from "../lib/press";
 import styles from "./AboutPage.module.css";
 
+const portraitImage = await responsiveImage(portrait, [480, 800, 1200]);
 const { site, about, aboutPage } = getCopy(Astro.currentLocale);
 const locale = (Astro.currentLocale ?? "es") as "es" | "ca" | "en";
 const publicationNotes = notes as PublicationNotes;
@@ -59,9 +61,11 @@ const count = (template: string, n: number) =>
 <Section pad="start">
   <Split ratio={1.25} gap="wide">
     <Portrait
-      src={portrait.src}
-      width={portrait.width}
-      height={portrait.height}
+      src={portraitImage.src}
+      srcSet={portraitImage.srcSet}
+      sizes="(min-width: 48rem) 560px, 100vw"
+      width={portraitImage.width}
+      height={portraitImage.height}
       alt={about.imageAlt}
     />
     <div class={styles.intro}>

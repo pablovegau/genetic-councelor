@@ -7,6 +7,9 @@ export interface PortraitProps extends ComponentPropsWithoutRef<"figure"> {
   width: number;
   height: number;
   alt: string;
+  /** Tamaños de la foto (`srcset`) y el ancho que ocupa (`sizes`), para no descargar de más. */
+  srcSet?: string;
+  sizes?: string;
   loading?: "lazy" | "eager";
 }
 
@@ -16,6 +19,8 @@ export function Portrait({
   width,
   height,
   alt,
+  srcSet,
+  sizes,
   loading,
   className,
   ...props
@@ -27,6 +32,8 @@ export function Portrait({
         width={width}
         height={height}
         alt={alt}
+        srcSet={srcSet}
+        sizes={sizes}
         loading={loading}
       />
     </figure>

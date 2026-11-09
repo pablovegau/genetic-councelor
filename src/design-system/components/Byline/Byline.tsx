@@ -7,6 +7,9 @@ export interface BylineImage {
   src: string;
   width: number;
   height: number;
+  /** Tamaños de la foto (`srcset`) y el ancho que ocupa (`sizes`), para no descargar de más. */
+  srcSet?: string;
+  sizes?: string;
 }
 
 export interface BylineProps extends ComponentPropsWithoutRef<"div"> {
@@ -32,6 +35,8 @@ export function Byline({
           alt=""
           width={avatar.width}
           height={avatar.height}
+          srcSet={avatar.srcSet}
+          sizes={avatar.sizes}
         />
       </span>
       <span>

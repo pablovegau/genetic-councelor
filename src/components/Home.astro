@@ -1,6 +1,7 @@
 ---
 import avatar from "../assets/mg-3149.webp";
 import portrait from "../assets/mg-3199.webp";
+import { responsiveImage } from "../lib/images";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getCopy } from "../i18n";
 import {
@@ -19,6 +20,10 @@ import { Text } from "../design-system/primitives";
 import { visits } from "../config/booking";
 import styles from "./Home.module.css";
 
+// La foto del retrato ocupa como mucho ~560 px y el avatar se ve a 48 px (con recorte): se sirven en
+// varios tamaños en vez de los 2400 px originales.
+const portraitImage = await responsiveImage(portrait, [480, 800, 1200]);
+const avatarImage = await responsiveImage(avatar, [200, 400, 600]);
 const copy = getCopy(Astro.currentLocale);
 const book = getRelativeLocaleUrl(Astro.currentLocale ?? "es", "reservar");
 const termsHref = getRelativeLocaleUrl(
@@ -113,7 +118,11 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
             <Button href={book}>{site.book}</Button>
           </div>
           <div class={styles.heroByline}>
-            <Byline avatar={avatar} name={site.brand} description={hero.role} />
+            <Byline
+              avatar={{ ...avatarImage, sizes: "166px" }}
+              name={site.brand}
+              description={hero.role}
+            />
           </div>
         </div>
         <Text
@@ -139,9 +148,11 @@ const steps = process.steps.map(({ when, title, text, key, value }, i) => ({
   <Section id="sobre-mi" tone="violet" band="action">
     <Split ratio={1.25} gap="wide">
       <Portrait
-        src={portrait.src}
-        width={portrait.width}
-        height={portrait.height}
+        src={portraitImage.src}
+        srcSet={portraitImage.srcSet}
+        sizes="(min-width: 48rem) 560px, 100vw"
+        width={portraitImage.width}
+        height={portraitImage.height}
         alt={about.imageAlt}
         loading="lazy"
       />
