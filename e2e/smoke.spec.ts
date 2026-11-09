@@ -350,7 +350,7 @@ for (const width of [768, 820, 1024]) {
 }
 
 for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
-  for (const width of [320, 360, 390]) {
+  for (const width of [320, 360, 390, 768, 820]) {
     test(`${path} no desborda en horizontal a ${width} px`, async ({
       page,
     }) => {
