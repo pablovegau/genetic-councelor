@@ -7,6 +7,19 @@ export interface TreeNodeCopy {
   text: string;
 }
 
+export interface CareerGroup {
+  /** Área: «Práctica asistencial», «Docencia». */
+  title: string;
+  /** Lo más reciente primero. */
+  items: {
+    /** «Desde 2025». */
+    when: string;
+    role: string;
+    place: string;
+    detail?: string;
+  }[];
+}
+
 export interface Copy {
   meta: { title: string; description: string };
   site: {
@@ -112,9 +125,17 @@ export interface Copy {
     meta: { title: string; description: string };
     lead: string;
     careerTitle: string;
-    career: string[];
+    career: CareerGroup[];
+    educationTitle: string;
+    education: string[];
+    /** Datos clave junto a la presentación, cada uno con un símbolo del árbol. */
+    facts: string[];
     pressTitle: string;
-    press: string[];
+    pressGroups: {
+      telomeres: { title: string; text: string };
+      other: { title: string };
+    };
+    pressKinds: { interview: string; hospital: string };
     publicationsTitle: string;
     publicationsLead: string;
     /** Con `{count}`: el número de publicaciones. */

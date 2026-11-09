@@ -2,6 +2,7 @@
 import portrait from "../assets/mg-3199.webp";
 import {
   Portrait,
+  PressList,
   PublicationList,
   Section,
   Split,
@@ -10,11 +11,13 @@ import { Text } from "../design-system/primitives";
 import { getCopy } from "../i18n";
 import publications from "../data/publications.json";
 import notes from "../data/publication-notes.json";
+import press from "../data/press.json";
 import {
   formatAuthors,
   orderPublications,
   type PublicationNotes,
 } from "../lib/publications";
+import { pressGroup, type PressEntry } from "../lib/press";
 import styles from "./AboutPage.module.css";
 
 const { site, about, aboutPage } = getCopy(Astro.currentLocale);
@@ -31,6 +34,24 @@ const items = orderPublications(publications, publicationNotes).map(
     url: publication.url,
   })
 );
+const dateFormat = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
+const pressItems = (group: PressEntry["group"]) =>
+  pressGroup(press as PressEntry[], group).map((entry) => ({
+    id: entry.id,
+    outlet: entry.outlet,
+    date: entry.date ? dateFormat.format(new Date(entry.date)) : undefined,
+    title: entry.title,
+    lang: entry.lang,
+    url: entry.url,
+    label: entry.kind ? aboutPage.pressKinds[entry.kind] : undefined,
+  }));
+// Símbolos del árbol genealógico de la portada: marcan las listas (datos clave, áreas y formación).
+const markers = [
+  { shape: "circle", tone: "action" },
+  { shape: "square", tone: "accent" },
+  { shape: "circle", tone: "danger" },
+] as const;
+const marker = (i: number) => markers[i % markers.length]!;
 const count = (template: string, n: number) =>
   template.replace("{count}", String(n));
 ---
@@ -50,6 +71,19 @@ const count = (template: string, n: number) =>
       <Text variant="text-lg" color="muted">
         {aboutPage.lead}
       </Text>
+      <ul class={styles.facts}>
+        {aboutPage.facts.map((fact, i) => (
+          <li>
+            <span
+              class={styles.marker}
+              data-shape={marker(i).shape}
+              data-tone={marker(i).tone}
+              aria-hidden="true"
+            />
+            <Text>{fact}</Text>
+          </li>
+        ))}
+      </ul>
     </div>
   </Split>
 </Section>
@@ -60,27 +94,85 @@ const count = (template: string, n: number) =>
       <Text as="h2" variant="heading-3">
         {aboutPage.careerTitle}
       </Text>
-      <ul class={styles.list}>
-        {aboutPage.career.map((fact) => (
-          <li>
-            <Text>{fact}</Text>
-          </li>
+      <div class={styles.groups}>
+        {aboutPage.career.map(({ title, items }, g) => (
+          <section class={styles.group}>
+            <Text as="h3" variant="heading-5" className={styles.groupTitle}>
+              <span
+                class={styles.marker}
+                data-shape={marker(g).shape}
+                data-tone={marker(g).tone}
+                aria-hidden="true"
+              />
+              {title}
+            </Text>
+            <ul class={styles.entries}>
+              {items.map(({ when, role, place, detail }) => (
+                <li>
+                  <Text size="2" color="muted">
+                    {when}
+                  </Text>
+                  <Text as="strong" className={styles.role}>
+                    {role}
+                  </Text>
+                  <Text>{place}</Text>
+                  {detail && (
+                    <Text size="2" color="muted">
+                      {detail}
+                    </Text>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
+      </div>
     </div>
     <div class={styles.block}>
       <Text as="h2" variant="heading-3">
-        {aboutPage.pressTitle}
+        {aboutPage.educationTitle}
       </Text>
-      <ul class={styles.list}>
-        {aboutPage.press.map((outlet) => (
+      <ul class={styles.education}>
+        {aboutPage.education.map((degree, i) => (
           <li>
-            <Text>{outlet}</Text>
+            <span
+              class={styles.marker}
+              data-shape={marker(i).shape}
+              data-tone={marker(i).tone}
+              aria-hidden="true"
+            />
+            <Text>{degree}</Text>
           </li>
         ))}
       </ul>
     </div>
   </Split>
+</Section>
+
+<Section id="prensa" tone="orange" band="accent">
+  <div class={styles.press}>
+    <Text as="h2" variant="heading-3">
+      {aboutPage.pressTitle}
+    </Text>
+    <div class={styles.block}>
+      <Text as="h3" variant="heading-4">
+        {aboutPage.pressGroups.telomeres.title}
+      </Text>
+      <Text color="muted" className={styles.lead}>
+        {aboutPage.pressGroups.telomeres.text}
+      </Text>
+      <PressList
+        items={pressItems("telomeres")}
+        newTabLabel={aboutPage.newTab}
+      />
+    </div>
+    <div class={styles.block}>
+      <Text as="h3" variant="heading-4">
+        {aboutPage.pressGroups.other.title}
+      </Text>
+      <PressList items={pressItems("other")} newTabLabel={aboutPage.newTab} />
+    </div>
+  </div>
 </Section>
 
 <Section id="publicaciones">

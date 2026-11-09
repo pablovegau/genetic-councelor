@@ -1,0 +1,129 @@
+[
+  {
+    "id": "rtve-audio-sara-torres",
+    "group": "telomeres",
+    "featured": true,
+    "kind": "interview",
+    "outlet": "RTVE",
+    "date": null,
+    "lang": "ca",
+    "title": "Sara Torres, genetista de l'Hospital Vall d'Hebron: malalties relacionades amb els telòmers",
+    "url": "https://www.rtve.es/play/audios/diga-li-ciencia/sara-torres-genetista-hospital-vall-dhebron-malalties-relacionades-telomers/16811865/",
+    "titleFromUrl": true
+  },
+  {
+    "id": "lavanguardia-longevity-2026",
+    "group": "telomeres",
+    "outlet": "La Vanguardia",
+    "date": "2026-08-30",
+    "lang": "es",
+    "title": "Hay adultos de 40 o 50 años con telómeros similares a los de personas de 80: la rara alteración genética que acelera el envejecimiento celular",
+    "url": "https://www.lavanguardia.com/vivo/longevity/20260830/11623086/hay-adultos-40-50-anos-telomeros-similares-personas-80-aspecto-envejecido-rara-alteracion-genetica-acelera-envejecimiento-celular-gvm.html",
+    "titleFromUrl": true
+  },
+  {
+    "id": "elconfidencial-2025",
+    "group": "telomeres",
+    "outlet": "El Confidencial",
+    "date": "2025-10-11",
+    "lang": "es",
+    "title": "Unidad de telómeros y diagnóstico genético",
+    "url": "https://www.elconfidencial.com/espana/cataluna/2025-10-11/unidad-telomeros-diagnostico-genetico-1hms_4223567/",
+    "titleFromUrl": true
+  },
+  {
+    "id": "socialcat-2025",
+    "group": "telomeres",
+    "outlet": "Social.cat",
+    "date": "2025-09-20",
+    "lang": "ca",
+    "title": "Una unitat de Vall d’Hebron única a l’Estat detecta mutacions que poden comportar malalties associades a l’envelliment",
+    "url": "https://www.social.cat/noticia/23774/unitat-vall-hebron-unica-estat-detecta-mutacions-poden-comportar-malalties-envelliment"
+  },
+  {
+    "id": "farmacosalud-2025",
+    "group": "telomeres",
+    "outlet": "Farmacosalud",
+    "date": "2025-09-08",
+    "lang": "es",
+    "title": "En marcha la primera Unidad de los Telómeros del Adulto, servicio que permite la detección precoz de telomeropatías",
+    "url": "https://farmacosalud.com/en-marcha-la-primera-unidad-de-los-telomeros-del-adulto-servicio-que-permite-la-deteccion-precoz-de-telomeropatias/"
+  },
+  {
+    "id": "vallhebron-2025",
+    "group": "telomeres",
+    "kind": "hospital",
+    "outlet": "Vall d'Hebron",
+    "date": "2025-09-04",
+    "lang": "ca",
+    "title": "Vall d’Hebron posa en marxa la primera Unitat d’Alteració en la Biologia dels Telòmers de l’Adult de l’Estat",
+    "url": "https://www.vallhebron.com/actualitat/noticies/vall-dhebron-posa-en-marxa-la-primera-unitat-dalteracio-en-la-biologia-dels-telomers-de-ladult-de-lestat"
+  },
+  {
+    "id": "ara-2025",
+    "group": "telomeres",
+    "outlet": "Ara",
+    "date": "2025-09-04",
+    "lang": "es",
+    "title": "La alteración genética detrás de muchas enfermedades que ocurre desapercibida: «Nunca me he encontrado mal»",
+    "url": "https://es.ara.cat/sociedad/salud/alteracion-genetica-detras-enfermedades-ocurre-desapercibida-he-encontrado-mal_1_5486991.html"
+  },
+  {
+    "id": "rtve-cat-2025",
+    "group": "telomeres",
+    "outlet": "RTVE Catalunya",
+    "date": "2025-09-04",
+    "lang": "ca",
+    "title": "Vall d'Hebron obre una unitat pionera per tractar l'envelliment prematur",
+    "url": "https://www.rtve.es/catalunya/noticies/20250904/vall-dhebron-obre-unitat-pionera-per-tractar-lenvelliment-prematur/16717098.shtml",
+    "titleFromUrl": true
+  },
+  {
+    "id": "elperiodico-2025",
+    "group": "telomeres",
+    "outlet": "El Periódico",
+    "date": "2025-09-04",
+    "lang": "es",
+    "title": "Vall d'Hebron pone en marcha la primera unidad de España de telomeropatías, enfermedades raras y cáncer hematológico",
+    "url": "https://www.elperiodico.com/es/sanidad/20250904/vall-dhebron-pone-marcha-primera-unidad-espana-telomeropatias-enfermedades-raras-cancer-hematologico-121224459",
+    "titleFromUrl": true
+  },
+  {
+    "id": "lavanguardia-2025",
+    "group": "telomeres",
+    "outlet": "La Vanguardia",
+    "date": "2025-09-04",
+    "lang": "es",
+    "title": "Vall d'Hebron crea una unidad pionera de telómeros para la telomeropatía, una alteración genética",
+    "url": "https://www.lavanguardia.com/vida/20250904/11028079/vall-hebron-crea-unidad-pionera-telomeros-telomeropatia-alteracion-genetica.html",
+    "titleFromUrl": true
+  },
+  {
+    "id": "larazon-2025",
+    "group": "telomeres",
+    "outlet": "La Razón",
+    "date": "2025-09-04",
+    "lang": "es",
+    "title": "Vall d'Hebron, líder en el tratamiento de telomeropatías en adultos",
+    "url": "https://www.larazon.es/cataluna/vall-dhebron-lider-tratamiento-telomeropatias-adultos_2025090468b97a0dee9f0221df391ab0.html",
+    "titleFromUrl": true
+  },
+  {
+    "id": "gacetamedica-2024",
+    "group": "other",
+    "outlet": "Gaceta Médica",
+    "date": "2024-05-13",
+    "lang": "es",
+    "title": "Analizar la deficiencia en la reparación del ADN en tumores con variantes en RAD51/D podría ser útil en la toma de decisiones terapéuticas",
+    "url": "https://gacetamedica.com/investigacion/analizar-la-deficiencia-en-la-reparacion-del-adn-en-tumores-con-variantes-en-rad51-d-podria-ser-util-en-la-toma-de-decisiones-terapeuticas/"
+  },
+  {
+    "id": "elpais-2023",
+    "group": "other",
+    "outlet": "El País",
+    "date": "2023-06-28",
+    "lang": "es",
+    "title": "Los detectives que buscan enfermedades de la sangre en el árbol genealógico",
+    "url": "https://elpais.com/salud-y-bienestar/2023-06-28/los-detectives-que-buscan-enfermedades-de-la-sangre-en-el-arbol-genealogico.html"
+  }
+]

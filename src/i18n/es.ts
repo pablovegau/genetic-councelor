@@ -205,21 +205,63 @@ export const es: Copy = {
     lead: "Asesora genética en Barcelona. Acompaña a personas adultas y a sus familias a entender el riesgo genético y a tomar decisiones con calma.",
     careerTitle: "Trayectoria",
     career: [
+      {
+        title: "Práctica asistencial",
+        items: [
+          {
+            when: "Desde 2025",
+            role: "Asesora genética",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Desde 2021",
+            role: "Asesora genética",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Forma parte del equipo de la Unidad de Telómeros del Adulto, la primera de España, que arrancó en diciembre de 2024.",
+          },
+        ],
+      },
+      {
+        title: "Docencia",
+        items: [
+          {
+            when: "Desde 2025",
+            role: "Profesora vinculada",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
+      },
+      {
+        title: "Sociedades científicas",
+        items: [
+          {
+            when: "Actualmente",
+            role: "Vocal de la Junta Directiva",
+            place: "SEAGen, Sociedad Española de Asesoramiento Genético",
+          },
+        ],
+      },
+    ],
+    educationTitle: "Formación",
+    education: [
+      "Grado en Genética (UAB)",
+      "Máster en Genética Asistencial (UAB)",
+      "Máster en Comunicación Científica (UPF)",
+    ],
+    facts: [
       "Más de 10 años de experiencia en genética.",
-      "Asesora genética en el Hospital Vall d'Hebron desde 2021.",
-      "Asesora genética en la Clínica Corachan-IDOC desde 2025.",
-      "Vocal de la Junta Directiva de SEAGen.",
-      "Profesora vinculada en la UAB desde 2025.",
+      "Atiende en español, catalán e inglés.",
     ],
     pressTitle: "Prensa y divulgación",
-    press: [
-      "El País",
-      "La Vanguardia",
-      "RTVE",
-      "Onda Cero",
-      "Telemadrid",
-      "Manual SEHH (2024)",
-    ],
+    pressGroups: {
+      telomeres: {
+        title: "Unidad de Telómeros del Adulto, Vall d'Hebron",
+        text: "En septiembre de 2025 el Hospital Vall d'Hebron presentó la primera unidad de España dedicada a las alteraciones de la biología de los telómeros en adultos. Sara es asesora genética del equipo.",
+      },
+      other: { title: "Otras apariciones" },
+    },
+    pressKinds: { interview: "Entrevista", hospital: "Nota del hospital" },
     publicationsTitle: "Publicaciones",
     publicationsLead: "Artículos en revistas científicas, tomados de PubMed.",
     total: "{count} publicaciones en PubMed.",

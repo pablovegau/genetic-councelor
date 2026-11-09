@@ -204,21 +204,63 @@ export const en: Copy = {
     lead: "Genetic counsellor in Barcelona. She supports adults and their families in understanding genetic risk and making decisions calmly.",
     careerTitle: "Career",
     career: [
+      {
+        title: "Clinical practice",
+        items: [
+          {
+            when: "Since 2025",
+            role: "Genetic counsellor",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Since 2021",
+            role: "Genetic counsellor",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Part of the team at the Adult Telomere Unit, the first in Spain, which started in December 2024.",
+          },
+        ],
+      },
+      {
+        title: "Teaching",
+        items: [
+          {
+            when: "Since 2025",
+            role: "Associate lecturer",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
+      },
+      {
+        title: "Scientific societies",
+        items: [
+          {
+            when: "Currently",
+            role: "Board member",
+            place: "SEAGen, the Spanish Society of Genetic Counselling",
+          },
+        ],
+      },
+    ],
+    educationTitle: "Education",
+    education: [
+      "Degree in Genetics (UAB)",
+      "Master's in Clinical Genetics (UAB)",
+      "Master's in Science Communication (UPF)",
+    ],
+    facts: [
       "More than 10 years of experience in genetics.",
-      "Genetic counsellor at Hospital Vall d'Hebron since 2021.",
-      "Genetic counsellor at Clínica Corachan-IDOC since 2025.",
-      "Board member of SEAGen.",
-      "Associate lecturer at the UAB since 2025.",
+      "Sees patients in Spanish, Catalan and English.",
     ],
     pressTitle: "Press and outreach",
-    press: [
-      "El País",
-      "La Vanguardia",
-      "RTVE",
-      "Onda Cero",
-      "Telemadrid",
-      "SEHH manual (2024)",
-    ],
+    pressGroups: {
+      telomeres: {
+        title: "Adult Telomere Unit, Vall d'Hebron",
+        text: "In September 2025 Vall d'Hebron Hospital presented Spain's first unit devoted to adult telomere biology disorders. Sara is the genetic counsellor on the team.",
+      },
+      other: { title: "Other appearances" },
+    },
+    pressKinds: { interview: "Interview", hospital: "Hospital press release" },
     publicationsTitle: "Publications",
     publicationsLead: "Articles in scientific journals, taken from PubMed.",
     total: "{count} publications on PubMed.",

@@ -125,6 +125,12 @@ export const catalogGroups: CatalogGroup[] = [
           "Iconos de 1,25 em que heredan el color: correo y logos de redes sociales.",
       },
       {
+        slug: "press-list",
+        label: "PressList",
+        description:
+          "Noticias y entrevistas: medio y fecha arriba y el titular enlazado debajo.",
+      },
+      {
         slug: "brand-mark",
         label: "BrandMark",
         description:

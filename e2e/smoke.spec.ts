@@ -298,7 +298,16 @@ for (const width of [768, 820, 1024]) {
   });
 }
 
-for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
+for (const path of [
+  "/",
+  "/ca/",
+  "/en/",
+  "/contacto/",
+  "/blog/",
+  "/sobre-mi/",
+  "/ca/sobre-mi/",
+  "/en/sobre-mi/",
+]) {
   for (const width of [320, 360, 390, 768, 820]) {
     test(`${path} no desborda en horizontal a ${width} px`, async ({
       page,
@@ -311,4 +320,98 @@ for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
       expect(overflow).toBeLessThanOrEqual(0);
     });
   }
+}
+
+for (const { path, group, other, interview } of [
+  {
+    path: "/sobre-mi/",
+    group: "Unidad de Telómeros del Adulto, Vall d'Hebron",
+    other: "Otras apariciones",
+    interview: "Entrevista",
+  },
+  {
+    path: "/ca/sobre-mi/",
+    group: "Unitat de Telòmers de l'Adult, Vall d'Hebron",
+    other: "Altres aparicions",
+    interview: "Entrevista",
+  },
+  {
+    path: "/en/sobre-mi/",
+    group: "Adult Telomere Unit, Vall d'Hebron",
+    other: "Other appearances",
+    interview: "Interview",
+  },
+]) {
+  test(`${path}: la prensa se agrupa por la unidad de telómeros y el resto, con la entrevista primero`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const press = page.locator("#prensa");
+    await expect(press.getByRole("heading", { name: group })).toBeVisible();
+    await expect(press.getByRole("heading", { name: other })).toBeVisible();
+    const lists = press.locator("ul");
+    await expect(lists).toHaveCount(2);
+    const first = lists.nth(0).getByRole("listitem");
+    expect(await first.count()).toBe(11);
+    await expect(first.nth(0)).toContainText("RTVE");
+    await expect(first.nth(0)).toContainText(interview);
+    await expect(first.nth(1)).toContainText("La Vanguardia");
+    await expect(lists.nth(1).getByRole("listitem")).toHaveCount(2);
+    // Todos los enlaces abren otra pestaña y los titulares conservan su idioma.
+    for (const link of await press.getByRole("link").all()) {
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("href", /^https:\/\//);
+      await expect(link).toHaveAttribute("lang", /^(es|ca)$/);
+    }
+  });
+}
+
+for (const { path, groups, first, degree, fact } of [
+  {
+    path: "/sobre-mi/",
+    groups: ["Práctica asistencial", "Docencia", "Sociedades científicas"],
+    first: ["Desde 2025", "Corachan-IDOC"],
+    degree: "Máster en Genética Asistencial (UAB)",
+    fact: "Atiende en español, catalán e inglés.",
+  },
+  {
+    path: "/ca/sobre-mi/",
+    groups: ["Pràctica assistencial", "Docència", "Societats científiques"],
+    first: ["Des del 2025", "Corachan-IDOC"],
+    degree: "Màster en Genètica Assistencial (UAB)",
+    fact: "Atén en castellà, català i anglès.",
+  },
+  {
+    path: "/en/sobre-mi/",
+    groups: ["Clinical practice", "Teaching", "Scientific societies"],
+    first: ["Since 2025", "Corachan-IDOC"],
+    degree: "Master's in Clinical Genetics (UAB)",
+    fact: "Sees patients in Spanish, Catalan and English.",
+  },
+]) {
+  test(`${path}: la trayectoria va por áreas con lo más reciente primero, y la formación y los datos clave llevan símbolo`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    // Las áreas de la trayectoria son las <section> anidadas en la banda violeta.
+    const areas = page.locator("main section section");
+    await expect(areas.getByRole("heading", { level: 3 })).toHaveText(groups);
+    // Práctica asistencial: Corachan (2025) antes que Vall d'Hebron (2021).
+    const clinical = areas.first().getByRole("listitem");
+    await expect(clinical).toHaveCount(2);
+    await expect(clinical.nth(0)).toContainText(first[0]!);
+    await expect(clinical.nth(0)).toContainText(first[1]!);
+    await expect(clinical.nth(1)).toContainText("Vall d'Hebron");
+    await expect(clinical.nth(1)).toContainText("2024");
+    await expect(page.getByText(degree)).toBeVisible();
+    await expect(page.getByText(fact)).toBeVisible();
+    // Sin especialidades: puede atender cualquier tipo de asesoramiento genético.
+    await expect(page.locator("main")).not.toContainText(
+      /especializada|specialised|especialitzada/i
+    );
+    // Los datos clave (2) y la formación (3) llevan su símbolo del árbol.
+    const bullets = page.locator("main ul > li > span[aria-hidden]");
+    await expect(bullets).toHaveCount(2 + 3);
+    await expect(page.locator("main h3 > span[aria-hidden]")).toHaveCount(3);
+  });
 }

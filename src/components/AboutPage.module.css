@@ -21,3 +21,105 @@
   padding: 0;
   list-style: none;
 }
+
+.press {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.lead {
+  max-inline-size: 40rem;
+}
+
+/* ---- Presentación -------------------------------------------------------- */
+.facts {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.facts li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.marker {
+  flex: none;
+  inline-size: var(--space-4);
+  block-size: var(--space-4);
+  margin-block-start: var(--space-1);
+}
+
+.marker[data-shape="circle"] {
+  border-radius: 50%;
+}
+
+.marker[data-tone="action"] {
+  background: var(--color-action-bg);
+}
+
+.marker[data-tone="accent"] {
+  background: var(--color-accent-bg);
+}
+
+.marker[data-tone="danger"] {
+  background: var(--color-danger-bg);
+}
+
+/* ---- Trayectoria: por áreas, lo más reciente primero ---------------------- */
+.groups {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.groupTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.groupTitle .marker {
+  margin-block-start: 0;
+}
+
+.entries {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entries li {
+  display: grid;
+  gap: var(--space-1);
+  /* Alineado con el título del área: el marcador más su hueco. */
+  padding-inline-start: calc(var(--space-4) + var(--space-3));
+}
+
+.role {
+  font-family: var(--typography-heading-5-font-family);
+  font-weight: var(--font-weight-semibold);
+}
+
+.education {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.education li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}

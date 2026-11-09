@@ -205,21 +205,63 @@ export const ca: Copy = {
     lead: "Assessora genètica a Barcelona. Acompanya persones adultes i les seves famílies a entendre el risc genètic i a prendre decisions amb calma.",
     careerTitle: "Trajectòria",
     career: [
+      {
+        title: "Pràctica assistencial",
+        items: [
+          {
+            when: "Des del 2025",
+            role: "Assessora genètica",
+            place: "Clínica Corachan-IDOC",
+          },
+          {
+            when: "Des del 2021",
+            role: "Assessora genètica",
+            place: "Hospital Vall d'Hebron",
+            detail:
+              "Forma part de l'equip de la Unitat de Telòmers de l'Adult, la primera de l'Estat, que va arrencar al desembre del 2024.",
+          },
+        ],
+      },
+      {
+        title: "Docència",
+        items: [
+          {
+            when: "Des del 2025",
+            role: "Professora vinculada",
+            place: "Universitat Autònoma de Barcelona (UAB)",
+          },
+        ],
+      },
+      {
+        title: "Societats científiques",
+        items: [
+          {
+            when: "Actualment",
+            role: "Vocal de la Junta Directiva",
+            place: "SEAGen, Societat Espanyola d'Assessorament Genètic",
+          },
+        ],
+      },
+    ],
+    educationTitle: "Formació",
+    education: [
+      "Grau en Genètica (UAB)",
+      "Màster en Genètica Assistencial (UAB)",
+      "Màster en Comunicació Científica (UPF)",
+    ],
+    facts: [
       "Més de 10 anys d'experiència en genètica.",
-      "Assessora genètica a l'Hospital Vall d'Hebron des del 2021.",
-      "Assessora genètica a la Clínica Corachan-IDOC des del 2025.",
-      "Vocal de la Junta Directiva de SEAGen.",
-      "Professora vinculada a la UAB des del 2025.",
+      "Atén en castellà, català i anglès.",
     ],
     pressTitle: "Premsa i divulgació",
-    press: [
-      "El País",
-      "La Vanguardia",
-      "RTVE",
-      "Onda Cero",
-      "Telemadrid",
-      "Manual SEHH (2024)",
-    ],
+    pressGroups: {
+      telomeres: {
+        title: "Unitat de Telòmers de l'Adult, Vall d'Hebron",
+        text: "El setembre de 2025 l'Hospital Vall d'Hebron va presentar la primera unitat de l'Estat dedicada a les alteracions de la biologia dels telòmers en adults. La Sara és assessora genètica de l'equip.",
+      },
+      other: { title: "Altres aparicions" },
+    },
+    pressKinds: { interview: "Entrevista", hospital: "Nota de l'hospital" },
     publicationsTitle: "Publicacions",
     publicationsLead: "Articles en revistes científiques, extrets de PubMed.",
     total: "{count} publicacions a PubMed.",

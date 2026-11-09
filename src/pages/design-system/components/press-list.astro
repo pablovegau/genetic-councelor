@@ -1,0 +1,61 @@
+---
+import ComponentPage from "../../../design-system/catalog/ComponentPage.astro";
+import type { PropRow } from "../../../design-system/catalog/prop-docs";
+import { PressList } from "../../../design-system/components";
+
+const usage =
+  '<PressList items={items} newTabLabel="se abre en otra pestaña" />';
+
+const rows: PropRow[] = [
+  {
+    name: "items",
+    type: "{ id; outlet; date?; title; lang?; url?; label? }[]",
+    default: "—",
+    description:
+      "Noticias ya ordenadas. La fecha va formateada; el titular, tal como se publicó y con su idioma.",
+  },
+  {
+    name: "newTabLabel",
+    type: "string",
+    default: "—",
+    description:
+      "Aviso para lectores de pantalla: el enlace abre otra pestaña.",
+  },
+];
+---
+
+<ComponentPage
+  item="press-list"
+  intro="Las noticias y entrevistas en las que aparece Sara: el medio y la fecha, con una etiqueta opcional («Entrevista»), y el titular enlazado debajo."
+  importLine={'import { PressList } from "design-system/components";'}
+  usage={usage}
+  component="PressList"
+  rows={rows}
+  tokens={[]}
+  notes={[
+    "Los datos salen de <code>src/data/press.json</code>; el orden (la destacada primero, luego por fecha) lo hace <code>orderPress</code> en <code>src/lib/press.ts</code>.",
+    "El titular va en el idioma en que se publicó (<code>lang</code>), aunque la página esté en otro.",
+  ]}
+>
+  <PressList
+    newTabLabel="se abre en otra pestaña"
+    items={[
+      {
+        id: "1",
+        outlet: "RTVE",
+        title: "Sara Torres, genetista de l'Hospital Vall d'Hebron",
+        lang: "ca",
+        label: "Entrevista",
+        url: "#demo",
+      },
+      {
+        id: "2",
+        outlet: "La Vanguardia",
+        date: "4 sept 2025",
+        title: "Vall d'Hebron crea una unidad pionera de telómeros",
+        lang: "es",
+        url: "#demo",
+      },
+    ]}
+  />
+</ComponentPage>
