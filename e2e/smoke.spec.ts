@@ -256,3 +256,110 @@ for (const { path, prefix, names } of [
     );
   });
 }
+
+test("en escritorio el menú está centrado entre la marca y el selector de idioma", async ({
+  page,
+}) => {
+  await page.goto("/");
+  test.skip(
+    (page.viewportSize()?.width ?? 0) < 768,
+    "En móvil el menú va en el panel."
+  );
+  const box = async (selector: string) =>
+    (await page.locator(selector).first().boundingBox())!;
+  const brand = await box("header .brand");
+  const nav = await box("header nav");
+  const langs = await box("header .langs");
+  const left = nav.x - (brand.x + brand.width);
+  const right = langs.x - (nav.x + nav.width);
+  expect(Math.abs(left - right)).toBeLessThanOrEqual(2);
+});
+
+for (const { path, linkedin } of [
+  { path: "/", linkedin: "LinkedIn" },
+  { path: "/ca/", linkedin: "LinkedIn" },
+  { path: "/en/", linkedin: "LinkedIn" },
+]) {
+  test(`${path}: LinkedIn con su logo entre el selector de idioma y el botón de reservar, y los iconos del pie`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    const width = page.viewportSize()?.width ?? 0;
+    if (width >= 768) {
+      const link = page.locator("header .social a");
+      await expect(link).toHaveAccessibleName(linkedin);
+      await expect(link).toHaveAttribute(
+        "href",
+        "https://www.linkedin.com/in/saratorresesquius/"
+      );
+      await expect(link.locator('svg[data-icon="linkedin"]')).toBeVisible();
+      const langs = (await page.locator("header .langs").boundingBox())!;
+      const social = (await link.boundingBox())!;
+      const book = (await page.locator("header .book").boundingBox())!;
+      expect(social.x).toBeGreaterThan(langs.x + langs.width - 1);
+      expect(social.x + social.width).toBeLessThan(book.x + 1);
+    }
+    const footer = page.locator("footer");
+    await expect(
+      footer.locator('a[href^="mailto:"] svg[data-icon="mail"]')
+    ).toBeVisible();
+    await expect(
+      footer.locator('a[href*="linkedin.com"] svg[data-icon="linkedin"]')
+    ).toBeVisible();
+  });
+}
+
+for (const { path, nav, status } of [
+  { path: "/blog/", nav: "Blog", status: "Estamos preparando el blog" },
+  { path: "/ca/blog/", nav: "Blog", status: "Estem preparant el blog" },
+  { path: "/en/blog/", nav: "Blog", status: "We are getting the blog ready" },
+]) {
+  test(`${path}: el blog está en construcción y aparece en el menú y en el pie`, async ({
+    page,
+  }) => {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Blog");
+    await expect(page.getByRole("main")).toContainText(status);
+    await expect(page.locator(`footer a[href="${path}"]`)).toHaveText(nav);
+    await expect(page.locator(`header a[href="${path}"]`)).not.toHaveCount(0);
+  });
+}
+
+for (const width of [768, 820, 1024]) {
+  test(`la cabecera cabe a ${width} px sin desbordar ni solaparse`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/ca/");
+    const overflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - window.innerWidth
+    );
+    expect(overflow).toBeLessThanOrEqual(0);
+    const rects = await page.evaluate(() =>
+      [".brand", "nav", ".langs", ".social", ".actions"].map((selector) => {
+        const { left, right } = document
+          .querySelector(`header ${selector}`)!
+          .getBoundingClientRect();
+        return { left, right };
+      })
+    );
+    rects.slice(1).forEach((rect, i) => {
+      expect(rect.left).toBeGreaterThanOrEqual(rects[i]!.right - 0.5);
+    });
+  });
+}
+
+for (const path of ["/", "/ca/", "/en/", "/contacto/", "/blog/"]) {
+  for (const width of [320, 360, 390]) {
+    test(`${path} no desborda en horizontal a ${width} px`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(path);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - window.innerWidth
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+    });
+  }
+}
