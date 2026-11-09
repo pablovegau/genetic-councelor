@@ -229,3 +229,28 @@ test("abierto tampoco tiene violaciones de accesibilidad WCAG 2.2 AA", async ({
     )
   ).toEqual([]);
 });
+
+test("el hueco bajo los elementos de la cabecera es igual que el de encima, con el menú abierto", async ({
+  page,
+}) => {
+  await page.goto("/blog/");
+  await open(page);
+  const { above, below, headerBottom, popupTop } = await page.evaluate(() => {
+    const trigger = document
+      .querySelector("header button[aria-label]")!
+      .getBoundingClientRect();
+    const popup = document
+      .querySelector("[role=dialog]")!
+      .getBoundingClientRect();
+    const header = document.querySelector("header")!.getBoundingClientRect();
+    return {
+      above: trigger.top,
+      below: popup.top - trigger.bottom,
+      headerBottom: header.bottom,
+      popupTop: popup.top,
+    };
+  });
+  expect(Math.abs(above - below)).toBeLessThanOrEqual(1);
+  // El panel empieza donde acaba la cabecera.
+  expect(Math.abs(popupTop - headerBottom)).toBeLessThanOrEqual(1);
+});

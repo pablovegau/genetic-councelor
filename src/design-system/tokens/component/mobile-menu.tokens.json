@@ -18,8 +18,9 @@
       "$value": "{blur.md}"
     },
     "inset-top": {
+      "$description": "Alto de la cabecera (relleno de la barra + botón de 40 px + relleno): el panel empieza donde acaba la cabecera, así el hueco bajo el botón es igual que el de encima.",
       "$type": "dimension",
-      "$value": "{space.16}"
+      "$value": "{space.18}"
     },
     "inset-x": {
       "$type": "dimension",
